@@ -82,14 +82,14 @@
 <meta name="description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this指向该对象 当函数作为单纯函数调用时，this指向全局对象（严格模式时，为undefined） 构造函数中的this指向新创建的对象 嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了。因为th">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重温this">
+<meta property="og:title" content="重温——this">
 <meta property="og:url" content="http://yoursite.com/2018/03/10/重温this/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this指向该对象 当函数作为单纯函数调用时，this指向全局对象（严格模式时，为undefined） 构造函数中的this指向新创建的对象 嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了。因为th">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-12T13:46:29.261Z">
+<meta property="og:updated_time" content="2018-03-13T13:50:55.811Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重温this">
+<meta name="twitter:title" content="重温——this">
 <meta name="twitter:description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this指向该对象 当函数作为单纯函数调用时，this指向全局对象（严格模式时，为undefined） 构造函数中的this指向新创建的对象 嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了。因为th">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>重温this | cchroot's blog</title>
+  <title>重温——this | cchroot's blog</title>
   
 
 
@@ -330,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">重温this</h1>
+          <h1 class="post-title" itemprop="name headline">重温——this</h1>
         
 
         <div class="post-meta">
@@ -426,7 +426,7 @@
 <h3 id="情况5-在构造函数的prototype中，this代表着什么"><a href="#情况5-在构造函数的prototype中，this代表着什么" class="headerlink" title="情况5:在构造函数的prototype中，this代表着什么?"></a>情况5:在构造函数的prototype中，this代表着什么?</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">z</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'cchroot'</span>;</span><br><span class="line">	<span class="keyword">this</span>.year = <span class="number">1994</span>;</span><br><span class="line">&#125;</span><br><span class="line">z.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> z1 = <span class="keyword">new</span> z();</span><br><span class="line">z1.getName(); <span class="comment">//cchroot</span></span><br></pre></td></tr></table></figure>
 <p>如上代码，在Fn.prototype.getName函数中，this指向的是z1对象。因此可以通过this.name获取z1.name的值。</p>
 <p>其实，不仅仅是构造函数的prototype，即便是在整个原型链中，this代表的也都是当前对象的值。</p>
-<p><br><br><br>注：本文是当时查看王福朋前辈的博客：<a href="http://www.cnblogs.com/wangfupeng1988/p/3977924.html" target="_blank" rel="noopener">深入理解javascript原型和闭包</a> 系列文字做的笔记，以及自己的一些理解、见解，以上如果有不理解，或者想自己更深入的研究的，可以访问前面的链接进行查看。</p>
+<p><br><br><br>注：本文是当时查看王福朋前辈的博客：<a href="http://www.cnblogs.com/wangfupeng1988/p/3977924.html" target="_blank" rel="noopener">深入理解javascript原型和闭包</a> 系列文字做的笔记，以及自己的一些理解、见解，以上如果有不理解的童鞋，可以访问前辈的文章链接进行查看。</p>
 
       
     </div>
@@ -457,8 +457,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/04/重温对象与原型/" rel="next" title="重温对象与原型">
-                <i class="fa fa-chevron-left"></i> 重温对象与原型
+              <a href="/2018/03/04/重温对象与原型/" rel="next" title="重温——对象与原型">
+                <i class="fa fa-chevron-left"></i> 重温——对象与原型
               </a>
             
           </div>
@@ -466,6 +466,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/重温作用域与闭包/" rel="prev" title="重温——作用域与闭包">
+                重温——作用域与闭包 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -546,7 +550,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

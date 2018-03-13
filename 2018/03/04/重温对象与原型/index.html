@@ -82,7 +82,7 @@
 <meta name="description" content="数据类型  一切引用类型都是对象。我们都知道JS的数据类型有String、Number、Boolean、Undefined，ES6新增Symbol的基本数据类型、Null、对象（Object）。其中，前面5种属于简单的值类型，不是对象。Null和Object(包括函数、数组、对象）等都是对象，它们都是引用类型。判断一个变量是不是对象非常简单。值类型的类型判断用typeof，引用类型的类型判断用in">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="重温对象与原型">
+<meta property="og:title" content="重温——对象与原型">
 <meta property="og:url" content="http://yoursite.com/2018/03/04/重温对象与原型/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="数据类型  一切引用类型都是对象。我们都知道JS的数据类型有String、Number、Boolean、Undefined，ES6新增Symbol的基本数据类型、Null、对象（Object）。其中，前面5种属于简单的值类型，不是对象。Null和Object(包括函数、数组、对象）等都是对象，它们都是引用类型。判断一个变量是不是对象非常简单。值类型的类型判断用typeof，引用类型的类型判断用in">
@@ -96,9 +96,9 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20180311174435820?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20180311174526464?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20180311175211340?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-03-12T13:41:08.838Z">
+<meta property="og:updated_time" content="2018-03-13T13:50:48.905Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="重温对象与原型">
+<meta name="twitter:title" content="重温——对象与原型">
 <meta name="twitter:description" content="数据类型  一切引用类型都是对象。我们都知道JS的数据类型有String、Number、Boolean、Undefined，ES6新增Symbol的基本数据类型、Null、对象（Object）。其中，前面5种属于简单的值类型，不是对象。Null和Object(包括函数、数组、对象）等都是对象，它们都是引用类型。判断一个变量是不是对象非常简单。值类型的类型判断用typeof，引用类型的类型判断用in">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20180311170150684?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
@@ -136,7 +136,7 @@
 
 
 
-  <title>重温对象与原型 | cchroot's blog</title>
+  <title>重温——对象与原型 | cchroot's blog</title>
   
 
 
@@ -340,7 +340,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">重温对象与原型</h1>
+          <h1 class="post-title" itemprop="name headline">重温——对象与原型</h1>
         
 
         <div class="post-meta">
@@ -433,7 +433,7 @@
 <p>其次，如果<strong>继承的方法不合适，可以做出修改</strong>。例如我们可以对Object和Array的toString()方法进行修改，修改成我们想要的方法，但是我们一般不会去修改原型链上本来有的基本方法，倒是经常可以为自己的特殊需求添加自定义一些函数：例如，自己去修改prototype.toString()方法：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> f1 = <span class="keyword">new</span> Foo();</span><br><span class="line">Foo.prototype.toString() = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="string">"cchroot"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(f1.toString());<span class="comment">//cchroot</span></span><br></pre></td></tr></table></figure></p>
 <p>最后，<strong>如果感觉当前缺少你要用的方法，可以自己去创建。</strong></p>
 <p>如果你要添加内置方法的原型属性，最好做一步判断，如果该属性不存在，则添加。如果本来就存在，就没必要再添加了。</p>
-<p><br><br><br>注：本文是当时查看王福朋前辈的博客：<a href="http://www.cnblogs.com/wangfupeng1988/p/3977924.html" target="_blank" rel="noopener">深入理解javascript原型和闭包</a> 系列文字做的笔记，以及自己的一些理解、见解和，以上如果有不理解，可以访问前面的链接进行查看。</p>
+<p><br><br><br>注：本文是当时查看王福朋前辈的博客：<a href="http://www.cnblogs.com/wangfupeng1988/p/3977924.html" target="_blank" rel="noopener">深入理解javascript原型和闭包</a> 系列文字做的笔记，以及自己的一些理解、见解和，以上如果有不理解，可以访问前辈的文章链接进行查看。</p>
 
       
     </div>
@@ -464,8 +464,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/03/重温apply and call/" rel="next" title="重温apply和call方法">
-                <i class="fa fa-chevron-left"></i> 重温apply和call方法
+              <a href="/2018/03/03/重温apply and call/" rel="next" title="重温——apply和call方法">
+                <i class="fa fa-chevron-left"></i> 重温——apply和call方法
               </a>
             
           </div>
@@ -474,8 +474,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/10/重温this/" rel="prev" title="重温this">
-                重温this <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/10/重温this/" rel="prev" title="重温——this">
+                重温——this <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -557,7 +557,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
