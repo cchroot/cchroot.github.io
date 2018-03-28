@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTTP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.1使用 HTTP 协议访问 WebWeb 页面根据 Web 浏览器地址栏中指定的URL，Web 浏览器从 Web 服务器端获取文件资源（resource）等信息，从而显示出 Web 页面。像这种通过发送请求获取服务器资源的 Web 浏览器等，都可称为客户端（client）。  Web 使用一种名为 HTTP（HyperText Transfer Protocol，超文本传输协议 ）的协议作为规">
+<meta name="keywords" content="HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解HTTP——了解Web及网络">
+<meta property="og:url" content="http://yoursite.com/2018/03/24/图解HTTP——了解Web及网络/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="1.1使用 HTTP 协议访问 WebWeb 页面根据 Web 浏览器地址栏中指定的URL，Web 浏览器从 Web 服务器端获取文件资源（resource）等信息，从而显示出 Web 页面。像这种通过发送请求获取服务器资源的 Web 浏览器等，都可称为客户端（client）。  Web 使用一种名为 HTTP（HyperText Transfer Protocol，超文本传输协议 ）的协议作为规">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326221215998?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326222017616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326222932550?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326223225720?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326224128706?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326224535280?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326225149208?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326225527508?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326225701333?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20180326230752289?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-03-28T15:52:08.788Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图解HTTP——了解Web及网络">
+<meta name="twitter:description" content="1.1使用 HTTP 协议访问 WebWeb 页面根据 Web 浏览器地址栏中指定的URL，Web 浏览器从 Web 服务器端获取文件资源（resource）等信息，从而显示出 Web 页面。像这种通过发送请求获取服务器资源的 Web 浏览器等，都可称为客户端（client）。  Web 使用一种名为 HTTP（HyperText Transfer Protocol，超文本传输协议 ）的协议作为规">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20180326221215998?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/24/图解HTTP——了解Web及网络/"/>
+
+
+
+
+
+  <title>图解HTTP——了解Web及网络 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vuejs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodejs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tools/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            工具
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/24/图解HTTP——了解Web及网络/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图解HTTP——了解Web及网络</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-24T20:59:05+08:00">
+                2018-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-1使用-HTTP-协议访问-Web"><a href="#1-1使用-HTTP-协议访问-Web" class="headerlink" title="1.1使用 HTTP 协议访问 Web"></a>1.1使用 HTTP 协议访问 Web</h3><p>Web 页面根据 Web 浏览器地址栏中指定的URL，Web 浏览器从 Web 服务器端获取文件资源（resource）等信息，从而显示出 Web 页面。像这种通过发送请求获取服务器资源的 Web 浏览器等，都可称为客户端（client）。</p>
+<p><img src="http://img.blog.csdn.net/20180326221215998?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>Web 使用一种名为 HTTP（HyperText Transfer Protocol，超文本传输协议 ）的协议作为规范，完成从客户端到服务器端等一系列运作流程。而协议是指规则的约定。可以说，Web 是建立在 HTTP 协议上通信的。</p>
+<h3 id="1-2HTTP-的诞生"><a href="#1-2HTTP-的诞生" class="headerlink" title="1.2HTTP 的诞生"></a>1.2HTTP 的诞生</h3><p>1989 年 3 月，CERN（欧洲核子研究组织）的蒂姆 • 伯纳斯 - 李（Tim BernersLee）博士提出了一种能让远隔两地的研究者们共享知识的设想。基本理念是：借助多文档之间相互关联形成的超文本（HyperText），连成可相互参阅的 WWW（World Wide Web，<strong>万维网</strong>）。</p>
+<p>现在已提出了 3 项 WWW 构建技术，分别是：把 SGML（Standard<br>Generalized Markup Language，标准通用标记语言）作为页面的文本标记语言的 HTML（HyperText Markup Language，<strong>超文本标记语言</strong>）；作为文档传递协议的 HTTP ；指定文档所在地址的URL（UniformResource Locator，统一资源定位符）。</p>
+<p>HTTP 于 1990 年问世。那时的 HTTP 并没有作为正式的标准被建立。现在的 HTTP 其实含有 HTTP1.0 之前版本的意思，因此被称为HTTP/0.9。HTTP 正式作为标准被公布是在 1996 年的 5 月，版本被命名为HTTP/1.0，并记载于 RFC1945。虽说是初期标准，但该协议标准至今仍被广泛使用在服务器端。1997 年 1 月公布的 HTTP/1.1 是目前主流的 HTTP 协议版本。</p>
+<h3 id="1-3-网络基础-TCP-IP"><a href="#1-3-网络基础-TCP-IP" class="headerlink" title="1.3 网络基础 TCP/IP"></a>1.3 网络基础 TCP/IP</h3><p>通常使用的网络（包括互联网）是在 TCP/IP 协议族的基础上运作的。而 HTTP 属于它内部的一个子集。不同的硬件、操作系统之间的通信，所有的这一切都需要一种规则。而我们就把这种规则称为<strong>协议</strong>（protocol）。</p>
+<p><img src="http://img.blog.csdn.net/20180326222017616?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>图：TCP/IP 是互联网相关的各类协议族的总称</p>
+<p>TCP/IP 协议族里重要的一点就是分层。TCP/IP 协议族按层次分别分为以下 4 层：<strong>应用层、传输层、网络层和数据链路层</strong>。</p>
+<p>TCP/IP 协议族各层的作用如下：</p>
+<p>应用层：<strong>决定了向用户提供应用服务时通信的活动</strong>；TCP/IP 协议族内预存了各类通用的应用服务。比如，<strong>FTP</strong>（FileTransfer Protocol，文件传输协议）和 <strong>DNS</strong>（Domain Name System，域名系统）服务就是其中两类。<strong>HTTP 协议也处于该层</strong>。</p>
+<p>传输层：传输层对上层应用层，<strong>提供处于网络连接中的两台计算机之间的数据传输</strong>。在传输层有两个性质不同的协议：<strong>TCP</strong>（Transmission ControlProtocol，<strong>传输控制协议</strong>）和 <strong>UDP</strong>（User Data Protocol，<strong>用户数据报协议</strong>）。</p>
+<p>网络层（又名网络互连层）：<strong>网络层用来处理在网络上流动的数据包</strong>。数据包是网络传输的最小数据单位。该层规定了通过怎样的路径（所谓的传输路线）到达对方计算机，并把数据包传送给对方。</p>
+<p>链路层（又名数据链路层，网络接口层）：<strong>用来处理连接网络的硬件部分</strong>。包括控制操作系统、硬件的设备驱动、NIC（Network Interface Card，网络适配器，即网卡），及光纤等物理可见部分（还包括连接器等一切传输媒介）。硬件上的范畴均在链路层的作用范围之内。</p>
+<p>TCP/IP 通信传输流：</p>
+<p><img src="http://img.blog.csdn.net/20180326222932550?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>利用 TCP/IP 协议族进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则往应用层往上走。</p>
+<p>用 HTTP 举例来说明：</p>
+<p><strong>首先</strong>作为发送端的客户端在应用层（HTTP 协议）发出一个想看某个 Web 页面的 HTTP 请求。<strong>接着</strong>，为了传输方便，在传输层（TCP 协议）把从应用层处收到的数据（HTTP 请求报文）进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。<strong>然后</strong>，在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。<strong>这样一来</strong>，发往网络的通信请求就准备齐全了。接收端的服务器在链路层接收到数据，按序往上层发送，一直到应用层。当传输到应用层，才能算真正接收到由客户端发送过来的 HTTP请求。</p>
+<p><img src="http://img.blog.csdn.net/20180326223225720?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>发送端在层与层之间传输数据时，每经过一层时必定会被打上一个该层所属的首部信息。反之，接收端在层与层传输数据时，每经过一层时会把对应的首部消去。这种把数据信息包装起来的做法称为封装（encapsulate）。</p>
+<h3 id="1-4与-HTTP-关系密切的协议-IP、TCP-和DNS"><a href="#1-4与-HTTP-关系密切的协议-IP、TCP-和DNS" class="headerlink" title="1.4与 HTTP 关系密切的协议 : IP、TCP 和DNS"></a>1.4与 HTTP 关系密切的协议 : IP、TCP 和DNS</h3><p>IP：<strong>负责传输</strong>。按层次分，IP（Internet Protocol）网际协议位于<strong>网络层</strong>。几乎所有使用网络的系统都会用到 IP 协议。TCP/IP 协议族中的 IP 指的就是网际协议。可能有人会把“IP”和“IP 地址”搞混，“IP”其实是一种协议的名称。</p>
+<p><strong>IP 协议的作用是把各种数据包传送给对方</strong>。而要保证确实传送到对方那里，则需要满足各类条件。其中两个重要的条件是 <strong>IP 地址</strong>和 <strong>MAC地址</strong>（Media Access Control Address）。</p>
+<p>IP 地址指明了节点被分配到的地址，MAC 地址是指网卡所属的固定地址。IP 地址可以和 MAC 地址进行配对。IP 地址可变换，但 MAC地址基本上不会更改。</p>
+<p>使用 ARP 协议凭借 MAC 地址进行通信，ARP 是一种用以解析地址的协议，根据通信方的 IP 地址就可以反查出对应的 MAC 地址。</p>
+<p>没有人能够全面掌握互联网中的传输状况，在到达通信目标前的中转过程中，那些计算机和路由器等网络设备只能获悉很粗略的传输路线：</p>
+<p><img src="http://img.blog.csdn.net/20180326224128706?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>TCP：<strong>确保可靠性的 TCP 协议</strong>，按层次分，TCP 位于<strong>传输层</strong>，提供可靠的字节流服务。TCP 协议为了更容易传送大数据才把数据分割，而且 TCP 协议能够确认数据最终是否送达到对方，确保数据能到达目标。</p>
+<p>为了准确无误地将数据送达目标处，TCP 协议采用了<strong>三次握手</strong><br>（three-way handshaking）策略。</p>
+<p>发送端首先发送一个带 SYN 标志的数据包给对方。接收端收到后，回传一个带有 SYN/ACK 标志的数据包以示传达确认信息。最后，发送端再回传一个带 ACK 标志的数据包，代表“握手”结束：</p>
+<p><img src="http://img.blog.csdn.net/20180326224535280?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>若在握手过程中某个阶段莫名中断，TCP 协议会再次以相同的顺序发送相同的数据包。除了上述三次握手，TCP 协议还有其他各种手段来保证通信的可靠性。</p>
+<h3 id="1-5负责域名解析的-DNS-服务"><a href="#1-5负责域名解析的-DNS-服务" class="headerlink" title="1.5负责域名解析的 DNS 服务"></a>1.5负责域名解析的 DNS 服务</h3><p>DNS:<strong>DNS（Domain Name System）服务</strong>是和 <strong>HTTP 协议</strong>一样位于<strong>应用层</strong>的协议。它<strong>提供域名到 IP 地址之间的解析服务</strong>。</p>
+<p>计算机既可以被赋予 IP 地址，也可以被赋予主机名和域名。用户通常使用主机名或域名来访问对方的计算机，而不是直接通过 IP地址访问。因为与 IP 地址的一组纯数字相比，用字母配合数字的表示形式来指定计算机名更符合人类的记忆习惯。但要让计算机去理解名称，相对而言就变得困难了。因为计算机更擅长处理一长串数字。</p>
+<p>为了解决上述的问题，DNS 服务应运而生。DNS 协议提供通过域名查找 IP 地址，或逆向从 IP 地址反查域名的服务：</p>
+<p><img src="http://img.blog.csdn.net/20180326225149208?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="1-6各种协议与-HTTP-协议的关系"><a href="#1-6各种协议与-HTTP-协议的关系" class="headerlink" title="1.6各种协议与 HTTP 协议的关系"></a>1.6各种协议与 HTTP 协议的关系</h3><p>我们再通过这张图来了解下 IP 协议、TCP 协议和 DNS 服务在使用HTTP 协议的通信过程中各自发挥了哪些作用：</p>
+<p><img src="http://img.blog.csdn.net/20180326225527508?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br><img src="http://img.blog.csdn.net/20180326225701333?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<h3 id="1-7URI-和-URL"><a href="#1-7URI-和-URL" class="headerlink" title="1.7URI 和 URL"></a>1.7URI 和 URL</h3><p>与 URI（统一资源标识符）相比，我们更熟悉 URL（UniformResource Locator，统一资源定位符）。</p>
+<p>URL正是使用 Web 浏览器等访问 Web 页面时需要输入的网页地址。</p>
+<p>URI 是 Uniform Resource Identifier 的缩写。URI 就是由某个协议方案表示的资源的定位标识符。协议方案是指访问资源所使用的协议类型名称。</p>
+<p>采用 HTTP 协议时，协议方案就是 http。除此之外，还有 ftp、25mailto、telnet、file 等。标准的 URI 协议方案有 30 种左右。</p>
+<p>URI 用字符串标识某一互联网资源，而 URL表示资源的地点（互联网上所处的位置）。可见 URL是 URI 的子集。</p>
+<p>表示指定的 URI，要使用涵盖全部必要信息的绝对 URI、绝对 URL以及相对 URL。相对 URL，是指从浏览器中基本 URI 处指定的 URL，形如 /image/logo.gif。</p>
+<p>这里说一下UTI与URL的区别与联系,举个例子：</p>
+<p>统一资源标志符URI就是在某一规则下能把一个资源独一无二地标识出来。</p>
+<p>拿人做例子，假设这个世界上所有人的名字都不能重复，那么名字就是URI的一个实例，通过名字这个字符串就可以标识出唯一的一个人。</p>
+<p>现实当中名字当然是会重复的，所以身份证号才是URI，通过身份证号能让我们能且仅能确定一个人。</p>
+<p>那统一资源定位符URL是什么呢。也拿人做例子然后跟HTTP的URL做类比，就可以有：动物住址协议://地球/中国/浙江省/杭州市/西湖区/某大学/14号宿舍楼/525号寝/张三.人</p>
+<p>可以看到，这个字符串同样标识出了唯一的一个人，起到了URI的作用，所以URL是URI的子集。URL是以描述人的位置来唯一确定一个人的。</p>
+<p>所以不论是用定位的方式还是用编号的方式，我们都可以唯一确定一个人，都是URl的一种实现，而URL就是用定位的方式实现的URI。</p>
+<p>回到Web上，假设所有的Html文档都有唯一的编号，记作html:xxxxx，xxxxx是一串数字，即Html文档的身份证号码，这个能唯一标识一个Html文档，那么这个号码就是一个URI。</p>
+<p>而URL则通过描述是哪个主机上哪个路径上的文件来唯一确定一个资源，也就是定位的方式来实现的URI。</p>
+<p>对于现在网址我更倾向于叫它URL，毕竟它提供了资源的位置信息，如果有一天网址通过号码来标识变成了<a href="http://741236985.html，那感觉叫成URI更为合适，不过这样子的话还得想办法找到这个资源咯，而且人类记忆英文比记忆数字更容易。" target="_blank" rel="noopener">http://741236985.html，那感觉叫成URI更为合适，不过这样子的话还得想办法找到这个资源咯，而且人类记忆英文比记忆数字更容易。</a></p>
+<p>知道了URI与URL的关系，现在，让我们先来了解一下绝对 URI 的格式：</p>
+<p><img src="http://img.blog.csdn.net/20180326230752289?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>使用 http: 或 https: 等协议方案名获取访问资源时要指定协议类型。不<br>区分字母大小写，最后附一个冒号（:），也可使用 data: 或 javascript: 这类指定数据或脚本程序的方案名。</p>
+<p>登录信息（认证）:指定用户名和密码作为从服务器端获取资源时必要的登录信息（身份认证）。此项是可选项。</p>
+<p>服务器地址：使用绝对 URI 必须指定待访问的服务器地址。地址可以是类似hackr.jp 这种 DNS 可解析的名称，或是 192.168.1.1 这类 IPv4 地址名，还可以是 [0:0:0:0:0:0:0:1] 这样用方括号括起来的 IPv6 地址名。</p>
+<p>服务器端口号：指定服务器连接的网络端口号。此项也是可选项，若用户省略则自动使用默认端口号。</p>
+<p>带层次的文件路径：指定服务器上的文件路径来定位特指的资源。这与 UNIX 系统的文件目录结构相似。</p>
+<p>查询字符串：针对已指定的文件路径内的资源，可以使用查询字符串传入任意参数。此项可选。</p>
+<p>片段标识符：使用片段标识符通常可标记出已获取资源中的子资源（文档内的某个位置）。但在 RFC 中并没有明确规定其使用方法。该项也为可选项。<br>有一些用来制定 HTTP 协议技术标准的文档，它们被称为RFC（Request for Comments，征求修正意见书）。</p>
+<p>注意：并不是所有的应用程序都符合 RFC。通常，应用程序会遵照由 RFC 确定的标准实现。可以说，RFC 是互联网的设计文档，要是不按照 RFC 标准执行，就有可能导致无法通信的状况。但设想一下，如果这款应用程序的使用者非常多，那会发生什么情况？不难想象，其他的客户端或服务器端必然都不得不去配合它……</p>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/23/node学习笔记——简介/" rel="next" title="node学习笔记——简介">
+                <i class="fa fa-chevron-left"></i> node学习笔记——简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/25/图解HTTP——简单的 HTTP 协议/" rel="prev" title="图解HTTP——简单的 HTTP 协议">
+                图解HTTP——简单的 HTTP 协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1使用-HTTP-协议访问-Web"><span class="nav-number">1.</span> <span class="nav-text">1.1使用 HTTP 协议访问 Web</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2HTTP-的诞生"><span class="nav-number">2.</span> <span class="nav-text">1.2HTTP 的诞生</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-网络基础-TCP-IP"><span class="nav-number">3.</span> <span class="nav-text">1.3 网络基础 TCP/IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4与-HTTP-关系密切的协议-IP、TCP-和DNS"><span class="nav-number">4.</span> <span class="nav-text">1.4与 HTTP 关系密切的协议 : IP、TCP 和DNS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5负责域名解析的-DNS-服务"><span class="nav-number">5.</span> <span class="nav-text">1.5负责域名解析的 DNS 服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6各种协议与-HTTP-协议的关系"><span class="nav-number">6.</span> <span class="nav-text">1.6各种协议与 HTTP 协议的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7URI-和-URL"><span class="nav-number">7.</span> <span class="nav-text">1.7URI 和 URL</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

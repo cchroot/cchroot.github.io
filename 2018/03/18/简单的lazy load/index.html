@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="这两天在公司协助切了一个门户网站的页面，用户在第一次登陆网站的时候明显感觉速度不够快，需要根据当前网速相应几秒。马上想到了把网站所有加载的图片在不失真的情况下进行了压缩：这里向大家推荐一个在线png,jpg图片压缩的网站：TinyPNG 基本可以把图片压缩50%作用，图片颜色种类越少图片的可以压缩的越小。 在压缩完图片之后，感觉网站还是不够快，然后决定再用用懒加载，把吧比较大的几张图片和banne">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-22T15:45:43.724Z">
+<meta property="og:updated_time" content="2018-03-23T15:28:33.722Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简单的lazy load">
 <meta name="twitter:description" content="这两天在公司协助切了一个门户网站的页面，用户在第一次登陆网站的时候明显感觉速度不够快，需要根据当前网速相应几秒。马上想到了把网站所有加载的图片在不失真的情况下进行了压缩：这里向大家推荐一个在线png,jpg图片压缩的网站：TinyPNG 基本可以把图片压缩50%作用，图片颜色种类越少图片的可以压缩的越小。 在压缩完图片之后，感觉网站还是不够快，然后决定再用用懒加载，把吧比较大的几张图片和banne">
@@ -242,7 +242,7 @@
       
         
         <li class="menu-item menu-item-vue">
-          <a href="/vue.js/" rel="section">
+          <a href="/categories/vuejs/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
             
@@ -252,7 +252,7 @@
       
         
         <li class="menu-item menu-item-node">
-          <a href="/node.js/" rel="section">
+          <a href="/categories/nodejs/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
             
@@ -262,7 +262,7 @@
       
         
         <li class="menu-item menu-item-tools">
-          <a href="/tools/" rel="section">
+          <a href="/categories/tools/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
             
@@ -411,7 +411,7 @@
 <p>后面测试了一下，上面的代码是没有问题的，但是性能偏差。如果直接将函数绑定在 scroll 事件上，当页面滚动时，函数会被高频触发，这非常影响浏览器的性能。我粗略地估计一下，当简单地滚动一下页面，函数至少触发了十来次，这显然是十分没必要的。 </p>
 <p>所以在做事件绑定的时候，想到可以对 lazyload 函数进行函数节流（throttle）与函数去抖（debounce）处理。 下面是throttle函数代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn, delay, atleast</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> timeout = <span class="literal">null</span>,</span><br><span class="line">       startTime = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">       <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	       <span class="keyword">var</span> curTime = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">	       clearTimeout(timeout);</span><br><span class="line">	       <span class="keyword">if</span>(curTime - startTime &gt;= atleast) &#123;</span><br><span class="line">	           fn();</span><br><span class="line">	           startTime = curTime;</span><br><span class="line">	       &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">	           timeout = setTimeout(fn, delay);</span><br><span class="line">	       &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
 <p>先前的代码不变，调用的时候在最后加上：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>, throttle(loadImages, <span class="number">500</span>, <span class="number">1000</span>), <span class="literal">false</span>);</span><br></pre></td></tr></table></figure></p>
-<p>这样实现了一个简单的延迟加载了，有兴趣的童鞋可以试试。</p>
+<p>这样实现了一个简单的延迟加载了，有兴趣的童鞋可以试试。目前<a href="https://github.com/lodash/lodash" target="_blank" rel="noopener">lodash</a>和<a href="https://github.com/jashkenas/underscore" target="_blank" rel="noopener">underscore</a>这两个现成的js库都对函数节流（throttle）与函数去抖（debounce）方法进行了实现，而且封装的更好，功能更完善，有兴趣的同学可以阅读下它的源码。</p>
 <p><br><br>补充：之后查看别人的简单实现方法的时候，发现一个HTHL5新的API可以更简单便捷的实现lazy load。Chrome 51+ 已经支持。其本质是，目标元素与视口产生一个交叉区，所以这个 API 叫做”交叉观察器”，它的用法很简单：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> io = <span class="keyword">new</span> IntersectionObserver(callback, option);</span><br></pre></td></tr></table></figure></p>
 <p>上面代码中，IntersectionObserver是浏览器原生提供的构造函数，接受两个参数：callback是可见性变化时的回调函数，option是配置对象（该参数可选）。</p>
 <p>构造函数的返回值是一个观察器实例。实例的observe方法可以指定观察哪个 DOM 节点。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 开始观察</span></span><br><span class="line">io.observe(<span class="built_in">document</span>.getElementById(<span class="string">'example'</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 停止观察</span></span><br><span class="line">io.unobserve(element);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 关闭观察器</span></span><br><span class="line">io.disconnect();</span><br></pre></td></tr></table></figure></p>
@@ -463,6 +463,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/23/node学习笔记——简介/" rel="prev" title="node学习笔记——简介">
+                node学习笔记——简介 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -534,7 +538,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -545,7 +549,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -556,7 +560,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/javascript/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
