@@ -79,22 +79,18 @@
 
 
 
-<meta name="description" content="Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的Cookie。 调用 Cookie 时，由于可校验 Cookie 的有效期，以及发送方的域、路径、协议等信息，所以正规发布的 Cookie 内的数据不会因来自其他Web 站点和攻击者的攻击而泄露。 至 201">
+<meta name="description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
 <meta name="keywords" content="HTTP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图解HTTP——HTTP首部六（为 Cookie 服务的首部字段和其他首部字段）">
-<meta property="og:url" content="http://yoursite.com/2018/04/01/图解HTTP——六、HTTP首部（六）/index.html">
+<meta property="og:title" content="图解HTTP——总结">
+<meta property="og:url" content="http://yoursite.com/2018/04/14/图解HTTP——总结/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的Cookie。 调用 Cookie 时，由于可校验 Cookie 的有效期，以及发送方的域、路径、协议等信息，所以正规发布的 Cookie 内的数据不会因来自其他Web 站点和攻击者的攻击而泄露。 至 201">
+<meta property="og:description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20180401173152153?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180401173302525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180401174621219?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-04-01T09:49:39.778Z">
+<meta property="og:updated_time" content="2018-04-17T15:54:23.311Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图解HTTP——HTTP首部六（为 Cookie 服务的首部字段和其他首部字段）">
-<meta name="twitter:description" content="Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的Cookie。 调用 Cookie 时，由于可校验 Cookie 的有效期，以及发送方的域、路径、协议等信息，所以正规发布的 Cookie 内的数据不会因来自其他Web 站点和攻击者的攻击而泄露。 至 201">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20180401173152153?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:title" content="图解HTTP——总结">
+<meta name="twitter:description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
 
 
 
@@ -124,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/01/图解HTTP——六、HTTP首部（六）/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/14/图解HTTP——总结/"/>
 
 
 
 
 
-  <title>图解HTTP——HTTP首部六（为 Cookie 服务的首部字段和其他首部字段） | cchroot's blog</title>
+  <title>图解HTTP——总结 | cchroot's blog</title>
   
 
 
@@ -317,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/图解HTTP——六、HTTP首部（六）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/图解HTTP——总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -334,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">图解HTTP——HTTP首部六（为 Cookie 服务的首部字段和其他首部字段）</h1>
+          <h1 class="post-title" itemprop="name headline">图解HTTP——总结</h1>
         
 
         <div class="post-meta">
@@ -346,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T17:59:05+08:00">
-                2018-04-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-14T20:30:05+08:00">
+                2018-04-14
               </time>
             
 
@@ -406,49 +402,91 @@
       
 
       
-        <p>Cookie 的工作机制是用户识别及状态管理。Web 网站为了管理用户的状态会通过 Web 浏览器，把一些数据临时写入用户的计算机内。接着当用户访问该Web网站时，可通过通信方式取回之前发放的Cookie。</p>
-<p>调用 Cookie 时，由于可校验 Cookie 的有效期，以及发送方的域、路径、协议等信息，所以正规发布的 Cookie 内的数据不会因来自其他Web 站点和攻击者的攻击而泄露。</p>
-<p>至 2013 年 5 月，Cookie 的规格标准文档有以下 4 种：</p>
-<p>由网景公司颁布的规格标准、RFC2109、RFC2965、RFC6265</p>
-<p>目前使用最广泛的 Cookie 标准却不是 RFC 中定义的任何一个。而是<br>网景公司制定的标准上进行扩展后的产物。<br><img src="http://img.blog.csdn.net/20180401173152153?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<h3 id="6-7-1-Set-Cookie"><a href="#6-7-1-Set-Cookie" class="headerlink" title="6.7.1 Set-Cookie"></a>6.7.1 Set-Cookie</h3><p>Set-Cookie: status=enable; expires=Tue, 05 Jul 2011 07:26:31 </p>
-<p>当服务器准备开始管理客户端的状态时，会事先告知各种信息。</p>
-<p>表 6-9：Set-Cookie 字段的属性：<br><img src="http://img.blog.csdn.net/20180401173302525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p><strong>expires 属性</strong>：Cookie 的 expires 属性指定浏览器可发送 Cookie 的有效期。当省略 expires 属性时，其有效期仅限于维持浏览器会话（Session）时间段内。这通常限于浏览器应用程序被关闭之前。</p>
-<p>另外，一旦 Cookie 从服务器端发送至客户端，服务器端就不存在可以显式删除 Cookie 的方法。但可通过覆盖已过期的 Cookie，实现对客户端 Cookie 的实质性删除操作。</p>
-<p><strong>path 属性</strong>：Cookie 的 path 属性可用于限制指定 Cookie 的发送范围的文件目录。不过另有办法可避开这项限制，看来对其作为安全机制的效果不能抱有期待。</p>
-<p><strong>domain 属性</strong>：通过 Cookie 的 domain 属性指定的域名可做到与结尾匹配一致。比如，当指定 example.com 后，除 example.com 以外www.example.com或 www2.example.com 等都可以发送 Cookie。因此，除了针对具体指定的多个域名发送 Cookie 之 外，不指定domain 属性显得更安全。</p>
-<p><strong>secure 属性</strong>：Cookie 的 secure 属性用于限制 Web 页面仅在 HTTPS 安全连接时，才可以发送 Cookie。发送 Cookie 时，指定 secure 属性的方法如下：Set-Cookie: name=value; secure</p>
-<p><strong>HttpOnly 属性</strong>：Cookie 的 HttpOnly 属性是 Cookie 的扩展功能，它使 JavaScript 脚本无法获得 Cookie。其主要目的为<strong>防止跨站脚本攻击</strong>（Cross-sitescripting，XSS）对 Cookie 的信息窃取。发送指定 HttpOnly 属性的 Cookie 的方法如下：Set-Cookie: name=value; HttpOnly</p>
-<p>通过上述设置，通常从 Web 页面内还可以对 Cookie 进行读取操作。但使用 JavaScript 的 document.cookie 就无法读取附加 HttpOnly 属性后的 Cookie 的内容了。因此，也就无法在 XSS 中利用 JavaScript 劫持Cookie 了。</p>
-<h3 id="6-7-2-Cookie"><a href="#6-7-2-Cookie" class="headerlink" title="6.7.2 Cookie"></a>6.7.2 Cookie</h3><p>Cookie: status=enable</p>
-<p>首部字段 Cookie 会告知服务器，当客户端想获得 HTTP 状态管理支持时，就会在请求中包含从服务器接收到的 Cookie。接收到多个Cookie 时，同样可以以多个 Cookie 形式发送。</p>
+        <p>TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。</p>
+<p>TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。</p>
+<p>请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。</p>
+<p>HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用SSL（Secure Socket Layer）和 TLS（Transport Layer Security）协议代替而已。</p>
+<h3 id="HTTP之状态码"><a href="#HTTP之状态码" class="headerlink" title="HTTP之状态码"></a>HTTP之状态码</h3><p>状态代码有三位数字组成，第一个数字定义了响应的类别，共分五种类别:</p>
+<p>1xx：信息响应类，指示信息–表示请求已接收，继续处理</p>
+<p>2xx：处理成功响应类，成功–表示请求已被成功接收、理解、接受</p>
+<p>3xx：重定向响应类，重定向–要完成请求必须进行更进一步的操作</p>
+<p>4xx：客户端错误–请求有语法错误或请求无法实现</p>
+<p>5xx：服务器端错误–服务器未能实现合法的请求</p>
+<p>常见状态码：<br>| 状态码 | 含义<br>| :—: |:—:<br>| 200 OK        | 客户端请求成功<br>| 400 Bad Request | 客户端请求有语法错误，不能被服务器所理解<br>| 401 Unauthorized | 请求未经授权，这个状态代码必须和WWWAuthenticate报头域一起使用<br>| 403 Forbidden | 服务器收到请求，但是拒绝提供服务<br>| 404 Not Found | 请求资源不存在，eg：输入了错误的URL<br>| 500 Internal Server Error | 服务器发生不可预期的错误<br>| 503 Serve  Unavailable | 服务器当前不能处理客户端的请求，一段时间后可能恢复正常</p>
 <p><br></p>
-<h3 id="6-8-其他首部字段"><a href="#6-8-其他首部字段" class="headerlink" title="6.8 其他首部字段"></a>6.8 其他首部字段</h3><p>HTTP 首部字段是可以自行扩展的。所以在 Web 服务器和浏览器的应用上，会出现各种非标准的首部字段。</p>
-<p>最为常用的首部字段有:<br><strong>X-Frame-Options、X-XSS-Protection、DNT、P3P</strong></p>
-<h3 id="6-8-1-X-Frame-Options"><a href="#6-8-1-X-Frame-Options" class="headerlink" title="6.8.1 X-Frame-Options"></a>6.8.1 X-Frame-Options</h3><p>X-Frame-Options: DENY</p>
-<p>首部字段 X-Frame-Options 属于 HTTP 响应首部，用于控制网站内容在其他 Web 网站的 Frame 标签内的显示问题。其主要目的是为了防止点击劫持（clickjacking）攻击。</p>
-<p>首部字段 X-Frame-Options 有以下两个可指定的字段值:</p>
-<p>DENY ：拒绝</p>
-<p>SAMEORIGIN ：仅同源域名下的页面（Top-level-rowsingcontext）匹配时许可。（比如，当指定 <a href="http://hackr.jp/sample.html页面为" target="_blank" rel="noopener">http://hackr.jp/sample.html页面为</a> SAMEORIGIN 时，那么 hackr.jp 上所有页面的 frame 都被允许可加载该页面，而 example.com 等其他域名的页面就不行了）</p>
-<p>现在主流的浏览器都已经支持该首部字段，能在所有的 Web 服务器端预先设定好 X-Frame-Options 字段值是最理想的状态。</p>
-<h3 id="6-8-2-X-XSS-Protection"><a href="#6-8-2-X-XSS-Protection" class="headerlink" title="6.8.2 X-XSS-Protection"></a>6.8.2 X-XSS-Protection</h3><p>X-XSS-Protection: 1</p>
-<p>首部字段 X-XSS-Protection 属于 HTTP 响应首部，它是针对跨站脚本攻击（XSS）的一种对策，用于控制浏览器 XSS 防护机制的开关。</p>
-<p>首部字段 X-XSS-Protection 可指定的字段值如下：</p>
-<p>0 ：将 XSS 过滤设置成无效状态</p>
-<p>1 ：将 XSS 过滤设置成有效状态</p>
-<h3 id="6-8-3-DNT"><a href="#6-8-3-DNT" class="headerlink" title="6.8.3 DNT"></a>6.8.3 DNT</h3><p><img src="http://img.blog.csdn.net/20180401174621219?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>首部字段 DNT 属于 HTTP 请求首部，其中 DNT 是 Do Not Track 的简称，意为拒绝个人信息被收集，是表示拒绝被精准广告追踪的一种方法。</p>
-<p>首部字段 DNT 可指定的字段值如下：</p>
-<p>0 ：同意被追踪</p>
-<p>1 ：拒绝被追踪</p>
-<p>由于首部字段 DNT 的功能具备有效性，所以 Web 服务器需要对 DNT做对应的支持。</p>
-<h3 id="6-8-4-P3P"><a href="#6-8-4-P3P" class="headerlink" title="6.8.4 P3P"></a>6.8.4 P3P</h3><p>P3P: CP=”CAO DSP LAW CURa ADMa DEVa TAIa PSAa PSDa IVAa IVDa</p>
-<p>首部字段 P3P 属于 HTTP 相应首部，通过利用 P3P（The Platform forPrivacy Preferences，在线隐私偏好平台）技术，可以让 Web 网站上的个人隐私变成一种仅供程序可理解的形式，以达到保护用户隐私的目的。</p>
-<p>要进行 P3P 的设定，需按以下操作步骤进行：</p>
-<p>步骤 1：创建 P3P 隐私</p>
-<p>步骤 2：创建 P3P 隐私对照文件后，保存命名在 /w3c/p3p.xml</p>
-<p>步骤 3：从 P3P 隐私中新建 Compact policies 后，输出到 HTTP 响应中</p>
+<h3 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h3><p>根据HTTP标准，HTTP请求可以使用多种请求方法。</p>
+<p>HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。</p>
+<p>HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">请求方法</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">GET</td>
+<td style="text-align:center">请求指定的页面信息，并返回实体主体。</td>
+</tr>
+<tr>
+<td style="text-align:center">HEAD</td>
+<td style="text-align:center">类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头</td>
+</tr>
+<tr>
+<td style="text-align:center">POST</td>
+<td style="text-align:center">向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。</td>
+</tr>
+<tr>
+<td style="text-align:center">PUT</td>
+<td style="text-align:center">从客户端向服务器传送的数据取代指定的文档的内容。</td>
+</tr>
+<tr>
+<td style="text-align:center">DELETE</td>
+<td style="text-align:center">请求服务器删除指定的页面。</td>
+</tr>
+<tr>
+<td style="text-align:center">CONNECT</td>
+<td style="text-align:center">HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</td>
+</tr>
+<tr>
+<td style="text-align:center">OPTIONS</td>
+<td style="text-align:center">允许客户端查看服务器的性能。</td>
+</tr>
+<tr>
+<td style="text-align:center">TRACE</td>
+<td style="text-align:center">回显服务器收到的请求，主要用于测试或诊断。</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h3 id="HTTP工作原理"><a href="#HTTP工作原理" class="headerlink" title="HTTP工作原理"></a>HTTP工作原理</h3><p>HTTP协议定义Web客户端如何从Web服务器请求Web页面，以及服务器如何把Web页面传送给客户端。HTTP协议采用了请求/响应模型。客户端向服务器发送一个请求报文，请求报文包含请求的方法、URL、协议版本、请求头部和请求数据。服务器以一个状态行作为响应，响应的内容包括协议的版本、成功或者错误代码、服务器信息、响应头部和响应数据。</p>
+<p>以下是 HTTP 请求/响应的步骤：</p>
+<p>1、客户端连接到Web服务器</p>
+<p>一个HTTP客户端，通常是浏览器，与Web服务器的HTTP端口（默认为80）建立一个TCP套接字连接。例如，<a href="http://www.oakcms.cn。" target="_blank" rel="noopener">http://www.oakcms.cn。</a></p>
+<p>2、发送HTTP请求</p>
+<p>通过TCP套接字，客户端向Web服务器发送一个文本的请求报文，一个请求报文由请求行、请求头部、空行和请求数据4部分组成。</p>
+<p>3、服务器接受请求并返回HTTP响应</p>
+<p>Web服务器解析请求，定位请求资源。服务器将资源复本写到TCP套接字，由客户端读取。一个响应由状态行、响应头部、空行和响应数据4部分组成。</p>
+<p>4、释放连接TCP连接</p>
+<p>若connection 模式为close，则服务器主动关闭TCP连接，客户端被动关闭连接，释放TCP连接;若connection 模式为keepalive，则该连接会保持一段时间，在该时间内可以继续接收请求;</p>
+<p>5、客户端浏览器解析HTML内容</p>
+<p>客户端浏览器首先解析状态行，查看表明请求是否成功的状态代码。然后解析每一个响应头，响应头告知以下为若干字节的HTML文档和文档的字符集。客户端浏览器读取响应数据HTML，根据HTML的语法对其进行格式化，并在浏览器窗口中显示。</p>
+<p>例如：在浏览器地址栏键入URL，按下回车之后会经历以下流程：</p>
+<p>1、浏览器向 DNS 服务器请求解析该 URL 中的域名所对应的 IP 地址;</p>
+<p>2、解析出 IP 地址后，根据该 IP 地址和默认端口 80，和服务器建立TCP连接;</p>
+<p>3、浏览器发出读取文件(URL 中域名后面部分对应的文件)的HTTP 请求，该请求报文作为 TCP 三次握手的第三个报文的数据发送给服务器;</p>
+<p>4、服务器对浏览器请求作出响应，并把对应的 html 文本发送给浏览器;</p>
+<p>5、释放 TCP连接;</p>
+<p>6、浏览器将该 html 文本并显示内容; 　</p>
+<h3 id="GET和POST的区别"><a href="#GET和POST的区别" class="headerlink" title="GET和POST的区别"></a>GET和POST的区别</h3><p>1.GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456. POST方法是把提交的数据放在HTTP包的Body中.</p>
+<p>2.GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制.</p>
+<p>3.GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值。</p>
+<p>4.GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码.</p>
+<h3 id="Web-的攻击技术"><a href="#Web-的攻击技术" class="headerlink" title="Web 的攻击技术"></a>Web 的攻击技术</h3><p>HTTP 不具备必要的安全功能，所以存在很多安全性问题。</p>
+<p>对 Web 应用的攻击模式分为主动攻击和被动攻击。</p>
+<p>主动攻击模式里具有代表性的攻击是 SQL注入攻击和 OS 命令注入攻击。</p>
+<p>被动攻击模式中具有代表性的攻击是跨站脚本攻击和跨站点请求伪造。</p>
 <p><br><br>完~<br><br><br></p>
 
       
@@ -480,8 +518,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/01/图解HTTP——六、HTTP首部（五）/" rel="next" title="图解HTTP——HTTP首部五（实体首部字段）">
-                <i class="fa fa-chevron-left"></i> 图解HTTP——HTTP首部五（实体首部字段）
+              <a href="/2018/04/12/vue组件间的通讯/" rel="next" title="vue组件间的通讯">
+                <i class="fa fa-chevron-left"></i> vue组件间的通讯
               </a>
             
           </div>
@@ -489,10 +527,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/05/图解HTTP——七、确保Web安全的HTTPS/" rel="prev" title="图解HTTP——确保Web安全的HTTPS">
-                图解HTTP——确保Web安全的HTTPS <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -644,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-7-1-Set-Cookie"><span class="nav-number">1.</span> <span class="nav-text">6.7.1 Set-Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-7-2-Cookie"><span class="nav-number">2.</span> <span class="nav-text">6.7.2 Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-8-其他首部字段"><span class="nav-number">3.</span> <span class="nav-text">6.8 其他首部字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-8-1-X-Frame-Options"><span class="nav-number">4.</span> <span class="nav-text">6.8.1 X-Frame-Options</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-8-2-X-XSS-Protection"><span class="nav-number">5.</span> <span class="nav-text">6.8.2 X-XSS-Protection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-8-3-DNT"><span class="nav-number">6.</span> <span class="nav-text">6.8.3 DNT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-8-4-P3P"><span class="nav-number">7.</span> <span class="nav-text">6.8.4 P3P</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP之状态码"><span class="nav-number">1.</span> <span class="nav-text">HTTP之状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP请求方法"><span class="nav-number">2.</span> <span class="nav-text">HTTP请求方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP工作原理"><span class="nav-number">3.</span> <span class="nav-text">HTTP工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET和POST的区别"><span class="nav-number">4.</span> <span class="nav-text">GET和POST的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-的攻击技术"><span class="nav-number">5.</span> <span class="nav-text">Web 的攻击技术</span></a></li></ol></div>
             
 
           </div>
