@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-17T15:54:23.311Z">
+<meta property="og:updated_time" content="2018-04-21T16:35:42.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图解HTTP——总结">
 <meta name="twitter:description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
@@ -406,13 +406,50 @@
 <p>TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。</p>
 <p>请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。</p>
 <p>HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用SSL（Secure Socket Layer）和 TLS（Transport Layer Security）协议代替而已。</p>
-<h3 id="HTTP之状态码"><a href="#HTTP之状态码" class="headerlink" title="HTTP之状态码"></a>HTTP之状态码</h3><p>状态代码有三位数字组成，第一个数字定义了响应的类别，共分五种类别:</p>
+<h3 id="HTTP之状态码"><a href="#HTTP之状态码" class="headerlink" title="HTTP之状态码"></a>HTTP之状态码</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">常见状态码</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">200 OK</td>
+<td style="text-align:center">客户端请求成功 </td>
+</tr>
+<tr>
+<td style="text-align:center">400 Bad Request</td>
+<td style="text-align:center">客户端请求有语法错误，不能被服务器所理解</td>
+</tr>
+<tr>
+<td style="text-align:center">401 Unauthorized</td>
+<td style="text-align:center">请求未经授权，这个状态代码必须和WWWAuthenticate报头域一起使用 </td>
+</tr>
+<tr>
+<td style="text-align:center">403 Forbidden</td>
+<td style="text-align:center">服务器收到请求，但是拒绝提供服务</td>
+</tr>
+<tr>
+<td style="text-align:center">404 Not Found</td>
+<td style="text-align:center">请求资源不存在，eg：输入了错误的URL</td>
+</tr>
+<tr>
+<td style="text-align:center">500 Internal Server Error</td>
+<td style="text-align:center">服务器发生不可预期的错误</td>
+</tr>
+<tr>
+<td style="text-align:center">503 Serve  Unavailable</td>
+<td style="text-align:center">服务器当前不能处理客户端的请求，一段时间后可能恢复正常</td>
+</tr>
+</tbody>
+</table>
+<p>状态代码有三位数字组成，第一个数字定义了响应的类别，共分五种类别:</p>
 <p>1xx：信息响应类，指示信息–表示请求已接收，继续处理</p>
 <p>2xx：处理成功响应类，成功–表示请求已被成功接收、理解、接受</p>
 <p>3xx：重定向响应类，重定向–要完成请求必须进行更进一步的操作</p>
 <p>4xx：客户端错误–请求有语法错误或请求无法实现</p>
 <p>5xx：服务器端错误–服务器未能实现合法的请求</p>
-<p>常见状态码：<br>| 状态码 | 含义<br>| :—: |:—:<br>| 200 OK        | 客户端请求成功<br>| 400 Bad Request | 客户端请求有语法错误，不能被服务器所理解<br>| 401 Unauthorized | 请求未经授权，这个状态代码必须和WWWAuthenticate报头域一起使用<br>| 403 Forbidden | 服务器收到请求，但是拒绝提供服务<br>| 404 Not Found | 请求资源不存在，eg：输入了错误的URL<br>| 500 Internal Server Error | 服务器发生不可预期的错误<br>| 503 Serve  Unavailable | 服务器当前不能处理客户端的请求，一段时间后可能恢复正常</p>
 <p><br></p>
 <h3 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h3><p>根据HTTP标准，HTTP请求可以使用多种请求方法。</p>
 <p>HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。</p>
@@ -528,6 +565,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/04/15/你不知道的javascript——作用域是什么/" rel="prev" title="你不知道的javascript——作用域是什么">
+                你不知道的javascript——作用域是什么 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -607,7 +648,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -628,8 +669,8 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
