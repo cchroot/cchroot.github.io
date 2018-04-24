@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="正则," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="字符串是编程时涉及到的最多的一种数据结构，对字符串进行操作的需求几乎无处不在。而正则表达式是一种用来匹配字符串的强有力的武器，所以正则是程序员必须掌握的强有力工具之一，对任何编程语言都一样。下面从两个简单的函数来看看简单的正则。 第一个函数123456789101112131415161718192021222324252627282930313233343536/** *  * @param &amp;">
+<meta name="keywords" content="正则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从两个简单的函数了解正则">
+<meta property="og:url" content="http://yoursite.com/2018/04/20/从两个简单的函数初探正则/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="字符串是编程时涉及到的最多的一种数据结构，对字符串进行操作的需求几乎无处不在。而正则表达式是一种用来匹配字符串的强有力的武器，所以正则是程序员必须掌握的强有力工具之一，对任何编程语言都一样。下面从两个简单的函数来看看简单的正则。 第一个函数123456789101112131415161718192021222324252627282930313233343536/** *  * @param &amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-24T14:38:19.293Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从两个简单的函数了解正则">
+<meta name="twitter:description" content="字符串是编程时涉及到的最多的一种数据结构，对字符串进行操作的需求几乎无处不在。而正则表达式是一种用来匹配字符串的强有力的武器，所以正则是程序员必须掌握的强有力工具之一，对任何编程语言都一样。下面从两个简单的函数来看看简单的正则。 第一个函数123456789101112131415161718192021222324252627282930313233343536/** *  * @param &amp;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/20/从两个简单的函数初探正则/"/>
+
+
+
+
+
+  <title>从两个简单的函数了解正则 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tools/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            工具
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/20/从两个简单的函数初探正则/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">从两个简单的函数了解正则</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-20T20:30:05+08:00">
+                2018-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>字符串是编程时涉及到的最多的一种数据结构，对字符串进行操作的需求几乎无处不在。而正则表达式是一种用来匹配字符串的强有力的武器，所以正则是程序员必须掌握的强有力工具之一，对任何编程语言都一样。下面从两个简单的函数来看看简单的正则。</p>
+<h3 id="第一个函数"><a href="#第一个函数" class="headerlink" title="第一个函数"></a>第一个函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * @param &#123;Object&#125; 时间戳 毫秒数</span></span><br><span class="line"><span class="comment"> * @param &#123;Object&#125; fmt 日期格式  例如:yyy-MM-dd hh:mm:ss</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">formatDate</span>(<span class="params">date,fmt</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//年单独匹配</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="regexp">/(y+)/</span>.test(fmt))&#123;</span><br><span class="line">		fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>,(date.getFullYear()+<span class="string">''</span>).substr(<span class="number">4</span>-<span class="built_in">RegExp</span>.$<span class="number">1.</span>length));</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//月，日，时，分，秒同样的匹配方式</span></span><br><span class="line">	<span class="keyword">let</span> o = &#123;</span><br><span class="line">		<span class="string">'M+'</span>: date.getMonth() + <span class="number">1</span>,</span><br><span class="line">		<span class="string">'d+'</span>: date.getDate(),</span><br><span class="line">		<span class="string">'h+'</span>: date.getHours(),</span><br><span class="line">		<span class="string">'m+'</span>: date.getMinutes(),</span><br><span class="line">		<span class="string">'s+'</span>: date.getSeconds()</span><br><span class="line">	&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">let</span> k <span class="keyword">in</span> o)&#123;</span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`(<span class="subst">$&#123;k&#125;</span>)`</span>).test(fmt))&#123;</span><br><span class="line">			<span class="keyword">let</span> str = o[k] + <span class="string">''</span>;</span><br><span class="line">			fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>,(<span class="built_in">RegExp</span>.$<span class="number">1.</span>length === <span class="number">1</span>)?str:padLeftZero(str));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> fmt;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 不足两位数前面添0</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; str </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">padLeftZero</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (<span class="string">'00'</span> + str).substr(str.length);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个时间戳转化成标准日期时间的方法，在日常开发中，一般我们通过请求获取的后台的时间格式都是从1970 年 1 月 1 日至今的毫秒数，即我们说的时间戳，所以这是一个我们经常需要用到的字符串过滤函数。</p>
+<p>下面解释一下这个函数：</p>
+<p>第一个if语句是单独匹配年份的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="regexp">/(y+)/</span>.test(fmt))&#123;</span><br><span class="line">	fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>,(date.getFullYear()+<span class="string">''</span>).substr(<span class="number">4</span>-<span class="built_in">RegExp</span>.$<span class="number">1.</span>length));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先解释一下上面用到的三个字符串操作的方法：</p>
+<ul>
+<li>test() 方法用于检测一个字符串是否匹配某个模式。语法：RegExpObject.test(string)</li>
+<li>replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。语法：stringObject.replace(regexp/substr,replacement)，两个参数都是必须的。</li>
+<li>substr() 方法可在字符串中抽取从 start 下标开始的指定数目的字符。语法:stringObject.substr(start,length),第一个参数必须，第二个长度可选</li>
+</ul>
+<p>所以上面if部分的意思就是：</p>
+<ol>
+<li>如果fmt中含有一个或多个y(正则以“/”开始和结束，“+”表示一个或多个)，开始的字符，则匹配成功，返回true,if为真；</li>
+<li>如果fmt中不存在一个或多个y开始的字符则返回false,if为假。</li>
+<li>if为真时,正则第一次匹配成功的字符串（RegExp.$1表示第一次匹配成功，RegExp.$3表示第三次匹配成功的字符，以此类推至99）替换为date.getFullYear()获取的转化为字符串的年份。并且利用substr()根据匹配年份的的字符串长度截取从末尾开始的长度的年份。（例如匹配为yyyy则返回 2018，yy则返回18）。</li>
+</ol>
+<p>后面的语句：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//月，日，时，分，秒同样的匹配方式</span></span><br><span class="line"><span class="keyword">let</span> o = &#123;</span><br><span class="line">	<span class="string">'M+'</span>: date.getMonth() + <span class="number">1</span>,</span><br><span class="line">	<span class="string">'d+'</span>: date.getDate(),</span><br><span class="line">	<span class="string">'h+'</span>: date.getHours(),</span><br><span class="line">	<span class="string">'m+'</span>: date.getMinutes(),</span><br><span class="line">	<span class="string">'s+'</span>: date.getSeconds()</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> k <span class="keyword">in</span> o)&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">`(<span class="subst">$&#123;k&#125;</span>)`</span>).test(fmt))&#123;</span><br><span class="line">		<span class="keyword">let</span> str = o[k] + <span class="string">''</span>;</span><br><span class="line">		fmt = fmt.replace(<span class="built_in">RegExp</span>.$<span class="number">1</span>,(<span class="built_in">RegExp</span>.$<span class="number">1.</span>length === <span class="number">1</span>)?str:padLeftZero(str));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里是利用一个对象o存储接下来需要匹配的月，日，时，分，秒。因为他们格式都是一样的。这里解释一下for in 循环里面的意思：</p>
+<ol>
+<li>遍历o对象，每次遍历new一个正则对象，这里利用es6的语法<code>(${k})</code>传递对象值，下面以第一个M+月份为例，其中new RegExp(<code>(${k})</code>)类似于之前的/(M+)/.test(fmt)。</li>
+<li>如果fmt中存在一个或多个M开始的字符串，则匹配成功；定义一个字符串str记录需替换匹配成功字符串的值。<br>3.fmt等于时间戳计算得月份的值（这里利用三位运算符，如果月份不足两位数，利用方法前面补0）替换第一次匹配成功的字符串。</li>
+</ol>
+<h3 id="第二个函数"><a href="#第二个函数" class="headerlink" title="第二个函数"></a>第二个函数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解析url参数</span></span><br><span class="line"><span class="comment"> * @example ?id=12345&amp;a=b</span></span><br><span class="line"><span class="comment"> * return Object &#123;id:12345,a:b&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">urlParse</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">let</span> url = <span class="built_in">window</span>.location.search;</span><br><span class="line">	<span class="keyword">let</span> obj = &#123;&#125;;</span><br><span class="line">	<span class="keyword">let</span> reg = <span class="regexp">/[?&amp;][^?&amp;]+=[^?&amp;]+/g</span>;</span><br><span class="line">	<span class="keyword">let</span> arr = url.match(reg)</span><br><span class="line">	<span class="comment">// ['?id=12345','&amp;a=b']</span></span><br><span class="line">	<span class="keyword">if</span>(arr)&#123;</span><br><span class="line">		arr.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">			<span class="comment">// 用substring取第一个以后的字符，即删除第一个字符，并且用=分割</span></span><br><span class="line">			<span class="keyword">let</span> tempArr = item.substring(<span class="number">1</span>).split(<span class="string">"="</span>);</span><br><span class="line">			<span class="keyword">let</span> key = <span class="built_in">decodeURIComponent</span>(tempArr[<span class="number">0</span>]);</span><br><span class="line">			<span class="keyword">let</span> val = <span class="built_in">decodeURIComponent</span>(tempArr[<span class="number">1</span>]);</span><br><span class="line">			obj[key] = val;</span><br><span class="line">		&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> obj;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这是一个分割url参数并转发为对象的函数。日常开发我们也经常遇到需要获取url上面参数的问题。</p>
+<p>照例先解释一下上面用到的三个字符串操作的方法：</p>
+<ul>
+<li>match() 方法可在字符串内检索指定的值，或找到一个或多个正则表达式的匹配。语法：stringObject.match(regexp)这里的regexp也可以是字符串，我们这里用的是正则。</li>
+<li>substring() 方法用于提取字符串中介于两个指定下标之间的字符。语法：stringObject.substring(start,stop)，第一个start必须，stop可选。返回从 start 处到 stop-1 处的所有字符。注意：只有一个参数的话和substr() 方法具有相同功能，就是截取字符串当前下标以后直到字符串最后的字符串片段。 </li>
+<li>decodeURIComponent() 函数可对 encodeURIComponent() 函数编码的 URI 进行解码。语法：decodeURIComponent(URIstring)。与其类似的decodeURI() 函数可对 encodeURI() 函数编码过的 URI 进行解码。</li>
+</ul>
+<p>下面解释一下这个函数：</p>
+<ol>
+<li>通过window.location.search方法获取url？开始的部分</li>
+<li>新声明一个空对象，用于存储最后需要返回的url中参数对象</li>
+<li>定义一个正则，表示匹配字符集[?&amp;]中任意字符，然后匹配非字符集[^?&amp;]中的元素（^表示非），加上”=”，继续匹配一个或多个非字符集[^?&amp;]中的元素，全局匹配(g结尾表示可以全局匹配，这里的可以表示不同的情况下表现不同，这里你只要知道：对于String对象的match方法，不加入g，也只是返回第一个匹配，一直执行match方法也总是返回第一个匹配，加入g，则一次返回所有的匹配)</li>
+<li>用数组arr存储match() 方法获取的全局匹配数组</li>
+<li>遍历arr数组，利用split() 方法分割和 encodeURIComponent（）方法解码存储到obj对象</li>
+<li>返回对象obj</li>
+</ol>
+<p>以上就是日常开发中利用到正则的两个简单的函数，希望从这两个函数中，你可以简单了解一下正则，并通过查找其他书籍和资料深入学习正则。</p>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/正则/" rel="tag"># 正则</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/18/v-for循环渲染完毕实例化控件/" rel="next" title="v-for循环渲染完毕实例化控件">
+                <i class="fa fa-chevron-left"></i> v-for循环渲染完毕实例化控件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/21/forEach()和map()的区别/" rel="prev" title="forEach()和map()的区别">
+                forEach()和map()的区别 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#第一个函数"><span class="nav-number">1.</span> <span class="nav-text">第一个函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二个函数"><span class="nav-number">2.</span> <span class="nav-text">第二个函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
