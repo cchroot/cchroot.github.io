@@ -97,7 +97,7 @@
 <meta property="og:image" content="https://i.imgur.com/HETsgyk.png">
 <meta property="og:image" content="https://i.imgur.com/gGNSkt8.png">
 <meta property="og:image" content="https://i.imgur.com/2SS5PIg.png">
-<meta property="og:updated_time" content="2018-05-01T16:43:04.528Z">
+<meta property="og:updated_time" content="2018-05-01T16:53:18.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS运行机制">
 <meta name="twitter:description" content="从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理 前言：今年年初的时候，在掘金上面看到了讲解JS运行机制的文章《从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理》，作者dailc，甚是喜欢，今天在动车上闲来无事，翻着原来收藏和喜欢的文章，又看了一遍觉得真的是非常棒，解决了很多我原来不清楚和模糊的概念。在这里跟转录跟大家分享一下，一来希望可以让更多人看见，二来自己也可以加深巩固一下，">
@@ -423,10 +423,32 @@
 <p>另外，本文适合有一定经验的前端人员，新手请规避，避免受到过多的概念冲击。可以先存起来，有了一定理解后再看，也可以分成多批次观看，避免过度疲劳。</p>
 <h2 id="大纲（二级标题见左侧导航）"><a href="#大纲（二级标题见左侧导航）" class="headerlink" title="大纲（二级标题见左侧导航）"></a>大纲（二级标题见左侧导航）</h2><ul>
 <li>区分进程和线程</li>
-<li>浏览器是多进程的</li>
-<li>梳理浏览器内核中线程之间的关系</li>
-<li>简单梳理下浏览器渲染流程</li>
-<li>从Event Loop谈JS的运行机制</li>
+<li>浏览器是多进程的<ul>
+<li>浏览器都包含哪些进程？</li>
+<li>浏览器多进程的优势</li>
+<li>重点是浏览器内核（渲染进程）</li>
+<li>Browser进程和浏览器内核（Renderer进程）的通信过程</li>
+</ul>
+</li>
+<li>梳理浏览器内核中线程之间的关系<ul>
+<li>GUI渲染线程与JS引擎线程互斥</li>
+<li>JS阻塞页面加载</li>
+<li>WebWorker，JS的多线程？</li>
+<li>WebWorker与SharedWorker</li>
+</ul>
+</li>
+<li>简单梳理下浏览器渲染流程<ul>
+<li>load事件与DOMContentLoaded事件的先后</li>
+<li>css加载是否会阻塞dom树渲染？</li>
+<li>普通图层和复合图层</li>
+</ul>
+</li>
+<li>从Event Loop谈JS的运行机制<ul>
+<li>事件循环机制进一步补充</li>
+<li>单独说说定时器</li>
+<li>setTimeout而不是setInterval</li>
+</ul>
+</li>
 <li>事件循环进阶：macrotask与microtask</li>
 <li>写在最后的话</li>
 </ul>
@@ -577,7 +599,7 @@
 <p>看到这里，应该就很容易明白了，本质上就是进程和线程的区别。SharedWorker由独立的进程管理，WebWorker只是属于render进程下的一个线程</p>
 <h2 id="简单梳理下浏览器渲染流程"><a href="#简单梳理下浏览器渲染流程" class="headerlink" title="简单梳理下浏览器渲染流程"></a>简单梳理下浏览器渲染流程</h2><p>本来是直接计划开始谈JS运行机制的，但想了想，既然上述都一直在谈浏览器，直接跳到JS可能再突兀，因此，中间再补充下浏览器的渲染流程（简单版本）</p>
 <p>为了简化理解，前期工作直接省略成：（要展开的或完全可以写另一篇超长文）</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 浏览器输入url，浏览器主进程接管，开一个下载线程，</span><br><span class="line">然后进行 http请求（略去DNS查询，IP寻址等等操作），然后等待响应，获取内容，</span><br><span class="line">随后将内容通过RendererHost接口转交给Renderer进程</span><br><span class="line"></span><br><span class="line">- 浏览器渲染流程开始</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 浏览器输入url，浏览器主进程接管，开一个下载线程，然后进行 http请求（略去DNS查询，IP寻址等等操作），然后等待响应，获取内容，随后将内容通过RendererHost接口转交给Renderer进程</span><br><span class="line"></span><br><span class="line">- 浏览器渲染流程开始</span><br></pre></td></tr></table></figure>
 <p>浏览器器内核拿到内容后，渲染大概可以划分成以下几个步骤：</p>
 <ol>
 <li>解析html建立dom树</li>
@@ -621,7 +643,7 @@
 <li>最常用的方式：<strong>translate3d</strong>、<strong>translateZ</strong></li>
 <li><strong>opacity</strong>属性/过渡动画（需要动画执行的过程中才会创建合成层，动画没有开始或结束后元素还会回到之前的状态）</li>
 <li><strong>will-chang</strong>属性（这个比较偏僻），一般配合opacity与translate使用（而且经测试，除了上述可以引发硬件加速的属性外，其它属性并不会变成复合层）， 作用是提前告诉浏览器要变化，这样浏览器会开始做一些优化工作（这个最好用完后就释放）</li>
-<li><strong><video><iframe><canvas><webgl></webgl></canvas></iframe></video></strong>等元素</li>
+<li><strong>video、iframe、canvas、webgl</strong>等标签元素</li>
 <li>其它，譬如以前的flash插件</li>
 </ul>
 <p><strong>absolute和硬件加速的区别</strong></p>
@@ -810,6 +832,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/05/03/改变this指向方法总结/" rel="prev" title="改变this指向方法总结">
+                改变this指向方法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -889,7 +915,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -910,7 +936,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/javascript/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
