@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="1. this 别名这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。 例如，在一个对象方法中在执行一个方法或者事件的时候： 123456789101112var obj = &amp;#123;	a: 1,	init: function()&amp;#123;		let ele = document.getElementsByClassName(&quot;ele&quot;);		let that = this;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-03T16:19:44.731Z">
+<meta property="og:updated_time" content="2018-05-03T16:26:35.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改变this指向方法总结">
 <meta name="twitter:description" content="1. this 别名这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。 例如，在一个对象方法中在执行一个方法或者事件的时候： 123456789101112var obj = &amp;#123;	a: 1,	init: function()&amp;#123;		let ele = document.getElementsByClassName(&quot;ele&quot;);		let that = this;">
@@ -430,9 +430,9 @@
 <p>与 lodash 不同，我们不需要传递数据给 map 作为参数：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]::map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>)</span><br><span class="line"><span class="comment">// [2, 4, 6]</span></span><br></pre></td></tr></table></figure>
 <p>对下面的代码熟悉吗？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[].map.call(someNodeList, myFn);</span><br><span class="line">// or</span><br><span class="line">Array.from(someNodeList).map(myFn);</span><br><span class="line">//Array.from() 方法从一个类似数组(对象必须有length属性,不然转化为空数组)或可迭代对象中创建一个新的数组实例。</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[].map.call(someNodeList, myFn);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="built_in">Array</span>.from(someNodeList).map(myFn);</span><br><span class="line"><span class="comment">//Array.from() 方法从一个类似数组(对象必须有length属性,不然转化为空数组)或可迭代对象中创建一个新的数组实例。</span></span><br></pre></td></tr></table></figure>
 <p>ES7 的绑定语法允许你像使用箭头函数一样使用 map：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">someNodeList::map(myFn);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">someNodeList::map(myFn);</span><br></pre></td></tr></table></figure>
 <h3 id="6-方法传参指定"><a href="#6-方法传参指定" class="headerlink" title="6. 方法传参指定"></a>6. 方法传参指定</h3><p>一些函数允许为 this 传递一个明确的值，保证其指向正确的上下文，例如 map 函数则将 this 作为最后一个参数：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">items.map(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">onClick</span>=<span class="string">&#123;this.clicked&#125;</span>&gt;</span>x<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>;</span><br><span class="line">&#125;, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
 <p>虽然代码能运行，但这不是函数的一致实现。大部分函数并不接受 this 参数，所以最好还是采用上文中的其它方式来绑定 this 。</p>
@@ -477,6 +477,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/04/JSON、JSONP、AJAX和跨域/" rel="prev" title="JSON、JSONP、AJAX和跨域">
+                JSON、JSONP、AJAX和跨域 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -557,7 +561,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
