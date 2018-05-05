@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="很多刚入门前端的童鞋，有可能会傻傻分不清JSON和JSONP，更不会知道JSON、JSONP、AJAX和跨域这几个名词和概念有什么关联，今天我就来缕一缕它们之间的千丝万缕的关系。 JSON与JSONPJSON(JavaScript Object Notation)和JSONP(JSON with Padding)虽然只有一个字母的差别，但其实他们根本不是一回事儿：JSON是一种数据交换格式，而JS">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-04T16:52:55.528Z">
+<meta property="og:image" content="http://img-blog.csdn.net/20180505001202448?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2NjaHJvb3Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-05-05T11:20:22.859Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSON、JSONP、AJAX和跨域">
 <meta name="twitter:description" content="很多刚入门前端的童鞋，有可能会傻傻分不清JSON和JSONP，更不会知道JSON、JSONP、AJAX和跨域这几个名词和概念有什么关联，今天我就来缕一缕它们之间的千丝万缕的关系。 JSON与JSONPJSON(JavaScript Object Notation)和JSONP(JSON with Padding)虽然只有一个字母的差别，但其实他们根本不是一回事儿：JSON是一种数据交换格式，而JS">
+<meta name="twitter:image" content="http://img-blog.csdn.net/20180505001202448?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2NjaHJvb3Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -463,7 +465,7 @@
 <p>所以，只要是JS调用异步通讯组件并使用格式化的数据来更新web页面上的内容或操作过程，那么我们用的方法就可算是AJAX。传统的网页（不使用 Ajax）如果需要更新内容，必须重载整个网页页面。</p>
 <h4 id="AJAX与JSONP"><a href="#AJAX与JSONP" class="headerlink" title="AJAX与JSONP"></a>AJAX与JSONP</h4><ol>
 <li>ajax和jsonp这两种技术在调用方式上“看起来”很像，目的也一样，都是请求一个url，然后把服务器返回的数据进行处理，因此jquery和ext等框架都把jsonp作为ajax的一种形式进行了封装；</li>
-<li>但ajax和jsonp其实本质上是不同的东西。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加<script>标签来调用服务器提供的js脚本。</li>
+<li>但ajax和jsonp其实本质上是不同的东西。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加script标签来调用服务器提供的js脚本。</li>
 <li>所以说，其实ajax与jsonp的区别不在于是否跨域，ajax通过服务端代理一样可以实现跨域，jsonp本身也不排斥同域的数据的获取。</li>
 <li>还有就是，jsonp是一种方式或者说非强制性协议，如同ajax一样，它也不一定非要用json格式来传递数据，如果你愿意，字符串都行，只不过这样不利于用jsonp提供公开服务。</li>
 </ol>
@@ -481,53 +483,53 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="http://www.foo.com/js/a.js">http://www.foo.com/js/a.js</a></td>
-<td style="text-align:center"><a href="http://www.foo.com/js/b.js">http://www.foo.com/js/b.js</a></td>
+<td><a href="http://www.foo.com/js/a.js" target="_blank" rel="noopener">http://www.foo.com/js/a.js</a></td>
+<td style="text-align:center"><a href="http://www.foo.com/js/b.js" target="_blank" rel="noopener">http://www.foo.com/js/b.js</a></td>
 <td style="text-align:right">协议、域名、端口都相同</td>
 <td>允许</td>
 </tr>
 <tr>
-<td><a href="http://www.foo.com/js/a.js">http://www.foo.com/js/a.js</a></td>
-<td style="text-align:center"><a href="http://www.foo.com:8888/js/b.js">http://www.foo.com:8888/js/b.js</a></td>
+<td><a href="http://www.foo.com/js/a.js" target="_blank" rel="noopener">http://www.foo.com/js/a.js</a></td>
+<td style="text-align:center"><a href="http://www.foo.com:8888/js/b.js" target="_blank" rel="noopener">http://www.foo.com:8888/js/b.js</a></td>
 <td style="text-align:right">协议、域名相同，端口不同</td>
 <td>不允许</td>
 </tr>
 <tr>
-<td><a href="https://www.foo.com/js/a.js">https://www.foo.com/js/a.js</a></td>
-<td style="text-align:center"><a href="http://www.foo.com/js/b.js">http://www.foo.com/js/b.js</a></td>
+<td><a href="https://www.foo.com/js/a.js" target="_blank" rel="noopener">https://www.foo.com/js/a.js</a></td>
+<td style="text-align:center"><a href="http://www.foo.com/js/b.js" target="_blank" rel="noopener">http://www.foo.com/js/b.js</a></td>
 <td style="text-align:right">主机、域名相同，协议不同</td>
 <td>不允许</td>
 </tr>
 <tr>
-<td><a href="http://www.foo.com/js/a.js">http://www.foo.com/js/a.js</a></td>
-<td style="text-align:center"><a href="http://www.bar.com/js/b.js">http://www.bar.com/js/b.js</a></td>
+<td><a href="http://www.foo.com/js/a.js" target="_blank" rel="noopener">http://www.foo.com/js/a.js</a></td>
+<td style="text-align:center"><a href="http://www.bar.com/js/b.js" target="_blank" rel="noopener">http://www.bar.com/js/b.js</a></td>
 <td style="text-align:right">协议、端口相同，域名不同</td>
 <td>不允许</td>
 </tr>
 <tr>
-<td><a href="http://www.foo.com/js/a.js">http://www.foo.com/js/a.js</a></td>
-<td style="text-align:center"><a href="http://foo.com/js/b.js">http://foo.com/js/b.js</a></td>
+<td><a href="http://www.foo.com/js/a.js" target="_blank" rel="noopener">http://www.foo.com/js/a.js</a></td>
+<td style="text-align:center"><a href="http://foo.com/js/b.js" target="_blank" rel="noopener">http://foo.com/js/b.js</a></td>
 <td style="text-align:right">协议、端口相同，主域名相同，子域名不同</td>
 <td>不允许</td>
 </tr>
 </tbody>
 </table>
-<p><br/><br>同源策略限制了不同源之间的交互，但是有人也许会有疑问，我们以前在写代码的时候也常常会引用其他域名的js文件，样式文件，图片文件什么的，没看到限制啊，这个定义是不是错了。其实不然，同源策略限制的不同源之间的交互主要针对的是js中的XMLHttpRequest等请求，下面这些情况是完全不受同源策略限制的：</p>
+<p><br><br>同源策略限制了不同源之间的交互，但是有人也许会有疑问，我们以前在写代码的时候也常常会引用其他域名的js文件，样式文件，图片文件什么的，没看到限制啊，这个定义是不是错了。其实不然，同源策略限制的不同源之间的交互主要针对的是js中的XMLHttpRequest等请求，下面这些情况是完全不受同源策略限制的：</p>
 <ul>
 <li>页面中的链接，重定向以及表单提交是不会受到同源策略限制的</li>
 <li>跨域资源嵌入是允许的，当然，浏览器限制了Javascript不能读写加载的内容。</li>
 </ul>
-<h4 id="Ajax与跨域"><a href="#Ajax与跨域" class="headerlink" title="Ajax与跨域"></a>Ajax与跨域</h4><p>通过ajax调用其他域的接口会有跨域问题。比如下面的例子，我在<a href="http://www.foo.com/index.html中通过ajax调用请求http://www.bar.com/js/test.js页面，此时是会报错的。">http://www.foo.com/index.html中通过ajax调用请求http://www.bar.com/js/test.js页面，此时是会报错的。</a></p>
+<h4 id="Ajax与跨域"><a href="#Ajax与跨域" class="headerlink" title="Ajax与跨域"></a>Ajax与跨域</h4><p>通过ajax调用其他域的接口会有跨域问题。比如下面的例子，我在<a href="http://www.foo.com/index.html中通过ajax调用请求http://www.bar.com/js/test.js页面，此时是会报错的。" target="_blank" rel="noopener">http://www.foo.com/index.html中通过ajax调用请求http://www.bar.com/js/test.js页面，此时是会报错的。</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">XMLHttpRequest cannot load http://www.bar.com/js/test.js. </span><br><span class="line">No &apos;Access-Control-Allow-Origin&apos; header is present on the requested resource. </span><br><span class="line">Origin &apos;http://www.foo.com&apos; is therefore not allowed access.</span><br></pre></td></tr></table></figure>
 <p>这是因为我们的WEB服务器没有设置ACCESS-CONTROL-ALLOW-ORIGIN头部，默认情况下是禁止跨域引用资源的。当然这里有一点要注意，其实这个跨域请求是发送成功了的，服务器也有返回test.js内容，只是浏览器禁止Javascript去取response的数据而已。如果要设置ACCESS-CONTROL-ALLOW-ORIGIN头部，nginx可以使用下面的代码:</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">dd_header</span> <span class="string">'Access-Control-Allow-Origin'</span> <span class="string">'http://www.foo.com'</span>;</span><br><span class="line"><span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Credentials'</span> <span class="string">'true'</span>;</span><br><span class="line"><span class="attribute">add_header</span> <span class="string">'Access-Control-Allow-Methods'</span> <span class="string">'GET,POST'</span>;</span><br></pre></td></tr></table></figure>
 <p>若Origin表示本域，也就是浏览器当前页面的域。当JavaScript向外域（如sina.com）发起请求后，浏览器收到响应后，首先检查Access-Control-Allow-Origin是否包含本域，如果是，则此次跨域请求成功，如果不是，则请求失败，JavaScript将无法获取到响应的任何数据。</p>
 <p>用一个图来表示就是：</p>
 <p><img src="//img-blog.csdn.net/20180505001202448?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2NjaHJvb3Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
-<p>假设本域是my.com，外域是sina.com，只要响应头Access-Control-Allow-Origin为<a href="http://my.com，或者是*，本次请求就可以成功。">http://my.com，或者是*，本次请求就可以成功。</a></p>
+<p>假设本域是my.com，外域是sina.com，只要响应头Access-Control-Allow-Origin为<a href="http://my.com，或者是*，本次请求就可以成功。" target="_blank" rel="noopener">http://my.com，或者是*，本次请求就可以成功。</a></p>
 <p>可见，跨域能否成功，取决于对方服务器是否愿意给你设置一个正确的Access-Control-Allow-Origin，决定权始终在对方手中。</p>
 <p>上面这种跨域请求，称之为“简单请求”。简单请求包括GET、HEAD和POST（POST的Content-Type类型仅限application/x-www-form-urlencoded、multipart/form-data和text/plain），并且不能出现任何自定义头（例如，X-Custom: 12345），通常能满足90%的需求。</p>
-<p>假设本域是my.com，外域是sina.com，只要响应头Access-Control-Allow-Origin为<a href="http://my.com，或者是*，本次请求就可以成功。">http://my.com，或者是*，本次请求就可以成功。</a></p>
+<p>假设本域是my.com，外域是sina.com，只要响应头Access-Control-Allow-Origin为<a href="http://my.com，或者是*，本次请求就可以成功。" target="_blank" rel="noopener">http://my.com，或者是*，本次请求就可以成功。</a></p>
 <p>可见，跨域能否成功，取决于对方服务器是否愿意给你设置一个正确的Access-Control-Allow-Origin，决定权始终在对方手中。</p>
 <p>上面这种跨域请求，称之为“简单请求”。简单请求包括GET、HEAD和POST（POST的Content-Type类型<br>仅限application/x-www-form-urlencoded、multipart/form-data和text/plain），并且不能出现任何自定义头（例如，X-Custom: 12345），通常能满足90%的需求。</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* CSS */</span></span><br><span class="line">@<span class="keyword">font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">'FontAwesome'</span>;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">'http://cdn.com/fonts/fontawesome.ttf'</span>) <span class="built_in">format</span>(<span class="string">'truetype'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -546,7 +548,7 @@
 <p>对于客户端，我们还是正常使用xhr对象发送ajax请求。 </p>
 <p>唯一需要注意的是，我们需要设置我们的xhr（var xhr = new XMLHttpRequest();）属性withCredentials为true，不然的话，cookie是带不过去的哦，设置： xhr.withCredentials = true; </p>
 <p>对于服务器端，需要在 response header中设置如下两个字段: </p>
-<p>Access-Control-Allow-Origin: <a href="http://www.yourhost.com">http://www.yourhost.com</a><br>Access-Control-Allow-Credentials:true //是否带cookie</p>
+<p>Access-Control-Allow-Origin: <a href="http://www.yourhost.com" target="_blank" rel="noopener">http://www.yourhost.com</a><br>Access-Control-Allow-Credentials:true //是否带cookie</p>
 <p>这样，我们就可以跨域请求接口了。</p>
 <p>3、使用window.name来进行跨域</p>
 <p>window对象有个name属性，该属性有个特征：即在一个窗口(window)的生命周期内,窗口载入的所有的页面都是共享一个window.name的，每个页面对window.name都有读写的权限，window.name是持久存在一个窗口载入过的所有页面中的，并不会因新页面的载入而进行重置。</p>
@@ -555,11 +557,11 @@
 <p>5、使用HTML5中新引进的window.postMessage方法来跨域传送数据</p>
 <p>window.postMessage(message,targetOrigin)  方法是html5新引进的特性，可以使用它来向其它的window对象发送消息，无论这个window对象是属于同源或不同源，目前IE8+、FireFox、Chrome、Opera等浏览器都已经支持window.postMessage方法。</p>
 <p>以上就是几种常见的解决跨域的方法，后面三种方法没有具体说明，童鞋们可以自行查找资料。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>JSON与JSONP、JSONP与AJAX、AJAX与跨域；它们相互之间都存在着一定的关系，我看完上面的文章，你肯定充分的了解了JSON、JSONP、AJAX以及跨域。</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>JSON与JSONP、JSONP与AJAX、AJAX与跨域；它们相互之间都存在着一定的关系，我看完上面的文章，你肯定充分的了解了JSON、JSONP、AJAX以及跨域。</p>
 <p>参考文章: </p>
-<p><a href="https://kb.cnblogs.com/page/139725/">说说JSON和JSONP，也许你会豁然开朗</a><br><a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001434499861493e7c35be5e0864769a2c06afb4754acc6000">AJAX</a><br><a href="http://www.cnblogs.com/chaoyuehedy/p/5556557.html">谈谈同源策略和跨域问题</a></p>
-<p><br/><br>完~</p>
-</script></li></ol>
+<p><a href="https://kb.cnblogs.com/page/139725/" target="_blank" rel="noopener">说说JSON和JSONP，也许你会豁然开朗</a><br><a href="https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001434499861493e7c35be5e0864769a2c06afb4754acc6000" target="_blank" rel="noopener">AJAX</a><br><a href="http://www.cnblogs.com/chaoyuehedy/p/5556557.html" target="_blank" rel="noopener">谈谈同源策略和跨域问题</a></p>
+<p><br><br>完~</p>
+
       
     </div>
     
@@ -598,6 +600,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/05/ES6开发下JSONP的应用/" rel="prev" title="ES6开发下JSONP的应用">
+                ES6开发下JSONP的应用 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -678,7 +684,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -699,8 +705,8 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -749,7 +755,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON与JSONP"><span class="nav-number">1.</span> <span class="nav-text">JSON与JSONP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是JSON"><span class="nav-number">1.1.</span> <span class="nav-text">什么是JSON</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON的格式"><span class="nav-number">1.2.</span> <span class="nav-text">JSON的格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON实例"><span class="nav-number">1.3.</span> <span class="nav-text">JSON实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是JSONP"><span class="nav-number">1.4.</span> <span class="nav-text">什么是JSONP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP的客户端具体实现："><span class="nav-number">1.5.</span> <span class="nav-text">JSONP的客户端具体实现：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AJAX"><span class="nav-number">2.</span> <span class="nav-text">AJAX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是AJAX"><span class="nav-number">2.1.</span> <span class="nav-text">什么是AJAX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AJAX与JSONP"><span class="nav-number">2.2.</span> <span class="nav-text">AJAX与JSONP</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JSON与JSONP"><span class="nav-number">1.</span> <span class="nav-text">JSON与JSONP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是JSON"><span class="nav-number">1.1.</span> <span class="nav-text">什么是JSON</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON的格式"><span class="nav-number">1.2.</span> <span class="nav-text">JSON的格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSON实例"><span class="nav-number">1.3.</span> <span class="nav-text">JSON实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是JSONP"><span class="nav-number">1.4.</span> <span class="nav-text">什么是JSONP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP的客户端具体实现："><span class="nav-number">1.5.</span> <span class="nav-text">JSONP的客户端具体实现：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AJAX"><span class="nav-number">2.</span> <span class="nav-text">AJAX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是AJAX"><span class="nav-number">2.1.</span> <span class="nav-text">什么是AJAX</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AJAX与JSONP"><span class="nav-number">2.2.</span> <span class="nav-text">AJAX与JSONP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨域"><span class="nav-number">3.</span> <span class="nav-text">跨域</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是同源？"><span class="nav-number">3.1.</span> <span class="nav-text">什么是同源？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Ajax与跨域"><span class="nav-number">3.2.</span> <span class="nav-text">Ajax与跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决跨域的方法"><span class="nav-number">3.3.</span> <span class="nav-text">解决跨域的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
 
           </div>
