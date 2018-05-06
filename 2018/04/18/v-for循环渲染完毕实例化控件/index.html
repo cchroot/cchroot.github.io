@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="在项目时用到了一些插件，比如这次用了jquery ui的自定义拖拽控件。 控件需要实例化，而列表的数据是通过ajax来获取的，然后在用 v-for 渲染数据，再次遇到了一个问题。 就是等插件实例化完毕，数据却还没渲染完毕，所以这就出现一个bug，拖拽没有实例化。 首先想到的不是vue自带的方法，我先想到的是用settimeout。这里先简单介绍一下setTimeout() 方法：一般用于在指定的毫">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-24T12:32:59.381Z">
+<meta property="og:updated_time" content="2018-05-06T15:38:59.397Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="v-for循环渲染完毕实例化控件">
 <meta name="twitter:description" content="在项目时用到了一些插件，比如这次用了jquery ui的自定义拖拽控件。 控件需要实例化，而列表的数据是通过ajax来获取的，然后在用 v-for 渲染数据，再次遇到了一个问题。 就是等插件实例化完毕，数据却还没渲染完毕，所以这就出现一个bug，拖拽没有实例化。 首先想到的不是vue自带的方法，我先想到的是用settimeout。这里先简单介绍一下setTimeout() 方法：一般用于在指定的毫">
@@ -426,6 +426,11 @@
 <p>上面就是解决bug的完整代码范例。 解释一下什么意思：</p>
 <p>在 axios 请求数据是 this.arr被赋值了，watch监听到了 arr 数据发生变化执行arr方法。到了this.$nextTick 它需要等DOM 渲染完毕才执行（也就是等arr在DOM渲染完毕）。</p>
 <p>这个方法完美解决需求，既不浪费时间又不会出现数据还没渲染完毕就执行实例初始化。</p>
+<p>2018年5月6日补充:</p>
+<p>还有另外一种方法忘记说明了，今天刚好写东西的时候注意了一下：</p>
+<p>就是我们要做的逻辑依然在mounted执行我们需要的逻辑，就是利用v-if在需要数据渲染的地方进行判断，这样mounted就会在v-if数据存在并且渲染完成后再执行逻辑，当然，如果v-if判断无数据不需要渲染照常执行就不用多说了。</p>
+<p>上面的例子可以写成这样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">"en"</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">"UTF-8"</span>&gt;</span><br><span class="line">    &lt;title&gt;Title&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;ul v-<span class="keyword">if</span>=<span class="string">"arr.length"</span>&gt;</span><br><span class="line">		&lt;li v-<span class="keyword">for</span>=<span class="string">"(item,key) in arr"</span> :key=<span class="string">"key"</span>&gt;可拖拽列表&#123;&#123;item&#125;&#125;&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/u</span>l&gt;</span><br><span class="line">&lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp">&lt;script type="text/</span>javascript<span class="string">"&gt;</span></span><br><span class="line"><span class="string">  vm = new Vue(&#123;</span></span><br><span class="line"><span class="string">    el:'.app',</span></span><br><span class="line"><span class="string">    data: &#123;</span></span><br><span class="line"><span class="string">      arr: [],</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">    created:function() &#123;</span></span><br><span class="line"><span class="string">      var that = this;</span></span><br><span class="line"><span class="string">      axios.get('url',&#123;</span></span><br><span class="line"><span class="string">        params:&#123;</span></span><br><span class="line"><span class="string">          link: '',</span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">      &#125;).then(function(res)&#123;</span></span><br><span class="line"><span class="string">          that.arr = res;</span></span><br><span class="line"><span class="string">      &#125;)</span></span><br><span class="line"><span class="string">    &#125;,</span></span><br><span class="line"><span class="string">	mounted: function() &#123;</span></span><br><span class="line"><span class="string">		this.$nextTick(function()&#123;</span></span><br><span class="line"><span class="string">          /*现在数据已经渲染完毕*/</span></span><br><span class="line"><span class="string">        &#125;)</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string">  &#125;)</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
 <p><br><br>完~<br><br><br></p>
 
       
@@ -541,7 +546,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-count">43</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
