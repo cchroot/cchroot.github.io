@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="HTTP," />
+  <meta name="keywords" content="javascript," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
-<meta name="keywords" content="HTTP">
+<meta name="description" content="上一篇文章说了JSON、JSONP、AJAX、跨域之间的联系与区别，在结算JSONP的环节中，也深刻的通过举例说明，解释了JSONP实现的原理。但是都是通过简单的例子，今天我们说说我在项目中是怎么使用JSONP的。这里我用到的是github上面一个简单的JSONP接口 API它的实现源码在index.js中，有兴趣的童鞋可以看看，只有几十行代码。我们先说说他的API: jsonp(url, opt">
+<meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图解HTTP——总结">
-<meta property="og:url" content="http://yoursite.com/2018/04/14/图解HTTP——总结/index.html">
+<meta property="og:title" content="ES6中JSONP的使用">
+<meta property="og:url" content="http://yoursite.com/2018/05/06/ES6中JSONP的使用/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
+<meta property="og:description" content="上一篇文章说了JSON、JSONP、AJAX、跨域之间的联系与区别，在结算JSONP的环节中，也深刻的通过举例说明，解释了JSONP实现的原理。但是都是通过简单的例子，今天我们说说我在项目中是怎么使用JSONP的。这里我用到的是github上面一个简单的JSONP接口 API它的实现源码在index.js中，有兴趣的童鞋可以看看，只有几十行代码。我们先说说他的API: jsonp(url, opt">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-21T16:35:42.679Z">
+<meta property="og:updated_time" content="2018-05-07T15:39:14.981Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="图解HTTP——总结">
-<meta name="twitter:description" content="TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。 TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。 请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。 HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口">
+<meta name="twitter:title" content="ES6中JSONP的使用">
+<meta name="twitter:description" content="上一篇文章说了JSON、JSONP、AJAX、跨域之间的联系与区别，在结算JSONP的环节中，也深刻的通过举例说明，解释了JSONP实现的原理。但是都是通过简单的例子，今天我们说说我在项目中是怎么使用JSONP的。这里我用到的是github上面一个简单的JSONP接口 API它的实现源码在index.js中，有兴趣的童鞋可以看看，只有几十行代码。我们先说说他的API: jsonp(url, opt">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/14/图解HTTP——总结/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/06/ES6中JSONP的使用/"/>
 
 
 
 
 
-  <title>图解HTTP——总结 | cchroot's blog</title>
+  <title>ES6中JSONP的使用 | cchroot's blog</title>
   
 
 
@@ -313,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/图解HTTP——总结/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/06/ES6中JSONP的使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -330,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">图解HTTP——总结</h1>
+          <h1 class="post-title" itemprop="name headline">ES6中JSONP的使用</h1>
         
 
         <div class="post-meta">
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-14T20:30:05+08:00">
-                2018-04-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T20:30:05+08:00">
+                2018-05-06
               </time>
             
 
@@ -365,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
                   </a>
                 </span>
 
@@ -402,128 +402,29 @@
       
 
       
-        <p>TCP/IP 是互联网相关的各类协议族的总称HTTP 属于它内部的一个子集。</p>
-<p>TCP/IP 的分层管理：TCP/IP 协议族按层次分别分为以下 4 层：应用层、传输层、网络层和数据链路层。</p>
-<p>请求报文是由请求方法、请求 URI、协议版本、可选的请求首部字段和内容实体构成的。</p>
-<p>HTTP 加上通讯加密处理和认证以及完整性保护后即是HTTPS。HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用SSL（Secure Socket Layer）和 TLS（Transport Layer Security）协议代替而已。</p>
-<h3 id="HTTP之状态码"><a href="#HTTP之状态码" class="headerlink" title="HTTP之状态码"></a>HTTP之状态码</h3><table>
-<thead>
-<tr>
-<th style="text-align:center">常见状态码</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">200 OK</td>
-<td style="text-align:center">客户端请求成功 </td>
-</tr>
-<tr>
-<td style="text-align:center">400 Bad Request</td>
-<td style="text-align:center">客户端请求有语法错误，不能被服务器所理解</td>
-</tr>
-<tr>
-<td style="text-align:center">401 Unauthorized</td>
-<td style="text-align:center">请求未经授权，这个状态代码必须和WWWAuthenticate报头域一起使用 </td>
-</tr>
-<tr>
-<td style="text-align:center">403 Forbidden</td>
-<td style="text-align:center">服务器收到请求，但是拒绝提供服务</td>
-</tr>
-<tr>
-<td style="text-align:center">404 Not Found</td>
-<td style="text-align:center">请求资源不存在，eg：输入了错误的URL</td>
-</tr>
-<tr>
-<td style="text-align:center">500 Internal Server Error</td>
-<td style="text-align:center">服务器发生不可预期的错误</td>
-</tr>
-<tr>
-<td style="text-align:center">503 Serve  Unavailable</td>
-<td style="text-align:center">服务器当前不能处理客户端的请求，一段时间后可能恢复正常</td>
-</tr>
-</tbody>
-</table>
-<p>状态代码有三位数字组成，第一个数字定义了响应的类别，共分五种类别:</p>
-<p>1xx：信息响应类，指示信息–表示请求已接收，继续处理</p>
-<p>2xx：处理成功响应类，成功–表示请求已被成功接收、理解、接受</p>
-<p>3xx：重定向响应类，重定向–要完成请求必须进行更进一步的操作</p>
-<p>4xx：客户端错误–请求有语法错误或请求无法实现</p>
-<p>5xx：服务器端错误–服务器未能实现合法的请求</p>
-<p><br></p>
-<h3 id="HTTP请求方法"><a href="#HTTP请求方法" class="headerlink" title="HTTP请求方法"></a>HTTP请求方法</h3><p>根据HTTP标准，HTTP请求可以使用多种请求方法。</p>
-<p>HTTP1.0定义了三种请求方法： GET, POST 和 HEAD方法。</p>
-<p>HTTP1.1新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT 方法</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">请求方法</th>
-<th style="text-align:center">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">GET</td>
-<td style="text-align:center">请求指定的页面信息，并返回实体主体。</td>
-</tr>
-<tr>
-<td style="text-align:center">HEAD</td>
-<td style="text-align:center">类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头</td>
-</tr>
-<tr>
-<td style="text-align:center">POST</td>
-<td style="text-align:center">向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。</td>
-</tr>
-<tr>
-<td style="text-align:center">PUT</td>
-<td style="text-align:center">从客户端向服务器传送的数据取代指定的文档的内容。</td>
-</tr>
-<tr>
-<td style="text-align:center">DELETE</td>
-<td style="text-align:center">请求服务器删除指定的页面。</td>
-</tr>
-<tr>
-<td style="text-align:center">CONNECT</td>
-<td style="text-align:center">HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。</td>
-</tr>
-<tr>
-<td style="text-align:center">OPTIONS</td>
-<td style="text-align:center">允许客户端查看服务器的性能。</td>
-</tr>
-<tr>
-<td style="text-align:center">TRACE</td>
-<td style="text-align:center">回显服务器收到的请求，主要用于测试或诊断。</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<h3 id="HTTP工作原理"><a href="#HTTP工作原理" class="headerlink" title="HTTP工作原理"></a>HTTP工作原理</h3><p>HTTP协议定义Web客户端如何从Web服务器请求Web页面，以及服务器如何把Web页面传送给客户端。HTTP协议采用了请求/响应模型。客户端向服务器发送一个请求报文，请求报文包含请求的方法、URL、协议版本、请求头部和请求数据。服务器以一个状态行作为响应，响应的内容包括协议的版本、成功或者错误代码、服务器信息、响应头部和响应数据。</p>
-<p>以下是 HTTP 请求/响应的步骤：</p>
-<p>1、客户端连接到Web服务器</p>
-<p>一个HTTP客户端，通常是浏览器，与Web服务器的HTTP端口（默认为80）建立一个TCP套接字连接。例如，<a href="http://www.oakcms.cn。" target="_blank" rel="noopener">http://www.oakcms.cn。</a></p>
-<p>2、发送HTTP请求</p>
-<p>通过TCP套接字，客户端向Web服务器发送一个文本的请求报文，一个请求报文由请求行、请求头部、空行和请求数据4部分组成。</p>
-<p>3、服务器接受请求并返回HTTP响应</p>
-<p>Web服务器解析请求，定位请求资源。服务器将资源复本写到TCP套接字，由客户端读取。一个响应由状态行、响应头部、空行和响应数据4部分组成。</p>
-<p>4、释放连接TCP连接</p>
-<p>若connection 模式为close，则服务器主动关闭TCP连接，客户端被动关闭连接，释放TCP连接;若connection 模式为keepalive，则该连接会保持一段时间，在该时间内可以继续接收请求;</p>
-<p>5、客户端浏览器解析HTML内容</p>
-<p>客户端浏览器首先解析状态行，查看表明请求是否成功的状态代码。然后解析每一个响应头，响应头告知以下为若干字节的HTML文档和文档的字符集。客户端浏览器读取响应数据HTML，根据HTML的语法对其进行格式化，并在浏览器窗口中显示。</p>
-<p>例如：在浏览器地址栏键入URL，按下回车之后会经历以下流程：</p>
-<p>1、浏览器向 DNS 服务器请求解析该 URL 中的域名所对应的 IP 地址;</p>
-<p>2、解析出 IP 地址后，根据该 IP 地址和默认端口 80，和服务器建立TCP连接;</p>
-<p>3、浏览器发出读取文件(URL 中域名后面部分对应的文件)的HTTP 请求，该请求报文作为 TCP 三次握手的第三个报文的数据发送给服务器;</p>
-<p>4、服务器对浏览器请求作出响应，并把对应的 html 文本发送给浏览器;</p>
-<p>5、释放 TCP连接;</p>
-<p>6、浏览器将该 html 文本并显示内容; 　</p>
-<h3 id="GET和POST的区别"><a href="#GET和POST的区别" class="headerlink" title="GET和POST的区别"></a>GET和POST的区别</h3><p>1.GET提交的数据会放在URL之后，以?分割URL和传输数据，参数之间以&amp;相连，如EditPosts.aspx?name=test1&amp;id=123456. POST方法是把提交的数据放在HTTP包的Body中.</p>
-<p>2.GET提交的数据大小有限制（因为浏览器对URL的长度有限制），而POST方法提交的数据没有限制.</p>
-<p>3.GET方式需要使用Request.QueryString来取得变量的值，而POST方式通过Request.Form来获取变量的值。</p>
-<p>4.GET方式提交数据，会带来安全问题，比如一个登录页面，通过GET方式提交数据时，用户名和密码将出现在URL上，如果页面可以被缓存或者其他人可以访问这台机器，就可以从历史记录获得该用户的账号和密码.</p>
-<h3 id="Web-的攻击技术"><a href="#Web-的攻击技术" class="headerlink" title="Web 的攻击技术"></a>Web 的攻击技术</h3><p>HTTP 不具备必要的安全功能，所以存在很多安全性问题。</p>
-<p>对 Web 应用的攻击模式分为主动攻击和被动攻击。</p>
-<p>主动攻击模式里具有代表性的攻击是 SQL注入攻击和 OS 命令注入攻击。</p>
-<p>被动攻击模式中具有代表性的攻击是跨站脚本攻击和跨站点请求伪造。</p>
+        <p>上一篇文章说了JSON、JSONP、AJAX、跨域之间的联系与区别，在结算JSONP的环节中，也深刻的通过举例说明，解释了JSONP实现的原理。但是都是通过简单的例子，今天我们说说我在项目中是怎么使用JSONP的。这里我用到的是github上面<a href="https://github.com/webmodules/jsonp" target="_blank" rel="noopener">一个简单的JSONP接口</a></p>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><p>它的实现源码在index.js中，有兴趣的童鞋可以看看，只有几十行代码。我们先说说他的API:</p>
+<p>jsonp(url, opts, fn)</p>
+<ul>
+<li>url  (String)  url</li>
+<li>opts (Object) 可选<ul>
+<li>param (String) 与后台jsonp接口约定好的回调参数名称(默认为 callback)</li>
+<li>timeout (Number)  超时报错时间(默认为 60000ms),即请求超过1分钟报超时</li>
+<li>prefix (String)  处理jsonp响应的全局回调函数的前缀（默认为jp）</li>
+<li>name (String) 处理jsonp响应的全局回调函数的名称（默认为前缀+递增计数器）</li>
+</ul>
+</li>
+<li>fn callback  回调函数，带有err和data两个参数</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>若你的项目中引入了jquery或者zepto,当然直接用他们封装好在AJAX中的方法就好啦。这里也一样，直接调用jsonp方法就不多说了。直接展示另外一种使用方法，基于jsonp封装成一个基于ES6 的 Promise jsonp 方法。</p>
+<p>先上代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> originJsonp <span class="keyword">from</span> <span class="string">'jsonp'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Promise jsonp方法</span></span><br><span class="line"><span class="comment"> * url &#123;String&#125; 无参数纯url</span></span><br><span class="line"><span class="comment"> * data &#123;Object&#125; 传给后台的可选param参数对象,对应originJsonp方法中的opts</span></span><br><span class="line"><span class="comment"> * option &#123;Object&#125; 与后台约定的函数方法名参数对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">jsonp</span>(<span class="params">url, data, option</span>) </span>&#123;</span><br><span class="line">  url += (url.indexOf(<span class="string">'?'</span>) &lt; <span class="number">0</span> ? <span class="string">'?'</span> : <span class="string">'&amp;'</span>) + param(data)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    originJsonp(url, option, (err, data) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (!err) &#123;</span><br><span class="line">        resolve(data)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        reject(err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 拼接url后的参数</span></span><br><span class="line"><span class="comment"> * data &#123;Object&#125; 传给后台的可选param参数对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">param</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> url = <span class="string">''</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> data) &#123;</span><br><span class="line">    <span class="keyword">let</span> value = data[k] !== <span class="literal">undefined</span> ? data[k] : <span class="string">''</span></span><br><span class="line">    url += <span class="string">'&amp;'</span> + k + <span class="string">'='</span> + <span class="built_in">encodeURIComponent</span>(value)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> url ? url.substring(<span class="number">1</span>) : <span class="string">''</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里需要注意的是，jsonp方法与封装前的jsonp方法（这里是originJsonp方法）参数略有不同。其他详细的看代码应该就懂了。使用方式为：</p>
+<p>可以先封装成获取特定数据的一个方法，这里是getRecommend()，当然你也可以直接把参数传入jsonp方法，但是这样参数可能看起来有点长和凌乱(根据业务情况，至少这里是这样)。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getRecommend</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> url = <span class="string">'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg'</span></span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> data = &#123;</span><br><span class="line">    g_tk: <span class="number">1928093487</span>,</span><br><span class="line">    inCharset: <span class="string">'utf-8'</span>,</span><br><span class="line">    outCharset: <span class="string">'utf-8'</span>,</span><br><span class="line">    notice: <span class="number">0</span>,</span><br><span class="line">    format: <span class="string">'jsonp'</span></span><br><span class="line">    platform: <span class="string">'h5'</span>,</span><br><span class="line">    uin: <span class="number">0</span>,</span><br><span class="line">    needNewCode: <span class="number">1</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    param: <span class="string">'jsonpCallback'</span></span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">return</span> jsonp(url, data, options)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在需要的地方调用方法使用即可：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getRecommend().then(<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">this</span>.recommends = res.data.slider</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>以上就是日常项目中jsonp的使用。</p>
 <p><br><br>完~<br><br><br></p>
 
       
@@ -542,7 +443,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
           
         </div>
       
@@ -555,8 +456,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/12/vue组件间的通讯/" rel="next" title="vue组件间的通讯">
-                <i class="fa fa-chevron-left"></i> vue组件间的通讯
+              <a href="/2018/05/04/JSON、JSONP、AJAX和跨域/" rel="next" title="JSON、JSONP、AJAX和跨域">
+                <i class="fa fa-chevron-left"></i> JSON、JSONP、AJAX和跨域
               </a>
             
           </div>
@@ -564,10 +465,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/15/你不知道的javascript(上一)——作用域是什么/" rel="prev" title="你不知道的javascript——作用域是什么">
-                你不知道的javascript——作用域是什么 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -719,7 +616,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP之状态码"><span class="nav-number">1.</span> <span class="nav-text">HTTP之状态码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP请求方法"><span class="nav-number">2.</span> <span class="nav-text">HTTP请求方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP工作原理"><span class="nav-number">3.</span> <span class="nav-text">HTTP工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET和POST的区别"><span class="nav-number">4.</span> <span class="nav-text">GET和POST的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-的攻击技术"><span class="nav-number">5.</span> <span class="nav-text">Web 的攻击技术</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li></ol></div>
             
 
           </div>

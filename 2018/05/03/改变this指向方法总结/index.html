@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="1. this 别名这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。 例如，在一个对象方法中在执行一个方法或者事件的时候： 123456789101112var obj = &amp;#123;	a: 1,	init: function()&amp;#123;		let ele = document.getElementsByClassName(&quot;ele&quot;);		let that = this;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-03T16:26:35.078Z">
+<meta property="og:updated_time" content="2018-05-07T14:53:16.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="改变this指向方法总结">
 <meta name="twitter:description" content="1. this 别名这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。 例如，在一个对象方法中在执行一个方法或者事件的时候： 123456789101112var obj = &amp;#123;	a: 1,	init: function()&amp;#123;		let ele = document.getElementsByClassName(&quot;ele&quot;);		let that = this;">
@@ -416,7 +416,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'/'</span>).then(<span class="function"><span class="keyword">function</span> <span class="title">loaded</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">&#125;.bind(<span class="keyword">this</span>));</span><br></pre></td></tr></table></figure>
 <p>在 JavaScript 中，所有函数都有 bind 方法，其允许你为 this 指定特定值。一旦函数被绑定，上下文就不能被覆盖，也就意味着 this 会指向正确的上下文。</p>
 <h3 id="4-ES6箭头函数"><a href="#4-ES6箭头函数" class="headerlink" title="4. ES6箭头函数"></a>4. ES6箭头函数</h3><p>ES2015 规范引入了箭头函数，使函数的定义更加简洁。箭头函数会隐式返回一个值，但更重要的是，它是在一个封闭的作用域中使用this：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">this.setState(&#123; loading: true &#125;);</span><br><span class="line"></span><br><span class="line">fetch(&apos;/&apos;).then(() =&gt; &#123;</span><br><span class="line">  this.setState(&#123; loading: false &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'/'</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>不管嵌套多少层，箭头函数中的 this 总能指向正确的上下文，因为函数体内的 this 指向的对象，就是定义时所在的对象，而不是使用时所在的对象。但缺点就是，由于箭头函数不能命名，因而在调试时，堆栈信息给的标签是anonymous function。</p>
 <p>如果你用 Babel 将 ES6 的代码转换成 ES5 的代码，就会发现两个有趣的现象：</p>
 <ul>
@@ -561,7 +561,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
