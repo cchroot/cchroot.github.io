@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在js中，我们经常复制一个对象，复制数据，今天来总结一下js中的深浅拷贝问题。 js中的内存js中的存储分为堆内存和栈内存。 基本类型有Undefined、Null、Boolean、Number 和String。这些类型在内存中分别占有固定大小的空间，他们的值保存在栈空间，我们通过按值来访问的。 引用类型，值大小不固定，栈内存中存放地址指向堆内存中的对象，是按引用访问的。 在堆内存中为这个值分配空">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js中的浅拷贝与深拷贝">
+<meta property="og:url" content="http://yoursite.com/2018/05/09/js中的浅拷贝与深拷贝/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="在js中，我们经常复制一个对象，复制数据，今天来总结一下js中的深浅拷贝问题。 js中的内存js中的存储分为堆内存和栈内存。 基本类型有Undefined、Null、Boolean、Number 和String。这些类型在内存中分别占有固定大小的空间，他们的值保存在栈空间，我们通过按值来访问的。 引用类型，值大小不固定，栈内存中存放地址指向堆内存中的对象，是按引用访问的。 在堆内存中为这个值分配空">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-12T17:04:31.676Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js中的浅拷贝与深拷贝">
+<meta name="twitter:description" content="在js中，我们经常复制一个对象，复制数据，今天来总结一下js中的深浅拷贝问题。 js中的内存js中的存储分为堆内存和栈内存。 基本类型有Undefined、Null、Boolean、Number 和String。这些类型在内存中分别占有固定大小的空间，他们的值保存在栈空间，我们通过按值来访问的。 引用类型，值大小不固定，栈内存中存放地址指向堆内存中的对象，是按引用访问的。 在堆内存中为这个值分配空">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/09/js中的浅拷贝与深拷贝/"/>
+
+
+
+
+
+  <title>js中的浅拷贝与深拷贝 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tools/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            工具
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/js中的浅拷贝与深拷贝/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">js中的浅拷贝与深拷贝</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-09T20:30:05+08:00">
+                2018-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在js中，我们经常复制一个对象，复制数据，今天来总结一下js中的深浅拷贝问题。</p>
+<h2 id="js中的内存"><a href="#js中的内存" class="headerlink" title="js中的内存"></a>js中的内存</h2><p>js中的存储分为<strong>堆内存</strong>和<strong>栈内存</strong>。</p>
+<p>基本类型有Undefined、Null、Boolean、Number 和String。这些类型在内存中分别占有固定大小的空间，他们的值保存在栈空间，我们通过按值来访问的。</p>
+<p>引用类型，值大小不固定，栈内存中存放地址指向堆内存中的对象，是按引用访问的。</p>
+<p>在堆内存中为这个值分配空间，由于这种值的大小不固定，因此不能把它们保存到栈内存中。但内存地址大小的固定的，因此可以将内存地址保存在栈内存中。 这样，当查询引用类型的变量时， 先从栈中读取内存地址， 然后再通过地址找到堆中的值。</p>
+<p>综上：<strong>JS中对象分为基本类型和复合（引用）类型，基本类型存放在栈内存，复合（引用）类型存放在堆内存。堆内存用于存放由new创建的对象，栈内存存放一些基本类型的变量和对象的引用变量。</strong></p>
+<h2 id="数组拷贝"><a href="#数组拷贝" class="headerlink" title="数组拷贝"></a>数组拷贝</h2><p>对于简单的变量，内存小，我们直接用=赋值（浅拷贝）不会发生引用。所以值也就是拷贝的值，存放在新的变量对应的栈内存中就好。</p>
+<p>然而对于数组和对象这种内存占用比较大的来说，直接用=复制的东西等于要复制的，那么就会发生引用，因为这种拷贝，只是将拷贝出来的东西的指向指向了要拷贝的那个东西，简单的说，就是<strong>两个都同时指向了一个空间，如果改变其中一个，另一个也会发生变化。</strong>这就发生了引用。</p>
+<h3 id="数组浅拷贝"><a href="#数组浅拷贝" class="headerlink" title="数组浅拷贝"></a>数组浅拷贝</h3><p>这里先说说数组，数组在ES5以前拷贝也存在引用的问题。例如：浅拷贝数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr2=arr1;</span><br><span class="line">arr1.push(<span class="number">4</span>);</span><br><span class="line">alert(arr1); <span class="comment">//1234</span></span><br><span class="line">alert(arr2); <span class="comment">//1234</span></span><br><span class="line">arr2.push(<span class="number">5</span>);</span><br><span class="line">alert(arr1); <span class="comment">//12345</span></span><br><span class="line">alert(arr2); <span class="comment">//12345</span></span><br></pre></td></tr></table></figure>
+<h3 id="数组深拷贝"><a href="#数组深拷贝" class="headerlink" title="数组深拷贝"></a>数组深拷贝</h3><p>对于数组需要深拷贝的问题，我们一般用for循环就可以解决：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1 = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]</span><br><span class="line"><span class="keyword">var</span> arr2 = copyArr(arr1)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copyArr</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> res = []</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">     res.push(arr[i])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就实现了数组的复制（深拷贝）。当然日常我们还会通过数组的一些方法实现数组的赋值，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr2 = arr1.slice(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr3 = arr1.concat();</span><br></pre></td></tr></table></figure>
+<p>以上是eS5前的方法，在ES6我们数组拷贝有新的两种方法，不会发生引用问题：</p>
+<p>第一种：Array.from(要复制的数组)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr2=<span class="built_in">Array</span>.from(arr1);</span><br><span class="line">arr1.push(<span class="number">4</span>);</span><br><span class="line">alert(arr1);  <span class="comment">//1234</span></span><br><span class="line">alert(arr2);  <span class="comment">//123</span></span><br><span class="line">arr2.push(<span class="number">5</span>);</span><br><span class="line">alert(arr1);  <span class="comment">//1234</span></span><br><span class="line">alert(arr2);  <span class="comment">//1235</span></span><br></pre></td></tr></table></figure>
+<p>第二种：…拓展运算符</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr1=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">var</span> arr2=[...arr1];</span><br><span class="line">arr1.push(<span class="number">4</span>);</span><br><span class="line">alert(arr1);  <span class="comment">//1234</span></span><br><span class="line">alert(arr2);  <span class="comment">//123</span></span><br><span class="line">arr2.push(<span class="number">5</span>);</span><br><span class="line">alert(arr1);  <span class="comment">//1234</span></span><br><span class="line">alert(arr2);  <span class="comment">//1235</span></span><br></pre></td></tr></table></figure>
+<p>…拓展运算符这个方法也可以用在函数的行参上面:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params">...arr1</span>)</span>&#123;  <span class="comment">//直接来复制arguments这个伪数组，让它变成真正的数组，从而拥有数组的方法。</span></span><br><span class="line">  alert(arr1); <span class="comment">//1234</span></span><br><span class="line">  arr1.push(<span class="number">5</span>);</span><br><span class="line">  alert(arr1); <span class="comment">//12345</span></span><br><span class="line">&#125;</span><br><span class="line">show(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以代替es5之前的apply/call 方法,例如：show.apply(this,arr1);</span></span><br></pre></td></tr></table></figure>
+<h2 id="对象拷贝"><a href="#对象拷贝" class="headerlink" title="对象拷贝"></a>对象拷贝</h2><h3 id="对象浅拷贝"><a href="#对象浅拷贝" class="headerlink" title="对象浅拷贝"></a>对象浅拷贝</h3><p>利用forin遍历拷贝对象，为浅拷贝对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> json1 = &#123;<span class="string">"a"</span>:<span class="string">"cchroot"</span>,<span class="string">"arr1"</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span>(<span class="params">obj1</span>) </span>&#123;</span><br><span class="line">　　　　<span class="keyword">var</span> obj2 = &#123;&#125;;</span><br><span class="line">　　　　<span class="keyword">for</span> (<span class="keyword">var</span> i <span class="keyword">in</span> obj1) &#123;</span><br><span class="line">　　　　　　obj2[i] = obj1[i];</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　　　<span class="keyword">return</span> obj2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> json2 = copy(json1);</span><br><span class="line">json1.arr1.push(<span class="number">4</span>);</span><br><span class="line">alert(json1.arr1);  <span class="comment">//1234</span></span><br><span class="line">alert(json2.arr1)  <span class="comment">//1234</span></span><br></pre></td></tr></table></figure>
+<p>此外，还可以利用ES6中 Object.assign() 方法浅拷贝对象，bject.assign()拷贝的是属性值。假如源对象的属性值是一个指向对象的引用，它也只拷贝那个引用值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> copy = <span class="built_in">Object</span>.assign(&#123;&#125;, obj);</span><br><span class="line"><span class="built_in">console</span>.log(copy); <span class="comment">// &#123; a: 1 &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="对象深拷贝"><a href="#对象深拷贝" class="headerlink" title="对象深拷贝"></a>对象深拷贝</h3><p>深<strong>拷贝和浅拷贝最根本的区别在于是否是真正获取了一个对象的复制实体，而不是引用</strong>。</p>
+<ol>
+<li>深复制在计算机中开辟了一块内存地址用于存放复制的对象</li>
+<li>而浅复制仅仅是指向被复制的内存地址，如果原地址中对象被改变了，那么浅复制出来的对象也会相应改变。</li>
+</ol>
+<p>目前实现深拷贝的方法不多，主要是两种：</p>
+<ol>
+<li>利用 JSON 对象中的 parse 和 stringify</li>
+<li>利用递归来实现每一层都重新创建对象并赋值</li>
+</ol>
+<p><strong>一、序列化反序列化法（JSON.stringify/parse的方法）</strong></p>
+<p>先看看这两个方法吧：</p>
+<ul>
+<li>JSON.stringify 是将一个 JavaScript 值转成一个 JSON 字符串。</li>
+<li>JSON.parse 是将一个 JSON 字符串转成一个 JavaScript 值或对象。</li>
+</ul>
+<p>简单的说，就是 JavaScript 值和 JSON 字符串的相互转换。</p>
+<p>我们可以封装一个方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 序列化反序列化法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	a:<span class="string">'a'</span>,</span><br><span class="line">	b:<span class="string">'b'</span>,</span><br><span class="line">	c:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],</span><br><span class="line">	d:&#123;<span class="attr">dd</span>:<span class="string">'dd'</span>,<span class="attr">ee</span>:<span class="string">'ee'</span>&#125;</span><br><span class="line">  &#125;;</span><br><span class="line">	</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(obj))</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">var</span> obj2 = deepClone(obj);</span><br><span class="line">	</span><br><span class="line"><span class="built_in">console</span>.log(obj === obj2); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>上面对于简单的对象拷贝（数组）是没问题的，但是对于下面：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> originObj = &#123;</span><br><span class="line">  name:<span class="string">'test'</span>,</span><br><span class="line">  unf: <span class="literal">undefined</span>,</span><br><span class="line">  nul: <span class="literal">null</span>,</span><br><span class="line">  saySomething:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'Hello World'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> resuleObj = deepClone(originObj);</span><br><span class="line"><span class="built_in">console</span>.log(resuleObj);<span class="comment">//Object&#123;name:'test',null:null&#125;</span></span><br></pre></td></tr></table></figure>
+<p>发现在 resuleObj 中，unf属性和saySomething方法丢失了。。。那是为什么呢？</p>
+<p>那是因为：undefined、function、symbol 会在转换过程中被忽略。。。</p>
+<p>也就是说<strong>如果对象中含有一个函数时（很常见），就不能用这个方法进行深拷贝，这种方法比较适合平常开发中使用，因为通常不需要考虑对象和数组之外的类型</strong>。</p>
+<p><strong>二、迭代递归法</strong></p>
+<p>我们要求复制一个复杂的对象，那么我们就可以利用递归的思想来做，及省性能，又不会发生引用。</p>
+<p>递归的思想就很简单了，就是对每一层的数据都实现一次 创建对象-&gt;对象赋值 的操作，例如拷贝一个json对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> json1=&#123;<span class="string">"name"</span>:<span class="string">"cchroot"</span>,<span class="string">"age"</span>:<span class="number">18</span>,<span class="string">"arr1"</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],<span class="string">"string"</span>:<span class="string">'afasfsafa'</span>,<span class="string">"arr2"</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>],<span class="string">"arr3"</span>:[&#123;<span class="string">"name1"</span>:<span class="string">"cchroot"</span>&#125;,&#123;<span class="string">"job"</span>:<span class="string">"前端"</span>&#125;]&#125;;</span><br><span class="line"><span class="keyword">var</span> json2=&#123;&#125;;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copy</span>(<span class="params">obj1,obj2</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj2=obj2||&#123;&#125;; <span class="comment">//最初的时候给它一个初始值=它自己或者是一个json</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> name <span class="keyword">in</span> obj1)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> obj1[name] === <span class="string">"object"</span>)&#123; <span class="comment">//先判断一下obj[name]是不是一个对象</span></span><br><span class="line">      obj2[name]= (obj1[name].constructor===<span class="built_in">Array</span>)?[]:&#123;&#125;; <span class="comment">//我们让要复制的对象的name项=数组或者是json</span></span><br><span class="line">      copy(obj1[name],obj2[name]); <span class="comment">//然后来无限调用函数自己 递归思想</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      obj2[name]=obj1[name];  <span class="comment">//如果不是对象，直接等于即可，不会发生引用。</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj2; <span class="comment">//然后在把复制好的对象给return出去</span></span><br><span class="line">&#125;</span><br><span class="line">json2=copy(json1,json2)</span><br><span class="line">json1.arr1.push(<span class="number">6</span>);</span><br><span class="line">alert(json1.arr1);  <span class="comment">//123456</span></span><br><span class="line">alert(json2.arr1);  <span class="comment">//12345</span></span><br></pre></td></tr></table></figure>
+<p>上面是封装的是一个拷贝对象的方法，下面我们可以封装一个拷贝对象和数组都可以的通用方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">deepClone</span>(<span class="params">source</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> targetObj = source.constructor === <span class="built_in">Array</span> ? [] : &#123;&#125;; <span class="comment">// 判断复制的目标是数组还是对象</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> keys <span class="keyword">in</span> source)&#123; <span class="comment">// 遍历目标</span></span><br><span class="line">    <span class="keyword">if</span>(source.hasOwnProperty(keys))&#123;</span><br><span class="line">      <span class="keyword">if</span>(source[keys] &amp;&amp; <span class="keyword">typeof</span> source[keys] === <span class="string">'object'</span>)&#123; <span class="comment">// 如果值是对象，就递归一下</span></span><br><span class="line">        targetObj[keys] = source[keys].constructor === <span class="built_in">Array</span> ? [] : &#123;&#125;;</span><br><span class="line">        targetObj[keys] = deepClone(source[keys]);</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123; <span class="comment">// 如果不是，就直接赋值</span></span><br><span class="line">        targetObj[keys] = source[keys];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> targetObj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以再使用测试一下：</p>
+<p>首先，对于普通对象，数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> originObj = &#123;<span class="attr">a</span>:<span class="string">'a'</span>,<span class="attr">b</span>:<span class="string">'b'</span>,<span class="attr">c</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>],<span class="attr">d</span>:&#123;<span class="attr">dd</span>:<span class="string">'dd'</span>&#125;&#125;;</span><br><span class="line"><span class="keyword">const</span> cloneObj = deepClone(originObj);</span><br><span class="line"><span class="built_in">console</span>.log(cloneObj === originObj); <span class="comment">// false</span></span><br><span class="line"> </span><br><span class="line">cloneObj.a = <span class="string">'aa'</span>;</span><br><span class="line">cloneObj.c = [<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>];</span><br><span class="line">cloneObj.d.dd = <span class="string">'doubled'</span>;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">console</span>.log(cloneObj); <span class="comment">// &#123;a:'aa',b:'b',c:[1,1,1],d:&#123;dd:'doubled'&#125;&#125;;</span></span><br><span class="line"><span class="built_in">console</span>.log(originObj); <span class="comment">// &#123;a:'a',b:'b',c:[1,2,3],d:&#123;dd:'dd'&#125;&#125;;</span></span><br></pre></td></tr></table></figure>
+<p>以上是没有问题的，那再试试带有函数的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> originObj = &#123;</span><br><span class="line">  name:<span class="string">'test'</span>,</span><br><span class="line">  unf: <span class="literal">undefined</span>,</span><br><span class="line">  nul: <span class="literal">null</span>,</span><br><span class="line">  saySomething:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Hello World'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(originObj); <span class="comment">// &#123;name: "test", unf: undefined, nul: null, saySomething: ƒ&#125;</span></span><br><span class="line"><span class="keyword">const</span> cloneObj = deepClone(originObj);</span><br><span class="line"><span class="built_in">console</span>.log(cloneObj);  <span class="comment">//  &#123;name: "test", unf: undefined, nul: null, saySomething: ƒ&#125;</span></span><br></pre></td></tr></table></figure>
+<p>也是没有问题的。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>赋值运算符 = 实现的是浅拷贝，只拷贝对象的引用值，基本基本类型(值类型)的数据我们用=浅拷贝就行；</li>
+<li>对于数组，ES5之前可以利用遍历和slice()concat()方法深拷贝，ES6开始，可以用Array.from()和…扩展运算符实现深拷贝</li>
+<li>基于序列化反序列化法（JSON.stringify/parse的方法）实现的是深拷贝，但是对目标对象有要求（非 undefined，function等）；</li>
+<li>若想真正意义上的深拷贝，请递归。</li>
+</ol>
+<p>参考文章: </p>
+<p><a href="https://www.jianshu.com/p/0d7bd31ccf43" target="_blank" rel="noopener">js中对象的复制，浅复制（浅拷贝）和深复制（深拷贝）</a><br><a href="https://www.cnblogs.com/dabingqi/p/8502932.html" target="_blank" rel="noopener">对象的深拷贝和浅拷贝</a></p>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/06/ES6中JSONP的使用/" rel="next" title="ES6中JSONP的使用">
+                <i class="fa fa-chevron-left"></i> ES6中JSONP的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#js中的内存"><span class="nav-number">1.</span> <span class="nav-text">js中的内存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组拷贝"><span class="nav-number">2.</span> <span class="nav-text">数组拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数组浅拷贝"><span class="nav-number">2.1.</span> <span class="nav-text">数组浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组深拷贝"><span class="nav-number">2.2.</span> <span class="nav-text">数组深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象拷贝"><span class="nav-number">3.</span> <span class="nav-text">对象拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象浅拷贝"><span class="nav-number">3.1.</span> <span class="nav-text">对象浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象深拷贝"><span class="nav-number">3.2.</span> <span class="nav-text">对象深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
