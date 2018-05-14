@@ -88,7 +88,7 @@
 <meta property="og:description" content="前言正则表达式在平时工作中非常常见，但是它的神奇对于很多程序员可能一直像黑魔法一样的存在，对于原来的我也一样，工作中用到的大部分正则都是去网上搜索得来的，再复杂一点看着文档费时费力的拼凑一下。是不是深有感触了？意外在网上看到有关正则的视频，让我收货颇多，顺便认真记录了笔记，方便以后复习，也希望给更多需要的朋友带来帮助。下面是正文： Regular Expression 使用单个字符串来描述、匹配一">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/MYE1rdp.png">
-<meta property="og:updated_time" content="2018-05-14T17:27:00.594Z">
+<meta property="og:updated_time" content="2018-05-14T17:59:56.142Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一篇文章搞定 javascript 正则表达式">
 <meta name="twitter:description" content="前言正则表达式在平时工作中非常常见，但是它的神奇对于很多程序员可能一直像黑魔法一样的存在，对于原来的我也一样，工作中用到的大部分正则都是去网上搜索得来的，再复杂一点看着文档费时费力的拼凑一下。是不是深有感触了？意外在网上看到有关正则的视频，让我收货颇多，顺便认真记录了笔记，方便以后复习，也希望给更多需要的朋友带来帮助。下面是正文： Regular Expression 使用单个字符串来描述、匹配一">
@@ -405,7 +405,7 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>正则表达式在平时工作中非常常见，但是它的神奇对于很多程序员可能一直像黑魔法一样的存在，对于原来的我也一样，工作中用到的大部分正则都是去网上搜索得来的，再复杂一点看着文档费时费力的拼凑一下。是不是深有感触了？意外在网上看到有关正则的视频，让我收货颇多，顺便认真记录了笔记，方便以后复习，也希望给更多需要的朋友带来帮助。下面是正文：</p>
-<p>Regular Expression 使用单个字符串来描述、匹配一系列符合某个语法规则的字符串。说简单了就是按照某种规则去匹配符合条件的字符串。这里先推荐一个学习正则表达式的在线工具：<a href="https://regexper.com/，网站利用图像和英文解释，可以帮助我们非常形象的学习正则表达式，该工具也可以通过github下载安装到本地，例如：一个匹配日期的正则：`^\d{4}[/-]\d{2}[/-]\d{2}$`在工具中是这样显示的：" target="_blank" rel="noopener">https://regexper.com/，网站利用图像和英文解释，可以帮助我们非常形象的学习正则表达式，该工具也可以通过github下载安装到本地，例如：一个匹配日期的正则：`^\d{4}[/-]\d{2}[/-]\d{2}$`在工具中是这样显示的：</a></p>
+<p>Regular Expression 使用单个字符串来描述、匹配一系列符合某个语法规则的字符串。说简单了就是按照某种规则去匹配符合条件的字符串。这里先推荐一个学习正则表达式的在线工具： <a href="https://regexper.com/，" target="_blank" rel="noopener">https://regexper.com/，</a> 网站利用图像和英文解释，可以帮助我们非常形象的学习正则表达式，该工具也可以通过github下载安装到本地，例如：一个匹配日期的正则：<code>^\d{4}[/-]\d{2}[/-]\d{2}$</code>在工具中是这样显示的：</p>
 <p><img src="https://i.imgur.com/MYE1rdp.png" alt=""></p>
 <p>是不是非常直观~</p>
 <h2 id="RegExp对象"><a href="#RegExp对象" class="headerlink" title="RegExp对象"></a>RegExp对象</h2><p>javaScript中通过内置对象RegExp支持正则表达式，有两种方法实例化RegExp对象：</p>
@@ -755,7 +755,23 @@
 <p>小知识：其实，我们在用 split() 分割字符’,’的时候，split() 方法也是把’,’ 隐士转换成正则’/,/‘的, search() 方法和 replace() 方法也是一样的。</p>
 <h3 id="replace"><a href="#replace" class="headerlink" title="replace"></a>replace</h3><p>replace() 方法用于在字符串中用一些字符替换另一些字符，或替换一个与正则表达式匹配的子串。</p>
 <p>语法为<code>stringObject.replace(regexp/substr,replacement)</code>,结果返回一个新的字符串，是用 replacement 替换了 regexp 的第一次匹配或所有匹配之后得到的。</p>
-<p>至于 replace() 的使用我就不再举例了，相信如果你认真看完前面的，肯定最熟悉的就是 replace() 方法了。 </p>
+<p>对于 replace() 方法，它有三种使用方式：</p>
+<ol>
+<li>String.prototype.replace(str,replaceStr);</li>
+<li>String.prototype.replace(reg,replaceStr);</li>
+<li>String.prototype.replace(reg,function);</li>
+</ol>
+<p>1和2两种的使用我就不再多举例了，相信如果你认真看完前面的文章，肯定最熟悉的就是 replace() 方法了的一、二两种用法了。 这里就提一下第3种使用方法。</p>
+<p>先说一下<code>String.prototype.replace(reg,function);</code>中 function 的参数含义,function 会在每次匹配替换的时候调用，有四个参数（第二个参数不固定）：</p>
+<ol>
+<li>匹配字符串</li>
+<li>正则表达式的分组内容，没有分组则没有该参数、</li>
+<li>匹配项在字符串中的 index</li>
+<li>原字符串</li>
+</ol>
+<p>照例来举两个个栗子看看：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'a1b2c3d4e5'</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/\d/g</span>;</span><br><span class="line"><span class="keyword">var</span> arr = str.replace(reg,<span class="function"><span class="keyword">function</span>(<span class="params">match, index, origin</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(index);<span class="comment">// 1 3 5 7 9</span></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">parseInt</span>(match) + <span class="number">1</span>;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr);<span class="comment">//a2b3c4d5e6 把每次匹配到的结果+1替换</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">'a1b2c3d4e5'</span>;</span><br><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/(\d)(\w)(\d)/g</span>;</span><br><span class="line"><span class="keyword">var</span> arr = str.replace(reg,<span class="function"><span class="keyword">function</span>(<span class="params">match, group1, group2, group3, index, origin</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(match);<span class="comment">// 1b2   3d4</span></span><br><span class="line">	<span class="keyword">return</span> group1 + group3;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(arr);<span class="comment">//a12c34e5  去除了每次匹配到的group2</span></span><br></pre></td></tr></table></figure>
+<p>文章到这里就全部结束了，这可能是至今为止我写的最长的博文了,码了好久好久……希望文章对您有帮助，我就心满意足了~</p>
 <p><br><br>完~<br><br><br></p>
 
       
@@ -897,7 +913,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/javascript/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
