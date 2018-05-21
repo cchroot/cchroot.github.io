@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言在知乎上翻看着原来收藏的文章，看到了这篇有关正则的文章： https://zhuanlan.zhihu.com/p/29163295 ，觉得值得收藏。加上最近刚好复习了一下正则表达式，趁热打铁再加深一下映像，也方便以后查找使用。并且前面几个我会附上便于理解的解析图，以便于大家理解。以下为正文： 正文正则表达式，一个十分古老而又强大的文本处理工具，仅仅用一段非常简短的表达式语句，便能够快速实现一">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="有用的20个正则表达式">
+<meta property="og:url" content="http://yoursite.com/2018/05/14/有用的20个正则表达式/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="前言在知乎上翻看着原来收藏的文章，看到了这篇有关正则的文章： https://zhuanlan.zhihu.com/p/29163295 ，觉得值得收藏。加上最近刚好复习了一下正则表达式，趁热打铁再加深一下映像，也方便以后查找使用。并且前面几个我会附上便于理解的解析图，以便于大家理解。以下为正文： 正文正则表达式，一个十分古老而又强大的文本处理工具，仅仅用一段非常简短的表达式语句，便能够快速实现一">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/FCwotSg.png">
+<meta property="og:image" content="https://i.imgur.com/HUHvHTo.png">
+<meta property="og:image" content="https://i.imgur.com/J5n9eh3.png">
+<meta property="og:image" content="https://i.imgur.com/c6zgoT1.png">
+<meta property="og:image" content="https://i.imgur.com/XU1OTy3.png">
+<meta property="og:image" content="https://i.imgur.com/kLyYD0U.png">
+<meta property="og:updated_time" content="2018-05-21T15:02:35.180Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有用的20个正则表达式">
+<meta name="twitter:description" content="前言在知乎上翻看着原来收藏的文章，看到了这篇有关正则的文章： https://zhuanlan.zhihu.com/p/29163295 ，觉得值得收藏。加上最近刚好复习了一下正则表达式，趁热打铁再加深一下映像，也方便以后查找使用。并且前面几个我会附上便于理解的解析图，以便于大家理解。以下为正文： 正文正则表达式，一个十分古老而又强大的文本处理工具，仅仅用一段非常简短的表达式语句，便能够快速实现一">
+<meta name="twitter:image" content="https://i.imgur.com/FCwotSg.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/14/有用的20个正则表达式/"/>
+
+
+
+
+
+  <title>有用的20个正则表达式 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tools/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            工具
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/有用的20个正则表达式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">有用的20个正则表达式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T20:30:05+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在知乎上翻看着原来收藏的文章，看到了这篇有关正则的文章： <a href="https://zhuanlan.zhihu.com/p/29163295" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29163295</a> ，觉得值得收藏。加上最近刚好复习了一下正则表达式，趁热打铁再加深一下映像，也方便以后查找使用。并且前面几个我会附上便于理解的解析图，以便于大家理解。以下为正文：</p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>正则表达式，一个十分古老而又强大的文本处理工具，仅仅用一段非常简短的表达式语句，便能够快速实现一个非常复杂的业务逻辑。熟练地掌握正则表达式的话，能够使你的开发效率得到极大的提升。</p>
+<p>正则表达式经常被用于字段或任意字符串的校验，如下面这段校验基本日期格式的JavaScript代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> reg = <span class="regexp">/^(\d&#123;1,4&#125;)(-|\/)(\d&#123;1,2&#125;)\2(\d&#123;1,2&#125;)$/</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/FCwotSg.png" alt=""></p>
+<p>下面是技匠整理的，在前端开发中经常使用到的20个正则表达式。</p>
+<h3 id="1-校验密码强度"><a href="#1-校验密码强度" class="headerlink" title="1 . 校验密码强度"></a>1 . 校验密码强度</h3><p>密码的强度必须是包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).&#123;<span class="number">8</span>,<span class="number">10</span>&#125;$</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/HUHvHTo.png" alt=""></p>
+<h3 id="2-校验中文"><a href="#2-校验中文" class="headerlink" title="2. 校验中文"></a>2. 校验中文</h3><p>字符串仅能是中文。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^[\u4e00-\u9fa5]&#123;<span class="number">0</span>,&#125;$</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/J5n9eh3.png" alt=""></p>
+<h3 id="3-由数字、26个英文字母或下划线组成的字符串"><a href="#3-由数字、26个英文字母或下划线组成的字符串" class="headerlink" title="3. 由数字、26个英文字母或下划线组成的字符串"></a>3. 由数字、26个英文字母或下划线组成的字符串</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\w+$</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/c6zgoT1.png" alt=""></p>
+<h3 id="4-校验E-Mail-地址"><a href="#4-校验E-Mail-地址" class="headerlink" title="4. 校验E-Mail 地址"></a>4. 校验E-Mail 地址</h3><p>同密码一样，下面是E-mail地址合规性的正则检查语句。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[\w!#$%&amp;'*+/=?^_`&#123;|&#125;~-]+(?:\.[\w!#$%&amp;'*+/=?^_`&#123;|&#125;~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?</span><br></pre></td></tr></table></figure>
+<h3 id="5-校验身份证号码"><a href="#5-校验身份证号码" class="headerlink" title="5. 校验身份证号码"></a>5. 校验身份证号码</h3><p>下面是身份证号码的正则校验。15 或 18位。</p>
+<p>15位：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^[<span class="number">1</span><span class="number">-9</span>]\d&#123;<span class="number">7</span>&#125;((<span class="number">0</span>\d)|(<span class="number">1</span>[<span class="number">0</span><span class="number">-2</span>]))(([<span class="number">0</span>|<span class="number">1</span>|<span class="number">2</span>]\d)|<span class="number">3</span>[<span class="number">0</span><span class="number">-1</span>])\d&#123;<span class="number">3</span>&#125;$</span><br></pre></td></tr></table></figure>
+<p>18位：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^[<span class="number">1</span><span class="number">-9</span>]\d&#123;<span class="number">5</span>&#125;[<span class="number">1</span><span class="number">-9</span>]\d&#123;<span class="number">3</span>&#125;((<span class="number">0</span>\d)|(<span class="number">1</span>[<span class="number">0</span><span class="number">-2</span>]))(([<span class="number">0</span>|<span class="number">1</span>|<span class="number">2</span>]\d)|<span class="number">3</span>[<span class="number">0</span><span class="number">-1</span>])\d&#123;<span class="number">3</span>&#125;([<span class="number">0</span><span class="number">-9</span>]|X)$</span><br></pre></td></tr></table></figure>
+<h3 id="6-校验日期"><a href="#6-校验日期" class="headerlink" title="6. 校验日期"></a>6. 校验日期</h3><p>yyyy-mm-dd“ 格式的日期校验，已考虑平闰年。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(?:(?!<span class="number">0000</span>)[<span class="number">0</span><span class="number">-9</span>]&#123;<span class="number">4</span>&#125;-(?:(?:<span class="number">0</span>[<span class="number">1</span><span class="number">-9</span>]|<span class="number">1</span>[<span class="number">0</span><span class="number">-2</span>])-(?:<span class="number">0</span>[<span class="number">1</span><span class="number">-9</span>]|<span class="number">1</span>[<span class="number">0</span><span class="number">-9</span>]|<span class="number">2</span>[<span class="number">0</span><span class="number">-8</span>])|(?:<span class="number">0</span>[<span class="number">13</span><span class="number">-9</span>]|<span class="number">1</span>[<span class="number">0</span><span class="number">-2</span>])-(?:<span class="number">29</span>|<span class="number">30</span>)|(?:<span class="number">0</span>[<span class="number">13578</span>]|<span class="number">1</span>[<span class="number">02</span>])<span class="number">-31</span>)|(?:[<span class="number">0</span><span class="number">-9</span>]&#123;<span class="number">2</span>&#125;(?:<span class="number">0</span>[<span class="number">48</span>]|[<span class="number">2468</span>][<span class="number">048</span>]|[<span class="number">13579</span>][<span class="number">26</span>])|(?:<span class="number">0</span>[<span class="number">48</span>]|[<span class="number">2468</span>][<span class="number">048</span>]|[<span class="number">13579</span>][<span class="number">26</span>])<span class="number">00</span>)<span class="number">-02</span><span class="number">-29</span>)$</span><br></pre></td></tr></table></figure>
+<h3 id="7-校验金额"><a href="#7-校验金额" class="headerlink" title="7. 校验金额"></a>7. 校验金额</h3><p>金额校验，精确到2位小数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^[<span class="number">0</span><span class="number">-9</span>]+(.[<span class="number">0</span><span class="number">-9</span>]&#123;<span class="number">2</span>&#125;)?$</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/XU1OTy3.png" alt=""></p>
+<h3 id="8-校验手机号"><a href="#8-校验手机号" class="headerlink" title="8. 校验手机号"></a>8. 校验手机号</h3><p>下面是国内 13、15、18开头的手机号正则表达式。（可根据目前国内收集号扩展前两位开头号码）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(<span class="number">13</span>[<span class="number">0</span><span class="number">-9</span>]|<span class="number">14</span>[<span class="number">5</span>|<span class="number">7</span>]|<span class="number">15</span>[<span class="number">0</span>|<span class="number">1</span>|<span class="number">2</span>|<span class="number">3</span>|<span class="number">5</span>|<span class="number">6</span>|<span class="number">7</span>|<span class="number">8</span>|<span class="number">9</span>]|<span class="number">18</span>[<span class="number">0</span>|<span class="number">1</span>|<span class="number">2</span>|<span class="number">3</span>|<span class="number">5</span>|<span class="number">6</span>|<span class="number">7</span>|<span class="number">8</span>|<span class="number">9</span>])\d&#123;<span class="number">8</span>&#125;$</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/kLyYD0U.png" alt=""></p>
+<h3 id="9-判断IE的版本"><a href="#9-判断IE的版本" class="headerlink" title="9. 判断IE的版本"></a>9. 判断IE的版本</h3><p>IE目前还没被完全取代，很多页面还是需要做版本兼容，下面是IE版本检查的表达式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^.*MSIE [<span class="number">5</span><span class="number">-8</span>](?:\.[<span class="number">0</span><span class="number">-9</span>]+)?(?!.*Trident\/[<span class="number">5</span><span class="number">-9</span>]\<span class="number">.0</span>).*$</span><br></pre></td></tr></table></figure>
+<h3 id="10-校验IP-v4地址"><a href="#10-校验IP-v4地址" class="headerlink" title="10. 校验IP-v4地址"></a>10. 校验IP-v4地址</h3><p>IP4 正则语句。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\b(?:(?:<span class="number">25</span>[<span class="number">0</span><span class="number">-5</span>]|<span class="number">2</span>[<span class="number">0</span><span class="number">-4</span>][<span class="number">0</span><span class="number">-9</span>]|[<span class="number">01</span>]?[<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>]?)\.)&#123;<span class="number">3</span>&#125;(?:<span class="number">25</span>[<span class="number">0</span><span class="number">-5</span>]|<span class="number">2</span>[<span class="number">0</span><span class="number">-4</span>][<span class="number">0</span><span class="number">-9</span>]|[<span class="number">01</span>]?[<span class="number">0</span><span class="number">-9</span>][<span class="number">0</span><span class="number">-9</span>]?)\b</span><br></pre></td></tr></table></figure>
+<h3 id="11-校验IP-v6地址"><a href="#11-校验IP-v6地址" class="headerlink" title="11. 校验IP-v6地址"></a>11. 校验IP-v6地址</h3><p>IP6 正则语句。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">7</span>,<span class="number">7</span>&#125;[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;|([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">1</span>,<span class="number">7</span>&#125;:|([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">1</span>,<span class="number">6</span>&#125;:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;|([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">1</span>,<span class="number">5</span>&#125;(:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;)&#123;<span class="number">1</span>,<span class="number">2</span>&#125;|([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">1</span>,<span class="number">4</span>&#125;(:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;)&#123;<span class="number">1</span>,<span class="number">3</span>&#125;|([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">1</span>,<span class="number">3</span>&#125;(:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;)&#123;<span class="number">1</span>,<span class="number">4</span>&#125;|([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">1</span>,<span class="number">2</span>&#125;(:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;)&#123;<span class="number">1</span>,<span class="number">5</span>&#125;|[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:((:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;)&#123;<span class="number">1</span>,<span class="number">6</span>&#125;)|:((:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;)&#123;<span class="number">1</span>,<span class="number">7</span>&#125;|:)|fe80:(:[<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">0</span>,<span class="number">4</span>&#125;)&#123;<span class="number">0</span>,<span class="number">4</span>&#125;%[<span class="number">0</span><span class="number">-9</span>a-zA-Z]&#123;<span class="number">1</span>,&#125;|::(ffff(:<span class="number">0</span>&#123;<span class="number">1</span>,<span class="number">4</span>&#125;)&#123;<span class="number">0</span>,<span class="number">1</span>&#125;:)&#123;<span class="number">0</span>,<span class="number">1</span>&#125;((<span class="number">25</span>[<span class="number">0</span><span class="number">-5</span>]|(<span class="number">2</span>[<span class="number">0</span><span class="number">-4</span>]|<span class="number">1</span>&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>])&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>])\.)&#123;<span class="number">3</span>,<span class="number">3</span>&#125;(<span class="number">25</span>[<span class="number">0</span><span class="number">-5</span>]|(<span class="number">2</span>[<span class="number">0</span><span class="number">-4</span>]|<span class="number">1</span>&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>])&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>])|([<span class="number">0</span><span class="number">-9</span>a-fA-F]&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:)&#123;<span class="number">1</span>,<span class="number">4</span>&#125;:((<span class="number">25</span>[<span class="number">0</span><span class="number">-5</span>]|(<span class="number">2</span>[<span class="number">0</span><span class="number">-4</span>]|<span class="number">1</span>&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>])&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>])\.)&#123;<span class="number">3</span>,<span class="number">3</span>&#125;(<span class="number">25</span>[<span class="number">0</span><span class="number">-5</span>]|(<span class="number">2</span>[<span class="number">0</span><span class="number">-4</span>]|<span class="number">1</span>&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>])&#123;<span class="number">0</span>,<span class="number">1</span>&#125;[<span class="number">0</span><span class="number">-9</span>]))</span><br></pre></td></tr></table></figure>
+<h3 id="12-检查URL的前缀"><a href="#12-检查URL的前缀" class="headerlink" title="12. 检查URL的前缀"></a>12. 检查URL的前缀</h3><p>应用开发中很多时候需要区分请求是HTTPS还是HTTP，通过下面的表达式可以取出一个url的前缀然后再逻辑判断。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!s.match(<span class="regexp">/^[a-zA-Z]+:\/\//</span>))</span><br><span class="line">&#123;</span><br><span class="line">    s = <span class="string">'http://'</span> + s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="13-提取URL链接"><a href="#13-提取URL链接" class="headerlink" title="13. 提取URL链接"></a>13. 提取URL链接</h3><p>下面的这个表达式可以筛选出一段文本中的URL。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(f|ht)&#123;<span class="number">1</span>&#125;(tp|tps):\/\/([\w-]+\.)+[\w-]+(\/[\w- ./?%&amp;=]*)?</span><br></pre></td></tr></table></figure>
+<h3 id="14-文件路径及扩展名校验"><a href="#14-文件路径及扩展名校验" class="headerlink" title="14. 文件路径及扩展名校验"></a>14. 文件路径及扩展名校验</h3><p>验证windows下文件路径和扩展名（下面的例子中为.txt文件）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^([a-zA-Z]\:|\\)\\([^\\]+\\)*[^\/:*?<span class="string">"&lt;&gt;|]+\.txt(l)?$</span></span><br></pre></td></tr></table></figure>
+<h3 id="15-提取Color-Hex-Codes"><a href="#15-提取Color-Hex-Codes" class="headerlink" title="15. 提取Color Hex  Codes"></a>15. 提取Color Hex  Codes</h3><p>有时需要抽取网页中的颜色代码，可以使用下面的表达式。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^#([A-Fa-f0-9]&#123;6&#125;|[A-Fa-f0-9]&#123;3&#125;)$</span><br></pre></td></tr></table></figure>
+<h3 id="16-提取网页图片"><a href="#16-提取网页图片" class="headerlink" title="16. 提取网页图片"></a>16. 提取网页图片</h3><p>假若你想提取网页中所有图片信息，可以利用下面的表达式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\&lt; *[img][^\\&gt;]*[src] *= *[\<span class="string">"\']&#123;0,1&#125;([^\"\'\ &gt;]*)</span></span><br></pre></td></tr></table></figure>
+<h3 id="17-提取页面超链接"><a href="#17-提取页面超链接" class="headerlink" title="17. 提取页面超链接"></a>17. 提取页面超链接</h3><p>提取html中的超链接。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="xml"><span class="tag">&lt;<span class="name">a\s*(?!.*\brel=)[^</span>&gt;</span>]*)(href="https?:\/\/)((?!(?:(?:www\.)?'.implode('|(?:www\.)?', $follow_list).'))[^"]+)"((?!.*\\brel=)[^&gt;]*)(?:[^&gt;]*)&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="查找CSS属性"><a href="#查找CSS属性" class="headerlink" title="查找CSS属性"></a>查找CSS属性</h3><p>通过下面的表达式，可以搜索到相匹配的CSS属性。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^\s*[a-zA-Z\-]+\s*[:]&#123;1&#125;\s[a-zA-Z0-9\s.#]+[;]&#123;1&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="19-抽取注释"><a href="#19-抽取注释" class="headerlink" title="19. 抽取注释"></a>19. 抽取注释</h3><p>如果你需要移除HMTL中的注释，可以使用如下的表达式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--(.*?)--&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="20-匹配HTML标签"><a href="#20-匹配HTML标签" class="headerlink" title="20. 匹配HTML标签"></a>20. 匹配HTML标签</h3><p>通过下面的表达式可以匹配出HTML中的标签属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;\/?\w+((\s+\w+(\s*=\s*(?:<span class="string">".*?"</span>|<span class="string">'.*?'</span>|[\^<span class="string">'"&gt;\s]+))?)+\s*|\s*)\/?&gt;</span></span><br></pre></td></tr></table></figure>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/12/一篇文章搞定 javascript 正则表达式/" rel="next" title="一篇文章搞定 javascript 正则表达式">
+                <i class="fa fa-chevron-left"></i> 一篇文章搞定 javascript 正则表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-校验密码强度"><span class="nav-number">2.1.</span> <span class="nav-text">1 . 校验密码强度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-校验中文"><span class="nav-number">2.2.</span> <span class="nav-text">2. 校验中文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-由数字、26个英文字母或下划线组成的字符串"><span class="nav-number">2.3.</span> <span class="nav-text">3. 由数字、26个英文字母或下划线组成的字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-校验E-Mail-地址"><span class="nav-number">2.4.</span> <span class="nav-text">4. 校验E-Mail 地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-校验身份证号码"><span class="nav-number">2.5.</span> <span class="nav-text">5. 校验身份证号码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-校验日期"><span class="nav-number">2.6.</span> <span class="nav-text">6. 校验日期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-校验金额"><span class="nav-number">2.7.</span> <span class="nav-text">7. 校验金额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-校验手机号"><span class="nav-number">2.8.</span> <span class="nav-text">8. 校验手机号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-判断IE的版本"><span class="nav-number">2.9.</span> <span class="nav-text">9. 判断IE的版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-校验IP-v4地址"><span class="nav-number">2.10.</span> <span class="nav-text">10. 校验IP-v4地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-校验IP-v6地址"><span class="nav-number">2.11.</span> <span class="nav-text">11. 校验IP-v6地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-检查URL的前缀"><span class="nav-number">2.12.</span> <span class="nav-text">12. 检查URL的前缀</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-提取URL链接"><span class="nav-number">2.13.</span> <span class="nav-text">13. 提取URL链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-文件路径及扩展名校验"><span class="nav-number">2.14.</span> <span class="nav-text">14. 文件路径及扩展名校验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-提取Color-Hex-Codes"><span class="nav-number">2.15.</span> <span class="nav-text">15. 提取Color Hex  Codes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#16-提取网页图片"><span class="nav-number">2.16.</span> <span class="nav-text">16. 提取网页图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#17-提取页面超链接"><span class="nav-number">2.17.</span> <span class="nav-text">17. 提取页面超链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查找CSS属性"><span class="nav-number">2.18.</span> <span class="nav-text">查找CSS属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#19-抽取注释"><span class="nav-number">2.19.</span> <span class="nav-text">19. 抽取注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#20-匹配HTML标签"><span class="nav-number">2.20.</span> <span class="nav-text">20. 匹配HTML标签</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
