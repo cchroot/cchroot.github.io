@@ -87,12 +87,13 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="很多刚入门前端的童鞋，有可能会傻傻分不清JSON和JSONP，更不会知道JSON、JSONP、AJAX和跨域这几个名词和概念有什么关联，今天我就来缕一缕它们之间的千丝万缕的关系。 JSON与JSONPJSON(JavaScript Object Notation)和JSONP(JSON with Padding)虽然只有一个字母的差别，但其实他们根本不是一回事儿：JSON是一种数据交换格式，而JS">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/6R9oUg5.png">
 <meta property="og:image" content="http://img-blog.csdn.net/20180505001202448?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2NjaHJvb3Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-05-05T11:20:22.859Z">
+<meta property="og:updated_time" content="2018-05-27T12:13:11.463Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSON、JSONP、AJAX和跨域">
 <meta name="twitter:description" content="很多刚入门前端的童鞋，有可能会傻傻分不清JSON和JSONP，更不会知道JSON、JSONP、AJAX和跨域这几个名词和概念有什么关联，今天我就来缕一缕它们之间的千丝万缕的关系。 JSON与JSONPJSON(JavaScript Object Notation)和JSONP(JSON with Padding)虽然只有一个字母的差别，但其实他们根本不是一回事儿：JSON是一种数据交换格式，而JS">
-<meta name="twitter:image" content="http://img-blog.csdn.net/20180505001202448?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2NjaHJvb3Q=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:image" content="https://i.imgur.com/6R9oUg5.png">
 
 
 
@@ -471,6 +472,14 @@
 </ol>
 <p>总而言之，jsonp不是ajax的一个特例，哪怕jquery等巨头把jsonp封装进了ajax，也不能改变这一点！</p>
 <h3 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h3><p>由于浏览器的同源策略，所谓同源策略，指的是浏览器对不同源的脚本或者文本的访问方式进行的限制。比如源a的js不能读取或设置引入的源b的元素属性。</p>
+<p>产生跨域原因：</p>
+<ul>
+<li>浏览器限制</li>
+<li>请求是跨域的</li>
+<li>请求是XHR(XMLHttpRequest)请求</li>
+</ul>
+<p>当然，既然原因知道了，我们就可以从原因入手，找出对应的方法解决跨域问题：</p>
+<p><img src="https://i.imgur.com/6R9oUg5.png" alt=""></p>
 <h4 id="什么是同源？"><a href="#什么是同源？" class="headerlink" title="什么是同源？"></a>什么是同源？</h4><p>所谓同源，就是指两个页面具有相同的协议，主机（也常说域名），端口，三个要素缺一不可。例如:</p>
 <table>
 <thead>
@@ -684,7 +693,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
