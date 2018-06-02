@@ -90,7 +90,10 @@
 <meta property="og:image" content="http://img.blog.csdn.net/20180325150743492?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20180325152056339?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://img.blog.csdn.net/20180325152139143?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-04-12T17:02:34.717Z">
+<meta property="og:image" content="https://i.imgur.com/RznhyHP.png">
+<meta property="og:image" content="https://i.imgur.com/VAP54jy.png">
+<meta property="og:image" content="https://i.imgur.com/WJKdxya.png">
+<meta property="og:updated_time" content="2018-06-02T12:42:36.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="node学习笔记——简介">
 <meta name="twitter:description" content="nodejs 简介node官网 上，是这样介绍nodejs的：Node.js是基于Chrome V8引擎 javascript 运行环境，node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。Node.js的包管理器npm，是全球最大的开源库生态系统。 node与js的关系我们知道java 是运行在java虚拟机上的，C#是运行在 .net framework 上面的，而同理，j">
@@ -416,6 +419,18 @@
 <p>二是作为分发数据请求，渲染HTML页面：</p>
 <p><img src="http://img.blog.csdn.net/20180325152139143?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
 <p>分发主要用于多并发操作，有利于系统的稳定性。例如：天猫就是这样做的，你访问天猫的网站的时候，先到天猫的node服务器，node服务器帮我们去调传统的java服务区。还有很多的游戏等<a href="http://pomelo.netease.com/demo.html" target="_blank" rel="noopener">网易基于nodejs的开源游戏服务器</a>。</p>
+<h3 id="异步操作"><a href="#异步操作" class="headerlink" title="异步操作"></a>异步操作</h3><p>Node 采用 Chrome V8 引擎处理 javascript 脚本，V8最大的特点就是单线程运行，一次只能运行一个任务。</p>
+<p>Node 大量采用异步操作，即任务不是马上执行，而是插在任务队列的尾部，等到前面的任务执行完毕后再执行，即：利用回调处理操作。</p>
+<p>Node 采用错误优先的回掉规则，即：回调函数一定作为参数的最后一个参数出现，回调函数的第一个参数默认接收错误信息，第二个参数才是真正的回掉数据，这样便于外界获取调用的错误情况。</p>
+<p>原因是：大部分操作都是异步的方式，无法通过 try catch 捕获异常， so 采用错误优先的回调函数，第一个参数为上一步的错误信息。</p>
+<h3 id="非阻塞异步"><a href="#非阻塞异步" class="headerlink" title="非阻塞异步"></a>非阻塞异步</h3><p>我们看一下 node 中的事件驱动和非阻塞机制：</p>
+<p><img src="https://i.imgur.com/RznhyHP.png" alt=""></p>
+<p>举个栗子是这样子的，读文件的过程：</p>
+<p><img src="https://i.imgur.com/VAP54jy.png" alt=""></p>
+<p>对于异步的调用和执行，node 会将任务和任务的回掉函数放入 event loop 中依次执行，这里就是读取文件的操作和回调。</p>
+<p><img src="https://i.imgur.com/WJKdxya.png" alt=""></p>
+<p>上图可以说明，node 通过主线程之外的 I/O 线程来执行 evnet loop 中的任务队列，而且，在I/O操作时不会阻止其他请求，同时无需承担每个请求所产生的线程/进程的成本。</p>
+<p>Event loop 是指处理外部事件，并把外部事件转换为回调来进行调用的实体。所以，I/O调用的同时，server 就可以去处理另一个请求。在一次I/O调用中，你的代码保存回调函数并把控制权交回到 node.js（主线程）运行时。当数据加载完毕可以访问时，就可以执行回调函数了。</p>
 <p>总结：Node是一个javascript的运行环境（平台），不是一门语言，也不是Javascript框架；Node的实现结构主要是通过chromeV8引擎和libvu；Node可以用来开发服务端应用程序，web系统等。</p>
 <p><br><br>完~<br><br><br></p>
 
@@ -562,7 +577,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/javascript/index.html">
+                <a href="/tools/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
@@ -612,7 +627,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#nodejs-简介"><span class="nav-number">1.</span> <span class="nav-text">nodejs 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node与js的关系"><span class="nav-number">2.</span> <span class="nav-text">node与js的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node的实现"><span class="nav-number">3.</span> <span class="nav-text">node的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node在Web中的应用"><span class="nav-number">4.</span> <span class="nav-text">node在Web中的应用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#nodejs-简介"><span class="nav-number">1.</span> <span class="nav-text">nodejs 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node与js的关系"><span class="nav-number">2.</span> <span class="nav-text">node与js的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node的实现"><span class="nav-number">3.</span> <span class="nav-text">node的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#node在Web中的应用"><span class="nav-number">4.</span> <span class="nav-text">node在Web中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步操作"><span class="nav-number">5.</span> <span class="nav-text">异步操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非阻塞异步"><span class="nav-number">6.</span> <span class="nav-text">非阻塞异步</span></a></li></ol></div>
             
 
           </div>
