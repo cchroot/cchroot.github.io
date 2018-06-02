@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="node.js," />
 
 
 
@@ -79,16 +79,25 @@
 
 
 
-<meta name="description" content="Your bloom is the reason of the breeze">
-<meta property="og:type" content="website">
-<meta property="og:title" content="cchroot&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/转录/index.html">
+<meta name="description" content="异步操作Node 采用 Chrome V8 引擎处理 javascript 脚本，V8最大的特点就是单线程运行，一次只能运行一个任务。 Node 大量采用异步操作，即任务不是马上执行，而是插在任务队列的尾部，等到前面的任务执行完毕后再执行，即：利用回调处理操作。 Node 采用错误优先的回掉规则，即：回调函数一定作为参数的最后一个参数出现，回调函数的第一个参数默认接收错误信息，第二个参数才是真正的">
+<meta name="keywords" content="node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node学习笔记——事件机制">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/node学习笔记——事件机制/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="Your bloom is the reason of the breeze">
+<meta property="og:description" content="异步操作Node 采用 Chrome V8 引擎处理 javascript 脚本，V8最大的特点就是单线程运行，一次只能运行一个任务。 Node 大量采用异步操作，即任务不是马上执行，而是插在任务队列的尾部，等到前面的任务执行完毕后再执行，即：利用回调处理操作。 Node 采用错误优先的回掉规则，即：回调函数一定作为参数的最后一个参数出现，回调函数的第一个参数默认接收错误信息，第二个参数才是真正的">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/RznhyHP.png">
+<meta property="og:image" content="https://i.imgur.com/VAP54jy.png">
+<meta property="og:image" content="https://i.imgur.com/WJKdxya.png">
+<meta property="og:image" content="https://i.imgur.com/mHSDTpB.png">
+<meta property="og:image" content="https://i.imgur.com/VAqhi7r.png">
+<meta property="og:image" content="https://i.imgur.com/XT4uOCL.png">
+<meta property="og:updated_time" content="2018-06-02T16:04:21.278Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cchroot&#39;s blog">
-<meta name="twitter:description" content="Your bloom is the reason of the breeze">
+<meta name="twitter:title" content="node学习笔记——事件机制">
+<meta name="twitter:description" content="异步操作Node 采用 Chrome V8 引擎处理 javascript 脚本，V8最大的特点就是单线程运行，一次只能运行一个任务。 Node 大量采用异步操作，即任务不是马上执行，而是插在任务队列的尾部，等到前面的任务执行完毕后再执行，即：利用回调处理操作。 Node 采用错误优先的回掉规则，即：回调函数一定作为参数的最后一个参数出现，回调函数的第一个参数默认接收错误信息，第二个参数才是真正的">
+<meta name="twitter:image" content="https://i.imgur.com/RznhyHP.png">
 
 
 
@@ -118,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/转录/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/15/node学习笔记——事件机制/"/>
 
 
 
 
 
-  <title>标签: 转录 | cchroot's blog</title>
+  <title>node学习笔记——事件机制 | cchroot's blog</title>
   
 
 
@@ -143,7 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -297,54 +306,202 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>转录<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/node学习笔记——事件机制/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/04/21/forEach()和map()的区别/" itemprop="url">
-              
-                <span itemprop="name">forEach()和map()的区别</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">node学习笔记——事件机制</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-04-21T20:35:05+08:00"
-              content="2018-04-21" >
-          04-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T20:59:05+08:00">
+                2018-03-15
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="异步操作"><a href="#异步操作" class="headerlink" title="异步操作"></a>异步操作</h3><p>Node 采用 Chrome V8 引擎处理 javascript 脚本，V8最大的特点就是单线程运行，一次只能运行一个任务。</p>
+<p>Node 大量采用异步操作，即任务不是马上执行，而是插在任务队列的尾部，等到前面的任务执行完毕后再执行，即：利用回调处理操作。</p>
+<p>Node 采用错误优先的回掉规则，即：回调函数一定作为参数的最后一个参数出现，回调函数的第一个参数默认接收错误信息，第二个参数才是真正的回掉数据，这样便于外界获取调用的错误情况。</p>
+<p>原因是：大部分操作都是异步的方式，无法通过 try catch 捕获异常， so 采用错误优先的回调函数，第一个参数为上一步的错误信息。</p>
+<h3 id="非阻塞异步事件机制"><a href="#非阻塞异步事件机制" class="headerlink" title="非阻塞异步事件机制"></a>非阻塞异步事件机制</h3><p>我们看一下 node 中的事件驱动和非阻塞机制：</p>
+<p><img src="https://i.imgur.com/RznhyHP.png" alt=""></p>
+<p>举个栗子是这样子的，读文件的过程：</p>
+<p><img src="https://i.imgur.com/VAP54jy.png" alt=""></p>
+<p>对于异步的调用和执行，node 会将任务和任务的回掉函数放入 event loop 中依次执行，这里就是读取文件的操作和回调。</p>
+<p><img src="https://i.imgur.com/WJKdxya.png" alt=""></p>
+<p>上图可以说明，node 通过主线程之外的 I/O 线程来执行 evnet loop 中的任务队列，而且，在I/O操作时不会阻止其他请求，同时无需承担每个请求所产生的线程/进程的成本。</p>
+<p>Event loop 是指处理外部事件，并把外部事件转换为回调来进行调用的实体。所以，I/O调用的同时，server 就可以去处理另一个请求。在一次I/O调用中，你的代码保存回调函数并把控制权交回到 node.js（主线程）运行时。当数据加载完毕可以访问时，就可以执行回调函数了。</p>
+<p>我们都知道，node是单线程的，前面说到node的事件机制是基于 event loop 的，下面通过几张图更加说明了node的事件机制:</p>
+<p><img src="https://i.imgur.com/mHSDTpB.png" alt=""></p>
+<p><img src="https://i.imgur.com/VAqhi7r.png" alt=""></p>
+<p><img src="https://i.imgur.com/XT4uOCL.png" alt=""></p>
+<p>node本身是单线程的，但是 node 内部是多线程的，对于为什么我们说它的单线程的，是因为对于node 外部调用和操作的所有API 都是通过主线程这单个线程来操作的，而阻塞的各种文件操作和网络操作，是派发给内node 内部的线程去做的，比如前面所说的 I/O 线程。</p>
+<p>简单来说就三点：</p>
+<ul>
+<li>node 平台将一个任务连同该任务的回调函数放到一个事件循环系统中；</li>
+<li>事件循环高效的管理node 系统内部线程池，同时高效执行每一个任务；</li>
+<li>当任务执行完成过后自动执行回调函数。</li>
+</ul>
+<p>这就是 node 的非阻塞事件机制，它的优势有：</p>
+<ul>
+<li>提高代码响应效率</li>
+<li>充分利用单核 CPU 的优势</li>
+<li>改善 I/O 的不可预测带来的问题</li>
+</ul>
+<p><br><br>完~<br><br><br></p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/13/node学习笔记——简介/" rel="next" title="node学习笔记——简介">
+                <i class="fa fa-chevron-left"></i> node学习笔记——简介
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/17/用的js代码片段/" rel="prev" title="翻译——30秒内即可理解的js代码片段">
+                翻译——30秒内即可理解的js代码片段 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -352,6 +509,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -372,8 +533,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -453,6 +623,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#异步操作"><span class="nav-number">1.</span> <span class="nav-text">异步操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非阻塞异步事件机制"><span class="nav-number">2.</span> <span class="nav-text">非阻塞异步事件机制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -600,6 +786,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
