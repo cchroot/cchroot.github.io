@@ -1402,6 +1402,316 @@ Web 使用一种名为 HTTP（HyperText Transfer Protocol，超文本传输协�
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/node learning notes__cookieAndSession /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/node learning notes__cookieAndSession /" itemprop="url">node学习笔记——cookie与session</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T20:59:05+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          HTTP是无状态协议。简单地说，当你浏览了一个页面，然后转到同一个网站的另一个页面，服务器无法认识到，这是同一个浏览器在访问同一个网站。每一次的访问，都是没有任何关系的。
+那么，比如我上一次访问，登陆了，下一次访问，又让我登陆，不存在登陆这事儿了，这样用户体验就非常糟糕了。
+CookieCookie 是一个简单到爆的想法：当访问一个页面的时候，服务器在下行 HTTP 报文中，命令浏览器存储一个字符串；浏览器再访问同一个域的时候，将把这个字符串携带到上行 HTTP 请求中。
+第一次访问一个服务器，不可能携带 cookie。 必须是服务器得到这次请求，在下行响应报头中，携带 cookie 信息，此后每一次浏览器往这个服务器发出的请求，都会携带这个 cookie。
+Cookie 的特点：
+
+cookie是不加密的，用
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/21/node learning notes__cookieAndSession /#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/node learning notes__acquaintanceMongoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/20/node learning notes__acquaintanceMongoDB/" itemprop="url">node学习笔记——初识MongoDB</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T20:59:05+08:00">
+                2018-03-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          数据库数据库就是存储数据的，那么存储数据就用txt就行了啊，为什么要有数据库？ 
+
+数据库有行、列的概念，数据有关系，数据不是散的。
+据库能够提供非常方便的接口，让增删改查操作变得简单
+数据库不能自己玩儿，要给向PHP、.net、jsp等语言提供接口。
+
+老牌数据库，比如MySQL、SQL Server、Oracle、Access。这些数据库，我们管他们叫做结构型数据库。每个表中，都有明确的字段，每行记录，都有这些字段，不能有的行有，有的行没有。
+非结构型数据库NoSQL在大数据时代，如果数据库中存储的数据很多，如果突然需要改变某个字段，很不方便，因为所谓的字段，是表的一个结构，所有的行都必须拥有，不能有的行有这个字段，有的行没有这个字段。
+所以非结构型数据库 NoSQL 应运而生，NoSQL 是个怪胎，无法挑
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/20/node learning notes__acquaintanceMongoDB/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/node learning notes__acquaintanceExpress/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1550,309 +1860,6 @@ Express 的哲学是在你的想法和服务器之间充当薄薄的一层。这
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/简单的lazy load/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cchroot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headPhoto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cchroot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/简单的lazy load/" itemprop="url">简单的lazy load</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T20:59:05+08:00">
-                2018-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          这两天在公司协助切了一个门户网站的页面，用户在第一次登陆网站的时候明显感觉速度不够快，需要根据当前网速相应几秒。马上想到了把网站所有加载的图片在不失真的情况下进行了压缩：这里向大家推荐一个在线png,jpg图片压缩的网站：TinyPNG 基本可以把图片压缩50%作用，图片颜色种类越少图片的可以压缩的越小。
-在压缩完图片之后，感觉网站还是不够快，然后决定再用用懒加载，把吧比较大的几张图片和banner的后面几张图片延迟加载。开始想用原来用过的现成的插件：lazy-load 不过后来觉得不想引用那么多Js文件，所以最后自己写了一个，下面是demo，不足之处，还望指正：
-HTML：12345678910111213141516171819202122232425262728&lt;!DOCTYPE html&gt;&
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/18/简单的lazy load/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/node learning notes__resourceAdministration/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cchroot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headPhoto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cchroot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/node learning notes__resourceAdministration/" itemprop="url">node学习笔记——简单的静态资源文件管理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T18:34:05+08:00">
-                2018-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
-                    <span itemprop="name">nodeJs</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          在 node 中管理静态资源文件与C#、JAVA 等语言不同，具体不同如下：
-不存在web容器nodejs 不像 apache 一样存在容器，nodejs 不存在容器的概念，都是通过路由来控制的，访问路径跟文件夹和文件名没有任何关系。
-让 node.js 提供一个静态服务，都非常难！
-也就是说，node.js中，如果看见一个网址是：1127.0.0.1:3000/fang，别再去想，一定有一个文件夹，叫做fang了。可能/fang的物理文件，是同目录的test.html
-URL和真实物理文件，是没有关系的。URL是通过了Node的顶层路由设计，呈递某一个静态文件的。
-简单的静态资源管理实现由于 node 不存在web容器的概念，所以需要通过路由控制访问的路径文件，具体node是怎么做的呢？我们可以看看简单的实现
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/18/node learning notes__resourceAdministration/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1907,7 +1914,7 @@ URL和真实物理文件，是没有关系的。URL是通过了Node的顶层路�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1928,7 +1935,7 @@ URL和真实物理文件，是没有关系的。URL是通过了Node的顶层路�
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>

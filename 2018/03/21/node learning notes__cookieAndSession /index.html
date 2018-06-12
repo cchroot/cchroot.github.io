@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在 node 中管理静态资源文件与C#、JAVA 等语言不同，具体不同如下： 不存在web容器nodejs 不像 apache 一样存在容器，nodejs 不存在容器的概念，都是通过路由来控制的，访问路径跟文件夹和文件名没有任何关系。 让 node.js 提供一个静态服务，都非常难！ 也就是说，node.js中，如果看见一个网址是：1127.0.0.1:3000/fang，别再去想，一定有一个文件">
+<meta name="description" content="HTTP是无状态协议。简单地说，当你浏览了一个页面，然后转到同一个网站的另一个页面，服务器无法认识到，这是同一个浏览器在访问同一个网站。每一次的访问，都是没有任何关系的。 那么，比如我上一次访问，登陆了，下一次访问，又让我登陆，不存在登陆这事儿了，这样用户体验就非常糟糕了。 CookieCookie 是一个简单到爆的想法：当访问一个页面的时候，服务器在下行 HTTP 报文中，命令浏览器存储一个字符">
 <meta name="keywords" content="node.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="node学习笔记——简单的静态资源文件管理">
-<meta property="og:url" content="http://yoursite.com/2018/03/18/node learning notes__resourceAdministration/index.html">
+<meta property="og:title" content="node学习笔记——cookie与session">
+<meta property="og:url" content="http://yoursite.com/2018/03/21/node learning notes__cookieAndSession /index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="在 node 中管理静态资源文件与C#、JAVA 等语言不同，具体不同如下： 不存在web容器nodejs 不像 apache 一样存在容器，nodejs 不存在容器的概念，都是通过路由来控制的，访问路径跟文件夹和文件名没有任何关系。 让 node.js 提供一个静态服务，都非常难！ 也就是说，node.js中，如果看见一个网址是：1127.0.0.1:3000/fang，别再去想，一定有一个文件">
+<meta property="og:description" content="HTTP是无状态协议。简单地说，当你浏览了一个页面，然后转到同一个网站的另一个页面，服务器无法认识到，这是同一个浏览器在访问同一个网站。每一次的访问，都是没有任何关系的。 那么，比如我上一次访问，登陆了，下一次访问，又让我登陆，不存在登陆这事儿了，这样用户体验就非常糟糕了。 CookieCookie 是一个简单到爆的想法：当访问一个页面的时候，服务器在下行 HTTP 报文中，命令浏览器存储一个字符">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-03T16:37:22.031Z">
+<meta property="og:updated_time" content="2018-06-12T14:38:57.455Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="node学习笔记——简单的静态资源文件管理">
-<meta name="twitter:description" content="在 node 中管理静态资源文件与C#、JAVA 等语言不同，具体不同如下： 不存在web容器nodejs 不像 apache 一样存在容器，nodejs 不存在容器的概念，都是通过路由来控制的，访问路径跟文件夹和文件名没有任何关系。 让 node.js 提供一个静态服务，都非常难！ 也就是说，node.js中，如果看见一个网址是：1127.0.0.1:3000/fang，别再去想，一定有一个文件">
+<meta name="twitter:title" content="node学习笔记——cookie与session">
+<meta name="twitter:description" content="HTTP是无状态协议。简单地说，当你浏览了一个页面，然后转到同一个网站的另一个页面，服务器无法认识到，这是同一个浏览器在访问同一个网站。每一次的访问，都是没有任何关系的。 那么，比如我上一次访问，登陆了，下一次访问，又让我登陆，不存在登陆这事儿了，这样用户体验就非常糟糕了。 CookieCookie 是一个简单到爆的想法：当访问一个页面的时候，服务器在下行 HTTP 报文中，命令浏览器存储一个字符">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/18/node learning notes__resourceAdministration/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/21/node learning notes__cookieAndSession /"/>
 
 
 
 
 
-  <title>node学习笔记——简单的静态资源文件管理 | cchroot's blog</title>
+  <title>node学习笔记——cookie与session | cchroot's blog</title>
   
 
 
@@ -313,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/node learning notes__resourceAdministration/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/node learning notes__cookieAndSession /">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -330,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">node学习笔记——简单的静态资源文件管理</h1>
+          <h1 class="post-title" itemprop="name headline">node学习笔记——cookie与session</h1>
         
 
         <div class="post-meta">
@@ -342,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T18:34:05+08:00">
-                2018-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T20:59:05+08:00">
+                2018-03-21
               </time>
             
 
@@ -402,14 +402,31 @@
       
 
       
-        <p>在 node 中管理静态资源文件与C#、JAVA 等语言不同，具体不同如下：</p>
-<h2 id="不存在web容器"><a href="#不存在web容器" class="headerlink" title="不存在web容器"></a>不存在web容器</h2><p>nodejs 不像 apache 一样存在容器，nodejs 不存在容器的概念，都是通过路由来控制的，访问路径跟文件夹和文件名没有任何关系。</p>
-<p>让 node.js 提供一个静态服务，都非常难！</p>
-<p>也就是说，node.js中，如果看见一个网址是：1127.0.0.1:3000/fang，别再去想，一定有一个文件夹，叫做fang了。可能/fang的物理文件，是同目录的test.html</p>
-<p>URL和真实物理文件，是没有关系的。URL是通过了Node的顶层路由设计，呈递某一个静态文件的。</p>
-<h2 id="简单的静态资源管理实现"><a href="#简单的静态资源管理实现" class="headerlink" title="简单的静态资源管理实现"></a>简单的静态资源管理实现</h2><p>由于 node 不存在web容器的概念，所以需要通过路由控制访问的路径文件，具体node是怎么做的呢？我们可以看看简单的实现：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">"http"</span>);</span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</span><br><span class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">"url"</span>);</span><br><span class="line"><span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">"path"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//这里如果不用req.url来if判断，那么用户不管输入什么网址，</span></span><br><span class="line">    <span class="comment">//做的事情都一样啊</span></span><br><span class="line">    <span class="comment">//得到地址</span></span><br><span class="line">    <span class="keyword">var</span> pathname = url.parse(req.url).pathname;</span><br><span class="line">    <span class="comment">//判断此时用户输入的地址是文件夹地址还是文件地址</span></span><br><span class="line">    <span class="comment">//如果是文件夹地址，那么自动请求这个文件夹中的index.html</span></span><br><span class="line">    <span class="keyword">if</span>(pathname.indexOf(<span class="string">"."</span>) == <span class="number">-1</span>)&#123;</span><br><span class="line">        pathname += <span class="string">"/index.html"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//输入的网址是127.0.0.1/images/logo.png</span></span><br><span class="line">    <span class="comment">//实际请求的是./static/images/logo.png</span></span><br><span class="line">    <span class="keyword">var</span> fileURL = <span class="string">"./"</span> + path.normalize(<span class="string">"./static/"</span> + pathname);</span><br><span class="line">    <span class="comment">//得到拓展名</span></span><br><span class="line">    <span class="keyword">var</span> extname = path.extname(pathname);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//把文件读出来</span></span><br><span class="line">    fs.readFile(fileURL,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</span><br><span class="line">        <span class="comment">//读完之后做的事情</span></span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            <span class="comment">//文件不存在</span></span><br><span class="line">            res.writeHead(<span class="number">404</span>,&#123;<span class="string">"Content-Type"</span>:<span class="string">"text/html;charset=UTF8"</span>&#125;)</span><br><span class="line">            res.end(<span class="string">"404,页面没有找到"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//成功之后做的事情</span></span><br><span class="line">        getMime(extname,<span class="function"><span class="keyword">function</span>(<span class="params">mime</span>)</span>&#123;</span><br><span class="line">            res.writeHead(<span class="number">200</span>,&#123;<span class="string">"Content-Type"</span>:mime&#125;)</span><br><span class="line">            res.end(data);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">server.listen(<span class="number">80</span>,<span class="string">"127.0.0.1"</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMime</span>(<span class="params">extname,callback</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//读取mime.json文件，得到JSON，根据extname key ，返回对应的value</span></span><br><span class="line">    <span class="comment">//读取文件</span></span><br><span class="line">    fs.readFile(<span class="string">"./mime.json"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123; <span class="comment">//mime.json是一个根据文件的扩展名设置Content-Type的mime值</span></span><br><span class="line">        <span class="keyword">if</span>(err)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">"找不到mime.json文件！"</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//转成JSON</span></span><br><span class="line">        <span class="keyword">var</span> mimeJSON = <span class="built_in">JSON</span>.parse(data);</span><br><span class="line">        <span class="keyword">var</span> mime =  mimeJSON[extname]  || <span class="string">"text/plain"</span>;</span><br><span class="line">        <span class="comment">//执行回调函数，mime类型字符串，就是它的参数</span></span><br><span class="line">        callback(mime);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>像 apache 这样的web容器里面，就封装了类似这样的实现，当然，它的实现比这样完善和复杂很多，还有考虑缓存啊，安全性等各种问题，以上就是node 管理静态资源文件的简单实现。</p>
+        <p>HTTP是无状态协议。简单地说，当你浏览了一个页面，然后转到同一个网站的另一个页面，服务器无法认识到，这是同一个浏览器在访问同一个网站。每一次的访问，都是没有任何关系的。</p>
+<p>那么，比如我上一次访问，登陆了，下一次访问，又让我登陆，不存在登陆这事儿了，这样用户体验就非常糟糕了。</p>
+<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><p>Cookie 是一个简单到爆的想法：当访问一个页面的时候，服务器在下行 HTTP 报文中，命令浏览器存储一个字符串；浏览器再访问同一个域的时候，将把这个字符串携带到上行 HTTP 请求中。</p>
+<p>第一次访问一个服务器，不可能携带 cookie。 必须是服务器得到这次请求，在下行响应报头中，携带 cookie 信息，此后每一次浏览器往这个服务器发出的请求，都会携带这个 cookie。</p>
+<p>Cookie 的特点：</p>
+<ul>
+<li>cookie是不加密的，用户可以自由看到；</li>
+<li>用户可以删除cookie，或者禁用它</li>
+<li>cookie可以被篡改</li>
+<li>cookie可以用于攻击，例如XSS与CSRF</li>
+<li>cookie存储量很小。未来实际上要被 localStorage 替代，但是后者IE9兼容。</li>
+</ul>
+<h2 id="Express中的Cookie"><a href="#Express中的Cookie" class="headerlink" title="Express中的Cookie"></a>Express中的Cookie</h2><p>在 Express 中，使用 cookie-parser 中间件来设置 cookie，主要设置选项有：domain、path、maxAge、signed等。 res负责设置cookie， req负责识别cookie：</p>
+<p>一个简单的栗子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express  = <span class="built_in">require</span>(<span class="string">'express'</span>);</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">'cookie-parser'</span>);</span><br><span class="line"> </span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="comment">//使用cookie必须要使用cookie-parser中间件</span></span><br><span class="line">app.use(cookieParser());</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	res.send(<span class="string">"猜你喜欢"</span> + req.cookies.mudidi);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//查询一个地方的攻略，URL语法： http://127.0.0.1/gonglue?mididi=北京</span></span><br><span class="line"><span class="comment">//此时北京就能记录在cookie中</span></span><br><span class="line">app.get(<span class="string">"/gonglue"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//得到get请求，用户查询的目的地</span></span><br><span class="line">	<span class="keyword">var</span> mudidi = req.query.mudidi;</span><br><span class="line">	<span class="comment">//记录用户喜好</span></span><br><span class="line">	<span class="comment">//先读取用户的喜好，然后把新的数据push进入数组，然后设置新的cookie</span></span><br><span class="line">	<span class="keyword">var</span> mudidiarry = req.cookies.mudidi || [];</span><br><span class="line">	mudidiarry.push(mudidi);</span><br><span class="line">	<span class="comment">//maxAge在Express中以毫秒为单位</span></span><br><span class="line">	res.cookie(<span class="string">"mudidi"</span>,mudidiarry,&#123;<span class="attr">maxAge</span>: <span class="number">900000</span>, <span class="attr">httpOnly</span>: <span class="literal">true</span>&#125;);</span><br><span class="line">	res.send(mudidi + <span class="string">"旅游攻略"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h2><p>session 依赖 cookie，当一个浏览器禁用 cookie 的时候，登陆效果消失； 或者用户清除了 cookie，登陆也消失。</p>
+<p>session 比 cookie 不一样在哪里呢？ </p>
+<p>session下发的是乱码，并且服务器自己缓存一些东西，下次浏览器的请求带着乱码上来，此时与缓存进行比较，看看是谁。</p>
+<p>所以，一个乱码，可以对应无限大的数据。</p>
+<p>任何语言中，session的使用，是“机理透明”的。他是帮你设置cookie的，但是足够方便，让你感觉不到这事儿和cookie有关。</p>
+<h2 id="Express中的Session"><a href="#Express中的Session" class="headerlink" title="Express中的Session"></a>Express中的Session</h2><p>Express 中，使用 express-session 中间件，来使用 session。</p>
+<p>session 会话，专门用于实现“登陆”，表示某一次用户的访问。</p>
+<p>session 是特殊的 cookie 。用户在登陆之后，服务器往客户端的 cookie 中发送一个字符串，但是此字符串是经过服务器加密的，服务器会缓存 cookie 文本和用户的信息；再次访问之后，如果这个加密字符串与服务器的缓存匹配，那么则判断这是同一个用户回来了，那么将保持登陆状态。</p>
+<p>一个简单的栗子:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> session = <span class="built_in">require</span>(<span class="string">"express-session"</span>);</span><br><span class="line"></span><br><span class="line">app.use(session(&#123;</span><br><span class="line">    secret: <span class="string">'keyboard cat'</span>,</span><br><span class="line">    resave: <span class="literal">false</span>,</span><br><span class="line">    saveUninitialized: <span class="literal">true</span></span><br><span class="line">&#125;));</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(req.session.login == <span class="string">"1"</span>)&#123;</span><br><span class="line">		res.send(<span class="string">"欢迎"</span> + req.session.username);</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		res.send(<span class="string">"没有成功登陆"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">"/login"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res</span>)</span>&#123;</span><br><span class="line">	req.session.login = <span class="string">"1"</span>;	<span class="comment">//设置这个session</span></span><br><span class="line">	req.session.username = <span class="string">"考拉"</span>;</span><br><span class="line">	res.send(<span class="string">"你已经成功登陆"</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
 <p><br><br>完~<br><br><br></p>
 
       
@@ -441,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/17/用的js代码片段/" rel="next" title="翻译——30秒内即可理解的js代码片段">
-                <i class="fa fa-chevron-left"></i> 翻译——30秒内即可理解的js代码片段
+              <a href="/2018/03/20/node learning notes__acquaintanceMongoDB/" rel="next" title="node学习笔记——初识MongoDB">
+                <i class="fa fa-chevron-left"></i> node学习笔记——初识MongoDB
               </a>
             
           </div>
@@ -451,8 +468,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/18/简单的lazy load/" rel="prev" title="简单的lazy load">
-                简单的lazy load <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/24/图解HTTP——一、了解Web及网络/" rel="prev" title="图解HTTP——了解Web及网络">
+                图解HTTP——了解Web及网络 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -605,7 +622,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#不存在web容器"><span class="nav-number">1.</span> <span class="nav-text">不存在web容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#简单的静态资源管理实现"><span class="nav-number">2.</span> <span class="nav-text">简单的静态资源管理实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">1.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Express中的Cookie"><span class="nav-number">2.</span> <span class="nav-text">Express中的Cookie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session"><span class="nav-number">3.</span> <span class="nav-text">Session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Express中的Session"><span class="nav-number">4.</span> <span class="nav-text">Express中的Session</span></a></li></ol></div>
             
 
           </div>
