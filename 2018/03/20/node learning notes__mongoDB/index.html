@@ -91,7 +91,7 @@
 <meta property="og:image" content="https://i.imgur.com/PjlZClm.png">
 <meta property="og:image" content="https://i.imgur.com/i0OZ3e2.png">
 <meta property="og:image" content="https://i.imgur.com/t62ypmq.png">
-<meta property="og:updated_time" content="2018-06-22T12:20:15.896Z">
+<meta property="og:updated_time" content="2018-06-23T16:59:30.622Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="node学习笔记——初识MongoDB">
 <meta name="twitter:description" content="数据库数据库就是存储数据的，那么存储数据就用txt就行了啊，为什么要有数据库？   数据库有行、列的概念，数据有关系，数据不是散的。 据库能够提供非常方便的接口，让增删改查操作变得简单 数据库不能自己玩儿，要给向PHP、.net、jsp等语言提供接口。  老牌数据库，比如MySQL、SQL Server、Oracle、Access。这些数据库，我们管他们叫做结构型数据库。每个表中，都有明确的字段，">
@@ -475,6 +475,7 @@
 <li>默认情况下，update() 方法更新单个文档。要更新多个文档，请在update() 方法中使用多重选项 {multi: true}：<code>db.student.update({&quot;sex&quot;:&quot;男&quot;},{$set:{&quot;age&quot;:33}},{multi: true});</code></li>
 <li>完整替换，不出现$set关键字了：<code>db.student.update({&quot;name&quot;:&quot;小明&quot;},{&quot;name&quot;:&quot;大明&quot;,&quot;age&quot;:16});</code></li>
 <li>删除数据,默认删除全部匹配项:<code>db.restaurants.remove({ &quot;borough&quot;: &quot;Manhattan&quot; })</code>,如果需要删除单项,请加{justOne: true} :<code>db.restaurants.remove({ &quot;borough&quot;: &quot;Queens&quot; }, { justOne: true })</code></li>
+<li>删除子文档数据：<code>db.collection.update({ field: &lt;query&gt; }, { $pull: { field: &lt;query&gt; }});</code>例如：<code>db.test.update({&quot;userId&quot;:100000077},{&quot;$pull&quot;:{&quot;cartList&quot;:{&quot;productId&quot;:201710009}}})</code>;</li>
 </ul>
 <p>需要说明的是，find() 的第二个参数限制返回的 filed 的个数，0代表不返回，1代表返回:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> db.Student.find(&#123;name:<span class="string">"jack"</span>&#125;,&#123;name:1,age:1&#125;)</span></span><br><span class="line">&#123; "_id" : ObjectId("5437383157abafe09d99cbfc"), "name" : "jack", "age" : 33 &#125;</span><br><span class="line">&#123; "_id" : ObjectId("543738b857abafe09d99cbfd"), "name" : "jack", "age" : 33 &#125;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> db.Student.find(&#123;name:<span class="string">"jack"</span>&#125;,&#123;sex:0&#125;)</span></span><br><span class="line">&#123; "_id" : ObjectId("5437383157abafe09d99cbfc"), "name" : "jack", "age" : 33 &#125;</span><br><span class="line">&#123; "_id" : ObjectId("543738b857abafe09d99cbfd"), "name" : "jack", "age" : 33 &#125;</span><br></pre></td></tr></table></figure>
@@ -671,7 +672,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
