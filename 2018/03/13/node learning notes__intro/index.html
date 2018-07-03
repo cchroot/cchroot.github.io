@@ -87,14 +87,14 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="nodejs 简介node官网 上，是这样介绍nodejs的：Node.js是基于Chrome V8引擎 javascript 运行环境，node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。Node.js的包管理器npm，是全球最大的开源库生态系统。 node与js的关系我们知道java 是运行在java虚拟机上的，C#是运行在 .net framework 上面的，而同理，j">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://img.blog.csdn.net/20180325150743492?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180325152056339?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://img.blog.csdn.net/20180325152139143?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:updated_time" content="2018-06-02T16:03:46.985Z">
+<meta property="og:image" content="http://yoursite.com/images/node_images/node_realize.png">
+<meta property="og:image" content="http://yoursite.com/images/node_images/node_use1.png">
+<meta property="og:image" content="http://yoursite.com/images/node_images/node_use2.png">
+<meta property="og:updated_time" content="2018-07-03T12:50:04.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="node学习笔记——简介">
 <meta name="twitter:description" content="nodejs 简介node官网 上，是这样介绍nodejs的：Node.js是基于Chrome V8引擎 javascript 运行环境，node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。Node.js的包管理器npm，是全球最大的开源库生态系统。 node与js的关系我们知道java 是运行在java虚拟机上的，C#是运行在 .net framework 上面的，而同理，j">
-<meta name="twitter:image" content="http://img.blog.csdn.net/20180325150743492?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta name="twitter:image" content="http://yoursite.com/images/node_images/node_realize.png">
 
 
 
@@ -409,12 +409,12 @@
         <h3 id="nodejs-简介"><a href="#nodejs-简介" class="headerlink" title="nodejs 简介"></a>nodejs 简介</h3><p><a href="https://nodejs.org/en/" target="_blank" rel="noopener">node官网</a> 上，是这样介绍nodejs的：Node.js是基于Chrome V8引擎 javascript 运行环境，node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。Node.js的包管理器npm，是全球最大的开源库生态系统。</p>
 <h3 id="node与js的关系"><a href="#node与js的关系" class="headerlink" title="node与js的关系"></a>node与js的关系</h3><p>我们知道java 是运行在java虚拟机上的，C#是运行在 .net framework 上面的，而同理，javascript除了可以运行在浏览器上之外，node就是javascript在服务端的运行环境（平台）。node平台提供一些以前js在浏览器客户端环境办不到的事情，例如：文件操作，网络操作，操作系统等等。在这个意义上，Node又是javascript的工具库。</p>
 <h3 id="node的实现"><a href="#node的实现" class="headerlink" title="node的实现"></a>node的实现</h3><p>我们先看一张图：</p>
-<p><img src="http://img.blog.csdn.net/20180325150743492?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="/images/node_images/node_realize.png" alt="这里写图片描述"></p>
 <p>如上图，我们写的程序一般是在My Application中，即JS文件。而chrome’s V8 是中来解析JS（ES）的语言解释器；libuv是用来跟OS进行交互和操作的，即可以通过libuv进行上面说到的文件读写，网络操作等OS操作。</p>
 <h3 id="node在Web中的应用"><a href="#node在Web中的应用" class="headerlink" title="node在Web中的应用"></a>node在Web中的应用</h3><p>node在web中的应用分为两种：一是：做网站（服务端）：</p>
-<p><img src="http://img.blog.csdn.net/20180325152056339?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="/images/node_images/node_use1.png" alt="这里写图片描述"></p>
 <p>二是作为分发数据请求，渲染HTML页面：</p>
-<p><img src="http://img.blog.csdn.net/20180325152139143?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY2Nocm9vdA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="/images/node_images/node_use2.png" alt="这里写图片描述"></p>
 <p>分发主要用于多并发操作，有利于系统的稳定性。例如：天猫就是这样做的，你访问天猫的网站的时候，先到天猫的node服务器，node服务器帮我们去调传统的java服务区。还有很多的游戏等<a href="http://pomelo.netease.com/demo.html" target="_blank" rel="noopener">网易基于nodejs的开源游戏服务器</a>。</p>
 <p>总结：Node是一个javascript的运行环境（平台），不是一门语言，也不是Javascript框架；Node的实现结构主要是通过chromeV8引擎和libvu；Node可以用来开发服务端应用程序，web系统等。</p>
 <p><br><br>完~<br><br><br></p>
@@ -562,7 +562,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/javascript/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
