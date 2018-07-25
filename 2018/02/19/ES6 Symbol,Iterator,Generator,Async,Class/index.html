@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，…拓展运算符，形参默认值，Promise 对象，Symbol,Iterator,Generator,Async,Class等等。 前面说了 ES6 中的 Promise，今天来看看 Symbol,Iterator,Generator,Async,Class： SymbolES5 中">
+<meta name="description" content="ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，”…”拓展运算符，形参默认值，Promise 对象，Symbol 类型,Iterator 遍历器,Generator 函数,Async 函数,Class 等等。 前面说了 ES6 中的 Promise，今天来看看 Symbol,Iterator,Generator,Async,Cl">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES6 Symbol,Iterator,Generator,Async,Class">
 <meta property="og:url" content="http://yoursite.com/2018/02/19/ES6 Symbol,Iterator,Generator,Async,Class/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，…拓展运算符，形参默认值，Promise 对象，Symbol,Iterator,Generator,Async,Class等等。 前面说了 ES6 中的 Promise，今天来看看 Symbol,Iterator,Generator,Async,Class： SymbolES5 中">
+<meta property="og:description" content="ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，”…”拓展运算符，形参默认值，Promise 对象，Symbol 类型,Iterator 遍历器,Generator 函数,Async 函数,Class 等等。 前面说了 ES6 中的 Promise，今天来看看 Symbol,Iterator,Generator,Async,Cl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-25T16:23:52.556Z">
+<meta property="og:updated_time" content="2018-07-25T16:33:24.845Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES6 Symbol,Iterator,Generator,Async,Class">
-<meta name="twitter:description" content="ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，…拓展运算符，形参默认值，Promise 对象，Symbol,Iterator,Generator,Async,Class等等。 前面说了 ES6 中的 Promise，今天来看看 Symbol,Iterator,Generator,Async,Class： SymbolES5 中">
+<meta name="twitter:description" content="ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，”…”拓展运算符，形参默认值，Promise 对象，Symbol 类型,Iterator 遍历器,Generator 函数,Async 函数,Class 等等。 前面说了 ES6 中的 Promise，今天来看看 Symbol,Iterator,Generator,Async,Cl">
 
 
 
@@ -402,7 +402,7 @@
       
 
       
-        <p>ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，…拓展运算符，形参默认值，Promise 对象，Symbol,Iterator,Generator,Async,Class等等。</p>
+        <p>ES6 中强大实用的语法有很多，例如：let关键字，const关键字，变量的解构赋值，模板字符串，简化对象，箭头函数，”…”拓展运算符，形参默认值，Promise 对象，Symbol 类型,Iterator 遍历器,Generator 函数,Async 函数,Class 等等。</p>
 <p>前面说了 ES6 中的 Promise，今天来看看 Symbol,Iterator,Generator,Async,Class：</p>
 <h2 id="Symbol"><a href="#Symbol" class="headerlink" title="Symbol"></a>Symbol</h2><p>ES5 中对象的属性名都是字符串，容易造成重名，污染环境,所以有了现在的 symbol~</p>
 <p>概念：ES6 中的添加了一种原始数据类型 symbol (已有的原始数据类型：String, Number, boolean, null, undefined, 对象)</p>
@@ -451,7 +451,20 @@
 <p>原生数组:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr3 = [<span class="number">1</span>, <span class="number">2</span>, <span class="string">'kobe'</span>, <span class="literal">true</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> arr3)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i); <span class="comment">// 1 2 kobe true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>字符串:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'abcdefg'</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> str)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item); <span class="comment">//a b c d e f g</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">## Generator 函数</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">概念：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">1. ES6 提供的解决异步编程的方案之一（Promise对象,Generator函数,Async函数）</span></span><br><span class="line"><span class="string">2. Generator 函数是一个状态机，内部封装了不同状态的数据</span></span><br><span class="line"><span class="string">3. 用来生成遍历器对象</span></span><br><span class="line"><span class="string">4. 可暂停函数(惰性求值), yield可暂停，next方法可启动。每次返回的是yield后的表达式结果</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">特点：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">1. function 与函数名之间有一个星号</span></span><br><span class="line"><span class="string">2. 内部用 yield 表达式来定义不同的状态，例如：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">'abcdefg'</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> str)&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(item); <span class="comment">//a b c d e f g</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Generator-函数"><a href="#Generator-函数" class="headerlink" title="Generator 函数"></a>Generator 函数</h2><p>概念：</p>
+<ol>
+<li>ES6 提供的解决异步编程的方案之一（Promise对象,Generator函数,Async函数）</li>
+<li>Generator 函数是一个状态机，内部封装了不同状态的数据</li>
+<li>用来生成遍历器对象</li>
+<li>可暂停函数(惰性求值), yield可暂停，next方法可启动。每次返回的是yield后的表达式结果</li>
+</ol>
+<p>特点：</p>
+<ol>
+<li>function 与函数名之间有一个星号</li>
+<li>内部用 yield 表达式来定义不同的状态，例如：</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">generatorExample</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="keyword">yield</span> <span class="string">'hello'</span>;  <span class="comment">// 状态值为hello</span></span><br><span class="line">  <span class="keyword">yield</span> <span class="string">'generator'</span>; <span class="comment">// 状态值为generator</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ol>
 <li>generator 函数返回的是<strong>指针对象</strong>（利用 iterator 遍历器），而不会执行函数内部逻辑</li>
 <li>调用 next 方法函数内部逻辑开始执行，遇到 yield 表达式停止，返回 {value: yield后的表达式结果/undefined, done: false/true}</li>
@@ -696,7 +709,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol"><span class="nav-number">1.</span> <span class="nav-text">Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator-遍历器"><span class="nav-number">2.</span> <span class="nav-text">Iterator 遍历器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Async-函数-源自ES2017"><span class="nav-number">3.</span> <span class="nav-text">Async 函数(源自ES2017)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-Class-定义类"><span class="nav-number">4.</span> <span class="nav-text">用 Class 定义类</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Symbol"><span class="nav-number">1.</span> <span class="nav-text">Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Iterator-遍历器"><span class="nav-number">2.</span> <span class="nav-text">Iterator 遍历器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Generator-函数"><span class="nav-number">3.</span> <span class="nav-text">Generator 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Async-函数-源自ES2017"><span class="nav-number">4.</span> <span class="nav-text">Async 函数(源自ES2017)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用-Class-定义类"><span class="nav-number">5.</span> <span class="nav-text">用 Class 定义类</span></a></li></ol></div>
             
 
           </div>
