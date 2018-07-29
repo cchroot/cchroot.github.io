@@ -312,6 +312,318 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/22/node learning notes__md5AndPictureProcessing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/22/node learning notes__md5AndPictureProcessing/" itemprop="url">node学习笔记——MD5加密与图片处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T20:59:05+08:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          MD5加密永远不要用明码写密码，这样黑客拿到的用户的密码的加密信息也没用，因为他无法翻译成为明码。
+MD5加密是函数型加密。就是每次加密的结果一定相同，没有随机位。
+特点：
+
+不管加密的文字，多长多短，永远都是32位英语字母、数字混合。
+哪怕只改一个字，密文都会大变。
+MD5没有反函数破解的可能，网上的破解工具，都是通过字典的模式，通过大量列出明-密对应的字典，找到明码。两次加密网上也有对应的字典。所以我们不要直接用一层md5，这样对黑客来说和明码是一样。
+MD5常用于作为版本校验。可以比对两个软件、文件是否完全一致。
+
+使用方法：
+1234//首先创建hashvar md5 = crypto.createHash('md5');//然后update和digestvar password = md5.updat
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/22/node learning notes__md5AndPictureProcessing/#espandi" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/21/node learning notes__cookieAndSession /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/21/node learning notes__cookieAndSession /" itemprop="url">node学习笔记——cookie与session</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T20:59:05+08:00">
+                2018-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          HTTP是无状态协议。简单地说，当你浏览了一个页面，然后转到同一个网站的另一个页面，服务器无法认识到，这是同一个浏览器在访问同一个网站。每一次的访问，都是没有任何关系的。
+那么，比如我上一次访问，登陆了，下一次访问，又让我登陆，不存在登陆这事儿了，这样用户体验就非常糟糕了。
+CookieCookie 是一个简单到爆的想法：当访问一个页面的时候，服务器在下行 HTTP 报文中，命令浏览器存储一个字符串；浏览器再访问同一个域的时候，将把这个字符串携带到上行 HTTP 请求中。
+第一次访问一个服务器，不可能携带 cookie。 必须是服务器得到这次请求，在下行响应报头中，携带 cookie 信息，此后每一次浏览器往这个服务器发出的请求，都会携带这个 cookie。
+Cookie 的特点：
+
+cookie是不加密的，用
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/03/21/node learning notes__cookieAndSession /#espandi" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/20/node learning notes__mongoDB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -417,7 +729,7 @@
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/20/node learning notes__mongoDB/#more" rel="contents">
+            <a class="btn" href="/2018/03/20/node learning notes__mongoDB/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -578,7 +890,7 @@ Express 的哲学是在你的想法和服务器之间充当薄薄的一层。这
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/19/node learning notes__express/#more" rel="contents">
+            <a class="btn" href="/2018/03/19/node learning notes__express/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -728,7 +1040,7 @@ HTML：12345678910111213141516171819202122232425262728&lt;!DOCTYPE html&gt;&
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/18/简单的lazy load/#more" rel="contents">
+            <a class="btn" href="/2018/03/18/简单的lazy load/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -881,7 +1193,7 @@ URL和真实物理文件，是没有关系的。URL是通过了Node的顶层路�
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/18/node learning notes__resourceAdministration/#more" rel="contents">
+            <a class="btn" href="/2018/03/18/node learning notes__resourceAdministration/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1030,7 +1342,7 @@ Anagrams of string（带有重复项）使用递归。对于给定字符串中�
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/17/用的js代码片段/#more" rel="contents">
+            <a class="btn" href="/2018/03/17/用的js代码片段/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1189,7 +1501,7 @@ path.relative(from, to) =&gt; 获取从from 到 to 的相对路径
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/17/node learning notes__somenodeuse/#more" rel="contents">
+            <a class="btn" href="/2018/03/17/node learning notes__somenodeuse/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1341,7 +1653,7 @@ commomModule.js如下：
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/16/node learning notes__require/#more" rel="contents">
+            <a class="btn" href="/2018/03/16/node learning notes__require/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1497,316 +1809,7 @@ Node 采用错误优先的回掉规则，即：回调函数一定作为参数的
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/03/15/node learning notes__eventMechanism/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/node learning notes__intro/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cchroot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headPhoto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cchroot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/node learning notes__intro/" itemprop="url">node学习笔记——简介</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T20:59:05+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
-                    <span itemprop="name">nodeJs</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          nodejs 简介node官网 上，是这样介绍nodejs的：Node.js是基于Chrome V8引擎 javascript 运行环境，node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。Node.js的包管理器npm，是全球最大的开源库生态系统。
-node与js的关系我们知道java 是运行在java虚拟机上的，C#是运行在 .net framework 上面的，而同理，javascript除了可以运行在浏览器上之外，node就是javascript在服务端的运行环境（平台）。node平台提供一些以前js在浏览器客户端环境办不到的事情，例如：文件操作，网络操作，操作系统等等。在这个意义上，Node又是javascript的工具库。
-node的实现我们先看一张图：
-
-如上图，我们写的程序一
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/13/node learning notes__intro/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/重温作用域与闭包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cchroot">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/headPhoto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cchroot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/11/重温作用域与闭包/" itemprop="url">重温——作用域与闭包</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T20:59:05+08:00">
-                2018-03-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          有兴趣的童鞋，还可以看看闭包相关的另一篇文章，读书笔记你不知道的javascript作用域与闭包
-“准备工作”——执行上下文中完成了哪些工作？很多童鞋可能不知道什么是执行上下文，也就是执行上下文环境，即javscript引擎会在解释 JavaScript 代码之前首先对其进行编译。编译阶段中中的一部分工作就是找到所有的声明，并用合适的作用域将它们关联起来。也正是词法作用域的核心内容。
-因此，正确的思考思路是，包括变量和函数在内的所有声明都会在任何代码被执行前首先被处理。也就是执行上下文中所需要完成的工作。有兴趣童鞋可以看看你不知道的javascript提升。
-那么，具体是哪些工作呢？
-
-变量、函数表达式——变量声明，默认赋值为undefined
-this——赋值；
-函数声明——赋值；
-
-这三种数据的准备情况我们
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/11/重温作用域与闭包/#more" rel="contents">
+            <a class="btn" href="/2018/03/15/node learning notes__eventMechanism/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1898,7 +1901,7 @@ this——赋值；
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-count">85</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1919,8 +1922,8 @@ this——赋值；
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
-                  <span class="site-state-item-count">10</span>
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
