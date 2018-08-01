@@ -90,8 +90,8 @@
 <meta property="og:image" content="http://yoursite.com/images/node/qhdfl1.png">
 <meta property="og:image" content="http://yoursite.com/images/node/qhdfl2.png">
 <meta property="og:image" content="http://yoursite.com/images/node/qhdfl3.png">
-<meta property="og:image" content="http://yoursite.com/images/node_images/node_use2.png">
-<meta property="og:updated_time" content="2018-07-03T13:59:36.009Z">
+<meta property="og:image" content="http://yoursite.com/images/node/node_use2.png">
+<meta property="og:updated_time" content="2018-08-01T14:53:04.799Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodejs作为中间层服务">
 <meta name="twitter:description" content="前后端分离的时代在MV* 的前后端分离时代，前后端数据通过JSON进行交互，彼此互相不关联，接口分离，后端提供数据即可，前端自己搞。  但是，有时候有新需求的时候，要定义前后端的数据接口了，这时候前端需要等到服务端接口开发完才能进行开发吗？ 当然不需要，我们可以采取 mock 的形式进行数据模拟，需要前后端共同定义好接口规范，于是乎我们开心的在本地写了一大堆mock文件。 但是问题又来了，我们需要">
@@ -431,7 +431,7 @@
 <p>对于这种情况，我们前端其实不应该去重复校验数据的格式，这也本不应该是浏览器端js需要做的事情。我们可以在中间层做接口转发，在转发的过程中做数据处理。而不用担心数据返回的问题：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">router.get(<span class="string">'/buyer/product/detail'</span>, (req, res, next) =&gt; &#123;</span><br><span class="line">  httpRequest.get(<span class="string">'/buyer/product/detail'</span>, (data) =&gt; &#123;</span><br><span class="line">    <span class="comment">// todo 处理数据</span></span><br><span class="line">    res.send(data);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>上面就是利用 nodejs 进行分发：</p>
-<p><img src="/images/node_images/node_use2.png" alt="前后端分离"></p>
+<p><img src="/images/node/node_use2.png" alt="前后端分离"></p>
 <h3 id="页面性能优化-和-SEO"><a href="#页面性能优化-和-SEO" class="headerlink" title="页面性能优化 和 SEO"></a>页面性能优化 和 SEO</h3><p>有时候我们做单页面应用，经常会碰到首屏加载性能问题，这个时候如果我们接了中间层 nodejs 的话，那么我们可以把首屏渲染的任务交给 nodejs 去做（即SSR服务端渲染），次屏的渲染依然走之前的浏览器渲染。（前端换页，浏览器端渲染，直接输入网址，服务器渲染）服务端渲染对页面进行拼接直出html字符串，可以大幅提高首屏渲染的时间，减少用户的等待时间。</p>
 <p>其次对于单页面的 SEO 优化也是很好地处理方式，由于目前的ajax并不被搜索百度等搜索引擎支持，所以如果想要得到爬虫的支持，那么 SSR 也是一种解决方法。</p>
 <p>这里说一下<strong>预渲染</strong></p>
@@ -582,7 +582,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/javascript/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
