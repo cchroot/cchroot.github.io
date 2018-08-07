@@ -312,7 +312,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/14/Vue.js中 watch 的高级用法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/19/node learning notes__express/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -331,7 +331,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/14/Vue.js中 watch 的高级用法/" itemprop="url">Vue.js中 watch 的高级用法</a></h1>
+                <a class="post-title-link" href="/2017/12/19/node learning notes__express/" itemprop="url">node学习笔记——初识Express</a></h1>
         
 
         <div class="post-meta">
@@ -343,8 +343,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-14T20:30:05+08:00">
-                2018-02-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T20:59:05+08:00">
+                2017-12-19
               </time>
             
 
@@ -366,8 +366,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vueJs/" itemprop="url" rel="index">
-                    <span itemprop="name">vueJs</span>
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
                   </a>
                 </span>
 
@@ -405,13 +405,24 @@
       
         
           
-          今天转录一篇vue.js中 watch 的高级用法，为自己加深印象，也为让更多的童鞋看到。原文地址为：Vue.js中 watch 的高级用法。对于watch，你可能只知道最基本的用法和deep的用法。但是却不知道为什么，和其优化的方法，这篇文章将会告诉你这些。下面是文章内容：
-基本用法假设有如下代码：
-123456789101112131415161718&lt;div&gt;      &lt;p&gt;FullName: &#123;&#123;fullName&#125;&#125;&lt;/p&gt;      &lt;p&gt;FirstName: &lt;input type="text" v-model="firstName"&gt;&lt;/p&gt;&lt;/div&gt;new Vue(&#
+          Express 在后台的受欢迎的程度，和原来的jQuery一样，就是企业的事实上的标准。
+为什么需要 Express 呢？因为原生Node开发，会发现有很多问题。比如：
+
+呈递静态页面很不方便，需要处理每个HTTP请求，还要考虑304问题
+路由处理代码不直观清晰，需要写很多正则表达式和字符串函数
+不能集中精力写业务，要考虑很多其他的东西
+
+Express 的哲学是在你的想法和服务器之间充当薄薄的一层。这并不意味着他不够健壮，或者没有足够的有用特性，而是尽量少干预你，让你充分表达自己的思想，同时提供一些有用的东西。
+
+英语官网
+中文官网
+
+基本功能路由能力：Express有着惊艳的路由能力，正则提取数据能力足够一般工作使用；
+1234567891011121314151617181920var express =
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/02/14/Vue.js中 watch 的高级用法/#more" rel="contents">
+            <a class="btn" href="/2017/12/19/node learning notes__express/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -462,7 +473,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/13/js获取网页高宽和event对象宽高/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/18/node learning notes__resourceAdministration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -481,7 +492,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/13/js获取网页高宽和event对象宽高/" itemprop="url">js获取网页高宽和event对象宽高</a></h1>
+                <a class="post-title-link" href="/2017/12/18/node learning notes__resourceAdministration/" itemprop="url">node学习笔记——简单的静态资源文件管理</a></h1>
         
 
         <div class="post-meta">
@@ -493,8 +504,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-13T20:30:05+08:00">
-                2018-02-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T18:34:05+08:00">
+                2017-12-18
               </time>
             
 
@@ -516,8 +527,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
                   </a>
                 </span>
 
@@ -555,22 +566,16 @@
       
         
           
-          发现自己老搞混各种宽高，所以今天稍微整理一下：
-网页高/宽
-网页可见区域宽： document.body.clientWidth
-网页可见区域高： document.body.clientHeight
-网页可见区域宽： document.body.offsetWidth (包括边线的宽) 
-网页可见区域高： document.body.offsetHeight (包括边线的高) 
-网页正文全文宽： document.body.scrollWidth 
-网页正文全文高： document.body.scrollHeight 
-网页被卷去的高： document.body.scrollTop 
-网页被卷去的左： document.body.scrollLeft 
-网页正文部分上： window.screenTop
-
+          在 node 中管理静态资源文件与C#、JAVA 等语言不同，具体不同如下：
+不存在web容器nodejs 不像 apache 一样存在容器，nodejs 不存在容器的概念，都是通过路由来控制的，访问路径跟文件夹和文件名没有任何关系。
+让 node.js 提供一个静态服务，都非常难！
+也就是说，node.js中，如果看见一个网址是：1127.0.0.1:3000/fang，别再去想，一定有一个文件夹，叫做fang了。可能/fang的物理文件，是同目录的test.html
+URL和真实物理文件，是没有关系的。URL是通过了Node的顶层路由设计，呈递某一个静态文件的。
+简单的静态资源管理实现由于 node 不存在web容器的概念，所以需要通过路由控制访问的路径文件，具体node是怎么做的呢？我们可以看看简单的实现
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/02/13/js获取网页高宽和event对象宽高/#more" rel="contents">
+            <a class="btn" href="/2017/12/18/node learning notes__resourceAdministration/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -621,7 +626,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/12/blog/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/17/node learning notes__somenodeuse/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -640,7 +645,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/12/blog/" itemprop="url">博客与博客搭建</a></h1>
+                <a class="post-title-link" href="/2017/12/17/node learning notes__somenodeuse/" itemprop="url">node学习笔记——一些概念与API</a></h1>
         
 
         <div class="post-meta">
@@ -652,8 +657,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-12T21:59:05+08:00">
-                2018-02-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T18:34:05+08:00">
+                2017-12-17
               </time>
             
 
@@ -675,8 +680,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tool/" itemprop="url" rel="index">
-                    <span itemprop="name">tool</span>
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
                   </a>
                 </span>
 
@@ -714,16 +719,22 @@
       
         
           
-            很早就有了搭建一个自己博客的想法，前段时间春节假期回家，利用一些空闲的实践研究了一下，最后采用了github+hexo+next主题的方式。至于为什么采用这种方式来搭建自己的博客，是综合了自己各方面的喜好来的。有兴趣的可以自行百度各种方式搭建博客的优缺点，然后根据自己的实际情况来选择。这里附上本人搭建的时候参考的文章,有兴趣的同学可以参考一下： 
-  搭建步骤： 一步一步搭建自己的博客  hexo官网： hexo  next主题： next主题
-  等搭建好博客,就可以自定义自己的next主题了，至于怎么改，网上有一搜就有好多，官网也有一些：例如：
-  自定义next主题  一些你可能想知道的问题
-  好了，至于更深的一些博客搭建的问题，本人自己也尚未研究，毕竟只是写博客嘛，也不想搞的太复杂。
+          路径操作模块（path）在文件操作过程中，都必须只用物理路径（绝对路径）
+path模块提供了一系列与路径相关的API
 
-          
+path.join([p1][,p2][,p3]…) =&gt; 连接多个路径
+path.basename(p, ext) =&gt;获取文件名
+path.dirname(p) =&gt;获取文件路径
+path.extname(p) =&gt;获取文件扩展名
+path.format(obj) 和 path.parse(p) =&gt; 从对象中返回路径字符串，和 path.parse 相反。和返回路径字符串的对象
+path.relative(from, to) =&gt; 获取从from 到 to 的相对路径
+
+同步或异步调用fs 模块对文件几乎所有的操作都有同步和异步两种形式
+例如：read
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/02/12/blog/#more" rel="contents">
+            <a class="btn" href="/2017/12/17/node learning notes__somenodeuse/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -774,7 +785,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/11/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/node learning notes__require/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -793,7 +804,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/11/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2017/12/16/node learning notes__require/" itemprop="url">node学习笔记——自己实现一个require</a></h1>
         
 
         <div class="post-meta">
@@ -805,8 +816,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-11T10:46:20+08:00">
-                2018-02-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-16T20:59:05+08:00">
+                2017-12-16
               </time>
             
 
@@ -828,8 +839,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tool/" itemprop="url" rel="index">
-                    <span itemprop="name">tool</span>
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
                   </a>
                 </span>
 
@@ -867,17 +878,15 @@
       
         
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More info: Server
-Generate static files1$ hexo generate
-More info: 
+          Node 使用 CommonJS 模块规范，内置的 require 函数用具加载模块文件。
+require 的基本功能是，读入并执行一个 JavaScript 文件，然后返回该模块的 export 对象，如果没有发现指定模块，会报错。内置 require 加载文件时可以省略扩展名，默认按JS文件执行。
+简单实现 require 加载机制为了弄清楚 commom.js 的运行机制，我们可以自己简单实现一下内部的模块加载机制：
+commomModule.js如下：
+1234567891011121314151617181920212223242526272829303132//'use strict'//自己写一个require函数function $require(id)&#123;	//1.先找到文件，如果文件
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/02/11/hello-world/#more" rel="contents">
+            <a class="btn" href="/2017/12/16/node learning notes__require/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -928,7 +937,7 @@ More info:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/10/vue scoped slots/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/15/node learning notes__eventMechanism/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -947,7 +956,7 @@ More info:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/10/vue scoped slots/" itemprop="url">vue 作用域插槽</a></h1>
+                <a class="post-title-link" href="/2017/12/15/node learning notes__eventMechanism/" itemprop="url">node学习笔记——事件机制</a></h1>
         
 
         <div class="post-meta">
@@ -959,8 +968,8 @@ More info:
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-10T20:30:05+08:00">
-                2018-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-15T20:59:05+08:00">
+                2017-12-15
               </time>
             
 
@@ -982,8 +991,8 @@ More info:
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vueJs/" itemprop="url" rel="index">
-                    <span itemprop="name">vueJs</span>
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
                   </a>
                 </span>
 
@@ -1021,15 +1030,19 @@ More info:
       
         
           
-          默认插槽和具名插槽这里就不多说了，大家直接去看官网的例子就好插槽,我们来说说 2.1.0+ 新增的比较难理解的作用域插槽。
-官网例子有的时候你希望提供的组件带有一个可从子组件获取数据的可复用的插槽。例如一个简单的  组件的模板可能包含了如下代码：
-12345678&lt;ul&gt;  &lt;li    v-for="todo in todos"    v-bind:key="todo.id"  &gt;    &#123;&#123; todo.text &#125;&#125;  &lt;/li&gt;&lt;/ul&gt;
-但是在我们应用的某些部分，我们希望每个独立的待办项渲染出和 todo.text 不太一样的东西。这也是作用域插槽的用武之地。
-为了让这个特性成为可能，你需要做的全部事情就是将待办项内
+          异步操作Node 采用 Chrome V8 引擎处理 javascript 脚本，V8最大的特点就是单线程运行，一次只能运行一个任务。
+Node 大量采用异步操作，即任务不是马上执行，而是插在任务队列的尾部，等到前面的任务执行完毕后再执行，即：利用回调处理操作。
+Node 采用错误优先的回掉规则，即：回调函数一定作为参数的最后一个参数出现，回调函数的第一个参数默认接收错误信息，第二个参数才是真正的回掉数据，这样便于外界获取调用的错误情况。
+原因是：大部分操作都是异步的方式，无法通过 try catch 捕获异常， so 采用错误优先的回调函数，第一个参数为上一步的错误信息。
+非阻塞异步事件机制我们看一下 node 中的事件驱动和非阻塞机制：
+
+举个栗子是这样子的，读文件的过程：
+
+对于异步的调用和执行，node
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/10/vue scoped slots/#more" rel="contents">
+            <a class="btn" href="/2017/12/15/node learning notes__eventMechanism/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1080,7 +1093,7 @@ More info:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/06/vue animation summary/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/node learning notes__intro/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -1099,7 +1112,7 @@ More info:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/06/vue animation summary/" itemprop="url">vue 动画小结</a></h1>
+                <a class="post-title-link" href="/2017/12/13/node learning notes__intro/" itemprop="url">node学习笔记——简介</a></h1>
         
 
         <div class="post-meta">
@@ -1111,8 +1124,8 @@ More info:
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-06T20:30:05+08:00">
-                2018-01-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T20:59:05+08:00">
+                2017-12-13
               </time>
             
 
@@ -1134,8 +1147,8 @@ More info:
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/vueJs/" itemprop="url" rel="index">
-                    <span itemprop="name">vueJs</span>
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
                   </a>
                 </span>
 
@@ -1173,19 +1186,15 @@ More info:
       
         
           
-          vue 的官方文档可以说是写的非常非常棒了，但是看完了官方文档有时候我们还会存在一些疑问，以及缺少完整的例子实践。下面就是我对 vue 动画部分的总结，其中有包含一点点官网文档的例子和说明，然后其它都是以完整的例子，复制粘贴即可运行的一个个例子告诉大家各种情况下怎么使用 vue 动画。例子都是采取尽量简单的方式展示，大家可以自行拷贝然后扩展实验。
-Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用过渡效果。包括以下工具：
+          nodejs 简介node官网 上，是这样介绍nodejs的：Node.js是基于Chrome V8引擎 javascript 运行环境，node.js使用了一个事件驱动、非阻塞式I/O的模型，使其轻量又高效。Node.js的包管理器npm，是全球最大的开源库生态系统。
+node与js的关系我们知道java 是运行在java虚拟机上的，C#是运行在 .net framework 上面的，而同理，javascript除了可以运行在浏览器上之外，node就是javascript在服务端的运行环境（平台）。node平台提供一些以前js在浏览器客户端环境办不到的事情，例如：文件操作，网络操作，操作系统等等。在这个意义上，Node又是javascript的工具库。
+node的实现我们先看一张图：
 
-在 CSS 过渡和动画中自动应用 class
-可以配合使用第三方 CSS 动画库，如 Animate.css
-在过渡钩子函数中使用 JavaScript 直接操作 DOM
-可以配合使用第三方 JavaScript 动画库，如 Velocity.js
-
-过渡的类名在进入/离开的过
+如上图，我们写的程序一
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/01/06/vue animation summary/#more" rel="contents">
+            <a class="btn" href="/2017/12/13/node learning notes__intro/#espandi" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1298,7 +1307,7 @@ Vue 在插入、更新或者移除 DOM 时，提供多种不同方式的应用�
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
+                <a href="/tools/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
