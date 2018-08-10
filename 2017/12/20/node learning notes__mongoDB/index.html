@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="node.js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据库数据库就是存储数据的，那么存储数据就用txt就行了啊，为什么要有数据库？   数据库有行、列的概念，数据有关系，数据不是散的。 据库能够提供非常方便的接口，让增删改查操作变得简单 数据库不能自己玩儿，要给向PHP、.net、jsp等语言提供接口。  老牌数据库，比如MySQL、SQL Server、Oracle、Access。这些数据库，我们管他们叫做结构型数据库。每个表中，都有明确的字段，">
+<meta name="keywords" content="node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node学习笔记——初识MongoDB">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/node learning notes__mongoDB/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="数据库数据库就是存储数据的，那么存储数据就用txt就行了啊，为什么要有数据库？   数据库有行、列的概念，数据有关系，数据不是散的。 据库能够提供非常方便的接口，让增删改查操作变得简单 数据库不能自己玩儿，要给向PHP、.net、jsp等语言提供接口。  老牌数据库，比如MySQL、SQL Server、Oracle、Access。这些数据库，我们管他们叫做结构型数据库。每个表中，都有明确的字段，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/wa0TuFE.png">
+<meta property="og:image" content="https://i.imgur.com/PjlZClm.png">
+<meta property="og:image" content="https://i.imgur.com/i0OZ3e2.png">
+<meta property="og:image" content="https://i.imgur.com/t62ypmq.png">
+<meta property="og:updated_time" content="2018-08-07T12:17:51.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node学习笔记——初识MongoDB">
+<meta name="twitter:description" content="数据库数据库就是存储数据的，那么存储数据就用txt就行了啊，为什么要有数据库？   数据库有行、列的概念，数据有关系，数据不是散的。 据库能够提供非常方便的接口，让增删改查操作变得简单 数据库不能自己玩儿，要给向PHP、.net、jsp等语言提供接口。  老牌数据库，比如MySQL、SQL Server、Oracle、Access。这些数据库，我们管他们叫做结构型数据库。每个表中，都有明确的字段，">
+<meta name="twitter:image" content="https://i.imgur.com/wa0TuFE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/20/node learning notes__mongoDB/"/>
+
+
+
+
+
+  <title>node学习笔记——初识MongoDB | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            tool
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/node learning notes__mongoDB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">node学习笔记——初识MongoDB</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T20:59:05+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodeJs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodeJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>数据库就是存储数据的，那么存储数据就用txt就行了啊，为什么要有数据库？ </p>
+<ul>
+<li>数据库有行、列的概念，数据有关系，数据不是散的。</li>
+<li>据库能够提供非常方便的接口，让增删改查操作变得简单</li>
+<li>数据库不能自己玩儿，要给向PHP、.net、jsp等语言提供接口。</li>
+</ul>
+<p>老牌数据库，比如MySQL、SQL Server、Oracle、Access。这些数据库，我们管他们叫做<strong>结构型数据库</strong>。每个表中，都有明确的字段，每行记录，都有这些字段，不能有的行有，有的行没有。</p>
+<h2 id="非结构型数据库NoSQL"><a href="#非结构型数据库NoSQL" class="headerlink" title="非结构型数据库NoSQL"></a>非结构型数据库NoSQL</h2><p>在大数据时代，如果数据库中存储的数据很多，如果突然需要改变某个字段，很不方便，因为所谓的字段，是表的一个结构，所有的行都必须拥有，不能有的行有这个字段，有的行没有这个字段。</p>
+<p>所以非结构型数据库 NoSQL 应运而生，NoSQL 是个怪胎，无法挑战老牌数据库，但是在大数据时代有自己的意义。NoSQL <strong>非结构型数据库</strong>，没有行、列的概念，用JSON来存储数据，集合就相当于“表”，文档就相当于“行”。</p>
+<p><img src="https://i.imgur.com/wa0TuFE.png" alt=""></p>
+<p>在 NoSQL 中，最小的“数据条目”，不是“行”，而是“文档”。文档就是键值对的一个集合，实际上表达方式和JSON一样。</p>
+<p><img src="https://i.imgur.com/PjlZClm.png" alt=""></p>
+<p>文档就是JSON，但是要比JSON多了一些限制：</p>
+<ul>
+<li><strong>每个文档必须有一个特殊的键 _ID ，这个键在集合中必须是唯一的。</strong></li>
+<li>文档中的所有键不能重复；大小写不同的键，视为不同的键。</li>
+<li>文档中键的命名，不能含有.和$，其他不限，甚至可以用中文命名、阿拉伯数字。</li>
+<li>文档中值的类型，比JavaScript中多了一些，比如日期、ObjectId()、正则表达式。</li>
+<li>文档给程序员看的时候，是JSON的表示模式，但是实际存储的时候，是BSON方式，即用二级制方式存储。</li>
+</ul>
+<p>NoSQL数据库包括四大类：键值存储数据库、列存储数据库、文档型数据库，图像数据库。</p>
+<p>NoSQL数据库在以下的这几种情况下比较适用：</p>
+<ol>
+<li>1、数据模型比较简单；</li>
+<li>需要灵活性更强的IT系统；</li>
+<li>对数据库性能要求较高；</li>
+<li>不需要高度的数据一致性；</li>
+<li>对于给定key，比较容易映射复杂值的环境。</li>
+</ol>
+<p>mysql 与 mongoDB 对比图：</p>
+<p><img src="https://i.imgur.com/i0OZ3e2.png" alt=""></p>
+<h2 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h2><p>MongoDB 属于NoSQL 文档型数据库，主要命令以三种开头：</p>
+<ul>
+<li>mongo   使用数据库</li>
+<li>mongod  开启</li>
+<li>mongoimport  导入数据</li>
+</ul>
+<p>打开命令行 CMD，开启命令为：<code>mongod --dbpath E:\mongo</code>,其中 –dbpath 就是选择数据库文档所在的文件夹。这个 CMD 不能动了，不能关，不能ctrl+c。 一旦这个cmd有问题了，数据库就自动关闭了。所以，应该再开一个cmd。输入：<code>mongo</code></p>
+<p>如果是3.0以上的 mongdb 则这样开启 <code>mongod --storageEngine mmapv1 --dbpath 数据目录</code>，3.2 版本开始，MongoDB 支持多数据存储引擎（Storage Engine），MongoDB 支持的存储引擎有：WiredTiger，MMAPv1 和 In-Memory。</p>
+<p>那么，运行环境就是mongo语法了，下面是一些经常用的增删改查方法：</p>
+<ul>
+<li>列出所有数据库：show dbs </li>
+<li>使用某个数据库：use 数据库名字，use一个不存在的，就是新建</li>
+<li>查看当前所在数据库：db</li>
+<li>插入数据：<code>db.student.insert({&quot;name&quot;:&quot;xiaoming&quot;,&quot;age&quot;:&quot;12&quot;,&quot;sex&quot;,&quot;male&quot;})</code>,student就是所谓的集合。集合中存储着很多json。如果student是第一次使用，集合将自动创建。</li>
+<li>清屏：cls</li>
+<li>删除数据库，删除当前所在的数据库：db.dropDatabase();</li>
+<li>将 JSON 导入数据库：<code>mongoimport --db test --collection restaurants --drop --file primer-dataset.json</code>:<ul>
+<li>–db test  想往哪个数据库里面导入</li>
+<li>–collection restaurants  想往哪个集合中导入</li>
+<li>–drop 把集合清空</li>
+<li>–file primer-dataset.json  哪个文件</li>
+</ul>
+</li>
+<li>查找数据，用find(),findOne() 则只获取第一条：<ul>
+<li>find中没有参数，那么将列出这个集合的所有文档：<code>db.restaurants.find()</code></li>
+<li>精确匹配：<code>db.student.find({&quot;score.shuxue&quot;:70});</code></li>
+<li>多个条件：<code>db.student.find({&quot;score.shuxue&quot;:70 , &quot;age&quot;:12})</code></li>
+<li>大于条件：<code>db.student.find({&quot;score.yuwen&quot;:{$gt:50}})</code></li>
+<li>或者,寻找所有年龄是9岁，或者11岁的学生：<code>db.student.find({$or:[{&quot;age&quot;:9},{&quot;age&quot;:11}]})</code></li>
+<li>查找完毕之后，打点调用sort，表示升降排序:<code>db.restaurants.find().sort({ &quot;borough&quot;: 1, &quot;address.zipcode&quot;: 1 })</code></li>
+</ul>
+</li>
+<li>查找名字叫做小明的，把年龄更改为16岁：<code>db.student.update({&quot;name&quot;:&quot;小明&quot;},{$set:{&quot;age&quot;:16}})</code></li>
+<li>查找数学成绩是70，把年龄更改为33岁：<code>db.student.update({&quot;score.shuxue&quot;:70},{$set:{&quot;age&quot;:33}})</code></li>
+<li>默认情况下，update() 方法更新单个文档。要更新多个文档，请在update() 方法中使用多重选项 {multi: true}：<code>db.student.update({&quot;sex&quot;:&quot;男&quot;},{$set:{&quot;age&quot;:33}},{multi: true});</code></li>
+<li>完整替换，不出现$set关键字了：<code>db.student.update({&quot;name&quot;:&quot;小明&quot;},{&quot;name&quot;:&quot;大明&quot;,&quot;age&quot;:16});</code></li>
+<li>删除数据,默认删除全部匹配项:<code>db.restaurants.remove({ &quot;borough&quot;: &quot;Manhattan&quot; })</code>,如果需要删除单项,请加{justOne: true} :<code>db.restaurants.remove({ &quot;borough&quot;: &quot;Queens&quot; }, { justOne: true })</code></li>
+<li>删除子文档数据：<code>db.collection.update({ field: &lt;query&gt; }, { $pull: { field: &lt;query&gt; }});</code>例如：<code>db.test.update({&quot;userId&quot;:100000077},{&quot;$pull&quot;:{&quot;cartList&quot;:{&quot;productId&quot;:201710009}}})</code>;</li>
+</ul>
+<p>需要说明的是，find() 的第二个参数限制返回的 filed 的个数，0代表不返回，1代表返回:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> db.Student.find(&#123;name:<span class="string">"jack"</span>&#125;,&#123;name:1,age:1&#125;)</span></span><br><span class="line">&#123; "_id" : ObjectId("5437383157abafe09d99cbfc"), "name" : "jack", "age" : 33 &#125;</span><br><span class="line">&#123; "_id" : ObjectId("543738b857abafe09d99cbfd"), "name" : "jack", "age" : 33 &#125;</span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> db.Student.find(&#123;name:<span class="string">"jack"</span>&#125;,&#123;sex:0&#125;)</span></span><br><span class="line">&#123; "_id" : ObjectId("5437383157abafe09d99cbfc"), "name" : "jack", "age" : 33 &#125;</span><br><span class="line">&#123; "_id" : ObjectId("543738b857abafe09d99cbfd"), "name" : "jack", "age" : 33 &#125;</span><br></pre></td></tr></table></figure>
+<p>“$lt”,”$lte”,”$gt”,”$gte”分别对应&lt;,&lt;=,&gt;,&gt;= ,此外还有：逻辑操作符：”$or”, “$and”,”$not”,”$nor”,以及包含与不包含：”$in”,”$nin”。</p>
+<h2 id="MongoDB-分页"><a href="#MongoDB-分页" class="headerlink" title="MongoDB 分页"></a>MongoDB 分页</h2><p>假如我们有有一个学生列表需要分页，那么有两种做法：</p>
+<ol>
+<li>错误的做法： 就是讲所有的result都读取到数组，然后进行数据操作，进行分页；</li>
+<li>正确的做法： 就是真的在数据库中，只读取这么多内容。</li>
+</ol>
+<p>如果利用第一种错误的方式，我们试图每次都读取全部数据，但是这样开销很大：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [];</span><br><span class="line">  db.find(<span class="string">"news"</span>,&#123;&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err,result</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">10</span> * page ; i &lt; <span class="number">10</span> * (page + <span class="number">1</span>) ; i++)&#123;</span><br><span class="line">      a.push(result[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    res.send(a);</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>所以，mongodb提供了傻傻的两个函数： limit() 和 skip()：</p>
+<p><img src="https://i.imgur.com/t62ypmq.png" alt=""></p>
+<p>假如第一页是page=0。每页10条，所以当前页的查询语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.student.find(&#123;&#125;).limit(10).skip(page*10)</span><br></pre></td></tr></table></figure>
+<p>得到数据总数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">db.student.stats().count</span><br><span class="line">db.student.find().count();</span><br></pre></td></tr></table></figure>
+<h2 id="mongoDB-索引"><a href="#mongoDB-索引" class="headerlink" title="mongoDB 索引"></a>mongoDB 索引</h2><p>在数据库操作中，根据一个字段的值，来寻找一个文档，是很常见的操作，比如根据学号来找一个学生。</p>
+<p>这个学号，是唯一的，只要有学号，就能唯一确认一个学生的文档（类似于结构型数据库中的主键）。学号这个属性，就非常适合建立索引，这样一来，查找学生就变得简单了。</p>
+<p>学生的姓名是唯一的，为了快速的进行检索，所以就把name属性建立成为“索引”：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.student.createIndex(&#123;<span class="string">"name"</span>:<span class="number">1</span>&#125;);</span><br></pre></td></tr></table></figure>
+<p>这样，今后通过 name 寻找 student 文档的时候，速度非常快。因为能够快速的从索引表中，找到这个文档。缺点就是插入每条数据的时候，时间变慢了，效率低了。但是换回来的就是寻找的速度快了。</p>
+<p>索引这个属性，所有的文档都不能相同：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.members.createIndex(&#123;<span class="string">"user_id"</span>: <span class="number">1</span>&#125;, &#123;<span class="attr">unique</span>: <span class="literal">true</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>需要注意的是：前面有说到过，在 mongoDB 中,每条数据都有一个特殊的键 _id ，这个键在集合中是唯一的，只是来实际查找中没有那么方便，使用时需要引入<code>require(&#39;mongodb&#39;).ObjectID;</code>，且数值是随机的一串，不是我们自己写入的，比较不好控制。</p>
+<h2 id="mongoDB-使用"><a href="#mongoDB-使用" class="headerlink" title="mongoDB 使用"></a>mongoDB 使用</h2><p>一个简易的留言板增删改查：</p>
+<p>数据库增删改查封装,db.js:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个模块里面封装了所有对数据库的常用操作</span></span><br><span class="line"><span class="keyword">var</span> MongoClient = <span class="built_in">require</span>(<span class="string">'mongodb'</span>).MongoClient;</span><br><span class="line"><span class="keyword">var</span> settings = <span class="built_in">require</span>(<span class="string">"../settings.js"</span>);</span><br><span class="line"><span class="comment">//不管数据库什么操作，都是先连接数据库，所以我们可以把连接数据库</span></span><br><span class="line"><span class="comment">//封装成为内部函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_connectDB</span>(<span class="params">callback</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> url = settings.dburl;   <span class="comment">//从settings文件中，获取数据库地址"mongodb://localhost:27017/mongotest"</span></span><br><span class="line">    <span class="comment">//连接数据库</span></span><br><span class="line">    MongoClient.connect(url, <span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">            callback(err, <span class="literal">null</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        callback(err, db);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//插入数据</span></span><br><span class="line">exports.insertOne = <span class="function"><span class="keyword">function</span> (<span class="params">collectionName, json, callback</span>) </span>&#123;</span><br><span class="line">    _connectDB(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        db.collection(collectionName).insertOne(json, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">            callback(err, result);</span><br><span class="line">            db.close(); <span class="comment">//关闭数据库</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查找数据，找到所有数据。args是个对象&#123;"pageamount":10,"page":10&#125;</span></span><br><span class="line">exports.find = <span class="function"><span class="keyword">function</span> (<span class="params">collectionName, json, C, D</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result = [];    <span class="comment">//结果数组</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">arguments</span>.length == <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="comment">//那么参数C就是callback，参数D没有传。</span></span><br><span class="line">        <span class="keyword">var</span> callback = C;</span><br><span class="line">        <span class="keyword">var</span> skipnumber = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//数目限制</span></span><br><span class="line">        <span class="keyword">var</span> limit = <span class="number">0</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">arguments</span>.length == <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> callback = D;</span><br><span class="line">        <span class="keyword">var</span> args = C;</span><br><span class="line">        <span class="comment">//应该省略的条数</span></span><br><span class="line">        <span class="keyword">var</span> skipnumber = args.pageamount * args.page || <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//数目限制</span></span><br><span class="line">        <span class="keyword">var</span> limit = args.pageamount || <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//排序方式</span></span><br><span class="line">        <span class="keyword">var</span> sort = args.sort || &#123;&#125;;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"find函数的参数个数，必须是3个，或者4个。"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//连接数据库，连接之后查找所有</span></span><br><span class="line">    _connectDB(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cursor = db.collection(collectionName).find(json).skip(skipnumber).limit(limit).sort(sort);</span><br><span class="line">        cursor.each(<span class="function"><span class="keyword">function</span> (<span class="params">err, doc</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (err) &#123;</span><br><span class="line">                callback(err, <span class="literal">null</span>);</span><br><span class="line">                db.close(); <span class="comment">//关闭数据库</span></span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (doc != <span class="literal">null</span>) &#123;</span><br><span class="line">                result.push(doc);   <span class="comment">//放入结果数组</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//遍历结束，没有更多的文档了</span></span><br><span class="line">                callback(<span class="literal">null</span>, result);</span><br><span class="line">                db.close(); <span class="comment">//关闭数据库</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">exports.deleteMany = <span class="function"><span class="keyword">function</span> (<span class="params">collectionName, json, callback</span>) </span>&#123;</span><br><span class="line">    _connectDB(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//删除</span></span><br><span class="line">        db.collection(collectionName).deleteMany(</span><br><span class="line">            json,</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">err, results</span>) </span>&#123;</span><br><span class="line">                callback(err, results);</span><br><span class="line">                db.close(); <span class="comment">//关闭数据库</span></span><br><span class="line">            &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//修改</span></span><br><span class="line">exports.updateMany = <span class="function"><span class="keyword">function</span> (<span class="params">collectionName, json1, json2, callback</span>) </span>&#123;</span><br><span class="line">    _connectDB(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        db.collection(collectionName).updateMany(</span><br><span class="line">            json1,</span><br><span class="line">            json2,</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">err, results</span>) </span>&#123;</span><br><span class="line">                callback(err, results);</span><br><span class="line">                db.close();</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//获取数据总条数</span></span><br><span class="line">exports.getAllCount = <span class="function"><span class="keyword">function</span> (<span class="params">collectionName,callback</span>) </span>&#123;</span><br><span class="line">    _connectDB(<span class="function"><span class="keyword">function</span> (<span class="params">err, db</span>) </span>&#123;</span><br><span class="line">        db.collection(collectionName).count(&#123;&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">count</span>) </span>&#123;</span><br><span class="line">            callback(count);</span><br><span class="line">            db.close();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后台代码,backstage.js:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这个模块是后台的接口代码</span></span><br><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> db = <span class="built_in">require</span>(<span class="string">"./model/db.js"</span>);</span><br><span class="line"><span class="keyword">var</span> formidable = <span class="built_in">require</span>(<span class="string">'formidable'</span>);</span><br><span class="line"><span class="keyword">var</span> ObjectId = <span class="built_in">require</span>(<span class="string">'mongodb'</span>).ObjectID;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//设置ejs模板引擎</span></span><br><span class="line">app.set(<span class="string">"view engine"</span>, <span class="string">"ejs"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//静态</span></span><br><span class="line">app.use(express.static(<span class="string">"./public"</span>));</span><br><span class="line"><span class="comment">//显示留言列表</span></span><br><span class="line">app.get(<span class="string">"/"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    db.getAllCount(<span class="string">"liuyanben"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">count</span>)</span>&#123;</span><br><span class="line">        res.render(<span class="string">"index"</span>,&#123;</span><br><span class="line">            <span class="string">"pageamount"</span> : <span class="built_in">Math</span>.ceil(count / <span class="number">20</span>)</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取所有留言，这个页面是供Ajax使用的</span></span><br><span class="line">app.get(<span class="string">"/du"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//可以接受一个参数</span></span><br><span class="line">    <span class="keyword">var</span> page = <span class="built_in">parseInt</span>(req.query.page);</span><br><span class="line"></span><br><span class="line">    db.find(<span class="string">"liuyanben"</span>,&#123;&#125;,&#123;<span class="string">"sort"</span>:&#123;<span class="string">"shijian"</span>:<span class="number">-1</span>&#125;,<span class="string">"pageamount"</span>:<span class="number">20</span>,<span class="string">"page"</span>:page&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err,result</span>)</span>&#123;</span><br><span class="line">        res.json(&#123;<span class="string">"result"</span>:result&#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//处理留言</span></span><br><span class="line">app.post(<span class="string">"/tijiao"</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> form = <span class="keyword">new</span> formidable.IncomingForm();</span><br><span class="line"></span><br><span class="line">    form.parse(req, <span class="function"><span class="keyword">function</span> (<span class="params">err, fields</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//写入数据库</span></span><br><span class="line">        db.insertOne(<span class="string">"liuyanben"</span>, &#123;</span><br><span class="line">            <span class="string">"xingming"</span> : fields.xingming,</span><br><span class="line">            <span class="string">"liuyan"</span> : fields.liuyan,</span><br><span class="line">            <span class="string">"shijian"</span> : <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line">        &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(err)&#123;</span><br><span class="line">                res.send(&#123;<span class="string">"result"</span>:<span class="number">-1</span>&#125;); <span class="comment">//-1是给Ajax看的</span></span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            res.json(&#123;<span class="string">"result"</span>:<span class="number">1</span>&#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//删除</span></span><br><span class="line">app.get(<span class="string">"/shanchu"</span>,<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//得到参数</span></span><br><span class="line">    <span class="keyword">var</span> id = req.query.id;<span class="comment">//根据唯一_id删除</span></span><br><span class="line">    db.deleteMany(<span class="string">"liuyanben"</span>,&#123;<span class="string">"_id"</span>:ObjectId(id)&#125;,<span class="function"><span class="keyword">function</span>(<span class="params">err,result</span>)</span>&#123;</span><br><span class="line">        res.redirect(<span class="string">"/"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>);</span><br></pre></td></tr></table></figure>
+<p>前端html模板，index.ejs：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh-CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"IE=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>简易留言板<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">href</span>=<span class="string">"css/bootstrap.min.css"</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="css">        <span class="selector-id">#chenggong</span>, <span class="selector-id">#shibai</span> &#123;</span></span><br><span class="line"><span class="undefined">            display: none;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">        <span class="selector-class">.liuyankuai</span> &#123;</span></span><br><span class="line"><span class="undefined">            padding: 10px 0;</span></span><br><span class="line"><span class="css">            <span class="selector-tag">border-bottom</span>: 1<span class="selector-tag">px</span> <span class="selector-tag">solid</span> <span class="selector-id">#ccc</span>;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>我的留言本<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">class</span>=<span class="string">"form-horizontal col-lg-6"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"xingming"</span> <span class="attr">class</span>=<span class="string">"col-sm-2 control-label"</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-10"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">id</span>=<span class="string">"xingming"</span> <span class="attr">name</span>=<span class="string">"xingming"</span> <span class="attr">placeholder</span>=<span class="string">"姓名"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"liuyan"</span> <span class="attr">class</span>=<span class="string">"col-sm-2 control-label"</span>&gt;</span>留言<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-10"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">class</span>=<span class="string">"form-control"</span> <span class="attr">rows</span>=<span class="string">"3"</span> <span class="attr">name</span>=<span class="string">"liuyan"</span> <span class="attr">id</span>=<span class="string">"liuyan"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-sm-offset-2 col-sm-10"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"tijiao"</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-success"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"alert alert-success"</span> <span class="attr">role</span>=<span class="string">"alert"</span> <span class="attr">id</span>=<span class="string">"chenggong"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"alert-link"</span>&gt;</span>表单已经成功提交<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"alert alert-danger"</span> <span class="attr">role</span>=<span class="string">"alert"</span> <span class="attr">id</span>=<span class="string">"shibai"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">class</span>=<span class="string">"alert-link"</span>&gt;</span>表单提交失败<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">nav</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"pagination"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            &lt;% for(var i = 1 ; i &lt;= pageamount ; i++)&#123;%&gt;</span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"yemaanniu"</span> <span class="attr">data-page</span>=<span class="string">"&lt;%=i%&gt;"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span>&gt;</span><span class="tag">&lt;<span class="name">%=i%</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">%&#125;%</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"quanbuliuyan"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/template"</span> <span class="attr">id</span>=<span class="string">"moban"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"liuyankuai"</span>&gt;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>【姓名】&#123;&#123;= xingming &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>【留言】&#123;&#123;= liuyan &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>【时间】&#123;&#123;= shijian &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="javascript">        &lt;p&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"/shanchu?id=&#123;&#123;=id&#125;&#125;"</span> <span class="attr">class</span>=<span class="string">"shanchu"</span>&gt;</span>删除<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/jquery-1.11.3.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"js/bootstrap.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"js/underscore-noflect.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> nowpage = <span class="number">1</span>;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">//给第一个页面，补一个active</span></span></span><br><span class="line"><span class="javascript">    $(<span class="string">".yemaanniu:first"</span>).addClass(<span class="string">"active"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">//给所有的页码按钮，添加监听</span></span></span><br><span class="line"><span class="javascript">    $(<span class="string">".yemaanniu"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        nowpage =  <span class="built_in">parseInt</span>($(<span class="keyword">this</span>).attr(<span class="string">"data-page"</span>));</span></span><br><span class="line"><span class="javascript">        <span class="comment">//重新发起请求，即可</span></span></span><br><span class="line"><span class="undefined">        getData(nowpage);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        $(<span class="keyword">this</span>).addClass(<span class="string">"active"</span>).siblings().removeClass(<span class="string">"active"</span>);</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">//默认请求第一页数据</span></span></span><br><span class="line"><span class="undefined">    getData(1);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">//Ajax请求数据</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">getData</span>(<span class="params">page</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">//真实page是从0开始算的</span></span></span><br><span class="line"><span class="javascript">        $.get(<span class="string">"/du?page="</span> + (page - <span class="number">1</span>), <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">//这里接收是result，但是这个json里面有一个key叫做result。</span></span></span><br><span class="line"><span class="javascript">            <span class="comment">//得到模板，弄成模板函数</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> compiled = _.template($(<span class="string">"#moban"</span>).html());</span></span><br><span class="line"><span class="javascript">            <span class="comment">//清空全部留言中的所有节点</span></span></span><br><span class="line"><span class="javascript">            $(<span class="string">"#quanbuliuyan"</span>).html(<span class="string">""</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; result.result.length; i++) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">//数据绑定</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> html = compiled(&#123;</span></span><br><span class="line"><span class="undefined">                    liuyan: result.result[i].liuyan,</span></span><br><span class="line"><span class="undefined">                    xingming: result.result[i].xingming,</span></span><br><span class="line"><span class="undefined">                    shijian: result.result[i].shijian,</span></span><br><span class="line"><span class="undefined">                    id: result.result[i]._id</span></span><br><span class="line"><span class="undefined">                &#125;);</span></span><br><span class="line"><span class="javascript">                <span class="comment">//DOM操作，添加节点</span></span></span><br><span class="line"><span class="javascript">                $(<span class="string">"#quanbuliuyan"</span>).append($(html));</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">//Ajax提交表单</span></span></span><br><span class="line"><span class="javascript">    $(<span class="string">"#tijiao"</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">"#shibai"</span>).hide();</span></span><br><span class="line"><span class="javascript">        $(<span class="string">"#chenggong"</span>).hide();</span></span><br><span class="line"><span class="javascript">        $.post(<span class="string">"/tijiao"</span>, &#123;</span></span><br><span class="line"><span class="javascript">            <span class="string">"xingming"</span>: $(<span class="string">"#xingming"</span>).val(),</span></span><br><span class="line"><span class="javascript">            <span class="string">"liuyan"</span>: $(<span class="string">"#liuyan"</span>).val()</span></span><br><span class="line"><span class="javascript">        &#125;, <span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (result.result == <span class="number">-1</span>) &#123;</span></span><br><span class="line"><span class="javascript">                $(<span class="string">"#shibai"</span>).fadeIn();</span></span><br><span class="line"><span class="javascript">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (result.result == <span class="number">1</span>) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">//提交成功</span></span></span><br><span class="line"><span class="javascript">                $(<span class="string">"#chenggong"</span>).fadeIn();</span></span><br><span class="line"><span class="javascript">                <span class="comment">//数据库真的存储了，但是当前页面无法显示。这是因为需要刷新</span></span></span><br><span class="line"><span class="javascript">                <span class="comment">//才能用ajax从/du中得到新的。所以我们先用一个假盒子凑出来。</span></span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> compiled = _.template($(<span class="string">"#moban"</span>).html());</span></span><br><span class="line"><span class="javascript">                <span class="keyword">var</span> html = compiled(&#123;<span class="attr">liuyan</span>: $(<span class="string">"#liuyan"</span>).val(), <span class="attr">xingming</span>: $(<span class="string">"#xingming"</span>).val(), <span class="attr">shijian</span>: <span class="keyword">new</span> <span class="built_in">Date</span>()&#125;);</span></span><br><span class="line"><span class="javascript">                $(html).insertBefore($(<span class="string">"#quanbuliuyan"</span>));</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined">    &#125;);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="通过配置文件的形式启动MongoDB"><a href="#通过配置文件的形式启动MongoDB" class="headerlink" title="通过配置文件的形式启动MongoDB"></a>通过配置文件的形式启动MongoDB</h2><p>a.在c:\MongoDB（可随意起）下面建一个data文件夹 c:\MongoDB\data</p>
+<p>b.在c:\MongoDB（可随意起）下面建一个logs文件夹 c:\MongoDB\logs ，在里面建一个文件mongo.log</p>
+<p>c.在c:\MongoDB（可随意起）下面建一个etc(随意起，放配置文件)文件夹 c:\MongoDB\etc ,在里面建一个文件mongo.conf</p>
+<p>d.打开mongo.conf文件，修改如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">数据库路径</span></span><br><span class="line">dbpath=e:\mongomallsystem\data\</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">日志输出文件路径</span></span><br><span class="line">logpath=e:\MongoDB\logs\mongodb.log</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">错误日志采用追加模式，配置这个选项后mongodb的日志会追加到现有的日志文件，而不是从新创建一个新文件</span></span><br><span class="line">logappend=true</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">启用日志文件，默认启用</span></span><br><span class="line">journal=true</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">这个选项可以过滤掉一些无用的日志信息，若需要调试使用请设置为<span class="literal">false</span></span></span><br><span class="line">quiet=false</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">端口号 默认为27017</span></span><br><span class="line">port=27017</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">指定存储引擎（默认先不加此引擎，如果报错了，再加进去）:</span></span><br><span class="line">storageEngine=mmapv1</span><br></pre></td></tr></table></figure>
+<p>完成以上操作后，我们就可以启动我们的mongo数据库了:</p>
+<p>在 cmd 命令行运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config e:\mongomallsystem\etc\mongo.conf</span><br></pre></td></tr></table></figure>
+<p>注意：运行这条命令后，命令行没有任何反应，查看27017的端口也无法查看连接，但是数据库是开启状态的,这时候打开另外一个 cmd 就可以进行数据库操作了。</p>
+<p>如果希望查看，也可以开启端口查看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config e:\mongomallsystem\etc\mongo.conf --httpinterface</span><br></pre></td></tr></table></figure>
+<p>通过以上命令就完成了,并且可以通过默认28017查看数据库状态日志,以后每次运行数据库执行 mongo.conf 配置文件就行</p>
+<p>当然，以上是通过配置的形式，来启动我们的MongoDB,也可以把参数直接在启动的时候，传递进去如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --dbpath e:\mongomallsystem\data --logpath e:\mongomallsystem\logs\mongodb.log --journal</span><br></pre></td></tr></table></figure>
+<h2 id="安装到window-服务当中"><a href="#安装到window-服务当中" class="headerlink" title="安装到window 服务当中"></a>安装到window 服务当中</h2><p>输入命令:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongod --config e:\mongomallsystem\etc\mongo.conf --install --serviceName "MongoDB"</span><br></pre></td></tr></table></figure>
+<p>安装成功后，打开window服务(win10在任务管理器上可以看到window服务)，我们可以看到里面已经安装了MongoDB。</p>
+<p>每天，我们用的时候，只需要启动服务即可，如果大家不安装此服务也可以，每次启动的时候，手动进入到安装目录里面，输入命令启动，两种方式都可以。</p>
+<p>删除服务命令：mongod –config c:\MongoDB\etc\mongo.conf –remove 然后在服务里面刷新一下，就会发现已经删掉了。</p>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node-js/" rel="tag"># node.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/19/node learning notes__express/" rel="next" title="node学习笔记——初识Express">
+                <i class="fa fa-chevron-left"></i> node学习笔记——初识Express
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/21/node learning notes__cookieAndSession /" rel="prev" title="node学习笔记——cookie与session">
+                node学习笔记——cookie与session <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库"><span class="nav-number">1.</span> <span class="nav-text">数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非结构型数据库NoSQL"><span class="nav-number">2.</span> <span class="nav-text">非结构型数据库NoSQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB"><span class="nav-number">3.</span> <span class="nav-text">MongoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MongoDB-分页"><span class="nav-number">4.</span> <span class="nav-text">MongoDB 分页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongoDB-索引"><span class="nav-number">5.</span> <span class="nav-text">mongoDB 索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongoDB-使用"><span class="nav-number">6.</span> <span class="nav-text">mongoDB 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过配置文件的形式启动MongoDB"><span class="nav-number">7.</span> <span class="nav-text">通过配置文件的形式启动MongoDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装到window-服务当中"><span class="nav-number">8.</span> <span class="nav-text">安装到window 服务当中</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

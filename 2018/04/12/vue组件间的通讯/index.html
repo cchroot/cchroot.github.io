@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue.js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="vue2.0以后，events 选项被弃用。原来用于父子组建间的通讯的\$dispatch 和 \$broadcast 也已经被弃用。取而代之的是可以通过单独的事件中心管理组件间的通信。 父子组件间的通讯这些方法的最常见用途之一是父子组件的相互通信。在这些情况下，你可以使用 v-on监听子组件上 $emit 的变化。这可以允许你很方便的添加事件显性。例如： 在goods组建中，包含了两个子组件ca">
+<meta name="keywords" content="vue.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue组件间的通讯">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/vue组件间的通讯/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="vue2.0以后，events 选项被弃用。原来用于父子组建间的通讯的\$dispatch 和 \$broadcast 也已经被弃用。取而代之的是可以通过单独的事件中心管理组件间的通信。 父子组件间的通讯这些方法的最常见用途之一是父子组件的相互通信。在这些情况下，你可以使用 v-on监听子组件上 $emit 的变化。这可以允许你很方便的添加事件显性。例如： 在goods组建中，包含了两个子组件ca">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-16T15:17:44.119Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue组件间的通讯">
+<meta name="twitter:description" content="vue2.0以后，events 选项被弃用。原来用于父子组建间的通讯的\$dispatch 和 \$broadcast 也已经被弃用。取而代之的是可以通过单独的事件中心管理组件间的通信。 父子组件间的通讯这些方法的最常见用途之一是父子组件的相互通信。在这些情况下，你可以使用 v-on监听子组件上 $emit 的变化。这可以允许你很方便的添加事件显性。例如： 在goods组建中，包含了两个子组件ca">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/12/vue组件间的通讯/"/>
+
+
+
+
+
+  <title>vue组件间的通讯 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            tool
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/vue组件间的通讯/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue组件间的通讯</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T20:30:05+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vueJs/" itemprop="url" rel="index">
+                    <span itemprop="name">vueJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>vue2.0以后，events 选项被弃用。原来用于父子组建间的通讯的\$dispatch 和 \$broadcast 也已经被弃用。取而代之的是可以通过单独的事件中心管理组件间的通信。</p>
+<h3 id="父子组件间的通讯"><a href="#父子组件间的通讯" class="headerlink" title="父子组件间的通讯"></a>父子组件间的通讯</h3><p>这些方法的最常见用途之一是父子组件的相互通信。在这些情况下，你可以使用 v-on监听子组件上 $emit 的变化。这可以允许你很方便的添加事件显性。例如：</p>
+<p>在goods组建中，包含了两个子组件cartcontrol.vue和shopcart.vue。cartcontrol.vue中点击，传递当前点击的元素到shopcart.vue中，则可以这样做：</p>
+<p>在cartcontrol.vue组件中通过addCart事件触发$emit提交事件’cart-add’<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">addCart(event) &#123;</span><br><span class="line">  <span class="keyword">this</span>.$emit(<span class="string">'cart-add'</span>, event.target);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>goods.vue组件中调用cartcontrol.vue组件上使用v-on来监听$emit的变化<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"cartcontrol-wrapper"</span>&gt;</span><br><span class="line">  &lt;cartcontrol v-on:cart-add=<span class="string">"cartAdd"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">cartcontrol</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>如果$emit有变化(这里是点击)则触发goods组件下的cartAdd(target)方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cartAdd(target) &#123;</span><br><span class="line">	<span class="keyword">this</span>.$refs.shopcart.drop(target);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>v-el 2.0中已经废弃全部采用ref和\$refs,这里通过给shopcart.vue组件属性ref=”shopcart”，利用this.\$refs.shopcart访问shopcart.vue组件中的drop(target)方法。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;shopcart ref=<span class="string">"shopcart"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">shopcart</span>&gt;</span></span></span><br></pre></td></tr></table></figure></p>
+<p>这样在shopcart.vue组件中的drop(el)方法就可以访问cartcontrol.vue组件点击的dom元素。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drop(el) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(el);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个例子的全部逻辑是：从子组件cartcontrol传点击的dom对象到父组件goods，然后通过父组件通过ref属性，调用子组件的方法，从而把当前的dom对象再传到另一个子组件shopcart中。</p>
+<h3 id="单一事件中心管理组件通信（可跨多层父子组件通信）"><a href="#单一事件中心管理组件通信（可跨多层父子组件通信）" class="headerlink" title="单一事件中心管理组件通信（可跨多层父子组件通信）"></a>单一事件中心管理组件通信（可跨多层父子组件通信）</h3><p>举个例子:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//准备一个空的实例对象</span></span><br><span class="line"><span class="keyword">var</span> Event=<span class="keyword">new</span> Vue();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> A=&#123;</span><br><span class="line">    template:<span class="string">`</span></span><br><span class="line"><span class="string">        &lt;div&gt;</span></span><br><span class="line"><span class="string">            &lt;span&gt;我是A组件&lt;/span&gt; -&gt; &#123;&#123;a&#125;&#125;</span></span><br><span class="line"><span class="string">            &lt;input type="button" value="把A数据给C" @click="send"&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    `</span>,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        send()&#123;</span><br><span class="line">            Event.$emit(<span class="string">'a-msg'</span>,<span class="keyword">this</span>.a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            a:<span class="string">'我是a数据'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> B=&#123;</span><br><span class="line">    template:<span class="string">`</span></span><br><span class="line"><span class="string">        &lt;div&gt;</span></span><br><span class="line"><span class="string">            &lt;span&gt;我是B组件&lt;/span&gt; -&gt; &#123;&#123;a&#125;&#125;</span></span><br><span class="line"><span class="string">            &lt;input type="button" value="把B数据给C" @click="send"&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    `</span>,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        send()&#123;</span><br><span class="line">            Event.$emit(<span class="string">'b-msg'</span>,<span class="keyword">this</span>.a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    data()&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            a:<span class="string">'我是b数据'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> C=&#123;</span><br><span class="line">    template:<span class="string">`</span></span><br><span class="line"><span class="string">        &lt;div&gt;</span></span><br><span class="line"><span class="string">            &lt;h3&gt;我是C组件&lt;/h3&gt;</span></span><br><span class="line"><span class="string">            &lt;span&gt;接收过来的A的数据为: &#123;&#123;a&#125;&#125;&lt;/span&gt;</span></span><br><span class="line"><span class="string">            &lt;br&gt;</span></span><br><span class="line"><span class="string">            &lt;span&gt;接收过来的B的数据为: &#123;&#123;b&#125;&#125;&lt;/span&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    `</span>,</span><br><span class="line">    data()&#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            a:<span class="string">''</span>,</span><br><span class="line">            b:<span class="string">''</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted()&#123;</span><br><span class="line">        <span class="comment">//var _this=this;</span></span><br><span class="line">        <span class="comment">//接收A组件的数据</span></span><br><span class="line">        Event.$on(<span class="string">'a-msg'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.a=a;</span><br><span class="line">        &#125;.bind(<span class="keyword">this</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//接收B组件的数据</span></span><br><span class="line">        Event.$on(<span class="string">'b-msg'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.b=a;</span><br><span class="line">        &#125;.bind(<span class="keyword">this</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onload=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">        el:<span class="string">'#box'</span>,</span><br><span class="line">        components:&#123;</span><br><span class="line">            <span class="string">'com-a'</span>:A,</span><br><span class="line">            <span class="string">'com-b'</span>:B,</span><br><span class="line">            <span class="string">'com-c'</span>:C</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>如上，通过一个空的Vue对象Event，来集中管理组件件的通讯，这就是单一事件中心管理组件通信。</p>
+<p>前面父子组件间的通讯的例子，通过单一事件中心管理可以这样实现：</p>
+<p>新建 components/event-bus.js<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">var</span> eventBus = <span class="keyword">new</span> Vue();</span><br></pre></td></tr></table></figure></p>
+<p>在组件 shopcart 里 created 方法里定义事件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; eventBus &#125; <span class="keyword">from</span> <span class="string">'components/event-bus'</span>;</span><br><span class="line"> <span class="comment">// ...</span></span><br><span class="line">  created() &#123;</span><br><span class="line">    eventBus.$on(<span class="string">'addcart'</span>, (ele) =&gt; &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(ele);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ...</span></span><br></pre></td></tr></table></figure></p>
+<p>cartcontrol 组件内触发事件<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; eventBus &#125; <span class="keyword">from</span> <span class="string">'components/event-bus'</span>;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">methods: &#123;</span><br><span class="line">  addToCart(e) &#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    eventBus.$emit(<span class="string">'addcart'</span>, e.target);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure></p>
+<p>在Vue的官网是这样说明单一事件中心管理组件通信：</p>
+<p>如果是跨多层父子组件通信的话，$emit 并没有什么用。相反，用<strong>集中式的事件中间件</strong>（即单一事件中心管理组件）可以做到简单的升级。这会让组件之间的通信非常顺利，即使是兄弟组件。因为 Vue 通过事件发射器接口执行实例，实际上你可以使用一个空的 Vue 实例。</p>
+<p>比如，假设我们有个 todo 的应用结构如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Todos</span><br><span class="line">├─ NewTodoInput</span><br><span class="line">└─ Todo</span><br><span class="line">   └─ DeleteTodoButton</span><br></pre></td></tr></table></figure></p>
+<p>可以通过单独的事件中心管理组件间的通信：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将在各处使用该事件中心</span></span><br><span class="line"><span class="comment">// 组件通过它来通信</span></span><br><span class="line"><span class="keyword">var</span> eventHub = <span class="keyword">new</span> Vue()</span><br></pre></td></tr></table></figure></p>
+<p>然后在组件中，可以使用 $emit, $on, $off 分别来分发、监听、取消监听事件：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// NewTodoInput</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">methods: &#123;</span><br><span class="line">  addTodo: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    eventHub.$emit(<span class="string">'add-todo'</span>, &#123; <span class="attr">text</span>: <span class="keyword">this</span>.newTodoText &#125;)</span><br><span class="line">    <span class="keyword">this</span>.newTodoText = <span class="string">''</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// DeleteTodoButton</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">methods: &#123;</span><br><span class="line">  deleteTodo: <span class="function"><span class="keyword">function</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">    eventHub.$emit(<span class="string">'delete-todo'</span>, id)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Todos</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">created: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  eventHub.$on(<span class="string">'add-todo'</span>, <span class="keyword">this</span>.addTodo)</span><br><span class="line">  eventHub.$on(<span class="string">'delete-todo'</span>, <span class="keyword">this</span>.deleteTodo)</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 最好在组件销毁前</span></span><br><span class="line"><span class="comment">// 清除事件监听</span></span><br><span class="line">beforeDestroy: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  eventHub.$off(<span class="string">'add-todo'</span>, <span class="keyword">this</span>.addTodo)</span><br><span class="line">  eventHub.$off(<span class="string">'delete-todo'</span>, <span class="keyword">this</span>.deleteTodo)</span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">  addTodo: <span class="function"><span class="keyword">function</span> (<span class="params">newTodo</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.todos.push(newTodo)</span><br><span class="line">  &#125;,</span><br><span class="line">  deleteTodo: <span class="function"><span class="keyword">function</span> (<span class="params">todoId</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.todos = <span class="keyword">this</span>.todos.filter(<span class="function"><span class="keyword">function</span> (<span class="params">todo</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> todo.id !== todoId</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在简单的情况下这样做可以替代\ $dispatch 和 \$broadcast，但是对于大多数复杂情况，更推荐使用一个专用的状态管理层如：Vuex。</p>
+<p>以上就是vue组件间的通讯。</p>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-js/" rel="tag"># vue.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/11/图解HTTP——十一、Web 的攻击技术（二）/" rel="next" title="图解HTTP——Web的攻击技术（二）">
+                <i class="fa fa-chevron-left"></i> 图解HTTP——Web的攻击技术（二）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/14/图解HTTP——总结/" rel="prev" title="图解HTTP——总结">
+                图解HTTP——总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-twitter"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#父子组件间的通讯"><span class="nav-number">1.</span> <span class="nav-text">父子组件间的通讯</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单一事件中心管理组件通信（可跨多层父子组件通信）"><span class="nav-number">2.</span> <span class="nav-text">单一事件中心管理组件通信（可跨多层父子组件通信）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
