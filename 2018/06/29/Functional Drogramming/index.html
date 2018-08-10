@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="转录," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="转录于微信公众号奇舞周刊 平时工作中主要用 OOP 的方式写代码，看了这篇文章了解到了很多平时不太注意的知识点和巩固了已知的一些概念。下面是原文： 曾经的你是不是总在工作和学习过程中听到函数式编程（FP）。但学到函子的时候总是一头雾水。本文是我在函数式编程学习过程中，总结的笔记，也分享给想学函数式编程的同学。 在学之前，你先问自己几个问题，或者当作一场面试，看看下面的这些问题，你该怎么回答？  你">
+<meta name="keywords" content="转录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="函数式编程别烦恼">
+<meta property="og:url" content="http://yoursite.com/2018/06/29/Functional Drogramming/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="转录于微信公众号奇舞周刊 平时工作中主要用 OOP 的方式写代码，看了这篇文章了解到了很多平时不太注意的知识点和巩固了已知的一些概念。下面是原文： 曾经的你是不是总在工作和学习过程中听到函数式编程（FP）。但学到函子的时候总是一头雾水。本文是我在函数式编程学习过程中，总结的笔记，也分享给想学函数式编程的同学。 在学之前，你先问自己几个问题，或者当作一场面试，看看下面的这些问题，你该怎么回答？  你">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-29T14:56:21.908Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数式编程别烦恼">
+<meta name="twitter:description" content="转录于微信公众号奇舞周刊 平时工作中主要用 OOP 的方式写代码，看了这篇文章了解到了很多平时不太注意的知识点和巩固了已知的一些概念。下面是原文： 曾经的你是不是总在工作和学习过程中听到函数式编程（FP）。但学到函子的时候总是一头雾水。本文是我在函数式编程学习过程中，总结的笔记，也分享给想学函数式编程的同学。 在学之前，你先问自己几个问题，或者当作一场面试，看看下面的这些问题，你该怎么回答？  你">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/29/Functional Drogramming/"/>
+
+
+
+
+
+  <title>函数式编程别烦恼 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            tool
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/29/Functional Drogramming/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">函数式编程别烦恼</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T20:30:05+08:00">
+                2018-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>转录于微信公众号奇舞周刊</p>
+<p>平时工作中主要用 OOP 的方式写代码，看了这篇文章了解到了很多平时不太注意的知识点和巩固了已知的一些概念。下面是原文：</p>
+<p>曾经的你是不是总在工作和学习过程中听到函数式编程（FP）。但学到函子的时候总是一头雾水。本文是我在函数式编程学习过程中，总结的笔记，也分享给想学函数式编程的同学。</p>
+<p>在学之前，你先问自己几个问题，或者当作一场面试，看看下面的这些问题，你该怎么回答？</p>
+<ul>
+<li>你能说出对javaScript工程师比较重要的两种编程范式吗？</li>
+<li>什么是函数式编程？</li>
+<li>函数式编程和面向对象各有什么优点和不足呢？</li>
+<li>你了解闭包吗？你经常在那些地方使用？闭包和柯里化有什么关系？</li>
+<li>如果我们想封装一个像underscorede的防抖的函数该怎么实现？</li>
+<li>你怎么理解函子的概念？Monad函子又有什么作用？</li>
+<li>下面这段代码的运行结果是什么？</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Container = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123; <span class="keyword">this</span>.__value = x; &#125;</span><br><span class="line">Container.of = <span class="function"><span class="params">x</span> =&gt;</span> <span class="keyword">new</span> Container(x);</span><br><span class="line"></span><br><span class="line">Container.prototype.map = <span class="function"><span class="keyword">function</span>(<span class="params">f</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(f)</span><br><span class="line">  <span class="keyword">return</span> Container.of(f(<span class="keyword">this</span>.__value))</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Container.of(<span class="number">3</span>).map(<span class="function"><span class="params">x</span>=&gt;</span>x+<span class="number">1</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> <span class="string">'Result is '</span> + x);</span><br><span class="line"><span class="built_in">console</span>.log(Container.of(<span class="number">3</span>).map(<span class="function"><span class="params">x</span>=&gt;</span>x+<span class="number">1</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> <span class="string">'Result is '</span> + x))</span><br></pre></td></tr></table></figure>
+<p>现在就让我们带着问题去学习吧。文章的最后，我们再次总结这些问题的答案。</p>
+<h2 id="1-1-函数式编程（FP）思想"><a href="#1-1-函数式编程（FP）思想" class="headerlink" title="1.1 函数式编程（FP）思想"></a>1.1 函数式编程（FP）思想</h2><p>面向对象（OOP）可以理解为是对数据的抽象，比如把一个人抽象成一个Object，关注的是数据。 函数式编程是一种过程抽象的思维，就是对当前的动作去进行抽象，关注的是动作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">举个例子：如果一个数a=1 ，我们希望执行+3（f函数），然后再*5（g函数），最后得到结果result是20</span><br><span class="line"></span><br><span class="line">数据抽象，我们关注的是这个数据：a=1 经过f处理得到 a=4 , 再经过g处理得到 a = 20</span><br><span class="line"></span><br><span class="line">过程抽象，我们关注的是过程：a要执行两个f,g两操作，先将fg合并成一个K操作，然后a直接执行K，得到 a=20</span><br></pre></td></tr></table></figure>
+<p><strong>问题：f和g合并成了K，那么可以合并的函数需要符合什么条件呢？下面就讲到了纯函数的这个概念。</strong></p>
+<h2 id="1-2-纯函数"><a href="#1-2-纯函数" class="headerlink" title="1.2 纯函数"></a>1.2 纯函数</h2><p>定义：一个函数如果输入参数确定，输出结果是唯一确定的，那么他就是纯函数。<br>特点：无状态，无副作用，无关时序，幂等（无论调用多少次，结果相同）</p>
+<p><strong>下面哪些是纯函数 ?</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">arr.slice(<span class="number">0</span>,<span class="number">3</span>); <span class="comment">//是纯函数</span></span><br><span class="line"></span><br><span class="line">arr.splice(<span class="number">0</span>,<span class="number">3</span>); <span class="comment">//不是纯函数，对外有影响</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x,y</span>)</span>&#123; <span class="comment">// 是纯函数</span></span><br><span class="line">  <span class="keyword">return</span> x + y <span class="comment">// 无状态，无副作用，无关时序，幂等</span></span><br><span class="line">&#125; <span class="comment">// 输入参数确定，输出结果是唯一确定</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">//不是纯函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addCount</span>(<span class="params"></span>)</span>&#123; <span class="comment">//输出不确定</span></span><br><span class="line">  count++ <span class="comment">// 有副作用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">random</span>(<span class="params">min,max</span>)</span>&#123; <span class="comment">// 不是纯函数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Math</span>.floor(<span class="built_in">Math</span>.radom() * ( max - min)) + min <span class="comment">// 输出不确定</span></span><br><span class="line">&#125; <span class="comment">// 但注意它没有副作用</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">setColor</span>(<span class="params">el,color</span>)</span>&#123; <span class="comment">//不是纯函数</span></span><br><span class="line">  el.style.color = color ; <span class="comment">//直接操作了DOM，对外有副作用</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不是很简单，接下来我们加一个需求？<br>如果最后一个函数，你希望批量去操作一组li并且还有许多这样的需求要改，写一个公共函数？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span> (<span class="params">fn , els , color</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">Array</span>.from(els).map(<span class="function">(<span class="params">item</span>)=&gt;</span>(fn(item,color)))</span><br><span class="line">&#125;</span><br><span class="line">change(setColor,oLi,<span class="string">"blue"</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>那么问题来了这个函数是纯函数吗？</strong></p>
+<p>首先无论输入什么，输出都是undefined,接下来我们分析一下对外面有没有影响，我们发现，在函数里并没有直接的影响，但是调用的setColor对外面产生了影响。那么change到底算不算纯函数呢？</p>
+<p>答案是当然不算，这里我们强调一点，纯函数的依赖必须是无影响的，也就是说，在内部引用的函数也不能对外造成影响。</p>
+<p><strong>问题：那么我们有没有什么办法，把这个函数提纯呢？</strong></p>
+<h2 id="1-3-柯里化（curry）"><a href="#1-3-柯里化（curry）" class="headerlink" title="1.3 柯里化（curry）"></a>1.3 柯里化（curry）</h2><p>定义：只传递给函数一部分参数来调用它，让它返回一个函数去处理剩下的参数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x, y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br><span class="line">add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">******* 柯里化之后 *************</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addX</span>(<span class="params">y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">x</span>) </span>&#123; <span class="keyword">return</span> x + y; &#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newAdd = addX(<span class="number">2</span>)</span><br><span class="line">newAdd (<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>现在我们回过头来看上一节的问题？<br>如果我们不让setColor在change函数里去执行，那么change不就是纯函数了吗？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span> (<span class="params">fn , els , color</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">Array</span>.from(els).map(<span class="function">(<span class="params">item</span>)=&gt;</span>(fn(item,color)))</span><br><span class="line">&#125;</span><br><span class="line">change(setColor,oLi,<span class="string">"blue"</span>)</span><br><span class="line"></span><br><span class="line">****** 柯里化之后 *************</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">els,color</span>)</span>&#123;</span><br><span class="line">       <span class="built_in">Array</span>.from(els).map(<span class="function">(<span class="params">item</span>)=&gt;</span>(fn(item,color)))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> newSetColor = change(setColor);</span><br><span class="line">newSetColor(oLi,<span class="string">"blue"</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们先分析柯里化（curry）过程。在之前change函数中fn , els , color三个参数，每次调用的时候我们都希望参数fn值是 setColor，因为我们想把不同的颜色給到不同的DOM上。我们的最外层的参数选择了fn，这样返回的函数就不用再输入fn值啦。</li>
+<li>接下来我们分析提纯的这个过程，改写后无论fn输入是什么，都return出唯一确定的函数，并且在change这个函数中，只执行了return这个语句，setColor函数并未在change上执行，所以change对外也不产生影响。显然change这时候就是一个纯函数。</li>
+<li>最后如果我们抛弃柯里化的概念，这里就是一个最典型的闭包用法而已。而change函数的意义就是我们可以通过它把一类setColor函数批量去改成像newSetColor这样符合新需求的函数。</li>
+</ul>
+<p>上面那个例子是直接重写了change函数，能不能直接在原来change的基础上通过一个函数改成 newSetColor呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">change</span> (<span class="params">fn , els , color</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">Array</span>.from(els).map(<span class="function">(<span class="params">item</span>)=&gt;</span>(fn(item,color)))</span><br><span class="line">&#125;</span><br><span class="line">change(setColor,oLi,<span class="string">"blue"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//******* 通过一个curry函数*************</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> changeCurry = curry(change);</span><br><span class="line"><span class="keyword">var</span> newSetColor = changeCurry(setColor);</span><br><span class="line">newSetColor(oLi,<span class="string">"blue"</span>)</span><br></pre></td></tr></table></figure>
+<p>哇！真的有这种函数吗？当然作为帮助函数（helper function），lodash 或 ramda都有啊。我们在深入的系列的课程中会动（chao）手（xi）写一个。</p>
+<p><strong>问题：处理上一个问题时，我们将一个函数作为参数传到另一个函数中去处理，这好像在函数式编程中很常见，他们有什么规律吗？</strong></p>
+<h2 id="1-4-高阶函数"><a href="#1-4-高阶函数" class="headerlink" title="1.4 高阶函数"></a>1.4 高阶函数</h2><p>定义：函数当参数，把传入的函数做一个封装，然后返回这个封装函数,达到更高程度的抽象。</p>
+<p>很显然上一节用传入fn的change函数就是一个高阶函数，显然它是一个纯函数，对外没有副作用。可能这么讲并不能让你真正去理解高阶函数，那么我就举几个例子！</p>
+<h3 id="1-4-1-等价函数"><a href="#1-4-1-等价函数" class="headerlink" title="1.4.1 等价函数"></a>1.4.1 等价函数</h3><p>定义 ：调用函数本身的地方都可以叫等价函数；</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__equal__</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>,args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//第一种</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x,y</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> addnew1 = __equal__(add);</span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>,<span class="number">2</span>));</span><br><span class="line"><span class="built_in">console</span>.log(addnew1(<span class="number">1</span>,<span class="number">2</span>));</span><br><span class="line"><span class="comment">//第二种</span></span><br><span class="line"><span class="keyword">let</span> obj = &#123;</span><br><span class="line">  x : <span class="number">1</span>,</span><br><span class="line">  y : <span class="number">2</span>,</span><br><span class="line">  add : <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.x + <span class="keyword">this</span>.y</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> addnew2 = __equal__(obj.add);</span><br><span class="line"><span class="built_in">console</span>.log( obj.add() ) ; <span class="comment">//3</span></span><br><span class="line"><span class="built_in">console</span>.log( addnew2.call(obj)); <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+<p>第一种不考虑this</p>
+<ul>
+<li>equal(add):让等价（equal）函数传入原始函数形成闭包，返回一个新的函数addnew1</li>
+<li>addnew1(1,2):addnew1中传入参数，在fn中调用，fn变量指向原始函数</li>
+</ul>
+<p>第二种考虑this</p>
+<ul>
+<li>addnew2.call(obj): 让equal函数返回的addnew2函数在obj的环境中执行,也就是fn.apply(this,args);中的父级函数中this,指向obj</li>
+<li>fn.apply(this,args)中，this是一个变量，继承父级, 父级指向obj，所以在obj的环境中调用fn</li>
+<li>fn是闭包形成指向obj.add</li>
+</ul>
+<p>好了，看懂代码后，我们发现，这好像和直接把函数赋值给一个变量没啥区别，那么等价函数有什么好处呢？</p>
+<p>等价函数的拦截和监控：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__watch__</span>(<span class="params">fn</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//偷偷干点啥</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//偷偷干点啥</span></span><br><span class="line">    <span class="keyword">let</span> ret = fn.apply(<span class="keyword">this</span>,args);</span><br><span class="line">    <span class="comment">//偷偷干点啥 return ret</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们知道，上面本质就是等价函数，fn执行结果没有任务问题。但是可以在执行前后，偷偷做点事情，比如consle.log(“我执行啦”)。</p>
+<p><strong>问题：等价函数可以用于拦截和监控，那有什么具体的例子吗？</strong></p>
+<h3 id="1-4-2-节流（throtle）函数"><a href="#1-4-2-节流（throtle）函数" class="headerlink" title="1.4.2 节流（throtle）函数"></a>1.4.2 节流（throtle）函数</h3><p>前端开发中会遇到一些频繁的事件触发，为了解决这个问题，一般有两种解决方案：</p>
+<p>函数节流（throtle）和函数防抖（debounce）</p>
+<p>什么是函数节流？</p>
+<p>如果将水龙头拧紧直到水是以水滴的形式流出，那你会发现每隔一段时间，就会有一滴水流出。也就是会说预先设定一个执行周期，当调用动作的时刻大于等于执行周期则执行该动作，然后进入下一个新周期。</p>
+<p>什么是函数防抖？</p>
+<p>如果用手指一直按住一个弹簧，它将不会弹起直到你松手为止。也就是说当调用动作n毫秒后，才会执行该动作，若在这n毫秒内又调用此动作则将重新计算执行时间。</p>
+<p>函数节流（throtle）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">throttle</span>(<span class="params">fn,wait</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timer;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!timer)&#123;</span><br><span class="line">      timer = setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>timer=<span class="literal">null</span>, wait);</span><br><span class="line">      <span class="built_in">console</span>.log(timer);</span><br><span class="line">      <span class="keyword">return</span> fn.apply(<span class="keyword">this</span>,args);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fn = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"btn clicked"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> btn = <span class="built_in">document</span>.getElementById(<span class="string">'btn'</span>);</span><br><span class="line">btn.onclick = throttle(fn , <span class="number">5000</span>);</span><br></pre></td></tr></table></figure>
+<p>分析代码</p>
+<ul>
+<li>首先我们定义了一个timer</li>
+<li>当timer不存在的时候，执行if判断里函数</li>
+<li>setTimeout给timer 赋一个id值，fn也执行</li>
+<li>如果继续点击，timer存在，if判断里函数不执行</li>
+<li>当时间到时，setTimeout的回调函数清空timer，此时再去执行if判断里函数</li>
+</ul>
+<p>所以，我们通过对等价函数监控和拦截很好的实现了节流（throtle）函数。而对函数fn执行的结果丝毫没有影响。这里给大家留一个作业，既然我们实现了节流函数，那么你能不能根据同样的原理写出防抖函数呢？</p>
+<p>自己写的有点简单：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> throttle = <span class="function"><span class="keyword">function</span>(<span class="params">delay, action</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> last = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> curr = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">    <span class="keyword">if</span> (curr - last &gt; delay)&#123;</span><br><span class="line">      action.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);</span><br><span class="line">      last = curr;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数防抖（debounce）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">debounce</span>(<span class="params">fn,wait</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> timer;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">...args</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//var args = arguments;</span></span><br><span class="line">	<span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">	clearTimeout(timer);</span><br><span class="line">	timer = setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		fn.apply(that,args);</span><br><span class="line">	&#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>问题：哦，像这样节流函数，在我平时的项目中直接写就好了，你封装成这样一个函数似乎还麻烦了呢？</strong></p>
+<h2 id="1-5-命令式与声明式"><a href="#1-5-命令式与声明式" class="headerlink" title="1.5 命令式与声明式"></a>1.5 命令式与声明式</h2><p>在平时，如果我们不借助方法函数去实现节流函数，我们可能会直接这么去实现节流函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> timer;</span><br><span class="line">btn.onclick = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(!timer)&#123;</span><br><span class="line">    timer = setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>timer=<span class="literal">null</span> , <span class="number">5000</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"btn clicked"</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么与之前的高阶函数有什么区别呢？</p>
+<p>很显然，在下面的这例子中，我们每次在需要做节流的时候，我们每次都需要这样重新写一次代码。告诉 程序如何执行。而上面的高阶函数的例子，我们定义好了一个功能函数之后，我们只需要告诉程序，你要做 什么就可以啦。</p>
+<ul>
+<li>命令式 ： 上面的例子就是命令式</li>
+<li>声明式 ： 高阶函数的例子就是声明式</li>
+</ul>
+<p>那下面大家看看，如果遍历一个数组,打印出每个数组中的元素，如何用两种方法实现呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//命令式</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line"><span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;array.length;i++)&#123;</span><br><span class="line"><span class="built_in">console</span>.log(array[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//声明式</span></span><br><span class="line">array.forEach(<span class="function">(<span class="params">i</span>) =&gt;</span> <span class="built_in">console</span>.log(i))</span><br></pre></td></tr></table></figure>
+<p>看到forEach是不是很熟悉，原来我们早就在大量使用函数式编程啦。</p>
+<p>这里我们可以先停下来从头回顾一下，函数式编程。</p>
+<ul>
+<li>函数式编程，更关注的是动作，比如我们定义的节流函数，就是把节流的这个动作抽象出来。</li>
+<li>所以这样的函数必须要输入输出确定且对外界没有，我们把这样的函数叫纯函数</li>
+<li>对于不纯的函数提纯的过程中，用到了柯里化的方法。</li>
+<li>我们柯里化过程中，我<strong>们传进去的参数恰恰是一个函数，返回的也是一个函数，这就叫高阶函数</strong>。</li>
+<li>高阶函数往往能抽象写出像节流这样的功能函数。</li>
+<li>声明式就是在使用这些功能函数</li>
+</ul>
+<p><strong>问题：现在我们对函数编程有了初步的了解，但还并没有感受到它的厉害，还记得我们之前讲到的纯函数可以合并吗？下一节，我们就去实现它</strong></p>
+<h2 id="1-6-组合（compose）"><a href="#1-6-组合（compose）" class="headerlink" title="1.6 组合（compose）"></a>1.6 组合（compose）</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">double</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x * <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add5</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">5</span></span><br><span class="line">&#125;</span><br><span class="line">double(add5(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p>上面的代码我们实现的是完成了两个动作，不过我们觉得这样写double(add5(x))，不是很舒服。 换一个角度思考，我们是不是可以把函数合并在一起。 我们定义了一个compose函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> compose = <span class="function"><span class="keyword">function</span>(<span class="params">f, g</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> f(g(x));</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>有了compose这个函数，显然我们可以把double和add5合并到一起</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> numDeal = compose(double,add5)</span><br><span class="line">numDeal(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先我们知道compose合并的double,add5是从右往左执行的</li>
+<li>所以1先执行了加5，在完成了乘2</li>
+</ul>
+<p>那么这时候就有几个问题：</p>
+<ul>
+<li>这只使用与一个参数，如果是多个参数怎么办？有的同学已经想到了用柯里化</li>
+<li>还有这只是两个函数，如果是多个函数怎么办。知道reduce用法的同学，可能已经有了思路。</li>
+<li>compose是从从右往左执行，我想左往右行不行？当然，他还有个专门的名字叫管道（pipe）函数</li>
+</ul>
+<p>这三道题我们留作思考题。我们在深入的专题里会去实现的哈。</p>
+<p>问题：现在我们想完成一些功能都需要去合并函数，而且合并的函数还会有一定顺序，我们能不能像JQ的链式调用那样去处理数据呢。</p>
+<h2 id="1-7-函子（Functor）"><a href="#1-7-函子（Functor）" class="headerlink" title="1.7 函子（Functor）"></a>1.7 函子（Functor）</h2><p>讲到函子，我们首先回到我们的问题上来。之前我们执行函数通常是下面这样。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">double</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x * <span class="number">2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add5</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + <span class="number">5</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">double(add5(<span class="number">1</span>))</span><br><span class="line"><span class="comment">//或者</span></span><br><span class="line"><span class="keyword">var</span> a = add5(<span class="number">5</span>)</span><br><span class="line">double(a)</span><br></pre></td></tr></table></figure>
+<p>那现在我们想以数据为核心，一个动作一个动作去执行。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span>).add5().double()</span><br></pre></td></tr></table></figure>
+<p>显然，如果能这样执行函数的话，就舒服多啦。那么我们知道，这样的去调用要满足：</p>
+<ul>
+<li>(5)必须是一个引用类型，因为需要挂载方法。</li>
+<li>引用类型上要有可以调用的方法</li>
+</ul>
+<p>所以我们试着去给他创建一个引用类型:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Num</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value ;</span><br><span class="line">  &#125;</span><br><span class="line">  add5()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value + <span class="number">5</span></span><br><span class="line">  &#125;</span><br><span class="line">  double()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value * <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> num = <span class="keyword">new</span> Num(<span class="number">5</span>);</span><br><span class="line">num.add5()</span><br></pre></td></tr></table></figure>
+<p>我们发现这个时候有一个问题，就是我们经过调用后，返回的就是一个值了，我们没有办法进行下一步处理。所以我们需要返回一个对象:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Num</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value ;</span><br><span class="line">  &#125;</span><br><span class="line">  add5 () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Num(<span class="keyword">this</span>.value + <span class="number">5</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  double () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Num(<span class="keyword">this</span>.value * <span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="keyword">new</span> Num(<span class="number">2</span>);</span><br><span class="line">num.add5().double()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们通过new Num ，创建了一个num 一样类型的实例</li>
+<li>把处理的值，作为参数传了进去从而改变了this.value的值</li>
+<li>我们把这个对象返了回去，可以继续调用方法去处理函数</li>
+</ul>
+<p>我们发现，new Num( this.value + 5)，中对this.value的处理，完全可以通过传进去一个函数去处理。</p>
+<p>并且在真实情况中，我们也不可能为每个实例都创建这样有不同方法的构造函数，它们需要一个统一的方法:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Num</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value ;</span><br><span class="line">  &#125;</span><br><span class="line">  map (fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Num(fn(<span class="keyword">this</span>.value))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> num = <span class="keyword">new</span> Num(<span class="number">2</span>);</span><br><span class="line">num.map(add5).map(double)</span><br></pre></td></tr></table></figure>
+<p>我们创建了一个map的方法，把处理的函数fn传了进去。这样我们就完美的实现啦，我们设想的功能啦。</p>
+<p>最后我们整理一下，这个函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Functor</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value ;</span><br><span class="line">  &#125;</span><br><span class="line">  map (fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> Functor.of(fn(<span class="keyword">this</span>.value))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Functor.of = <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Functor(val);</span><br><span class="line">&#125;</span><br><span class="line">Functor.of(<span class="number">5</span>).map(add5).map(double)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们把原来的构造函数Num的名字改成了Functor</li>
+<li>我们给new Functor(val);封住了一个方法Functor.of</li>
+</ul>
+<p>现在Functor.of(5).map(add5).map(double)去调用函数。有没有觉得很爽。</p>
+<p>哈哈，更爽的是，你已经在不知不觉间把函子的概念学完啦。上面这个例子总的Functor就是函子。现在我们来总结一下，它有那些特点吧：</p>
+<ul>
+<li>Functor是一个容器，它包含了值，就是this.value.(想一想你最开始的new Num(5))</li>
+<li>Functor具有map方法。该方法将容器里面的每一个值，映射到另一个容器。（想一想你在里面是不是new Num(fn(this.value)）</li>
+<li>函数式编程里面的运算，都是通过函子完成，即运算不直接针对值，而是针对这个值的容器—-函子。(想一想你是不是没直接去操作值)</li>
+<li>函子本身具有对外接口（map方法），各种函数就是运算符，通过接口接入容器，引发容器里面的值的变形。（说的就是你传进去那个函数把this.value给处理啦）</li>
+<li>函数式编程一般约定，函子有一个of方法，用来生成新的容器。（就是最后咱们整理了一下函数嘛）</li>
+</ul>
+<p>嗯，这下明白什么是函子了吧。在初学函数编程时，一定不要太过于纠结概念。看到好多，教程上在讲 函子时全然不提JavaScript语法。用生硬的数学概念去解释。</p>
+<p>我个人觉得书读百遍，其义自见。对于编程范式的概念理解也是一样的，你先知道它是什么。怎么用。 多写多练，自然就理解其中的含义啦。总抱着一堆概念看，是很难看懂的。</p>
+<p>以上，函子（Functor）的解释过程，个人理解。也欢迎大家指正。</p>
+<p><strong>问题：我们实现了一个最通用的函子，现在别问问题，我们趁热打铁，再学一个函子</strong></p>
+<h3 id="1-7-1-Maybe-函子"><a href="#1-7-1-Maybe-函子" class="headerlink" title="1.7.1 Maybe 函子"></a>1.7.1 Maybe 函子</h3><p>我们知道，在做字符串处理的时候，如果一个字符串是null, 那么对它进行toUpperCase(); 就会报错。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Functor.of(<span class="literal">null</span>).map(<span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123; <span class="keyword">return</span> s.toUpperCase(); &#125;);</span><br></pre></td></tr></table></figure>
+<p>那么我们在Functor函子上去进行调用，同样也会报错。</p>
+<p>那么我们有没有什么办法在函子里把空值过滤掉呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Maybe</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value ;</span><br><span class="line">  &#125;</span><br><span class="line">  map (fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value ? Maybe.of(fn(<span class="keyword">this</span>.value)) : Maybe.of(<span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">Maybe.of = <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Maybe(val);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = Maybe.of(<span class="literal">null</span>).map(<span class="function"><span class="keyword">function</span> (<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> s.toUpperCase();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们看到只需要把在中设置一个空值过滤，就可以完成这样一个Maybe函子。</p>
+<p>所以各种不同类型的函子，会完成不同的功能。学到这，我们发现，每个函子并没有直接去操作需要处理的数据，也没有参与到处理数据的函数中来。</p>
+<p>而是在这中间做了一些拦截和过滤。这和我们的高阶函数是不是有点像呢。所以你现在对函数式编程是不是有了更深的了解啦。</p>
+<p>现在我们就用函数式编程做一个小练习： 我们有一个字符串‘li’，我们希望处理成大写的字符串，然后加载到id为text的div上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">'li'</span>;</span><br><span class="line">Maybe.of(str).map(toUpperCase).map(html(<span class="string">'text'</span>))<span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>如果在有编写好的Maybe函子和两个功能函数的时候，我们只需要一行代码就可以搞定啦</p>
+<p>那么下面看看，我们的依赖函数吧：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> $$ = <span class="function"><span class="params">id</span> =&gt;</span> Maybe.of(<span class="built_in">document</span>.getElementById(id));</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Maybe</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(value)&#123;</span><br><span class="line">    <span class="keyword">this</span>.__value = value;</span><br><span class="line">  &#125;</span><br><span class="line">  map(fn)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.__value ? Maybe.of(fn(<span class="keyword">this</span>.__value)) : Maybe.of(<span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">of</span>(value)&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Maybe(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> toUpperCase = <span class="function"><span class="params">str</span> =&gt;</span> str.toUpperCase();</span><br><span class="line"><span class="keyword">let</span> html = <span class="function"><span class="params">id</span> =&gt;</span> html =&gt; &#123; $$(id).map(<span class="function"><span class="params">dom</span> =&gt;</span> &#123; dom.innerHTML = html; &#125;); &#125;;</span><br></pre></td></tr></table></figure>
+<p>我们来分析一下代码：</p>
+<ul>
+<li>因为Maybe.of(document.getElementById(id)我们会经常用到，所以用双$封装了一下</li>
+<li>然后是一个很熟悉的Maybe函子，这里of用的Class的静态方法</li>
+<li>toUpperCase是一个普通纯函数（es6如果不是很好的同学，可以用babel）编译成es5</li>
+<li>html是一个高阶函数，我们先传入目标dom的id然后会返回一个函数将，字符串挂在到目标dom上</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> html = <span class="function"><span class="keyword">function</span>(<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">html</span>) </span>&#123;</span><br><span class="line">    $$(id).map(<span class="function"><span class="keyword">function</span> (<span class="params">dom</span>) </span>&#123;</span><br><span class="line">      dom.innerHTML = html;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>大家再来想一个问题 Maybe.of(str).map(toUpperCase).map(html(‘text’))最后的值是什么呢？</p>
+<p>我们发现最后没有处理的函数没有返回值，所以最后结果应该是 Maybe {__value: undefined}; 这里面给大家留一个问题，我们把字符串打印在div上之后想继续操作字符串该怎么办呢？</p>
+<p><strong>问题：在理解了函子这个概念之后，我们来学习本文最后一节内容。有没有很开心</strong></p>
+<h2 id="1-8-Monad函子"><a href="#1-8-Monad函子" class="headerlink" title="1.8 Monad函子"></a>1.8 Monad函子</h2><p>Monad函子也是一个函子，其实很原理简单，只不过它的功能比较重要。那我们来看看它与其它的 有什么不同吧。</p>
+<p>我们先来看这样一个例子，手敲在控制台打印一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = Maybe.of( Maybe.of( Maybe.of(<span class="string">'str'</span>) ) )</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br><span class="line"><span class="built_in">console</span>.log(a.map(fn));</span><br><span class="line"><span class="built_in">console</span>.log(a.map(fn).map(fn));</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fn</span>(<span class="params">e</span>)</span>&#123; <span class="keyword">return</span> e.value &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我们有时候会遇到一种情况，需要处理的数据是 Maybe {value: Maybe}</li>
+<li>显然我们需要一层一层的解开。</li>
+<li>这样很麻烦，那么我们有没有什么办法得到里面的值呢</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Maybe</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value ;</span><br><span class="line">  &#125;</span><br><span class="line">  map (fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value ? Maybe.of(fn(<span class="keyword">this</span>.value)) : Maybe.of(<span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  join ( ) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Maybe.of = <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> Maybe(val);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们想取到里面的值，就把它用join方法返回来就好了啊。所以我给它加了一个join方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = Maybe.of( Maybe.of(<span class="string">'str'</span>) )</span><br><span class="line"><span class="built_in">console</span>.log(a.join().map(toUpperCase))</span><br></pre></td></tr></table></figure>
+<p>所以现在我们可以通过，join的方法一层一层得到里面的数据,并把它处理成大写</p>
+<p>现在你肯定会好奇为什么会产生Maybe.of( Maybe.of(‘str’)) 结构呢？</p>
+<p>还记得html那个函数吗？我们之前留了一个问题，字符串打印在div上之后想继续操作字符串该怎么办呢？</p>
+<p>很显然我们需要让这个函数有返回值。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> html = <span class="function"><span class="params">id</span> =&gt;</span> html =&gt; &#123;</span><br><span class="line">   <span class="keyword">return</span> $$(id).map(<span class="function"><span class="params">dom</span> =&gt;</span> &#123;</span><br><span class="line">     dom.innerHTML = html;</span><br><span class="line">     <span class="keyword">return</span> html</span><br><span class="line">   &#125;);</span><br><span class="line"> &#125;;</span><br></pre></td></tr></table></figure>
+<p>分析一下代码：</p>
+<ul>
+<li>如果只在里面加 return html，外面函数并没有返回值</li>
+<li>如果只在外面加return，则取不到html</li>
+<li>所以只能里面外面都加</li>
+<li>这就出现了 Maybe.of( Maybe.of(‘LI’) )</li>
+</ul>
+<p>那么这时候我们想，既然我们在执行的时候就知道，它会有影响，那我能不能在执行的时候，就把这个应该 给消除呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Maybe</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span> (value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value ;</span><br><span class="line">  &#125;</span><br><span class="line">  map (fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value ? Maybe.of(fn(<span class="keyword">this</span>.value)) : Maybe.of(<span class="literal">null</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  join ( )&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line">  chain(fn) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.map(fn).join();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们写了一个chain函数。首先它调用了一下map方法，执行结束后，在去掉一层嵌套的函子。</p>
+<p>所以在执行的时候，我们就可以这样去写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Maybe.of(str).map(toUpperCase).chain(html(<span class="string">'text'</span>))<span class="string">`</span></span><br></pre></td></tr></table></figure>
+<p>这样返回的函数就是只有一层嵌套的函子啦。</p>
+<p>学到这里我们已经把全部的函数式编程所涉及到概念都学习完啦。现在要是面试官拿这样一道题问题，答案是什么？是不是有点太简单啦。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Container = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.__value = x;</span><br><span class="line">&#125;</span><br><span class="line">Container.of = <span class="function"><span class="params">x</span> =&gt;</span> <span class="keyword">new</span> Container(x);</span><br><span class="line"></span><br><span class="line">Container.prototype.map = <span class="function"><span class="keyword">function</span>(<span class="params">f</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(f)</span><br><span class="line">  <span class="keyword">return</span> Container.of(f(<span class="keyword">this</span>.__value))</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Container.of(<span class="number">3</span>).map(<span class="function"><span class="params">x</span>=&gt;</span>x+<span class="number">1</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> <span class="string">'Result is '</span> + x);</span><br><span class="line"><span class="built_in">console</span>.log(Container.of(<span class="number">3</span>).map(<span class="function"><span class="params">x</span>=&gt;</span>x+<span class="number">1</span>).map(<span class="function"><span class="params">x</span> =&gt;</span> <span class="string">'Result is '</span> + x))</span><br></pre></td></tr></table></figure>
+<p>但你会发现我们并没有具体纠结每一个概念上，而是更多的体现在可实现的代码上，而这些代码你也并不陌生。</p>
+<p>哈哈，那你可能会问，我是不是学了假的函数式编程，并没有。因为我觉得函数式编程也是编程，最终都是要回归到日常项目的实践中。而应对不同难度的项目，所运用的知识当然也是不一样的，就好比造船，小船有小船的造法，邮轮有油轮的造法，航母有航母的造法。你没有必要把全部的造船知识点，逐一学完才开始动手。日常况且在工作中，你可能也并有真正的机会去造航母（比如写框架）。与其把大量的时间都花在理解那些概念上，不如先动手造一艘小船踏实。所以本文中大量淡化了不需要去立即学习的概念。</p>
+<p>现在，当你置身在函数式编程的那片海中，看见泛起的一叶叶扁舟，是不是不再陌生了呢？</p>
+<p>是不是在海角和天边，还划出一道美丽的曲线？</p>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/转录/" rel="tag"># 转录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/23/vue plugin demo/" rel="next" title="开发一个简单 vue 插件">
+                <i class="fa fa-chevron-left"></i> 开发一个简单 vue 插件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/06/JSON、JSONP、AJAX和跨域/" rel="prev" title="JSON、JSONP、AJAX和跨域">
+                JSON、JSONP、AJAX和跨域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-函数式编程（FP）思想"><span class="nav-number">1.</span> <span class="nav-text">1.1 函数式编程（FP）思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-纯函数"><span class="nav-number">2.</span> <span class="nav-text">1.2 纯函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-柯里化（curry）"><span class="nav-number">3.</span> <span class="nav-text">1.3 柯里化（curry）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-高阶函数"><span class="nav-number">4.</span> <span class="nav-text">1.4 高阶函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-1-等价函数"><span class="nav-number">4.1.</span> <span class="nav-text">1.4.1 等价函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-2-节流（throtle）函数"><span class="nav-number">4.2.</span> <span class="nav-text">1.4.2 节流（throtle）函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-命令式与声明式"><span class="nav-number">5.</span> <span class="nav-text">1.5 命令式与声明式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-6-组合（compose）"><span class="nav-number">6.</span> <span class="nav-text">1.6 组合（compose）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-7-函子（Functor）"><span class="nav-number">7.</span> <span class="nav-text">1.7 函子（Functor）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-1-Maybe-函子"><span class="nav-number">7.1.</span> <span class="nav-text">1.7.1 Maybe 函子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-8-Monad函子"><span class="nav-number">8.</span> <span class="nav-text">1.8 Monad函子</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. this 别名这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。 例如，在一个对象方法中在执行一个方法或者事件的时候： 123456789101112var obj = &amp;#123;	a: 1,	init: function()&amp;#123;		let ele = document.getElementsByClassName(&quot;ele&quot;);		let that = this;">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="改变this指向方法总结">
+<meta property="og:url" content="http://yoursite.com/2018/06/16/改变this指向方法总结/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="1. this 别名这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。 例如，在一个对象方法中在执行一个方法或者事件的时候： 123456789101112var obj = &amp;#123;	a: 1,	init: function()&amp;#123;		let ele = document.getElementsByClassName(&quot;ele&quot;);		let that = this;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-07T12:34:20.182Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="改变this指向方法总结">
+<meta name="twitter:description" content="1. this 别名这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。 例如，在一个对象方法中在执行一个方法或者事件的时候： 123456789101112var obj = &amp;#123;	a: 1,	init: function()&amp;#123;		let ele = document.getElementsByClassName(&quot;ele&quot;);		let that = this;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/16/改变this指向方法总结/"/>
+
+
+
+
+
+  <title>改变this指向方法总结 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br />
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br />
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br />
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br />
+            
+            tool
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/16/改变this指向方法总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">改变this指向方法总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-16T21:59:05+08:00">
+                2018-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-this-别名"><a href="#1-this-别名" class="headerlink" title="1. this 别名"></a>1. this 别名</h3><p>这种方式一般就是在函数作用域顶端创建一个指向 this 的变量。</p>
+<p>例如，在一个对象方法中在执行一个方法或者事件的时候：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">	a: <span class="number">1</span>,</span><br><span class="line">	init: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="keyword">let</span> ele = <span class="built_in">document</span>.getElementsByClassName(<span class="string">"ele"</span>);</span><br><span class="line">		<span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">		<span class="keyword">let</span> aaa = <span class="function">(<span class="params">(</span>) =&gt;</span> &#123;</span><br><span class="line">			that.a = <span class="number">2</span>; <span class="comment">//通过this的别名that改变a的值</span></span><br><span class="line">		&#125;)(); <span class="comment">//匿名自执行函数</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.init();</span><br><span class="line"><span class="built_in">console</span>.log(obj.a) <span class="comment">//结果为2</span></span><br></pre></td></tr></table></figure>
+<p>或者在vue实例的created()方法中利用axios获取数据的时候：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">created() &#123;</span><br><span class="line">  	<span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">  	<span class="comment">//发送请求的时候带上参数</span></span><br><span class="line">	axios.get(<span class="string">'../static/data.json?id='</span> + <span class="keyword">this</span>.seller.id)</span><br><span class="line">			  .then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">			    that.seller = <span class="built_in">Object</span>.assign(&#123;&#125;,that.seller,response.data.seller)</span><br><span class="line">			  &#125;)</span><br><span class="line">			  .catch(<span class="function"><span class="keyword">function</span> (<span class="params">error</span>) </span>&#123;</span><br><span class="line">			    <span class="built_in">console</span>.log(error);</span><br><span class="line">			  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-call和apply"><a href="#2-call和apply" class="headerlink" title="2. call和apply"></a>2. call和apply</h3><p>call和apply的区别在于，使用apply时，所有参数都应放在一个单独的数组参数中，而在使用call的时候，参数应该一次列出，并用逗号隔开。call和apply的详细作用可以阅读我原来的博文：<a href="https://cchroot.github.io/2018/03/03/%E9%87%8D%E6%B8%A9apply%20and%20call/" target="_blank" rel="noopener">重温——apply和call方法</a>，里面详细介绍了apply和call的各种用法。这里只说它们的其中一种用法：改变this指向。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如果单纯只是在一个函数中调用另一个函数是没什么多大区别，apply / call 的最大作用就是改变上下文</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">"张三"</span>;</span><br><span class="line"><span class="comment">//在全局里定义函数func1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//在对象里定义函数func2</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    name:<span class="string">"李四"</span>,</span><br><span class="line">    showName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">	    <span class="built_in">console</span>.log(getName())  <span class="comment">//这里直接调用，"张三"</span></span><br><span class="line">	    </span><br><span class="line">        <span class="keyword">return</span> getName.apply(<span class="keyword">this</span>);    <span class="comment">//在showName里调用getName，并将this从window改变为obj；也可以说是在obj对象中（obj的上下文环境中）调用window环境中的getName函数，利用apply方法保持了this原来的值。</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;，</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(obj.showName());  <span class="comment">//obj调用，"李四"</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-bind-this"><a href="#3-bind-this" class="headerlink" title="3. bind(this)"></a>3. bind(this)</h3><p>ES5中的bind()方法，它会创建一个函数的实例，其this值会被绑定到传给bind()函数的值。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.color = <span class="string">'green'</span>;</span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="attr">color</span>:<span class="string">'blue'</span>&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayColor</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="keyword">this</span>.color);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> objectSaycolor = sayColor.bind(o);</span><br><span class="line">objectSaycolor();<span class="comment">//blue</span></span><br></pre></td></tr></table></figure>
+<p>在这里sayColor()调用bind()并传入对象o,创建了objectSayColor()函数。objectSayColor()函数的this值等于o,因此即使是在全局作用域中调用这个函数，也会输出blue，而不是全局window对象中国的green。</p>
+<p>bind()方法还有一种使用方式是在函数运行时将 this 注入到回调中，使回调中的 this 能指向正确的上下文（改方法跟别名方式的第二个例子是相同的效果），例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'/'</span>).then(<span class="function"><span class="keyword">function</span> <span class="title">loaded</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">&#125;.bind(<span class="keyword">this</span>));</span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 中，所有函数都有 bind 方法，其允许你为 this 指定特定值。一旦函数被绑定，上下文就不能被覆盖，也就意味着 this 会指向正确的上下文。</p>
+<h3 id="4-ES6箭头函数"><a href="#4-ES6箭头函数" class="headerlink" title="4. ES6箭头函数"></a>4. ES6箭头函数</h3><p>ES2015 规范引入了箭头函数，使函数的定义更加简洁。箭头函数会隐式返回一个值，但更重要的是，它是在一个封闭的作用域中使用this：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">true</span> &#125;);</span><br><span class="line"></span><br><span class="line">fetch(<span class="string">'/'</span>).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>不管嵌套多少层，箭头函数中的 this 总能指向正确的上下文，因为函数体内的 this 指向的对象，就是定义时所在的对象，而不是使用时所在的对象。但缺点就是，由于箭头函数不能命名，因而在调试时，堆栈信息给的标签是anonymous function。</p>
+<p>如果你用 Babel 将 ES6 的代码转换成 ES5 的代码，就会发现两个有趣的现象：</p>
+<ul>
+<li>在某些情况下，编译器能判断函数名是否被赋值给了某个变量</li>
+<li>编译器使用 别名 来维护上下文</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> loaded = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">this</span>.setState(&#123; <span class="attr">loading</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// will be compiled to</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> _this = <span class="keyword">this</span>;</span><br><span class="line"><span class="keyword">var</span> loaded = <span class="function"><span class="keyword">function</span> <span class="title">loaded</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  _this.setState(&#123; <span class="attr">loading</span>: <span class="literal">false</span> &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="5-ES7-的绑定语法"><a href="#5-ES7-的绑定语法" class="headerlink" title="5. ES7 的绑定语法"></a>5. ES7 的绑定语法</h3><p>在 ES7 中，有一个关于 bind 语法 的提议，提议将 :: 作为一个新的绑定操作符，该操作符会将左值和右值(一个函数)进行绑定。</p>
+<p>以 map 的实现为例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">map</span>(<span class="params">f</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> mapped = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="keyword">this</span>.length);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">    mapped[i] = f(<span class="keyword">this</span>[i], i);  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> mapped;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>与 lodash 不同，我们不需要传递数据给 map 作为参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]::map(<span class="function"><span class="params">x</span> =&gt;</span> x * <span class="number">2</span>)</span><br><span class="line"><span class="comment">// [2, 4, 6]</span></span><br></pre></td></tr></table></figure>
+<p>对下面的代码熟悉吗？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[].map.call(someNodeList, myFn);</span><br><span class="line"><span class="comment">// or</span></span><br><span class="line"><span class="built_in">Array</span>.from(someNodeList).map(myFn);</span><br><span class="line"><span class="comment">//Array.from() 方法从一个类似数组(对象必须有length属性,不然转化为空数组)或可迭代对象中创建一个新的数组实例。</span></span><br></pre></td></tr></table></figure>
+<p>ES7 的绑定语法允许你像使用箭头函数一样使用 map：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">someNodeList::map(myFn);</span><br></pre></td></tr></table></figure>
+<h3 id="6-方法传参指定"><a href="#6-方法传参指定" class="headerlink" title="6. 方法传参指定"></a>6. 方法传参指定</h3><p>一些函数允许为 this 传递一个明确的值，保证其指向正确的上下文，例如 map 函数则将 this 作为最后一个参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">items.map(<span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">onClick</span>=<span class="string">&#123;this.clicked&#125;</span>&gt;</span>x<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>;</span><br><span class="line">&#125;, <span class="keyword">this</span>);</span><br></pre></td></tr></table></figure>
+<p>虽然代码能运行，但这不是函数的一致实现。大部分函数并不接受 this 参数，所以最好还是采用上文中的其它方式来绑定 this 。</p>
+<p>参考文章: <a href="https://www.sitepoint.com/bind-javascripts-this-keyword-react/" target="_blank" rel="noopener">6 Ways to Bind JavaScript‘s this Keyword in React, ES6 &amp; ES7</a></p>
+<p><br><br>完~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/10/Lazy load function/" rel="next" title="惰性载入函数">
+                <i class="fa fa-chevron-left"></i> 惰性载入函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/23/vue plugin demo/" rel="prev" title="开发一个简单 vue 插件">
+                开发一个简单 vue 插件 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/headPhoto.jpg"
+                alt="cchroot" />
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">86</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-this-别名"><span class="nav-number">1.</span> <span class="nav-text">1. this 别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-call和apply"><span class="nav-number">2.</span> <span class="nav-text">2. call和apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-bind-this"><span class="nav-number">3.</span> <span class="nav-text">3. bind(this)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-ES6箭头函数"><span class="nav-number">4.</span> <span class="nav-text">4. ES6箭头函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-ES7-的绑定语法"><span class="nav-number">5.</span> <span class="nav-text">5. ES7 的绑定语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-方法传参指定"><span class="nav-number">6.</span> <span class="nav-text">6. 方法传参指定</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
