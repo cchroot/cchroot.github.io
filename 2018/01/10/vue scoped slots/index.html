@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="默认插槽和具名插槽这里就不多说了，大家直接去看官网的例子就好插槽,我们来说说 2.1.0+ 新增的比较难理解的作用域插槽。 官网例子有的时候你希望提供的组件带有一个可从子组件获取数据的可复用的插槽。例如一个简单的  组件的模板可能包含了如下代码： 12345678&amp;lt;ul&amp;gt;  &amp;lt;li    v-for=&quot;todo in todos&quot;    v-bind:key=&quot;todo.id&quot;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-21T14:13:57.617Z">
+<meta property="og:updated_time" content="2018-10-13T17:30:58.982Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue 作用域插槽">
 <meta name="twitter:description" content="默认插槽和具名插槽这里就不多说了，大家直接去看官网的例子就好插槽,我们来说说 2.1.0+ 新增的比较难理解的作用域插槽。 官网例子有的时候你希望提供的组件带有一个可从子组件获取数据的可复用的插槽。例如一个简单的  组件的模板可能包含了如下代码： 12345678&amp;lt;ul&amp;gt;  &amp;lt;li    v-for=&quot;todo in todos&quot;    v-bind:key=&quot;todo.id&quot;">
@@ -405,7 +405,7 @@
         <p>默认插槽和具名插槽这里就不多说了，大家直接去看官网的例子就好<a href="https://cn.vuejs.org/v2/guide/components-slots.html" target="_blank" rel="noopener">插槽</a>,我们来说说 2.1.0+ 新增的比较难理解的作用域插槽。</p>
 <h2 id="官网例子"><a href="#官网例子" class="headerlink" title="官网例子"></a>官网例子</h2><p>有的时候你希望提供的组件带有一个可从子组件获取数据的可复用的插槽。例如一个简单的 <todo-list> 组件的模板可能包含了如下代码：</todo-list></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-for</span>=<span class="string">"todo in todos"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-bind:key</span>=<span class="string">"todo.id"</span></span></span><br><span class="line"><span class="tag">  &gt;</span></span><br><span class="line">    &#123;&#123; todo.text &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>但是在我们应用的某些部分，我们希望每个独立的待办项渲染出和 todo.text 不太一样的东西。这也是作用域插槽的用武之地。</p>
+<p>但是在我们应用的某些部分，我们希望每个独立的待办项渲染出和<code>todo.text</code>不太一样的东西。这也是作用域插槽的用武之地。</p>
 <p>为了让这个特性成为可能，你需要做的全部事情就是将待办项内容包裹在一个 <slot> 元素上，然后将所有和其上下文相关的数据传递给这个插槽：在这个例子中，这个数据是 todo 对象：</slot></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-for</span>=<span class="string">"todo in todos"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">v-bind:key</span>=<span class="string">"todo.id"</span></span></span><br><span class="line"><span class="tag">  &gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 我们为每个 todo 准备了一个插槽，--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 将 `todo` 对象作为一个插槽的 prop 传入。--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">slot</span> <span class="attr">v-bind:todo</span>=<span class="string">"todo"</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- 回退的内容 --&gt;</span></span><br><span class="line">      &#123;&#123; todo.text &#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>现在当我们使用 <todo-list> 组件的时候，我们可以选择为待办项定义一个不一样的 <template> 作为替代方案，并且可以通过 slot-scope 特性从子组件获取数据：</template></todo-list></p>
@@ -563,7 +563,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
+                <a href="/tools/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>

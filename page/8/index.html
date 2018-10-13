@@ -560,8 +560,8 @@
           默认插槽和具名插槽这里就不多说了，大家直接去看官网的例子就好插槽,我们来说说 2.1.0+ 新增的比较难理解的作用域插槽。
 官网例子有的时候你希望提供的组件带有一个可从子组件获取数据的可复用的插槽。例如一个简单的  组件的模板可能包含了如下代码：
 12345678&lt;ul&gt;  &lt;li    v-for="todo in todos"    v-bind:key="todo.id"  &gt;    &#123;&#123; todo.text &#125;&#125;  &lt;/li&gt;&lt;/ul&gt;
-但是在我们应用的某些部分，我们希望每个独立的待办项渲染出和 todo.text 不太一样的东西。这也是作用域插槽的用武之地。
-为了让这个特性成为可能，你需要做的全部事情就是将待办项内
+但是在我们应用的某些部分，我们希望每个独立的待办项渲染出和todo.text不太一样的东西。这也是作用域插槽的用武之地。
+为了让这个特性成为可能，你需要做的全部事情就是将待办项内容包
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1909,7 +1909,7 @@ cookie是不加密的，用
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
+                <a href="/tools/index.html">
                   <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
