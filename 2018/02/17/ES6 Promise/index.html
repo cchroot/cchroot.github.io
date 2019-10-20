@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Promise是什么在MDN上是这样解释的：  The Promise object is used for asynchronous computations.(Promise 对象用于异步计算) The Promise object represents the eventual completion (or failure) of an asynchronous operation, and">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise入门">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/ES6 Promise/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="Promise是什么在MDN上是这样解释的：  The Promise object is used for asynchronous computations.(Promise 对象用于异步计算) The Promise object represents the eventual completion (or failure) of an asynchronous operation, and">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/Y1Etlcb.png">
+<meta property="og:image" content="http://yoursite.com/images/js/promise_process.png">
+<meta property="og:updated_time" content="2018-08-17T15:40:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Promise入门">
+<meta name="twitter:description" content="Promise是什么在MDN上是这样解释的：  The Promise object is used for asynchronous computations.(Promise 对象用于异步计算) The Promise object represents the eventual completion (or failure) of an asynchronous operation, and">
+<meta name="twitter:image" content="https://i.imgur.com/Y1Etlcb.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/17/ES6 Promise/">
+
+
+
+
+
+  <title>Promise入门 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/ES6 Promise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Promise入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-17T20:31:05+08:00">
+                2018-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Promise是什么"><a href="#Promise是什么" class="headerlink" title="Promise是什么"></a>Promise是什么</h2><p>在MDN上是这样解释的：</p>
+<ul>
+<li>The Promise object is used for asynchronous computations.(Promise 对象用于异步计算)</li>
+<li>The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.（Promise 对象用于表示一个异步操作的最终状态（完成或失败），以及其返回的值。）</li>
+</ul>
+<p>看完上面的解释你可能还是不太明白，我个人来理解，按照用途可以这样解释：</p>
+<ol>
+<li>主要用于异步计算</li>
+<li>可以将异步操作队列化，按照期望的顺序执行，返回符合预期的结果</li>
+<li>可以在对象之间传递和操作 Promise ,帮助我们处理队列</li>
+</ol>
+<h2 id="异步回调存在的问题"><a href="#异步回调存在的问题" class="headerlink" title="异步回调存在的问题"></a>异步回调存在的问题</h2><p>我们在使用js做开发的时候，存在非常多的异步操作，而异步回调也是家常便饭，而在异步回调中存在着四个问题：</p>
+<ol>
+<li>嵌套层很深，难以维护</li>
+<li>无法正常使用reutrn 和 throw</li>
+<li>无法正常检索堆栈信息</li>
+<li>多个回调之间难以建立联系</li>
+</ol>
+<h2 id="Promise-简介"><a href="#Promise-简介" class="headerlink" title="Promise 简介"></a>Promise 简介</h2><p>直接上代码解释：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(</span><br><span class="line">  <span class="comment">//执行器 executor</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span>(<span class="params">reslove,reject</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//一段耗时的异步操作</span></span><br><span class="line">	reslove();<span class="comment">//数据处理完成</span></span><br><span class="line">	reject();<span class="comment">//数据处理出错</span></span><br><span class="line">  &#125;</span><br><span class="line">)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span> <span class="title">A</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//成功，下一步</span></span><br><span class="line">  &#125;,<span class="function"><span class="keyword">function</span> <span class="title">B</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//失败，做相应的处理</span></span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>以上就是 Promise 的语法，可以看出：</p>
+<ul>
+<li>Promise 是一个代理对象，它和原先要进行的操作并无关系</li>
+<li>它通过引入一个回调，来避免更多的回调</li>
+</ul>
+<p>Promise有三个状态：</p>
+<ul>
+<li>pending,待定，初始状态</li>
+<li>fulfilled,实现，成功状态</li>
+<li>reject,被否决，失败状态</li>
+</ul>
+<p>当 Promise 状态发生改变，就会触发 .then() 里的响应函数处理后续步骤；此外，Promise 的状态一经改变，是不会再改变的。</p>
+<p><img src="https://i.imgur.com/Y1Etlcb.png" alt></p>
+<p>如图，在 Promise 中，每一个 then() 都会返回一个新的 Promise ，这样就由 then() 的调用生产一个 Promise 的调用队列，根据执行结果的状态，不断的调用 then() 里面对应的处理函数，一个 then() 处理完后，继续下一个，直到所有的处理函数执行完毕。</p>
+<p>使用promise基本步骤(2步):</p>
+<ol>
+<li>创建promise对象</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">   <span class="comment">//初始化promise状态为 pending</span></span><br><span class="line">  <span class="comment">//执行异步操作</span></span><br><span class="line">  <span class="keyword">if</span>(异步操作成功) &#123;</span><br><span class="line">    resolve(value);<span class="comment">//修改promise的状态为fullfilled</span></span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    reject(errMsg);<span class="comment">//修改promise的状态为rejected</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>调用promise的then():</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  result =&gt; console.log(result</span>),</span></span><br><span class="line"><span class="function">  <span class="title">errorMsg</span> =&gt; <span class="title">alert</span>(<span class="params">errorMsg</span>)</span></span><br><span class="line"><span class="function">))</span></span><br></pre></td></tr></table></figure>
+<h2 id="promise-的基本使用"><a href="#promise-的基本使用" class="headerlink" title="promise 的基本使用"></a>promise 的基本使用</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//基本使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>)</span><br><span class="line">		<span class="comment">//throw new Error("图片加载失败")//模仿语法报错</span></span><br><span class="line">        img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            reject(<span class="string">'图片加载失败'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> promise</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> src = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result = loadImg(src)</span><br><span class="line">result.then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>, img.width)</span><br><span class="line">    <span class="keyword">return</span> img <span class="comment">// 非promise对象会自动包装成一个 promise 对象，并且img会作为参数传递，类似于：resolve(img)</span></span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'error 1'</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>, img.height)</span><br><span class="line">	<span class="keyword">return</span> img</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'error 2'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统一捕获异常</span></span><br><span class="line"><span class="keyword">var</span> src = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result = loadImg(src)</span><br><span class="line">result.then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>, img.width)</span><br><span class="line">    <span class="keyword">return</span> img</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>, img.height)</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">ex</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 统一捕获异常</span></span><br><span class="line">    <span class="built_in">console</span>.log(ex)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//多个串联，第一个加载完后加载第二个，以此类推</span></span><br><span class="line"><span class="keyword">var</span> src1 = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result1 = loadImg(src1)</span><br><span class="line"><span class="keyword">var</span> src2 = <span class="string">'https://img1.mukewang.com/545862fe00017c2602200220-100-100.jpg'</span></span><br><span class="line"><span class="keyword">var</span> result2 = loadImg(src2)</span><br><span class="line">result1.then(<span class="function"><span class="keyword">function</span> (<span class="params">img1</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第一个图片加载完成'</span>, img1.width)</span><br><span class="line">    <span class="keyword">return</span> result2  <span class="comment">// 重要！！！</span></span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">img2</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个图片加载完成'</span>, img2.width)</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">ex</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//统一catch</span></span><br><span class="line">    <span class="built_in">console</span>.log(ex)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//promise.all 接收一个 promise 对象的数组</span></span><br><span class="line"><span class="comment">//待全部完成后，统一执行 success</span></span><br><span class="line"><span class="keyword">var</span> src1 = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result1 = loadImg(src1)</span><br><span class="line"><span class="keyword">var</span> src2 = <span class="string">'https://img1.mukewang.com/545862fe00017c2602200220-100-100.jpg'</span></span><br><span class="line"><span class="keyword">var</span> result2 = loadImg(src2)</span><br><span class="line"><span class="built_in">Promise</span>.all([result1, result2]).then(<span class="function"><span class="keyword">function</span> (<span class="params">datas</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//接收到的 datas 是一个数组，依次包含了多个 promise 返回内容</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'all'</span>, datas[<span class="number">0</span>])</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'all'</span>, datas[<span class="number">1</span>])</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//promise.race 接收一个包含多个 promise对象数组</span></span><br><span class="line"><span class="comment">//只要有一个完成，就执行 success</span></span><br><span class="line"><span class="built_in">Promise</span>.race([result1, result2]).then(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//data 即最先执行完成的 promises 的返回值</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'race'</span>, data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>promise 用的最广泛的地方在两个：</p>
+<ol>
+<li>使用promise实现超时处理</li>
+<li>使用promise封装处理ajax请求</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">request.responseType = <span class="string">'json'</span>;</span><br><span class="line">request.open(<span class="string">"GET"</span>, url);</span><br><span class="line">request.send();</span><br></pre></td></tr></table></figure>
+<p>来看看 promise 的执行顺序:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个promise实例对象</span></span><br><span class="line"><span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">//初始化promise的状态为pending----&gt;初始化状态</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'1111'</span>);<span class="comment">//同步执行</span></span><br><span class="line">    <span class="comment">//启动异步任务</span></span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'3333'</span>);</span><br><span class="line">        <span class="comment">//resolve('atguigu.com');//修改promise的状态pending----&gt;fullfilled（成功状态）</span></span><br><span class="line">        reject(<span class="string">'xxxx'</span>);<span class="comment">//修改promise的状态pending-----&gt;rejected(失败状态)</span></span><br><span class="line">    &#125;,<span class="number">1000</span>)</span><br><span class="line">&#125;);</span><br><span class="line">promise.then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'成功了。。。'</span> + data);</span><br><span class="line">&#125;, (error) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'失败了'</span> + error);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'2222'</span>);</span><br></pre></td></tr></table></figure>
+<p>执行结果：1111 =&gt; 2222 =&gt; 3333 =&gt; 失败了xxxx(成功了。。。atguigu.com)</p>
+<p>可以用下图表示执行过程：</p>
+<p><img src="/images/js/promise_process.png" alt="promise过程分析"></p>
+<p>完整使用案例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一个请求news的方法</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getNews</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//创建一个promise对象</span></span><br><span class="line">    <span class="keyword">let</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="comment">//初始化promise状态为pending</span></span><br><span class="line">        <span class="comment">//启动异步任务</span></span><br><span class="line">        <span class="keyword">let</span> request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">        request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(request.readyState === <span class="number">4</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(request.status === <span class="number">200</span>)&#123;</span><br><span class="line">                    <span class="keyword">let</span> news = request.response;</span><br><span class="line">                    resolve(news);</span><br><span class="line">                &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                    reject(<span class="string">'请求失败了。。。'</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        request.responseType = <span class="string">'json'</span>;<span class="comment">//设置返回的数据类型</span></span><br><span class="line">        request.open(<span class="string">"GET"</span>, url);<span class="comment">//规定请求的方法，创建链接</span></span><br><span class="line">        request.send();<span class="comment">//发送</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> promise;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getNews(<span class="string">'http://localhost:3000/news?id=2'</span>)</span><br><span class="line">        .then(<span class="function">(<span class="params">news</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(news);</span><br><span class="line">            <span class="built_in">document</span>.write(<span class="built_in">JSON</span>.stringify(news));</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'http://localhost:3000'</span> + news.commentsUrl);</span><br><span class="line">            <span class="keyword">return</span> getNews(<span class="string">'http://localhost:3000'</span> + news.commentsUrl);</span><br><span class="line">        &#125;, (error) =&gt; &#123;</span><br><span class="line">            alert(error);</span><br><span class="line">            <span class="comment">//reject("error")</span></span><br><span class="line">            <span class="comment">//return 1;</span></span><br><span class="line">            <span class="comment">//return error</span></span><br><span class="line">            <span class="comment">//return new promise();</span></span><br><span class="line">        &#125;)</span><br><span class="line">        .then(<span class="function">(<span class="params">comments</span>) =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(comments);</span><br><span class="line">            <span class="built_in">document</span>.write(<span class="string">'&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;'</span> + <span class="built_in">JSON</span>.stringify(comments));</span><br><span class="line">        &#125;, (error) =&gt; &#123;</span><br><span class="line">            alert(error);</span><br><span class="line">        &#125;)</span><br></pre></td></tr></table></figure>
+<p>运行代码后你会发现：</p>
+<p>第一个promise如果成功，返回的是一个 promise，那么第二个 then 则看这个 promise 的结果。由于当前本地没有开启服务器接口，所以你第一个是错误的 <code>reject(&#39;请求失败了。。。&#39;)</code>，那么第二个 then 看的就是第一个 then 中 error 函数的返回，你只 alert，默认函数返回不是返回一个promise 对象，所以第二个 then 在你第一个 promise 进去错误的情况下，肯定是会执行的，并且 comments 为 undefined。</p>
+<p>总的来说：promise 在 then 之后的后继的 then 都是看前面的 then 中执行的那个函数的结果来进行相应的操作，基本就两个，返回不是 promise 类型的，和是 promise 类型的，如果是 promise 类型的，则这个 then 就是基本的 then 操作，如果不是，那应该就是简单的带参回调函数。</p>
+<p>注意:如果忽略针对某个状态的回调函数参数，或者提供非函数 (nonfunction) 参数，那么 then 方法将会丢失关于该状态的回调函数信息，但是并不会产生错误。如果调用 then 的 Promise 的状态（fulfillment 或 rejection）发生改变，但是 then 中并没有关于这种状态的回调函数，那么 then 将创建一个没有经过回调函数处理的新 Promise 对象，这个新 Promise 只是简单地接受调用这个 then 的原 Promise 的终态作为它的终态。</p>
+<p>并且：如果then中的回调函数返回一个值，那么then返回的Promise将会成为接受状态，并且将返回的值作为接受状态的回调函数的参数值。</p>
+<p>具体请参考: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/then" target="_blank" rel="noopener">Promise.prototype.then()</a></p>
+<p><br><br>完~<br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/14/Vue.js中 watch 的高级用法/" rel="next" title="Vue.js中 watch 的高级用法">
+                <i class="fa fa-chevron-left"></i> Vue.js中 watch 的高级用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/19/ES6 Symbol,Iterator,Generator,Async,Class/" rel="prev" title="ES6 Symbol,Iterator,Generator,Async,Class">
+                ES6 Symbol,Iterator,Generator,Async,Class <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise是什么"><span class="nav-number">1.</span> <span class="nav-text">Promise是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步回调存在的问题"><span class="nav-number">2.</span> <span class="nav-text">异步回调存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-简介"><span class="nav-number">3.</span> <span class="nav-text">Promise 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#promise-的基本使用"><span class="nav-number">4.</span> <span class="nav-text">promise 的基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际应用"><span class="nav-number">5.</span> <span class="nav-text">实际应用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

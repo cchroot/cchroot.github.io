@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ES6问题一：ES6模块化如何使用，开发环境如何打包？  基本语法为：import export(注意有无default) 可以用 webpack 或者 rollup 等打包工具打包 需要配置安装多个 babel ,以及 .babelrc 文件  问题二： Class 和普通构造函数的区别？  class 在语法上更加贴合面向对象的写法 class 实现继承更加易读、易理解 更易于写后 java">
+<meta name="keywords" content="面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试复习二">
+<meta property="og:url" content="http://yoursite.com/2018/08/18/interview2/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="ES6问题一：ES6模块化如何使用，开发环境如何打包？  基本语法为：import export(注意有无default) 可以用 webpack 或者 rollup 等打包工具打包 需要配置安装多个 babel ,以及 .babelrc 文件  问题二： Class 和普通构造函数的区别？  class 在语法上更加贴合面向对象的写法 class 实现继承更加易读、易理解 更易于写后 java">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-09T14:50:52.583Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试复习二">
+<meta name="twitter:description" content="ES6问题一：ES6模块化如何使用，开发环境如何打包？  基本语法为：import export(注意有无default) 可以用 webpack 或者 rollup 等打包工具打包 需要配置安装多个 babel ,以及 .babelrc 文件  问题二： Class 和普通构造函数的区别？  class 在语法上更加贴合面向对象的写法 class 实现继承更加易读、易理解 更易于写后 java">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/18/interview2/">
+
+
+
+
+
+  <title>面试复习二 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/18/interview2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面试复习二</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-18T20:30:05+08:00">
+                2018-08-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h2><p>问题一：ES6模块化如何使用，开发环境如何打包？</p>
+<ul>
+<li>基本语法为：import export(注意有无default)</li>
+<li>可以用 webpack 或者 rollup 等打包工具打包</li>
+<li>需要配置安装多个 babel ,以及 .babelrc 文件</li>
+</ul>
+<p>问题二： Class 和普通构造函数的区别？</p>
+<ul>
+<li>class 在语法上更加贴合面向对象的写法</li>
+<li>class 实现继承更加易读、易理解</li>
+<li>更易于写后 java 等后端语言的开发者快速入门使用</li>
+<li>本质还是语法糖，使用 prototype</li>
+</ul>
+<p>问题三：Promise 的基本使用和原理</p>
+<ul>
+<li>new Promise 实例，而且要 return</li>
+<li>new Promise 时要传入参数，函数有 resolve reject 两个参数</li>
+<li>成功时执行 resolve() 失败时执行 reject()</li>
+<li><p>then 监听结果</p>
+</li>
+<li><p>promise里面的then函数仅仅是注册了后续需要执行的代码，真正的执行是在resolve方法里面执行的</p>
+</li>
+<li>通过Promise.prototype.then和Promise.prototype.catch方法将观察者方法注册到被观察者Promise对象中，同时返回一个新的Promise对象，以便可以链式调用</li>
+<li>被观察者管理内部pending、fulfilled和rejected的状态转变，同时通过构造函数中传递的resolve和reject方法以主动触发状态转变和通知观察者。</li>
+</ul>
+<p>问题四： 总结一下 ES6 的其它常用功能</p>
+<ul>
+<li>let/const</li>
+<li>多行字符串/模板变量</li>
+<li>解构赋值</li>
+<li>块级作用域</li>
+<li>函数默认参数</li>
+<li>箭头函数</li>
+<li>拓展运算符</li>
+<li>Symbol类型</li>
+<li>Iterator 遍历器</li>
+<li>Generator 函数</li>
+<li>Async 函数</li>
+</ul>
+<h2 id="原型高级"><a href="#原型高级" class="headerlink" title="原型高级"></a>原型高级</h2><p>问题一：说一说原型的实际应用</p>
+<ul>
+<li>描述一下 jquery 如何使用原型</li>
+<li>描述一下 zepto 如何使用原型</li>
+<li>instanceof 原理</li>
+<li>再结合自己的项目经验，说一个自己的开发例子</li>
+</ul>
+<p>zepto 源码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">window</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//空对象</span></span><br><span class="line">    <span class="keyword">var</span> zepto = &#123;&#125;</span><br><span class="line">	<span class="comment">//构造函数</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Z</span>(<span class="params">dom, selector</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> i, len = dom ? dom.length : <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">this</span>[i] = dom[i]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.length = len</span><br><span class="line">        <span class="keyword">this</span>.selector = selector || <span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    zepto.Z = <span class="function"><span class="keyword">function</span> (<span class="params">dom, selector</span>) </span>&#123;</span><br><span class="line">		<span class="comment">//注意new,返回一个实例</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Z(dom, selector)</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//初始化函数，源码中更复杂</span></span><br><span class="line">    zepto.init = <span class="function"><span class="keyword">function</span> (<span class="params">selector</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> slice = <span class="built_in">Array</span>.prototype.slice</span><br><span class="line">        <span class="keyword">var</span> dom = slice.call(<span class="built_in">document</span>.querySelectorAll(selector))</span><br><span class="line">        <span class="keyword">return</span> zepto.Z(dom, selector)</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//即zepto的$</span></span><br><span class="line">    <span class="keyword">var</span> $ = <span class="function"><span class="keyword">function</span> (<span class="params">selector</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> zepto.init(selector)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">window</span>.$ = $</span><br><span class="line"></span><br><span class="line">    $.fn = &#123;</span><br><span class="line">        css: <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">            alert(<span class="string">'css'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        html: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'这是一个模拟的 html 函数'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//定义原型</span></span><br><span class="line">    Z.prototype = $.fn</span><br><span class="line">&#125;)(<span class="built_in">window</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line"><span class="keyword">var</span> $p = $(<span class="string">'p'</span>)</span><br><span class="line">$p.css(<span class="string">'font-size'</span>, <span class="string">'40px'</span>) <span class="comment">//css()与html()是原型方法</span></span><br><span class="line">alert($p.html())</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> $div1 = $(<span class="string">'#div1'</span>)</span><br><span class="line">$div1.css(<span class="string">'color'</span>, <span class="string">'blue'</span>)</span><br><span class="line">alert($div1.html())</span><br></pre></td></tr></table></figure>
+<p>jquery 源码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">(<span class="function"><span class="keyword">function</span> (<span class="params">window</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//注意，第一步就找到了构造函数</span></span><br><span class="line">    <span class="keyword">var</span> jQuery = <span class="function"><span class="keyword">function</span> (<span class="params">selector</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> jQuery.fn.init(selector)</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//初始化实例方法</span></span><br><span class="line">    jQuery.fn = &#123;</span><br><span class="line">        css: <span class="function"><span class="keyword">function</span> (<span class="params">key, value</span>) </span>&#123;</span><br><span class="line">            alert(<span class="string">'css'</span>)</span><br><span class="line">        &#125;,</span><br><span class="line">        html: <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">'html'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//定义构造函数</span></span><br><span class="line">    <span class="keyword">var</span> init = jQuery.fn.init = <span class="function"><span class="keyword">function</span> (<span class="params">selector</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> slice = <span class="built_in">Array</span>.prototype.slice</span><br><span class="line">        <span class="keyword">var</span> dom = slice.call(<span class="built_in">document</span>.querySelectorAll(selector))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> i, len = dom ? dom.length : <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">this</span>[i] = dom[i]</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>.length = len</span><br><span class="line">        <span class="keyword">this</span>.selector = selector || <span class="string">''</span></span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//定义原型</span></span><br><span class="line">    init.prototype = jQuery.fn</span><br><span class="line"></span><br><span class="line">    <span class="built_in">window</span>.$ = jQuery</span><br><span class="line"></span><br><span class="line">&#125;)(<span class="built_in">window</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用</span></span><br><span class="line"><span class="keyword">var</span> $p = $(<span class="string">'p'</span>)</span><br><span class="line">$p.css(<span class="string">'font-size'</span>, <span class="string">'40px'</span>)</span><br><span class="line">alert($p.html())</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> $div1 = $(<span class="string">'#div1'</span>)</span><br><span class="line">$div1.css(<span class="string">'color'</span>, <span class="string">'blue'</span>)</span><br><span class="line">alert($div1.html())</span><br></pre></td></tr></table></figure>
+<p>为什么要把原型方法放在 $.fn 或者 Jquery.fn？</p>
+<p>因为要扩展插件(本质就是扩展原型方法)：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$.fn.getNodeName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>[<span class="number">0</span>].nodeName;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好处：</p>
+<ul>
+<li>只有 $ 会暴露在 window 全局变量，限制暴露对象，避免全局污染</li>
+<li>将插件扩展统一到 $.fn.xxx 这个接口，方便使用且统一</li>
+</ul>
+<p>问题二：原型如何体现它的扩展性</p>
+<ul>
+<li>说一下 jquery 和 zepto 的插件机制<ul>
+<li>封装对象方法</li>
+<li>封装全局函数 </li>
+<li>选择器插件</li>
+</ul>
+</li>
+<li>结合自己的开发经验，做过的基于原型的插件</li>
+<li>jQuery插件的机制很简单，就是利用jQuery提供的jQuery.fn.extend()和jQuery.extend()方法，扩展jQuery的功能。</li>
+<li>jQuery.fn.extend()多用于扩展上面提到的3种类型中的第一种，jQuery.extend()用于扩展后两种插件。这两个方法都接受一个参数，类型为Object。Object对象的“名/值对”分别代表“函数或方法名/函数主体”。</li>
+</ul>
+<h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2><p>问题一：什么是单线程,和异步有什么关系？</p>
+<ul>
+<li>单线程：只有一个线程，只能做一件事情</li>
+<li>原因：避免 DOM 渲染的冲突。<ul>
+<li>浏览器需要渲染 dom</li>
+<li>js 可以修改 dom 的结构</li>
+<li>js 执行的时候，浏览器 dom 渲染就会暂停</li>
+<li>两段 js 也不能同时执行（都修改 dom 就冲突了）</li>
+<li>H5 中的 webworker 支持多线程，但是不能访问 dom</li>
+</ul>
+</li>
+<li>解决方案就是异步</li>
+<li>实现方式就是 even-loop</li>
+</ul>
+<p>问题二：什么是 even-loop</p>
+<ul>
+<li>事件轮询，js 实现异步的具体解决方案</li>
+<li>同步代码，直接执行</li>
+<li>异步函数先放在异步队列中</li>
+<li>待同步函数执行完毕，轮询执行异步队列的函数</li>
+</ul>
+<p>问题三:是否用过 jquery 的 Deferred？</p>
+<ul>
+<li>jquery 1.5的变化<ul>
+<li>无法改变 js 异步和单线程的本质</li>
+<li>只能从写法上杜绝 callback 这种形式</li>
+<li>它是一种语法糖形式，但是解耦了</li>
+<li>很好的体现了：开放封闭原则</li>
+</ul>
+</li>
+<li>使用 Jquery Deferred<ul>
+<li>总结，dtd 的 API 可以分成两类，用意不同</li>
+<li>第一类：dtd.resolve  dtd.reject</li>
+<li>第二类：dtd.then dtd.done dtd.fail</li>
+<li>这两类应该分开，否则后果很严重</li>
+</ul>
+</li>
+<li>初步引入 Promise 概念</li>
+<li>then() 方法返回一个 Promise 。它最多需要有两个参数：Promise 的成功和失败情况的回调函数，而它的行为与then中的回调函数的返回值有关：<ul>
+<li>如果then中的回调函数返回一个值，那么then返回的Promise将会成为接受状态，并且将返回的值作为接受状态的回调函数的参数值。</li>
+<li>如果then中的回调函数抛出一个错误，那么then返回的Promise将会成为拒绝状态，并且将抛出的错误作为拒绝状态的回调函数的参数值。</li>
+<li>如果then中的回调函数返回一个已经是接受状态的Promise，那么then返回的Promise也会成为接受状态，并且将那个Promise的接受状态的回调函数的参数值作为该被返回的Promise的接受状态回调函数的参数值。</li>
+<li>如果then中的回调函数返回一个已经是拒绝状态的Promise，那么then返回的Promise也会成为拒绝状态，并且将那个Promise的拒绝状态的回调函数的参数值作为该被返回的Promise的拒绝状态回调函数的参数值。</li>
+<li>如果then中的回调函数返回一个未定状态（pending）的Promise，那么then返回Promise的状态也是未定的，并且它的终态与那个Promise的终态相同；同时，它变为终态时调用的回调函数参数与那个Promise变为终态时的回调函数的参数是相同的。</li>
+</ul>
+</li>
+</ul>
+<p>问题四：Promise 的基本使用和原理</p>
+<ul>
+<li>基本语法回顾</li>
+<li>异常捕获</li>
+<li>多个串联</li>
+<li>Promise.all 和 promise.race</li>
+<li>Promise 标准<ul>
+<li>三种状态：pending fulfilled reject</li>
+<li>初始状态是 pending</li>
+<li>pending 变为 fulfilled,或者 pending 变为 reject</li>
+<li>状态是不可逆的</li>
+<li>promise 实例必须实现 then 这个方法</li>
+<li>then() 必须可以接收两个函数作为参数</li>
+<li>then() 返回的必须是一个 promise 实例(对象)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//基本使用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">loadImg</span>(<span class="params">src</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> img = <span class="built_in">document</span>.createElement(<span class="string">'img'</span>)</span><br><span class="line">		<span class="comment">//throw new Error("图片加载失败")//模仿语法报错</span></span><br><span class="line">        img.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            resolve(img)</span><br><span class="line">        &#125;</span><br><span class="line">        img.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            reject(<span class="string">'图片加载失败'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        img.src = src</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> promise</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> src = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result = loadImg(src)</span><br><span class="line">result.then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>, img.width)</span><br><span class="line">    <span class="keyword">return</span> img <span class="comment">// 非promise对象会自动包装成一个 promise 对象，并且img会作为参数传递，类似于：resolve(img)</span></span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'error 1'</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>, img.height)</span><br><span class="line">	<span class="keyword">return</span> img</span><br><span class="line">&#125;,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'error 2'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统一捕获异常</span></span><br><span class="line"><span class="keyword">var</span> src = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result = loadImg(src)</span><br><span class="line">result.then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>, img.width)</span><br><span class="line">    <span class="keyword">return</span> img</span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="number">2</span>, img.height)</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">ex</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 统一捕获异常</span></span><br><span class="line">    <span class="built_in">console</span>.log(ex)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//多个串联，第一个加载完后加载第二个，以此类推</span></span><br><span class="line"><span class="keyword">var</span> src1 = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result1 = loadImg(src1)</span><br><span class="line"><span class="keyword">var</span> src2 = <span class="string">'https://img1.mukewang.com/545862fe00017c2602200220-100-100.jpg'</span></span><br><span class="line"><span class="keyword">var</span> result2 = loadImg(src2)</span><br><span class="line">result1.then(<span class="function"><span class="keyword">function</span> (<span class="params">img1</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第一个图片加载完成'</span>, img1.width)</span><br><span class="line">    <span class="keyword">return</span> result2  <span class="comment">// 重要！！！</span></span><br><span class="line">&#125;).then(<span class="function"><span class="keyword">function</span> (<span class="params">img2</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'第二个图片加载完成'</span>, img2.width)</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span> (<span class="params">ex</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//统一catch</span></span><br><span class="line">    <span class="built_in">console</span>.log(ex)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//promise.all 接收一个 promise 对象的数组</span></span><br><span class="line"><span class="comment">//待全部完成后，统一执行 success</span></span><br><span class="line"><span class="keyword">var</span> src1 = <span class="string">'https://www.imooc.com/static/img/index/logo_new.png'</span></span><br><span class="line"><span class="keyword">var</span> result1 = loadImg(src1)</span><br><span class="line"><span class="keyword">var</span> src2 = <span class="string">'https://img1.mukewang.com/545862fe00017c2602200220-100-100.jpg'</span></span><br><span class="line"><span class="keyword">var</span> result2 = loadImg(src2)</span><br><span class="line"><span class="built_in">Promise</span>.all([result1, result2]).then(<span class="function"><span class="keyword">function</span> (<span class="params">datas</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//接收到的 datas 是一个数组，依次包含了多个 promise 返回内容</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'all'</span>, datas[<span class="number">0</span>])</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'all'</span>, datas[<span class="number">1</span>])</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//promise.race 接收一个包含多个 promise对象数组</span></span><br><span class="line"><span class="comment">//只要有一个完成，就执行 success</span></span><br><span class="line"><span class="built_in">Promise</span>.race([result1, result2]).then(<span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">	<span class="comment">//data 即最先执行完成的 promises 的返回值</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'race'</span>, data)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>问题五：介绍一下 async/await(和 promise 的区别、联系)</p>
+<ul>
+<li>then 只是将 callback 拆分了</li>
+<li>async/await 是最直接的同步写法，再也没有回调函数</li>
+<li>使用了 promise ,并没有和 promise 冲突</li>
+<li>但是：改变不了 js 单线程，异步的本质</li>
+<li>需要 babel-polyfill</li>
+</ul>
+<p>问题六：总结一下当前 js 解决异步的方案</p>
+<ul>
+<li>回调函数（setTimeout()）</li>
+<li>事件监听</li>
+<li>发布订阅（jQuery.subscribe(“done”, f2);jQuery.publish(“done”);）</li>
+<li>promise</li>
+<li>generator</li>
+<li>async/await</li>
+</ul>
+<h2 id="virtual-dom"><a href="#virtual-dom" class="headerlink" title="virtual dom"></a>virtual dom</h2><p>问题一： 什么是 vdom?</p>
+<ul>
+<li>virtual dom,虚拟 DOM</li>
+<li>用 JS 模拟 DOM 结构</li>
+<li>DOM 变化对比，放在 JS 层来做（图灵完备语言）</li>
+<li>目的是提高重绘性能<ul>
+<li>DOM 操作是“昂贵”的，JS 运行效率高</li>
+<li>尽量减少 DOM 操作，而不是 “推到重来”</li>
+<li>项目越复杂，影响就越严重</li>
+<li>vdom 可以解决这个问题</li>
+</ul>
+</li>
+<li>核心api<ul>
+<li>h(‘标签名’,{属性},[子元素]),对应 vue 中的vm._c，有子元素</li>
+<li>h(‘标签名’,{属性},[字符串]),对应 vue 中的vm._c，无子元素</li>
+<li>patch(containter,vnode)，对应 vue 中的vm.<em>patch</em>,首次渲染</li>
+<li>patch(vnode,newVnode)，对应 vue 中的vm.<em>patch</em>,diff 对比修改</li>
+</ul>
+</li>
+</ul>
+<p>问题二： 介绍一下 diff 算法？</p>
+<ul>
+<li>知道什么是 diff 算法，是 linux 的基础命令</li>
+<li>vdom 中应用 diff 算法是为了找到需要更新的节点</li>
+<li>diff 实现，path(container,vnode);patch(vnode,newVnode)</li>
+<li>核心逻辑，createElement 和 updataChildren</li>
+</ul>
+<h2 id="MVVM-和-Vue"><a href="#MVVM-和-Vue" class="headerlink" title="MVVM 和 Vue"></a>MVVM 和 Vue</h2><p>问题一：说一下使用 Jquery 和使用框架的区别</p>
+<ul>
+<li>数据和视图分离，解耦（开放封闭原则，数据可修改，DOM操作渲染封装）</li>
+<li>以数据驱动视图，只关心数据变化，DOM 操作被封装</li>
+</ul>
+<p>问题二：说一下对 MVVM（Model View ViewModel） 的理解，如何实现 MVVM？</p>
+<ul>
+<li>Model 数据、模型</li>
+<li>View 视图、模板（视图和模型是分离的）</li>
+<li>ViewModel 连接 Model 和 View（View 通过 DOM Listeners 事件监听 Model 来控制 Model 的改变，Model 通过 Data Bindings 操控视图的更新）</li>
+</ul>
+<p>问题三：响应式，vue 中如何实现响应式</p>
+<ul>
+<li>关键是理解 Object.defineProperty</li>
+<li>将 data 的属性代理到 vm 上</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"testId"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"show-text"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">	<span class="comment">//双向绑定</span></span></span><br><span class="line"><span class="javascript">    <span class="keyword">var</span> obj = &#123;&#125;</span></span><br><span class="line"><span class="javascript">    <span class="built_in">Object</span>.defineProperty(obj, <span class="string">'theValue'</span>, &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">get</span>: function () &#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> obj</span></span><br><span class="line">        &#125;,</span><br><span class="line"><span class="javascript">        <span class="keyword">set</span>: function (newValue) &#123;</span></span><br><span class="line"><span class="javascript">        	<span class="built_in">console</span>.log(<span class="string">"自动执行set方法"</span>)</span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.getElementById(<span class="string">'testId'</span>).value = newValue</span></span><br><span class="line"><span class="javascript">            <span class="built_in">document</span>.getElementById(<span class="string">'show-text'</span>).innerHTML = newValue</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.addEventListener(<span class="string">'keyup'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line">        obj.theValue = e.target.value</span><br><span class="line">    &#125;)</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//将 data 的属性代理到 vm 上</span></span><br><span class="line"><span class="keyword">var</span> vm = &#123;&#125;</span><br><span class="line"><span class="keyword">var</span> data = &#123;</span><br><span class="line">    name: <span class="string">'zhangsan'</span>,</span><br><span class="line">    age: <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> key, value</span><br><span class="line"><span class="keyword">for</span> (key <span class="keyword">in</span> data) &#123;</span><br><span class="line">    (<span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(vm, key, &#123;</span><br><span class="line">            <span class="keyword">get</span>: function () &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'get'</span>, data[key]) <span class="comment">// 监听</span></span><br><span class="line">                <span class="keyword">return</span> data[key]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="keyword">set</span>: function (newVal) &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">'set'</span>, newVal) <span class="comment">// 监听</span></span><br><span class="line">                data[key] = newVal</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;)(key)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>问题四：模板引擎是什么？ vue 中如何解析模板? vue 的模板如何被渲染成 html?</p>
+<ul>
+<li>跟 html 类似，但是有很大区别</li>
+<li>模板本质是字符串，模板最终必须转换成 js 代码</li>
+<li>有逻辑，如 v-if,v-for 等，逻辑必须用 js 才能实现（图灵完备）</li>
+<li>最终还是要转换为 hmtl来显示，必须用 js 来转换</li>
+<li>因此，模板最重要转换成一个 js 函数（通过 render 函数[vm._c,vm._s,vm._l…]）</li>
+<li>知道 render 函数长什么样子，render 函数返回 vnode</li>
+<li>updateComponent 函数 <strong>patch</strong>()，首次直接渲染，第二次开始 diff 对比旧的 vnode </li>
+</ul>
+<p>问题五：vue 的整个实现流程是怎么样的？</p>
+<ol>
+<li>第一步，解析模板成 render 函数<ol>
+<li>with 用法</li>
+<li>模板中用的所有信息都被 render 函数包含</li>
+<li>模板中用到的 data 中的属性，都变成了 js 变量</li>
+<li>模板中的 v-model v-for v-on 都变成了 js 逻辑</li>
+<li>render 函数返回 vnode</li>
+</ol>
+</li>
+<li>第二步，响应式开始监听（data，watch等）<ul>
+<li>Object.defineProperty</li>
+<li>将 data 的属性代理到 vm 上</li>
+</ul>
+</li>
+<li>第三步，首次渲染，显示页面，且绑定依赖<ol>
+<li>初次渲染，执行 updataComponent,执行 vm._render()</li>
+<li>执行 render 函数，会访问到 vm.list 和 vm.title 等 data 上的数据</li>
+<li>会被响应式的 get 方式监听到<ul>
+<li>为何要监听 get,直接监听 set 不行吗？</li>
+<li>data 中有许多属性，有些被用到，有些可能不被用到</li>
+<li>被用到的会走 get,不被用到的不会走 get</li>
+<li>未走 get 中的属性，set 的时候我们也无需关心</li>
+<li>避免不必要的重复渲染</li>
+</ul>
+</li>
+<li>执行 updateComponent,会走 vnode 的 patch 方法</li>
+<li>patch 将 vnode 渲染成 DOM,初次渲染完成</li>
+</ol>
+</li>
+<li>第四部，data 属性变化，触发 rerender<ol>
+<li>修改属性，被响应式的 set 监听到</li>
+<li>set 中执行 updateComponent</li>
+<li>updateComponent 重新执行 vm._render()</li>
+<li>生成的 vnode 和 preVnode，通过 patch 进行对比</li>
+<li>渲染到 html 中</li>
+</ol>
+</li>
+</ol>
+<h2 id="组件化和-React"><a href="#组件化和-React" class="headerlink" title="组件化和 React"></a>组件化和 React</h2><p>问题一：说一下对组件化的理解</p>
+<ul>
+<li>组件的封装：封装视图、数据、变化逻辑</li>
+<li>组件的复用：props 传递、复用</li>
+</ul>
+<p>问题二：JSX 本质是什么</p>
+<ul>
+<li>JSX 语法（标签、JS 表达式、判断、循环、事件绑定）</li>
+<li>JSX 本质是语法糖，需要被解析成 JS 才能运行</li>
+<li>JSX 是独立的标准，可被其他项目使用</li>
+</ul>
+<p>问题三：JSX 和 vdom 的关系</p>
+<ul>
+<li>为何需要 vdom: JSX 需要渲染成 html，数据驱动视图</li>
+<li>React.createElement 和 h,都生成 vnode</li>
+<li>何时 patch： ReactDOM.render(…) 和 setState</li>
+<li>自定义组件的解析：初始化实例，然后执行 render，例如：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//把 React.createElement(App,null); 转换成下面两句：</span></span><br><span class="line"><span class="keyword">var</span> app = <span class="keyword">new</span> App(<span class="literal">null</span>); <span class="comment">//这里传入的属性是 null，或者 &#123;data:this.state.list&#125;,&#123;addTitle:this.addTitle.bind(this)&#125; 等数据或者函数</span></span><br><span class="line"><span class="keyword">return</span> app.render();</span><br></pre></td></tr></table></figure>
+<p>问题四： 说一下 setState 的过程</p>
+<ul>
+<li>setState 的异步：效果、原因（提高效率）<ul>
+<li>可能会一次执行多次 setState</li>
+<li>你无法规定、限制用户如何使用 setState</li>
+<li>没必要每次 setState 都重新渲染，考虑性能</li>
+<li>即便是每次重新渲染，用户也看不到中间的效果(执行 JS 时，DOM 渲染是暂停的)</li>
+</ul>
+</li>
+<li>vue 修改属性也是异步的：效果、原因（提高效率）</li>
+<li>setState 的过程：最终走到 patch(preVnode,newVnode)<ul>
+<li>每个组件实例，都有 renderComponent 方法</li>
+<li>执行 renderComponent 会重新执行实例的 render</li>
+<li>render 函数返回 newVnode ,然后拿到 preVnode</li>
+<li>执行 patch(preVnode,newVnode)</li>
+</ul>
+</li>
+</ul>
+<h2 id="React-vs-Vue"><a href="#React-vs-Vue" class="headerlink" title="React vs Vue"></a>React vs Vue</h2><ul>
+<li>两者的本质区别<ul>
+<li>vue 本质是 MVVM 框架，由 MVC 发展而来</li>
+<li>React 本质是前端组件化框架，由后端组件化发展而来</li>
+<li>但并不妨碍他们两者都能实现相同的功能</li>
+</ul>
+</li>
+<li>看模板的和组件化的区别<ul>
+<li>模板<ul>
+<li>vue 使用模板（最初由 angular 提出）</li>
+<li>React 使用 JSX</li>
+<li>模板语法上，我更加倾向于 JSX</li>
+<li>模板分离上，我更加倾向于 Vue</li>
+</ul>
+</li>
+<li>组件化<ul>
+<li>React 本身就是组件化，没有组件化就不是 React</li>
+<li>vue 也支持组件化，不过是在 MVVM 上的扩展</li>
+<li>对于组件化，我更加倾向于 React ,做的彻底而清晰</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>两者共同点<ul>
+<li>都支持组件化</li>
+<li>都是数据驱动视图</li>
+</ul>
+</li>
+</ul>
+<h2 id="Hybird"><a href="#Hybird" class="headerlink" title="Hybird"></a>Hybird</h2><p>问题一：hybird 存在的价值，为何会用 hybrid？</p>
+<ul>
+<li>hybird 是客户端和前端的混合开发</li>
+<li>没有访问手机内部信息功能的权限，所以可以快速迭代更新，无需审核</li>
+<li>体验流畅（和 NA 的体验基本类似）</li>
+<li>减少开发和沟通成本，双端公用一套代码</li>
+</ul>
+<p>问题二: webview</p>
+<ul>
+<li>是 app 中的一个组件（app 可以有 webview，也可以没有）</li>
+<li>用于加载 h5 页面，即一个小型的浏览器内核</li>
+</ul>
+<p>问题三： file:// 协议</p>
+<ul>
+<li>file 协议：本地文件快</li>
+<li>http(s) 协议：网络加载，慢</li>
+</ul>
+<p>问题四：hybrid 使用场景：</p>
+<ul>
+<li>不是所有的场景都适合 hybrid</li>
+<li>使用 NA:体验要求极致，变化不频繁</li>
+<li>使用 hybrid： 体验要求高，变化频繁</li>
+<li>使用 h5:体验无要求，不经常使用</li>
+</ul>
+<p>问题五： hybrid 具体实现：</p>
+<ul>
+<li>前端做好静态页面(html,js,css),将文件交给客户端</li>
+<li>客户端拿到静态页面，以文件形式存储在 app 中</li>
+<li>客户端在一个 webview 中使用 file 协议加载静态文件</li>
+</ul>
+<p>问题六： app 发布之后，静态文件如何实时更新？</p>
+<ul>
+<li>分版本，有版本号，如 201803211015</li>
+<li>将静态文件压缩成 zip 包，上传到服务器</li>
+<li>客户端每次启动，都去服务端检查版本号</li>
+<li>如果服务端本本号大于客户端版本号，就去下载最新的 zip 包</li>
+<li>下载完之后解压包，然后将现有文件覆盖</li>
+</ul>
+<p>问题七: hybrid 和 h5 的区别</p>
+<ul>
+<li>优点<ul>
+<li>体验好，跟 NA 体验基本一致</li>
+<li>可快速迭代，无需 app 审核（关键）</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>开发成本高，联调、测试、查 bug 都比较麻烦</li>
+<li>运维成本高，更新流程复杂</li>
+</ul>
+</li>
+<li>适用场景<ul>
+<li>hybrid：产品的稳定功能，体验要求高，迭代频繁（产品型）</li>
+<li>h5：单词的运营活动（如 xx 红包）或不常用功能（运营型）</li>
+</ul>
+</li>
+</ul>
+<p>问题八：前端和客户端通讯</p>
+<ul>
+<li>静态页面如何获取内容，例如：新闻详情页，前端如何获取新闻内容？<ul>
+<li>不能用 ajax 获取，第一跨域，第二速度慢</li>
+<li>客户端获取新内容(客户端可以提前获取)，然后 js 通讯拿到内容，再渲染</li>
+</ul>
+</li>
+<li>JS 和客户端通讯的基本形式<ul>
+<li>通过 schema 协议——前端和客户端通讯约定</li>
+<li>调用能力，传递参数，监听回调</li>
+</ul>
+</li>
+<li>schema 协议简介和使用</li>
+<li>schema 使用封装</li>
+<li>内置上线<ul>
+<li>更快更安全</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/17/interview/" rel="next" title="面试复习一">
+                <i class="fa fa-chevron-left"></i> 面试复习一
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/25/debounce and throttle/" rel="prev" title="简单的防抖和节流函数">
+                简单的防抖和节流函数 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6"><span class="nav-number">1.</span> <span class="nav-text">ES6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型高级"><span class="nav-number">2.</span> <span class="nav-text">原型高级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步"><span class="nav-number">3.</span> <span class="nav-text">异步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#virtual-dom"><span class="nav-number">4.</span> <span class="nav-text">virtual dom</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVVM-和-Vue"><span class="nav-number">5.</span> <span class="nav-text">MVVM 和 Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件化和-React"><span class="nav-number">6.</span> <span class="nav-text">组件化和 React</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-vs-Vue"><span class="nav-number">7.</span> <span class="nav-text">React vs Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hybird"><span class="nav-number">8.</span> <span class="nav-text">Hybird</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

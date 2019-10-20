@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="面试,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="杂谈jquery 源码： 核心架构，事件委托，插件机制 项目开发中遇到过什么难题，怎么解决的~ npm 常用命令 webpack 自我陈述准备：把我面试的沟通方向，阔达、自信的适度发挥 简历： 左右和纵向分栏，项目做完之后的公司收益和技术收益，兴趣说技术相关兴趣 遇到不懂的问题，可以说指导，回去思考，好奇，不要说不知道，不懂，没经历过结尾，要资料，再来~ 自如谈兴趣，巧妙示实例，适时讨疑问，节奏要">
+<meta name="keywords" content="面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试复习一">
+<meta property="og:url" content="http://yoursite.com/2018/08/17/interview/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="杂谈jquery 源码： 核心架构，事件委托，插件机制 项目开发中遇到过什么难题，怎么解决的~ npm 常用命令 webpack 自我陈述准备：把我面试的沟通方向，阔达、自信的适度发挥 简历： 左右和纵向分栏，项目做完之后的公司收益和技术收益，兴趣说技术相关兴趣 遇到不懂的问题，可以说指导，回去思考，好奇，不要说不知道，不懂，没经历过结尾，要资料，再来~ 自如谈兴趣，巧妙示实例，适时讨疑问，节奏要">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/css/browser.png">
+<meta property="og:updated_time" content="2018-12-09T14:49:18.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="面试复习一">
+<meta name="twitter:description" content="杂谈jquery 源码： 核心架构，事件委托，插件机制 项目开发中遇到过什么难题，怎么解决的~ npm 常用命令 webpack 自我陈述准备：把我面试的沟通方向，阔达、自信的适度发挥 简历： 左右和纵向分栏，项目做完之后的公司收益和技术收益，兴趣说技术相关兴趣 遇到不懂的问题，可以说指导，回去思考，好奇，不要说不知道，不懂，没经历过结尾，要资料，再来~ 自如谈兴趣，巧妙示实例，适时讨疑问，节奏要">
+<meta name="twitter:image" content="http://yoursite.com/images/css/browser.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/17/interview/">
+
+
+
+
+
+  <title>面试复习一 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-search">
+          <a href="/search/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-search"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/17/interview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">面试复习一</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-17T20:30:05+08:00">
+                2018-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试/" itemprop="url" rel="index">
+                    <span itemprop="name">面试</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="杂谈"><a href="#杂谈" class="headerlink" title="杂谈"></a>杂谈</h2><p>jquery 源码： 核心架构，事件委托，插件机制</p>
+<p>项目开发中遇到过什么难题，怎么解决的~</p>
+<p>npm 常用命令 webpack</p>
+<p>自我陈述准备：把我面试的沟通方向，阔达、自信的适度发挥</p>
+<p>简历： 左右和纵向分栏，项目做完之后的公司收益和技术收益，兴趣说技术相关兴趣</p>
+<p>遇到不懂的问题，可以说指导，回去思考，好奇，不要说不知道，不懂，没经历过结尾，要资料，再来~</p>
+<p>自如谈兴趣，巧妙示实例，适时讨疑问，节奏要适宜，切忌小聪明</p>
+<h2 id="三栏布局"><a href="#三栏布局" class="headerlink" title="三栏布局"></a>三栏布局</h2><p>布局：高度已知，左右固定，中间自动：浮动，绝对定位，弹性盒子，display:table-cell,网格布局，然后其各自有什么优缺点，假设高度已知去除会怎么样？如果有一个高度比较高，撑开了，别的跟着撑开（flex和table可以用）？这五种方案的兼容性如何？最优方案是哪个？最后：BFC,圣杯和双飞翼布局，以及felx布局</p>
+<p>布局小结：语义化掌握到位，页面布局理解深刻，CSS基础知识扎实，思维灵活且积极向上，代码规范</p>
+<p>布局变通：<br>三栏布局：左右宽度固定，中间自适应；  上下高度固定，中间自适应。<br>两栏布局：左宽固定，右自适应；  右宽固定，左自适应； 上高度固定，下自适应；下高度固定，上自适应~</p>
+<h2 id="CSS盒模型：谈谈你对CSS盒模型的认识："><a href="#CSS盒模型：谈谈你对CSS盒模型的认识：" class="headerlink" title="CSS盒模型：谈谈你对CSS盒模型的认识："></a>CSS盒模型：谈谈你对CSS盒模型的认识：</h2><p>1、 border、margin、padding、content,标准模型和IE模型<br>2、 标准模型和IE模型的区别<br>3、 CSS如何设置这两种模型<br>4、 JS如何设置获取盒模型对应的宽和高:<br>    dom.style.width/height–只能获取行内（内联）样式的宽高<br>    dom.currentStyle.width/height–渲染以后的样式，只有IE支持<br>    window.getComputedStyle(dom).width/height–兼容性好，对比第二种<br>    dom.getBoundingClientRect().width/height–常用来计算元素对于视口的位置（top,left,right,bottom,width,height）<br>5、 根据盒模型解释边距重叠<br>6、 BFC边距重叠解决方案</p>
+<p>BFC的基本概念：块级格式化上下文，它是指一个独立的块级渲染区域，只有Block-level BOX参与，该区域拥有一套渲染规则来约束块级盒子的布局，且与区域外部无关。</p>
+<p>BFC的生成：CSS2.1中规定满足下列CSS声明之一的元素便会生成BFC：</p>
+<ul>
+<li>根元素（html本身就是BFC）</li>
+<li>float的值不为none</li>
+<li>overflow的值不为visible</li>
+<li>display的值为inline-block、table-cell、table-caption</li>
+<li>position的值为absolute或fixed</li>
+</ul>
+<p>BFC的约束规则（原理）：</p>
+<ol>
+<li>内部的Box会在垂直方向上一个接一个的放置</li>
+<li>垂直方向上的距离由margin决定。（完整的说法是：属于同一个BFC的两个相邻Box的margin会发生重叠，与方向无关，给子元素再加一个父元素，父元素创建一个BFC即可解决）</li>
+<li>每个元素的左外边距与包含块的左边界相接触（从左向右），即使浮动元素也是如此。（这说明BFC中子元素不会超出他的包含块，而position为absolute的元素可以超出他的包含块边界）</li>
+<li>BFC的区域不会与float的元素区域重叠（一个固定宽度浮动，一个只设高度且创建BFC即可）</li>
+<li>计算BFC的高度时，浮动子元素也参与计算（创建BFC清除浮动原理，例如：子元素浮动，父元素overflow:auto）</li>
+<li>BFC就是页面上的一个隔离的独立容器，容器里面的子元素不会影响到外面元素，反之亦然</li>
+</ol>
+<h2 id="DOM事件类"><a href="#DOM事件类" class="headerlink" title="DOM事件类"></a>DOM事件类</h2><p>基本概念：DOM事件的级别（例如：DOM2的事件）</p>
+<ul>
+<li>DOM0 element.onclick=function(){}</li>
+<li>DOM2 element.addEventListener(‘click’,function(){},false)</li>
+<li>DOM3 element.addEventListener(‘keyup’,function(){},false)</li>
+</ul>
+<p>DOM事件模型（捕获和冒泡）</p>
+<p>DOM事件流 (捕获阶段=&gt;目标阶段=&gt;冒泡阶段)</p>
+<p>描述DOM事件捕获的具体流程(window-&gt;document-&gt;html(document.documentElement)-&gt;body-&gt;…-&gt;目标元素)，冒泡相反</p>
+<p>Event对象的常见应用</p>
+<ul>
+<li>event.preventDefault()</li>
+<li>event.stopProagation()</li>
+<li>event.stopImmediatePropagation() //同一个元素绑定两个点击事件，可阻止一个事件触发</li>
+<li>event.currentTarget //当前所绑定的事件,测试</li>
+<li>event.target</li>
+</ul>
+<p>自定义事件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> eve = <span class="keyword">new</span> Event(<span class="string">'custome'</span>);</span><br><span class="line">element.addEventListener(<span class="string">'custome'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'custome'</span>)</span><br><span class="line">&#125;);</span><br><span class="line">element.dispatchEvent(eve);</span><br><span class="line"></span><br><span class="line"><span class="comment">//CustomEvent 可以传入obj数据:</span></span><br><span class="line"><span class="keyword">var</span> eve2 = <span class="keyword">new</span> CustomEvent(<span class="string">'custome2'</span>,obj);</span><br><span class="line">element.addEventListener(<span class="string">'custome2'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'custome'</span>)</span><br><span class="line">&#125;);</span><br><span class="line">element.dispatchEvent(eve2);</span><br></pre></td></tr></table></figure>
+<h2 id="HTTP协议类"><a href="#HTTP协议类" class="headerlink" title="HTTP协议类"></a>HTTP协议类</h2><ul>
+<li>HTTP协议的主要特点<ul>
+<li>简单快速，灵活，无连接，无状态</li>
+</ul>
+</li>
+<li>HTTP报文的组成部分<ul>
+<li>请求报文：请求行、请求头、空行、请求体</li>
+<li>相应报文：状态行、响应头、空行、响应体</li>
+</ul>
+</li>
+<li>HTTP方法<ul>
+<li>GET-&gt;获取资源</li>
+<li>POST-&gt;传输资源</li>
+<li>PUT-&gt;更新资源</li>
+<li>DELETE-&gt;删除资源</li>
+<li>HEAD-&gt;获得报文首部</li>
+<li>PATCH-&gt;对资源进行部分修改</li>
+<li>OPTIONS-&gt;查询支持的方法</li>
+<li>CONNECT-&gt;要求在与代理服务器通信时建立隧道</li>
+<li>TRACE-&gt;追踪路径</li>
+</ul>
+</li>
+<li>POST和GET的区别<ul>
+<li>GET在浏览器回退时是无害的，而POST会再次请求</li>
+<li>GET产生的URL地址可以被收藏，而POST不可以</li>
+<li>GET请求会被浏览器主动缓存，而POST不会，除非手动设置</li>
+<li>GET请求只能进行URL编码，而POST支持多种编码方式</li>
+<li>GET请求参数会被完整保存在浏览器历史纪录里，而POST中的参数不会被保留</li>
+<li>GET请求在URL中传输的参数是有长度限制的，而POST没有限制</li>
+<li>对参数的数据类型，GET只接受ASCLL字符，而POST没有限制</li>
+<li>GET比POST更不安全，因为参数直接暴露在URL上，所以不能用来传递敏感信息</li>
+<li>GET参数通过URL传递，POST放在Request body中</li>
+<li>GET和POST本质上就是TCP链接，并无差别。但是由于HTTP的规定和浏览器/服务器的限制，导致他们在应用过程中体现出一些不同。 </li>
+<li>GET产生一个TCP数据包；POST产生两个TCP数据包。</li>
+</ul>
+</li>
+<li>HTTP状态吗<ul>
+<li>1XX 指示信息-表示请求已被接收，继续处理</li>
+<li>2XX 成功-表示请求已被成功接收</li>
+<li>3XX 重定向-要完成请求必须进行更进一步的操作</li>
+<li>4XX 客户端错误-请求有语法错误或请求无法实现</li>
+<li>5XX 服务器错误-服务器未能实现合法的请求</li>
+</ul>
+</li>
+<li>什么是持久连接<ul>
+<li>HTTP协议采用“请求-应答”模式，当使用普通模式，即非Keep-Alive模式时，每个请求/应答客户端和服务器都需要新建一个连接，完成之后立即断开连接（HTTP协议为无连接协议）</li>
+<li>当使用Keep-Alive模式（又称持久连接、连接复用）时，Keep-Alive 功能使客户端到服务器端的连接持续有效，当出现对服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接</li>
+</ul>
+</li>
+<li>什么是管线化<ul>
+<li>在使用持久连接的情况下，某个连接上的消息传递类似于：请求1-&gt;响应1-&gt;请求2-&gt;响应2-&gt;请求3-&gt;响应3</li>
+<li>某个连接上的消息变成了类似这样：请求1-&gt;请求2-&gt;请求3-&gt;响应1-&gt;响应2-&gt;响应3</li>
+</ul>
+</li>
+<li>HTTP缓存</li>
+</ul>
+<h2 id="原型链类"><a href="#原型链类" class="headerlink" title="原型链类"></a>原型链类</h2><ul>
+<li>创建对象有几种方法(3种)<ul>
+<li>var o1 = {name:’o1’};var o11 = new Object({name:’o11’});</li>
+<li>var M = function(){this.name=’o2’};var o2 = new M();</li>
+<li>var P = {name:’o3’};var o3 = Object.create(P);</li>
+</ul>
+</li>
+<li>原型、构造函数、实例、原型链</li>
+<li>instanceof原理<ul>
+<li>沿着A的<em>proto</em>这条线来找，同时沿着B的prototype这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回true。如果找到终点还未重合，则返回false。</li>
+</ul>
+</li>
+<li>new运算符<ul>
+<li>创建一个新空对象</li>
+<li>空对象继承（指向）构造函数的prototype原型对象</li>
+<li>构造函数被执行，上下文this会被指定到这个新实例对象上</li>
+<li>如果构造函数返回了一个“对象”，那么这个对象会取代new出来的对象。如果构造函数没有返回对象，那么new出来的结果为步骤一创建的新对象。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//new运行原理</span></span><br><span class="line"><span class="keyword">var</span> new2 = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="built_in">Object</span>.create(func.prototype); <span class="comment">//创建空对象，空对象关联构造函数的原型链</span></span><br><span class="line">  <span class="keyword">var</span> k = func.call(o); <span class="comment">//执行构造函数</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> k === <span class="string">'object'</span>)&#123; <span class="comment">//判断结果是不是对象类型</span></span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> o;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过原型继承创建一个新对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherit</span>(<span class="params">proto</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(proto == <span class="literal">null</span>) &#123;<span class="keyword">throw</span> <span class="built_in">TypeError</span>()&#125;;</span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">Object</span>.create()) <span class="keyword">return</span> <span class="built_in">Object</span>.create(proto);</span><br><span class="line">  <span class="keyword">var</span> t = <span class="keyword">typeof</span>(proto);</span><br><span class="line">  <span class="keyword">if</span>(t ！== <span class="string">'object'</span> &amp;&amp; t !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">TypeError</span>();</span><br><span class="line">  <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">  F.prototype = proto;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="面向对象类"><a href="#面向对象类" class="headerlink" title="面向对象类"></a>面向对象类</h2><h3 id="类与实例"><a href="#类与实例" class="headerlink" title="类与实例"></a>类与实例</h3><ul>
+<li>类的声明</li>
+<li>生成实例</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//构造函数的方式继承</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'name'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6的方式</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal2</span></span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>()&#123;</span><br><span class="line">	<span class="keyword">this</span>.name = <span class="string">'name'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//实例化,声明方式不一样，但是实例化方式是一样的</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Animal(),<span class="keyword">new</span> Animal2())</span><br></pre></td></tr></table></figure>
+<h3 id="类与继承"><a href="#类与继承" class="headerlink" title="类与继承"></a>类与继承</h3><ul>
+<li>如何实现继承</li>
+<li>继承的几种方式</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//借助构造函数实现继承</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent1'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//在子类中执行需继承的构造函数</span></span><br><span class="line">  <span class="comment">//这样就改变了Parent1()的this指向</span></span><br><span class="line">  <span class="comment">//从而导致了父类执行的属性都会挂载到子类的实例上去</span></span><br><span class="line">  Parent1.call(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.type = <span class="string">'child1'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Child1)<span class="comment">//没有参数可以不写小括号</span></span><br><span class="line"><span class="comment">//缺点:Parent1原型链上的方法没有办法被继承，只实现了部分继承</span></span><br><span class="line"><span class="comment">//无法实现函数复用，每个子类都有父类实例函数的副本，影响性能</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//借助原型链继承</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent2'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.type = <span class="string">'child2'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//让构造函数的实例能访问到父类的原型对象上的属性和方法</span></span><br><span class="line"><span class="comment">//Parent2的实例赋值给 Child2.prototype 属性</span></span><br><span class="line"><span class="comment">//new Child2().__proto__ =&gt; Child2.prototype == new Parent2() </span></span><br><span class="line">Child2.prototype =  <span class="keyword">new</span> Parent2();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">new</span> Child2())</span><br><span class="line"></span><br><span class="line"><span class="comment">//缺点:来自原型对象的引用属性是所有实例共享的,child1.__proto__==child2.__proto__</span></span><br><span class="line"><span class="comment">//无法实现多继承</span></span><br><span class="line"><span class="comment">//创建子类实例时，无法向父类构造函数传参</span></span><br><span class="line"><span class="comment">//要想为子类新增属性和方法，必须要在new Animal()这样的语句之后执行，不能放到构造器中</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//组合继承</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent3</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent3'</span>;</span><br><span class="line">  <span class="keyword">this</span>.paly = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child3</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  Parent3.call(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.tpye = <span class="string">'child3'</span></span><br><span class="line">&#125;</span><br><span class="line">Child3.prototype = <span class="keyword">new</span> Parent3();</span><br><span class="line"><span class="keyword">var</span> s3 = <span class="keyword">new</span> Child3();</span><br><span class="line"><span class="keyword">var</span> s4 = <span class="keyword">new</span> Child3();</span><br><span class="line">s3.paly.push(<span class="number">4</span>);</span><br><span class="line"><span class="built_in">console</span>.log(s3.play,s4.paly);</span><br><span class="line"><span class="comment">//缺点:父级构造函数实例化了两次~</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//组合继承优化1</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent4</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent4'</span>;</span><br><span class="line">  <span class="keyword">this</span>.paly = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child4</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  Parent4.call(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.tpye = <span class="string">'child4'</span></span><br><span class="line">&#125;</span><br><span class="line">Child4.prototype = Parent4.prototype; <span class="comment">//引用同一个对象,导致constructor相同</span></span><br><span class="line"><span class="keyword">var</span> s5 = <span class="keyword">new</span> Child4();</span><br><span class="line"><span class="keyword">var</span> s6 = <span class="keyword">new</span> Child4();</span><br><span class="line">s3.paly.push(<span class="number">4</span>);</span><br><span class="line"><span class="built_in">console</span>.log(s5.play,s6.paly);</span><br><span class="line"><span class="built_in">console</span>.log(s5 <span class="keyword">instanceof</span> Child4,es5 <span class="keyword">instanceof</span> Parent4)<span class="comment">//true true //无法区分是父类(Parent4)还是子类(Child4)实例化的</span></span><br><span class="line"><span class="built_in">console</span>.log(s5.constructor) <span class="comment">//Parent4 引用导致，这不是我们想要的</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//组合继承优化2</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent5</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent5'</span>;</span><br><span class="line">  <span class="keyword">this</span>.paly = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child5</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  Parent5.call(<span class="keyword">this</span>);</span><br><span class="line">  <span class="keyword">this</span>.tpye = <span class="string">'child5'</span></span><br><span class="line">&#125;</span><br><span class="line">Child5.prototype = <span class="built_in">Object</span>.create(Parent5.prototype);</span><br><span class="line"><span class="comment">//Object.create原理：创建空对象，空对象关联构造函数(Parent5)的原型链</span></span><br><span class="line">child5.prototype.constructor = Child5; <span class="comment">//还是需要指定constructor</span></span><br><span class="line"><span class="keyword">var</span> S7 = <span class="keyword">new</span> Child5();</span><br><span class="line"><span class="built_in">console</span>.log(s7 <span class="keyword">instanceof</span> Child5,s7 <span class="keyword">instanceof</span> Parent5)<span class="comment">//true true</span></span><br><span class="line"><span class="built_in">console</span>.log(s7.constructor) <span class="comment">// Child5</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>其它继承方式：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//实例继承</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent6</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent2'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child6</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> parent = <span class="keyword">new</span> Parent6();</span><br><span class="line">  parent.name = name || <span class="string">'Tom'</span>;</span><br><span class="line">  <span class="keyword">return</span> parent;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//实例是父类的实例，不是子类的实例</span></span><br><span class="line"><span class="comment">//无法实现多继承</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//拷贝继承</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent7</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'parent7'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child7</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> parent = <span class="keyword">new</span> Parent7();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> p <span class="keyword">in</span> parent)&#123;</span><br><span class="line">    Child6.prototype[p] = parent[p];</span><br><span class="line">  &#125;</span><br><span class="line">  Cat.prototype.name = name || <span class="string">'Tom'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//效率较低，内存占用高</span></span><br><span class="line"><span class="comment">//无法获取父类不可枚举的方法</span></span><br></pre></td></tr></table></figure>
+<h2 id="通讯类"><a href="#通讯类" class="headerlink" title="通讯类"></a>通讯类</h2><ul>
+<li>什么是同源策略及限制<ul>
+<li>同源策略限制从一个源加载的文档如何与来自另一个源的资源进行交互。这是一个用于隔离潜在恶意文件的关键安全机制。(http协议，域名，端口)</li>
+<li>主要限制在：cookie，localStrage和IndexedDB无法读取；DOM无法获得，Ajax无法发送</li>
+</ul>
+</li>
+<li>前后端如何通讯<ul>
+<li>ajax,websocket,CORS,EventSource,服务端渲染</li>
+</ul>
+</li>
+<li>如何创建Ajax<ul>
+<li>XMLHttpRequest对象的工作流程</li>
+<li>兼容性处理（IE）</li>
+<li>事件的触发条件</li>
+<li>事件的触发顺序</li>
+</ul>
+</li>
+<li>跨域通讯的几种方式<ul>
+<li>JSONP</li>
+<li>Hash</li>
+<li>postMessage</li>
+<li>websocket</li>
+<li>CORS</li>
+<li>window.name</li>
+<li>window.domain</li>
+</ul>
+</li>
+</ul>
+<h2 id="安全类"><a href="#安全类" class="headerlink" title="安全类"></a>安全类</h2><ul>
+<li>CSRF 跨站请求伪造<ul>
+<li>基本概念和缩写<ul>
+<li>cross-site request forgery</li>
+</ul>
+</li>
+<li>攻击原理<ul>
+<li>登陆过A网站</li>
+<li>在访问B网站时，B网站诱使点击连接访问A网站(通过对A网站还存在的cookie等身份验证)</li>
+</ul>
+</li>
+<li>防御措施<ul>
+<li>Token验证， 访问接口时候带token</li>
+<li>Referer验证  页面来源，同域</li>
+<li>隐藏令牌  类似于token,例如隐藏在头部</li>
+<li>输入验证码</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>XSS 跨域脚本攻击<ul>
+<li>基本概念和缩写<ul>
+<li>cross-site scripting</li>
+</ul>
+</li>
+<li>攻击原理<ul>
+<li>向页面注入脚本运行，脚本中做攻击内容，通过input，textarea等标签，例如输入评论内容的时候</li>
+<li>危害：窃取用户的 Cookie 值;伪造虚假的输入表单骗取个人信息;显示伪造的文章或者图片</li>
+</ul>
+</li>
+<li>防御措施<ul>
+<li>过滤标签符号’&lt; &gt;’等</li>
+<li>设置 Cookie 为 HttpOnly</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SQL注入<ul>
+<li>基本概念<ul>
+<li>服务器上的数据库运行非法的 SQL 语句，主要通过拼接来完成。</li>
+</ul>
+</li>
+<li>攻击原理<ul>
+<li>在搜索或查询等SQL查询时，拼接非法SQL查询隐藏数据或者本不可以显示的内容等</li>
+</ul>
+</li>
+<li>防范手段<ul>
+<li>使用参数化查询</li>
+<li>单引号转换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>DOS 拒绝服务攻击<ul>
+<li>原理<ul>
+<li>其目的在于使目标电脑的网络或系统资源耗尽，使服务暂时中断或停止，导致其正常用户无法访问。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="算法类"><a href="#算法类" class="headerlink" title="算法类"></a>算法类</h2><ul>
+<li>排序<ul>
+<li>快速排序 <a href="https://segmentfault.com/a/1190000009426421" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009426421</a></li>
+<li>选择排序 <a href="https://segmentfault.com/a/1190000009366805" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009366805</a></li>
+<li>希尔排序 <a href="https://segmentfault.com/a/1190000009461832" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009461832</a></li>
+</ul>
+</li>
+<li>堆栈、队列、链表 <a href="https://juejin.im/entry/58759e79128fe1006b48cdfd" target="_blank" rel="noopener">https://juejin.im/entry/58759e79128fe1006b48cdfd</a></li>
+<li>递归 <a href="https://segmentfault.com/a/1190000009857470" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009857470</a></li>
+<li>波兰式和逆波兰式<ul>
+<li><a href="http://www.cnblogs.com/chenying99/p/3675876.html" target="_blank" rel="noopener">http://www.cnblogs.com/chenying99/p/3675876.html</a></li>
+<li><a href="https://github.com/Tairraos/rnp.js/blob/master/rpn.js" target="_blank" rel="noopener">https://github.com/Tairraos/rnp.js/blob/master/rpn.js</a></li>
+</ul>
+</li>
+</ul>
+<p>技巧：</p>
+<ul>
+<li>伪代码</li>
+<li>找面试官要提示</li>
+<li>用了什么算法，原理</li>
+</ul>
+<h2 id="渲染机制"><a href="#渲染机制" class="headerlink" title="渲染机制"></a>渲染机制</h2><ul>
+<li>什么是DOCTYOE及作用<ul>
+<li>DTD文档类型定义，用来定义XML或者(X)HTML的文件类型。浏览器使用它来判断文档类型，决定使用何种协议来解析，以及切换浏览器模式。</li>
+<li>DOCTYOE是用来声明文档类型和DTD规范的，一个主要用途就是验证文件的合法性。</li>
+<li>HTML5 &lt;!DOCTYPE html&gt;</li>
+<li>HTML 4.01 Strict</li>
+<li>HTML 4.01 Transitional</li>
+</ul>
+</li>
+<li>浏览器渲染过程<br>  <img src="/images/css/browser.png" alt="这里写图片描述"></li>
+<li>重排Reflow<ul>
+<li>DOM结构中的各个元素都有自己的盒子（模型），这些都需要浏览器根据各种样式来计算并根据计算结果将元素放到它该出现的位置，这个过程称为reflow</li>
+</ul>
+</li>
+<li>重绘Repaint<ul>
+<li>当盒子的位置、大小及其他属性都确认后，浏览器于是便把这些元素都照各自的特性绘制了一遍，于是页面的内容出现了，这个过程为repaint</li>
+</ul>
+</li>
+<li>布局Layout</li>
+</ul>
+<h2 id="js运行机制"><a href="#js运行机制" class="headerlink" title="js运行机制"></a>js运行机制</h2><ul>
+<li>理解JS的单线程的概念</li>
+<li>理解任务队列</li>
+<li>理解Event Loop</li>
+<li>理解哪些语句会放入异步任务队列<ul>
+<li>setTimeout和setInterval</li>
+<li>DOM事件</li>
+<li>ES6中的Promise</li>
+</ul>
+</li>
+<li>理解语句放入异步任务队列的时机<ul>
+<li>时间计算到了才放入异步队列</li>
+</ul>
+</li>
+</ul>
+<h2 id="页面性能类"><a href="#页面性能类" class="headerlink" title="页面性能类"></a>页面性能类</h2><p>提升页面性能的方法有哪些?</p>
+<ol>
+<li>资源压缩合并，减少HTTP请求</li>
+<li>非核心代码异步加载-&gt;异步加载的方式-&gt;异步加载的区别<ul>
+<li>异步加载的方式：1、动态脚本加载；2、defer；3、async</li>
+<li>异步加载的区别：1、defer是在HTML解析完以及同步js执行完之后才会执行，如果是多个，安装加载的顺序依次执行；2、async是在加载完成之后立即执行，如果是多个，执行顺序和加载顺序无关。</li>
+</ul>
+</li>
+<li><p>利用浏览器缓存-&gt;缓存的分类-&gt;缓存的原理</p>
+<ul>
+<li>强缓存：Expires （Expires:Thu,21 Jan 2017 23：39：02） GMT；Cache-Control (Cache-Control:max-age=3600)</li>
+<li>协商缓存：Last-Modified If-Modified-Since Etag If-None-Match (Last-Modified:Web,26 Jan 2017 00:35:11 GMT)</li>
+<li>Expires是绝对时间，取客户端电脑的时间来对比，可能不准确，而且可能被修改，Cache-Control是相对时间</li>
+<li>Last-Modified 与 If-Modified-Since的值相同，Last-Modified是服务器下发的时间，If-Modified-Since是客户端触发协商缓存，请求询问服务器带入的请求头中。这个方式的协商缓存有一个缺点，有可能文件改动了，但是内容没变，所有才有了Etag</li>
+<li>Etag是服务器下发的key值（Hash值），If-None-Match是客户端触发协商缓存，请求询问服务器key值(内容)有没有变化，是否可以使用缓存。</li>
+</ul>
+</li>
+<li><p>使用CDN（3~4个域名cdn，并行加载）</p>
+</li>
+<li>预解析DNS<ul>
+<li><meta http-equiv="x-dns-prefetch-control" content="on"> //强制打开dns预解析，a标签默认开启，但是https情况下是一般是关闭的 </li>
+<li><link ref="dns-prefetch" href="XXX">
+
+</li>
+</ul>
+</li>
+</ol>
+<p>优化分类：</p>
+<ul>
+<li>网络层面</li>
+<li>构建层面</li>
+<li>浏览器渲染层面</li>
+<li>服务端层面</li>
+</ul>
+<p>优化方式：</p>
+<ul>
+<li>资源的合并与压缩<ul>
+<li>压缩 html,css,js</li>
+<li>资源合并：公共库合并，业务分离，不同页面的合并，见机行事，随机应变</li>
+</ul>
+</li>
+<li>图片编解码和类型选择<ul>
+<li>不同场景选择不同格式图片</li>
+<li>雪碧图大小要合适，同页面的图片，并且小于一定大小的合并</li>
+</ul>
+</li>
+<li>浏览器的渲染机制<ul>
+<li>顺序执行、并发加载，域名并发限制（3~4个cdn域名并发加载）</li>
+<li>是否阻塞</li>
+<li>依赖关系</li>
+<li>引入方式（css阻塞js的运行，但是不阻止js加载）</li>
+<li>重绘与回流，图层（将频繁重绘回流的 DOM 元素单独作为一个图层，但是图层也不能过多）</li>
+<li>创建图层的方式：<ul>
+<li>3D 或透视变换 css 属性</li>
+<li>使用加速视频解码的 video 节点</li>
+<li>拥有 3D（webGL）上下文或加速的2D 上下文 canvas 节点</li>
+<li>混合插件（如Flash）</li>
+<li>对自己的 opacity 做 CSS 动画或使用一个动画 webkit 变换的元素</li>
+<li>拥有 css 过滤器的元素</li>
+<li>元素有一个包含复合层的后代节点</li>
+<li>元素有一个 z-index 较低且包含一个符合层的兄弟元素</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>懒加载预加载</li>
+<li>浏览器存储</li>
+<li>缓存机制</li>
+<li>PWA</li>
+<li>Vue-SSR</li>
+</ul>
+<p>请求过程中潜在的性能优化点（理解http请求过程是核心）：</p>
+<ul>
+<li>dns 是否可以通过缓存减少 dns 查询时间？</li>
+<li>网络请求的过程走最近的网络环境？</li>
+<li>相同的静态资源是否可以缓存？</li>
+<li>能否减少 http 请求的大小？</li>
+<li>减少 http 请求</li>
+<li>服务端渲染</li>
+</ul>
+<h2 id="错误监控"><a href="#错误监控" class="headerlink" title="错误监控"></a>错误监控</h2><ul>
+<li>前端错误的分类<ul>
+<li>即时运行错误：代码错误</li>
+<li>资源加载错误</li>
+</ul>
+</li>
+<li>错误的捕获方式<ul>
+<li>即时运行错误：try…catch 和 window.onerror</li>
+<li>资源加载错误：object.onerror（在节点上绑定onerror,该错误不会冒泡）、performance.getEntries()和Error事件捕获（window.addEventListener(‘error’,function(e){console.log(‘捕获’,e)},true)）</li>
+</ul>
+</li>
+</ul>
+<p>延伸：跨域的JS运行错误可以捕获吗？错误提示是什么？怎么处理？ </p>
+<ol>
+<li>在script标签增加crossorigin属性</li>
+<li>设置JS资源响应投Access-Control-Allow-Origin:*</li>
+</ol>
+<ul>
+<li>上报错误的基本原理<ul>
+<li>采用Ajax通信的方式上报</li>
+<li>利用Image对象上报(new Image()).src=’接口地址’</li>
+</ul>
+</li>
+</ul>
+<h2 id="业务能力"><a href="#业务能力" class="headerlink" title="业务能力"></a>业务能力</h2><ul>
+<li>准备要充分<ul>
+<li>项目背后的原理和技术难点</li>
+</ul>
+</li>
+<li>描述要演练<ul>
+<li>我做过什么业务</li>
+<li>负责的业务有什么业绩</li>
+<li>使用了什么技术方案</li>
+<li>突破了什么技术难点</li>
+<li>遇到了什么问题</li>
+<li>最大的收获是什么</li>
+</ul>
+</li>
+<li>引导找时机</li>
+<li>优势要发挥</li>
+<li>回答要灵活</li>
+</ul>
+<h2 id="团队协作能力与带人能力"><a href="#团队协作能力与带人能力" class="headerlink" title="团队协作能力与带人能力"></a>团队协作能力与带人能力</h2><h2 id="职业竞争力"><a href="#职业竞争力" class="headerlink" title="职业竞争力"></a>职业竞争力</h2><ol>
+<li>乐观积极</li>
+<li>主动沟通</li>
+<li>逻辑顺畅</li>
+<li>上进有责任心</li>
+<li>有主张，做事果断</li>
+</ol>
+<h2 id="职业规划"><a href="#职业规划" class="headerlink" title="职业规划"></a>职业规划</h2><ol>
+<li>职业竞争力<ul>
+<li>业务能力</li>
+<li>思考能力</li>
+<li>学习能力</li>
+<li>无上限付出</li>
+<li>学会赞美</li>
+</ul>
+</li>
+<li>职业规划<ul>
+<li>目标是什么<ul>
+<li>在业务上成为专家，在技术上成为行业大牛</li>
+</ul>
+</li>
+<li>进阶的目标<ul>
+<li>不断的学习积累个方面经验，以学习为主</li>
+</ul>
+</li>
+<li>长期目标<ul>
+<li>做几件有价值的事情，如开源作品、技术框架</li>
+</ul>
+</li>
+<li>方式方法<ul>
+<li>先完成业务上的主要问题，做到极致，然后逐步向目标靠拢</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="面试总结"><a href="#面试总结" class="headerlink" title="面试总结"></a>面试总结</h2><ul>
+<li>JD描述<ul>
+<li>对于社招一定要看</li>
+</ul>
+</li>
+<li>简历<ul>
+<li>对照JD改写出相吻合的简历，对于未掌握的技术栈快速复习、理解</li>
+</ul>
+</li>
+<li>自我介绍<ul>
+<li><strong>一定要打草稿</strong>，展示什么优势、描述什么项目，切忌临场发挥</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/15/CSS Layout/" rel="next" title="你真的懂布局吗？">
+                <i class="fa fa-chevron-left"></i> 你真的懂布局吗？
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/18/interview2/" rel="prev" title="面试复习二">
+                面试复习二 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#杂谈"><span class="nav-number">1.</span> <span class="nav-text">杂谈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三栏布局"><span class="nav-number">2.</span> <span class="nav-text">三栏布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS盒模型：谈谈你对CSS盒模型的认识："><span class="nav-number">3.</span> <span class="nav-text">CSS盒模型：谈谈你对CSS盒模型的认识：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM事件类"><span class="nav-number">4.</span> <span class="nav-text">DOM事件类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP协议类"><span class="nav-number">5.</span> <span class="nav-text">HTTP协议类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原型链类"><span class="nav-number">6.</span> <span class="nav-text">原型链类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面向对象类"><span class="nav-number">7.</span> <span class="nav-text">面向对象类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类与实例"><span class="nav-number">7.1.</span> <span class="nav-text">类与实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类与继承"><span class="nav-number">7.2.</span> <span class="nav-text">类与继承</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通讯类"><span class="nav-number">8.</span> <span class="nav-text">通讯类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全类"><span class="nav-number">9.</span> <span class="nav-text">安全类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法类"><span class="nav-number">10.</span> <span class="nav-text">算法类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#渲染机制"><span class="nav-number">11.</span> <span class="nav-text">渲染机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#js运行机制"><span class="nav-number">12.</span> <span class="nav-text">js运行机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面性能类"><span class="nav-number">13.</span> <span class="nav-text">页面性能类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误监控"><span class="nav-number">14.</span> <span class="nav-text">错误监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#业务能力"><span class="nav-number">15.</span> <span class="nav-text">业务能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#团队协作能力与带人能力"><span class="nav-number">16.</span> <span class="nav-text">团队协作能力与带人能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#职业竞争力"><span class="nav-number">17.</span> <span class="nav-text">职业竞争力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#职业规划"><span class="nav-number">18.</span> <span class="nav-text">职业规划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#面试总结"><span class="nav-number">19.</span> <span class="nav-text">面试总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
