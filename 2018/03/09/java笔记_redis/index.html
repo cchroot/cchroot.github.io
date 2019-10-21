@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本质：redis 是一款高性能的 NOSQL 系列的非关系型数据库 什么是RedisRedis 是用C语言开发的一个开源的高性能键值对(key-value)数据库，官方提供测试数据，50个并发执行100000个请求，读的宿舍是110000次/s,写的速度是81000次/s,且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：  字符串类型 St">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis 基础">
+<meta property="og:url" content="http://yoursite.com/2018/03/09/java笔记_redis/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="本质：redis 是一款高性能的 NOSQL 系列的非关系型数据库 什么是RedisRedis 是用C语言开发的一个开源的高性能键值对(key-value)数据库，官方提供测试数据，50个并发执行100000个请求，读的宿舍是110000次/s,写的速度是81000次/s,且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：  字符串类型 St">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-21T16:17:55.894Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis 基础">
+<meta name="twitter:description" content="本质：redis 是一款高性能的 NOSQL 系列的非关系型数据库 什么是RedisRedis 是用C语言开发的一个开源的高性能键值对(key-value)数据库，官方提供测试数据，50个并发执行100000个请求，读的宿舍是110000次/s,写的速度是81000次/s,且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：  字符串类型 St">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/09/java笔记_redis/">
+
+
+
+
+
+  <title>Redis 基础 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/java笔记_redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Redis 基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T20:31:05+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本质：redis 是一款高性能的 NOSQL 系列的非关系型数据库</p>
+<h3 id="什么是Redis"><a href="#什么是Redis" class="headerlink" title="什么是Redis"></a>什么是Redis</h3><p>Redis 是用C语言开发的一个开源的高性能键值对(key-value)数据库，官方提供测试数据，50个并发执行100000个请求，读的宿舍是110000次/s,写的速度是81000次/s,且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：</p>
+<ol>
+<li>字符串类型 String</li>
+<li>哈希类型 hash</li>
+<li>列表类型 list</li>
+<li>集合类型 set</li>
+<li>有序集合类型 sortedset</li>
+</ol>
+<p>redis的应用场景：</p>
+<ul>
+<li>缓存（数据查询，短链接，新闻内容，商品内容等等）</li>
+<li>聊天室的在线好友列表</li>
+<li>热舞队列。（秒杀，抢购，12306）】</li>
+<li>应用排行榜</li>
+<li>网站访问统计</li>
+<li>数据过期处理（可以精确到毫秒）</li>
+<li>分布式集群架构中的session分离</li>
+</ul>
+<h3 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h3><p>官网： <a href="https://redis.io" target="_blank" rel="noopener">https://redis.io</a></p>
+<p>中文网：<a href="http://www.redis.net.cn/" target="_blank" rel="noopener">http://www.redis.net.cn/</a></p>
+<p>下载后解压直接可以使用：</p>
+<pre><code>- redis.window.conf:配置文件
+- redis-cli.exe:redis的客户端
+- redis-server.exe:redis服务器端
+</code></pre><h3 id="命令操作"><a href="#命令操作" class="headerlink" title="命令操作"></a>命令操作</h3><ul>
+<li>redis 存储的是：key,value格式的数据结构，其中key都是字符串，value有5种不同的数据结构:<ul>
+<li>字符串类型 String</li>
+<li>哈希类型 hash : map 格式</li>
+<li>列表类型 list : linkedlist 格式</li>
+<li>集合类型 set</li>
+<li>有序集合类型 sortedset</li>
+</ul>
+</li>
+<li>字符串类型 string<ul>
+<li>存储 set key value</li>
+<li>获取 get key</li>
+<li>删除 del key</li>
+</ul>
+</li>
+<li>哈希类型 hash<ul>
+<li>存储 hset key field value</li>
+<li>获取 单个值：hget key field，所有值：hgetall key</li>
+<li>删除 hdel key fild</li>
+</ul>
+</li>
+<li><p>列表类型 list:可以添加一个元素到列表的头部（左边）或者尾部（右边）</p>
+<ul>
+<li>添加：<ol>
+<li>lpush key value 将元素加入列表左边</li>
+<li>rpush key value 将元素加入列表右边</li>
+</ol>
+</li>
+<li>获取：<ol>
+<li>lrange key start end 范围获取</li>
+</ol>
+</li>
+<li>删除：<ol>
+<li>lpop key 删除列表最左边的元素，并将元素返回</li>
+<li>rpop key 删除列表最右边的元素，并将元素返回</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>集合类型 set：不允许重复元素</p>
+<ul>
+<li>存储： sadd key value</li>
+<li>获取： smembers key: 获取set集合中所有元素</li>
+<li>删除： srem key value: 删除set集合中的某个元素</li>
+</ul>
+</li>
+<li><p>有序集合类型 sortedset:不允许重复元素，且元素有顺序</p>
+<ul>
+<li>存储 zadd key score value</li>
+<li>获取 zrange key start end</li>
+<li>删除 zren key value</li>
+</ul>
+</li>
+</ul>
+<h3 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h3><p>redis 是一个内存数据库，当redis服务器重启，获取电脑重启，数据会丢失，我们可以将 redis 内存种的数据持久化保存到硬盘文件种。</p>
+<p>redis 持久化机制：</p>
+<ol>
+<li>RDB：默认方式，不需要配置，默认使用这种机制。在一定的时间间隔种，检测key的变化情况，然后持久化数据<ol>
+<li>编辑redis.windows.conf文件：<ul>
+<li>save 900 1,after 900 sec (15 min) if at least 1 key changed</li>
+<li>save 300 10,after 300 sec (5 min) if at least 10 keys changed</li>
+<li>save 60 10000 sec if at least 10000 keys changed</li>
+</ul>
+</li>
+<li>重新启动redis服务器，并指定配置文件名称<ul>
+<li>redis-server.exe redis.windows.conf</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>AOF：日志记录的方式，可以记录每一条命令的操作。可以每一次命令操作后，持久化数据<ol>
+<li>编辑 redis.windows.confi 文件<ul>
+<li>appendonly no (关闭 aof) –&gt; appendonly yes 开启aof)</li>
+<li><h1 id="appendfsync-always-每一次操作都进行持久化"><a href="#appendfsync-always-每一次操作都进行持久化" class="headerlink" title="appendfsync always: 每一次操作都进行持久化"></a>appendfsync always: 每一次操作都进行持久化</h1></li>
+<li><h1 id="appendfsync-eversec：-每隔一秒进行一次持久化"><a href="#appendfsync-eversec：-每隔一秒进行一次持久化" class="headerlink" title="appendfsync eversec： 每隔一秒进行一次持久化"></a>appendfsync eversec： 每隔一秒进行一次持久化</h1></li>
+<li><h1 id="appendfsync-no-不进行持久化"><a href="#appendfsync-no-不进行持久化" class="headerlink" title="appendfsync no: 不进行持久化"></a>appendfsync no: 不进行持久化</h1></li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="Java-客户端-Jedis"><a href="#Java-客户端-Jedis" class="headerlink" title="Java 客户端 Jedis"></a>Java 客户端 Jedis</h3><p>一款 java 操作redis 数据库的工具</p>
+<p>使用步骤：</p>
+<ol>
+<li>下载 jedis 的 jar 包</li>
+<li>使用：<ol>
+<li>获取连接： Jedis jedis = new Jedis(“localhost”,6379);</li>
+<li>操作： jedis.set(“username”,”zhangsan”);</li>
+<li>关闭连接： jedis.close();</li>
+</ol>
+</li>
+</ol>
+<p>Jedis 操作各种 redis 中的数据结构，Jedis 中的方法和 redis 中的命令一致</p>
+<ul>
+<li>字符串类型 String: set,get</li>
+<li>哈希类型 hash : map 格式：hset,hget</li>
+<li>列表类型 list : linkedlist 格式: lpush/rpush,lpop,rpop</li>
+<li>集合类型 set : sadd,srem</li>
+<li>有序集合类型 sortedset : zadd</li>
+</ul>
+<h3 id="Jedis-连接池"><a href="#Jedis-连接池" class="headerlink" title="Jedis 连接池"></a>Jedis 连接池</h3><p>使用方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 0. 创建一个配置对象</span></span><br><span class="line">JedisPoolConfig config = JedisPoolConfig();</span><br><span class="line">config.setMaxTotal(<span class="number">50</span>); <span class="comment">// 设置对打允许连接数</span></span><br><span class="line">config.setMaxIdle(<span class="number">10</span>); <span class="comment">// 最大空闲连接</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 1. 创建Jedis连接池对象</span></span><br><span class="line">JedisPool jedisPool = <span class="keyword">new</span> JedisPool(config,<span class="string">"localhost"</span>,<span class="number">6379</span>);</span><br><span class="line"><span class="comment">// 2. 获取连接</span></span><br><span class="line">Jedis jedis = jedisPool.getResource();</span><br><span class="line"><span class="comment">// 3. 使用</span></span><br><span class="line">jedis.set(<span class="string">"hehe"</span>,<span class="string">"haha"</span>);</span><br><span class="line"><span class="comment">// 4.关闭，归还到连接池中</span></span><br><span class="line">jedis.close();</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/04/重温对象与原型/" rel="next" title="重温——对象与原型">
+                <i class="fa fa-chevron-left"></i> 重温——对象与原型
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/10/重温this/" rel="prev" title="重温——this">
+                重温——this <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Redis"><span class="nav-number">1.</span> <span class="nav-text">什么是Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装"><span class="nav-number">2.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令操作"><span class="nav-number">3.</span> <span class="nav-text">命令操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久化"><span class="nav-number">4.</span> <span class="nav-text">持久化</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#appendfsync-always-每一次操作都进行持久化"><span class="nav-number"></span> <span class="nav-text">appendfsync always: 每一次操作都进行持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#appendfsync-eversec：-每隔一秒进行一次持久化"><span class="nav-number"></span> <span class="nav-text">appendfsync eversec： 每隔一秒进行一次持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#appendfsync-no-不进行持久化"><span class="nav-number"></span> <span class="nav-text">appendfsync no: 不进行持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-客户端-Jedis"><span class="nav-number">1.</span> <span class="nav-text">Java 客户端 Jedis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jedis-连接池"><span class="nav-number">2.</span> <span class="nav-text">Jedis 连接池</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

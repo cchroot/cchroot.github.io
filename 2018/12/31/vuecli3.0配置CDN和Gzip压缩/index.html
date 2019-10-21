@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue.js,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前端时间把项目的加载速度进行了统一的优化，主要使用了 CDN 加载框架和静态文件，还有启用了 Gzip 压缩，这里记录总结一下。 CDN使用修改配置打开 vue.config.js 配置文件，添加 externals： 12345678const externals = &amp;#123;  &apos;vue&apos;: &apos;Vue&apos;,  &apos;vuex&apos;: &apos;Vuex&apos;,  &apos;vue-router&apos;: &apos;VueRouter">
+<meta name="keywords" content="vue.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vuecli3.0使用CDN和Gzip压缩">
+<meta property="og:url" content="http://yoursite.com/2018/12/31/vuecli3.0配置CDN和Gzip压缩/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="前端时间把项目的加载速度进行了统一的优化，主要使用了 CDN 加载框架和静态文件，还有启用了 Gzip 压缩，这里记录总结一下。 CDN使用修改配置打开 vue.config.js 配置文件，添加 externals： 12345678const externals = &amp;#123;  &apos;vue&apos;: &apos;Vue&apos;,  &apos;vuex&apos;: &apos;Vuex&apos;,  &apos;vue-router&apos;: &apos;VueRouter">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-21T16:32:14.511Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vuecli3.0使用CDN和Gzip压缩">
+<meta name="twitter:description" content="前端时间把项目的加载速度进行了统一的优化，主要使用了 CDN 加载框架和静态文件，还有启用了 Gzip 压缩，这里记录总结一下。 CDN使用修改配置打开 vue.config.js 配置文件，添加 externals： 12345678const externals = &amp;#123;  &apos;vue&apos;: &apos;Vue&apos;,  &apos;vuex&apos;: &apos;Vuex&apos;,  &apos;vue-router&apos;: &apos;VueRouter">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/31/vuecli3.0配置CDN和Gzip压缩/">
+
+
+
+
+
+  <title>vuecli3.0使用CDN和Gzip压缩 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/vuecli3.0配置CDN和Gzip压缩/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vuecli3.0使用CDN和Gzip压缩</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-31T20:37:05+08:00">
+                2018-12-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vueJs/" itemprop="url" rel="index">
+                    <span itemprop="name">vueJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前端时间把项目的加载速度进行了统一的优化，主要使用了 CDN 加载框架和静态文件，还有启用了 Gzip 压缩，这里记录总结一下。</p>
+<h2 id="CDN使用"><a href="#CDN使用" class="headerlink" title="CDN使用"></a>CDN使用</h2><h3 id="修改配置"><a href="#修改配置" class="headerlink" title="修改配置"></a>修改配置</h3><p>打开 vue.config.js 配置文件，添加 externals：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> externals = &#123;</span><br><span class="line">  <span class="string">'vue'</span>: <span class="string">'Vue'</span>,</span><br><span class="line">  <span class="string">'vuex'</span>: <span class="string">'Vuex'</span>,</span><br><span class="line">  <span class="string">'vue-router'</span>: <span class="string">'VueRouter'</span>,</span><br><span class="line">  <span class="string">'axios'</span>: <span class="string">'axios'</span>,</span><br><span class="line">  <span class="string">'element-ui'</span>: <span class="string">'ELEMENT'</span>,</span><br><span class="line">  <span class="string">'vue-i18n'</span>: <span class="string">'VueI18n'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里需要注意，’:’ 号后面对应的文件名必须和项目里面 import 引入的文件昵称相同，例如： <code>import Vue from &#39;vue&#39;</code> 就是上面对应的 <code>&#39;vue&#39;: &#39;Vue&#39;</code>。</p>
+<p>这里特别注意一下 element-ui 的昵称必须是: ‘ELEMENT’, 如果使用其它昵称将报错。具体看 element-ui 源码导出方式你就懂了~</p>
+<p>然后，再添加 CDN 文件加载路径和不同环境的配置，注意，这里开发环境和生产环节都启用了，正常只有生产环境启用，这里测试是否可用在开发环境也启用了 CDN: </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> cdn = &#123;</span><br><span class="line">  <span class="comment">// 开发环境</span></span><br><span class="line">  dev: &#123;</span><br><span class="line">    css: [</span><br><span class="line">      <span class="string">'https://unpkg.com/element-ui@2.7.2/lib/theme-chalk/index.css'</span>,</span><br><span class="line">      <span class="string">'https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css'</span></span><br><span class="line">    ],</span><br><span class="line">    js: [</span><br><span class="line">      <span class="string">'https://unpkg.com/vue@2.6.6/dist/vue.min.js'</span>,</span><br><span class="line">      <span class="string">'https://unpkg.com/vuex@3.0.1/dist/vuex.min.js'</span>,</span><br><span class="line">      <span class="string">'https://unpkg.com/vue-router@3.0.1/dist/vue-router.min.js'</span>,</span><br><span class="line">      <span class="string">'https://cdn.bootcss.com/axios/0.18.0/axios.min.js'</span>,</span><br><span class="line">      <span class="string">'https://unpkg.com/element-ui@2.7.2/lib/index.js'</span>,</span><br><span class="line">      <span class="string">'https://cdn.bootcss.com/vue-i18n/8.10.0/vue-i18n.min.js'</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 生产环境</span></span><br><span class="line">  build: &#123;</span><br><span class="line">    css: [</span><br><span class="line">      <span class="string">'https://unpkg.com/element-ui@2.7.2//lib/theme-chalk/index.css'</span>,</span><br><span class="line">      <span class="string">'https://cdn.bootcss.com/Swiper/4.5.0/css/swiper.min.css'</span></span><br><span class="line">    ],</span><br><span class="line">    js: [</span><br><span class="line">      <span class="string">'https://unpkg.com/vue@2.6.6/dist/vue.min.js'</span>,</span><br><span class="line">      <span class="string">'https://unpkg.com/vuex@3.0.1/dist/vuex.min.js'</span>,</span><br><span class="line">      <span class="string">'https://unpkg.com/vue-router@3.0.1/dist/vue-router.min.js'</span>,</span><br><span class="line">      <span class="string">'https://cdn.bootcss.com/axios/0.18.0/axios.min.js'</span>,</span><br><span class="line">      <span class="string">'https://unpkg.com/element-ui@2.7.2//lib/index.js'</span>,</span><br><span class="line">      <span class="string">'https://cdn.bootcss.com/vue-i18n/8.10.0/vue-i18n.min.js'</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>导入配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  productionSourceMap: <span class="literal">false</span>, <span class="comment">// 生产环境是否生成 sourceMap 文件</span></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    proxy: <span class="string">'http://demo.com'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  chainWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除懒加载模块的prefetch，降低带宽压力</span></span><br><span class="line"><span class="comment">     * https://cli.vuejs.org/zh/guide/html-and-static-assets.html#prefetch</span></span><br><span class="line"><span class="comment">     * 而且预渲染时生成的prefetch标签是modern版本的，低版本浏览器是不需要的</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    config.plugins.delete(<span class="string">'prefetch'</span>)</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加CDN参数到htmlWebpackPlugin配置中， 详见public/index.html 修改</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    config.plugin(<span class="string">'html'</span>).tap(<span class="function"><span class="params">args</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'production'</span>) &#123;</span><br><span class="line">        args[<span class="number">0</span>].cdn = cdn.build</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'development'</span>) &#123;</span><br><span class="line">        args[<span class="number">0</span>].cdn = cdn.dev</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> args</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;,</span><br><span class="line">  configureWebpack: <span class="function">(<span class="params">config</span>) =&gt;</span> &#123; <span class="comment">// 改webpack devtool 输出方式</span></span><br><span class="line">    config.externals = externals</span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'development'</span>) &#123;</span><br><span class="line">      <span class="comment">// 开发环境加载source-map</span></span><br><span class="line">      config.devtool = <span class="string">'source-map'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上就是 vue.config.js 所需要做的配置了。</p>
+<h3 id="修改-index-html-文件"><a href="#修改-index-html-文件" class="headerlink" title="修改 index.html 文件"></a>修改 index.html 文件</h3><p>在 head 标签中循环导入 CDN 引入的 CSS 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 使用CDN加速的CSS文件，配置在vue.config.js下 --&gt;</span><br><span class="line">&lt;% for (var i in htmlWebpackPlugin.options.cdn&amp;&amp;htmlWebpackPlugin.options.cdn.css) &#123; %&gt;</span><br><span class="line">	&lt;link href=&quot;&lt;%= htmlWebpackPlugin.options.cdn.css[i] %&gt;&quot; rel=&quot;preload&quot; as=&quot;style&quot;&gt;</span><br><span class="line">	&lt;link href=&quot;&lt;%= htmlWebpackPlugin.options.cdn.css[i] %&gt;&quot; rel=&quot;stylesheet&quot;&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>然后在 body 中循环导入 CDN 引入的 js 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--使用CDN加速的JS文件，配置在vue.config.js下 --&gt;</span><br><span class="line">&lt;% for (var i in htmlWebpackPlugin.options.cdn&amp;&amp;htmlWebpackPlugin.options.cdn.js) &#123; %&gt;</span><br><span class="line">	&lt;script src=&quot;&lt;%= htmlWebpackPlugin.options.cdn.js[i] %&gt;&quot;&gt;&lt;/script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+<p>以上就是 CDN 的配置了，这里不需要注释掉原来项目里面 import 导入的代码噢，不影响，很方便，可以随时取消 CDN 的引用而不用修改代码，需要注意的就是上面 externals 配置的昵称必须和 import 导入的别名相同。</p>
+<h2 id="Gzip-压缩"><a href="#Gzip-压缩" class="headerlink" title="Gzip 压缩"></a>Gzip 压缩</h2><p>如果你觉得采用了 CDN 和各种代码优化后，还觉得首页加载太慢，又不想采用 SSR 的话，可以试试启用 Gzip 压缩噢，可以把文件的传输大小减少一半以上，加快文件的传输速度，自然就加快了首页的加载速度了。这里的配置还是基于 vue-cli3.0:</p>
+<h3 id="安装压缩文件插件："><a href="#安装压缩文件插件：" class="headerlink" title="安装压缩文件插件："></a>安装压缩文件插件：</h3><p><code>npm i -D compression-webpack-plugin</code></p>
+<h3 id="在文件-vue-config-js-里导入-compression-webpack-plugin，并添加压缩文件类型"><a href="#在文件-vue-config-js-里导入-compression-webpack-plugin，并添加压缩文件类型" class="headerlink" title="在文件 vue.config.js 里导入 compression-webpack-plugin，并添加压缩文件类型"></a>在文件 vue.config.js 里导入 compression-webpack-plugin，并添加压缩文件类型</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> CompressionWebpackPlugin = <span class="built_in">require</span>(<span class="string">'compression-webpack-plugin'</span>)</span><br><span class="line"><span class="keyword">const</span> productionGzipExtensions = [<span class="string">'js'</span>, <span class="string">'css'</span>]</span><br></pre></td></tr></table></figure>
+<h3 id="在configureWebpack-里配置如下代码"><a href="#在configureWebpack-里配置如下代码" class="headerlink" title="在configureWebpack 里配置如下代码:"></a>在configureWebpack 里配置如下代码:</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">configureWebpack: &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">        <span class="keyword">new</span> CompressionWebpackPlugin(&#123;</span><br><span class="line">            asset: <span class="string">'[path].gz[query]'</span>,</span><br><span class="line">            algorithm: <span class="string">'gzip'</span>,</span><br><span class="line">            test: <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'\\.('</span> + productionGzipExtensions.join(<span class="string">'|'</span>) + <span class="string">')$'</span>),</span><br><span class="line">            threshold: <span class="number">1024</span>,</span><br><span class="line">            minRatio: <span class="number">0.8</span>,</span><br><span class="line">			deleteOriginalAssets: <span class="literal">false</span> <span class="comment">// 不删除源文件</span></span><br><span class="line">        &#125;)</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，上面的通用模式，可以只在生产环境使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"> configureWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'production'</span>) &#123;</span><br><span class="line">        <span class="comment">// 生产环境</span></span><br><span class="line">        config.plugins.push(</span><br><span class="line">            <span class="keyword">new</span> CompressionWebpackPlugin(&#123;</span><br><span class="line">                filename: <span class="string">'[path].gz[query]'</span>,</span><br><span class="line">                algorithm: <span class="string">'gzip'</span>,</span><br><span class="line">                test: <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'\\.('</span> + productionGzipExtensions.join(<span class="string">'|'</span>) + <span class="string">')$'</span>),</span><br><span class="line">                threshold: <span class="number">1024</span>,</span><br><span class="line">                minRatio: <span class="number">0.8</span>,</span><br><span class="line">				deleteOriginalAssets: <span class="literal">false</span> <span class="comment">// 不删除源文件</span></span><br><span class="line">            &#125;)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'development'</span>) &#123;</span><br><span class="line">      <span class="comment">// 开发环境加载</span></span><br><span class="line">    &#125;</span><br><span class="line">	<span class="keyword">return</span> config</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (process.env.NODE_ENV === <span class="string">'production'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        plugins: [</span><br><span class="line">          <span class="keyword">new</span> CompressionWebpackPlugin(&#123;</span><br><span class="line">            filename: <span class="string">'[path].gz[query]'</span>,</span><br><span class="line">            algorithm: <span class="string">'gzip'</span>,</span><br><span class="line">            test: <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'\\.('</span> + productionGzipExtensions.join(<span class="string">'|'</span>) + <span class="string">')$'</span>),</span><br><span class="line">            threshold: <span class="number">1024</span>,</span><br><span class="line">            minRatio: <span class="number">0.8</span>,</span><br><span class="line">            deleteOriginalAssets: <span class="literal">false</span> <span class="comment">// 不删除源文件</span></span><br><span class="line">          &#125;)</span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>配置参数解释：</p>
+<ol>
+<li>asset： 目标资源名称。 [file] 会被替换成原始资源。[path] 会被替换成原始资源的路径， [query] 会被替换成查询字符串。默认值是 “[path].gz[query]”。</li>
+<li>algorithm： 可以是 function(buf, callback) 或者字符串。对于字符串来说依照 zlib 的算法(或者 zopfli 的算法)。默认值是 “gzip”。</li>
+<li>test： 所有匹配该正则的资源都会被处理。默认值是全部资源。</li>
+<li>threshold： 只有大小大于该值的资源会被处理。单位是 bytes。默认值是 0。</li>
+<li>minRatio： 只有压缩率小于这个值的资源才会被处理。默认值是 0.8。</li>
+<li>deleteOriginalAssets: false // 不删除源文件</li>
+</ol>
+<p>打包后会同时保留原文件和压缩后的文件，存储等条件允许的情况下，原文件也建议发布到服务器以支持不兼容gzip的浏览器。</p>
+<p>以上就是配置 Gzip 压缩前端需要完成的工作了，接下来还需要后端在 Nginx 上开启 Gzip 压缩：</p>
+<h3 id="Nginx-配置："><a href="#Nginx-配置：" class="headerlink" title="Nginx 配置："></a>Nginx 配置：</h3><p>在 http {} 包裹的配置中配置参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"># 开启gzip</span><br><span class="line">gzip  on;</span><br><span class="line"></span><br><span class="line"># 如果存在gz文件则服务器不压缩，直接采用gz文件。不知道为啥我开启了这个就报错</span><br><span class="line"># gzip_static默认是没有的，参考http://nginx.org/en/docs/http/ngx_http_gzip_static_module.html</span><br><span class="line">gzip_static on;</span><br><span class="line"></span><br><span class="line"># 启用gzip压缩的最小文件，小于设置值的文件将不会压缩</span><br><span class="line">gzip_min_length 1k;</span><br><span class="line"></span><br><span class="line"># 设置用于处理请求压缩的缓冲区数量和大小，比如4 16K表示按照内存页（one memory page）大小以16K为单位（即一个系统中内存页为16K），申请4倍的内存空间。建议此项不设置，使用默认值。</span><br><span class="line">gzip_buffers 4 16k;</span><br><span class="line"></span><br><span class="line">用于识别http协议的版本，早期的浏览器不支持gzip压缩，用户会看到乱码，所以为了支持前期版本加了此选项。默认在http/1.0的协议下不开启gzip压缩。</span><br><span class="line">gzip_http_version 1.0;</span><br><span class="line"></span><br><span class="line"># gzip 压缩级别，1-10，数字越大压缩的越好，也越占用CPU时间</span><br><span class="line">gzip_comp_level 1;</span><br><span class="line"></span><br><span class="line"># 进行压缩的文件类型。javascript有多种形式。</span><br><span class="line"># 其中的值可以在 mime.types 文件中找到。</span><br><span class="line">gzip_types text/plain application/javascript application/css  text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;</span><br><span class="line"></span><br><span class="line"># 是否在http header中添加Vary: Accept-Encoding，建议开启</span><br><span class="line">gzip_vary off;</span><br><span class="line"></span><br><span class="line"># 禁用IE 6 gzip</span><br><span class="line">gzip_disable &quot;MSIE [1-6]\.&quot;;</span><br></pre></td></tr></table></figure>
+<p>注意：不是压缩级别越高越好，其实gzip_comp_level 1的压缩能力已经够用了，后面级别越高，压缩的比例其实增长不大，反而很吃处理性能。 </p>
+<p>这里启用了 <code>gzip_static on</code>,如果服务器存在 .gz 文件则不压缩直接传输 .gz 文件，节省服务器带宽，需要注意的是 <code>gzip_static</code> 命令默认是没有的，参考<a href="http://nginx.org/en/docs/http/ngx_http_gzip_static_module.html" target="_blank" rel="noopener">nginx文档</a>,需要在安装 nginx 的时候检查模块支持中是否含有 <code>--with-http_gzip_static_module</code> 模块，没有此模块的话，配置会报错不存在该指令。</p>
+<p>另一方面，压缩一定要和静态资源缓存相结合，缓存压缩后的版本，否则每次都压缩高负载下服务器肯定吃不住。</p>
+<h3 id="开启-nginx-缓存"><a href="#开启-nginx-缓存" class="headerlink" title="开启 nginx 缓存"></a>开启 nginx 缓存</h3><p>配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">location ~* ^.+\.(ico|gif|jpg|jpeg|png)$ &#123; </span><br><span class="line">    access_log   off; </span><br><span class="line">    expires      30d;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~* ^.+\.(css|js|txt|xml|swf|wav)$ &#123;</span><br><span class="line">    access_log   off;</span><br><span class="line">    expires      24h;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">location ~* ^.+\.(html|htm)$ &#123;</span><br><span class="line">    expires      1h;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中的缓存时间可以自己根据需要修改。</p>
+<h3 id="关于字体"><a href="#关于字体" class="headerlink" title="关于字体"></a>关于字体</h3><p>为静态资源开启缓存能够较少服务器带宽的消耗，特别是在css中使用字体时，同时配合gzip压缩能够大大减少下载字体造成的带宽影响。</p>
+<p>设置字体缓存:</p>
+<p>需要注意的是，字体有很多格式，为所有字体格式设置缓存是很有必要的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">location ~* ^.+\.(eot|ttf|otf|woff|svg)$ &#123;</span><br><span class="line">    access_log   off;</span><br><span class="line">    expires max;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启用字体 gzip:</p>
+<p>只需要为 ttf、otf 和 svg 字体启用 gzip，对其他字体格式进行 gzip 压缩时效果不明显。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gzip_types  font/ttf font/otf image/svg+xml</span><br></pre></td></tr></table></figure>
+<h3 id="测试命令："><a href="#测试命令：" class="headerlink" title="测试命令："></a>测试命令：</h3><p><code>curl -I -H &quot;Accept-Encoding: gzip, deflate&quot; &quot;http://39.108.73.162:8082/vendor.js&quot;</code></p>
+<p>测试结果（需要出现Content-Encoding: gzip）:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: nginx/1.7.2</span><br><span class="line">Date: XXXXX</span><br><span class="line">Content-Type: application/javascript</span><br><span class="line">Last-Modified: Web, XXXX</span><br><span class="line">Connection: keey-alive</span><br><span class="line">ETag: XXXXXXXXXXXX</span><br><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
+<p>注意最后面这句： Content-Encoding: gzip 就OK~</p>
+<p>nginx 参数说明请参考<a href="http://nginx.org/en/docs/http/ngx_http_gzip_static_module.html" target="_blank" rel="noopener">nginx文档</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-js/" rel="tag"># vue.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/03/CDN/" rel="next" title="CDN 基础">
+                <i class="fa fa-chevron-left"></i> CDN 基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CDN使用"><span class="nav-number">1.</span> <span class="nav-text">CDN使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改配置"><span class="nav-number">1.1.</span> <span class="nav-text">修改配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改-index-html-文件"><span class="nav-number">1.2.</span> <span class="nav-text">修改 index.html 文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gzip-压缩"><span class="nav-number">2.</span> <span class="nav-text">Gzip 压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装压缩文件插件："><span class="nav-number">2.1.</span> <span class="nav-text">安装压缩文件插件：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在文件-vue-config-js-里导入-compression-webpack-plugin，并添加压缩文件类型"><span class="nav-number">2.2.</span> <span class="nav-text">在文件 vue.config.js 里导入 compression-webpack-plugin，并添加压缩文件类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在configureWebpack-里配置如下代码"><span class="nav-number">2.3.</span> <span class="nav-text">在configureWebpack 里配置如下代码:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Nginx-配置："><span class="nav-number">2.4.</span> <span class="nav-text">Nginx 配置：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启-nginx-缓存"><span class="nav-number">2.5.</span> <span class="nav-text">开启 nginx 缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于字体"><span class="nav-number">2.6.</span> <span class="nav-text">关于字体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试命令："><span class="nav-number">2.7.</span> <span class="nav-text">测试命令：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

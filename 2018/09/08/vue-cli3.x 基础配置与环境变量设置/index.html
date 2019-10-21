@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="vue.js,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="vue-cli3.x 基础配置项目中配置目录别名 alias：12345678910111213141516const path = require(&apos;path&apos;)function resolve (dir) &amp;#123;  return path.join(__dirname, dir)&amp;#125;module.exports=&amp;#123;    ...    //  将接收ChainableC">
+<meta name="keywords" content="vue.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-cli3.x 基础配置与环境变量设置">
+<meta property="og:url" content="http://yoursite.com/2018/09/08/vue-cli3.x 基础配置与环境变量设置/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="vue-cli3.x 基础配置项目中配置目录别名 alias：12345678910111213141516const path = require(&apos;path&apos;)function resolve (dir) &amp;#123;  return path.join(__dirname, dir)&amp;#125;module.exports=&amp;#123;    ...    //  将接收ChainableC">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-21T16:29:05.732Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue-cli3.x 基础配置与环境变量设置">
+<meta name="twitter:description" content="vue-cli3.x 基础配置项目中配置目录别名 alias：12345678910111213141516const path = require(&apos;path&apos;)function resolve (dir) &amp;#123;  return path.join(__dirname, dir)&amp;#125;module.exports=&amp;#123;    ...    //  将接收ChainableC">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/09/08/vue-cli3.x 基础配置与环境变量设置/">
+
+
+
+
+
+  <title>vue-cli3.x 基础配置与环境变量设置 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/08/vue-cli3.x 基础配置与环境变量设置/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vue-cli3.x 基础配置与环境变量设置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-08T20:59:05+08:00">
+                2018-09-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vueJs/" itemprop="url" rel="index">
+                    <span itemprop="name">vueJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="vue-cli3-x-基础配置"><a href="#vue-cli3-x-基础配置" class="headerlink" title="vue-cli3.x 基础配置"></a>vue-cli3.x 基础配置</h2><h3 id="项目中配置目录别名-alias："><a href="#项目中配置目录别名-alias：" class="headerlink" title="项目中配置目录别名 alias："></a>项目中配置目录别名 alias：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">resolve</span> (<span class="params">dir</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> path.join(__dirname, dir)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//  将接收ChainableConfig由webpack-chain提供支持的实例的函数。</span></span><br><span class="line">    chainWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">        config.resolve.alias</span><br><span class="line">            .set(<span class="string">'@'</span>, resolve(<span class="string">'src'</span>))</span><br><span class="line">            .set(<span class="string">'assets'</span>,resolve(<span class="string">'src/assets'</span>))</span><br><span class="line">            .set(<span class="string">'components'</span>,resolve(<span class="string">'src/components'</span>))</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，vue-cli3.x中已默认配置好 ‘@’ 指向 ‘src’ 目录，如果只需要 ‘@’ 则不需要再配置别名</p>
+<h3 id="webpack-代理配置相关"><a href="#webpack-代理配置相关" class="headerlink" title="webpack 代理配置相关"></a>webpack 代理配置相关</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">   ...</span><br><span class="line">  <span class="comment">//  代理相关配置</span></span><br><span class="line">  devServer: &#123;</span><br><span class="line">    host: <span class="string">'0.0.0.0'</span>,</span><br><span class="line">    port: <span class="number">8080</span>,</span><br><span class="line">    https: <span class="literal">false</span>,</span><br><span class="line">    hotOnly: <span class="literal">false</span>,</span><br><span class="line">    proxy: <span class="literal">null</span>, <span class="comment">// string | Object</span></span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正常情况处理跨域只要配置 proxy 即可</p>
+<h3 id="打包文件优化配置"><a href="#打包文件优化配置" class="headerlink" title="打包文件优化配置"></a>打包文件优化配置</h3><p>这里之说两个常用插件配置：</p>
+<p>安装插件：</p>
+<ul>
+<li>uglifyjs-webpack-plugin //去除console</li>
+<li>compression-webpack-plugin //gzip压缩</li>
+</ul>
+<p>安装命令：<code>npm install uglifyjs-webpack-plugin --save-dev</code>，<code>npm install compression-webpack-plugin --save-dev</code></p>
+<p>在 vue.config.js 中配置：</p>
+<h3 id="vue-config-js-完整默认配置为："><a href="#vue-config-js-完整默认配置为：" class="headerlink" title="vue.config.js 完整默认配置为："></a>vue.config.js 完整默认配置为：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//去console插件</span></span><br><span class="line"><span class="keyword">const</span> UglifyJsPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>)</span><br><span class="line"><span class="comment">//gzip压缩插件</span></span><br><span class="line"><span class="keyword">const</span> CompressionWebpackPlugin = <span class="built_in">require</span>(<span class="string">'compression-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">//  webpack插件配置</span></span><br><span class="line">  configureWebpack: <span class="function"><span class="params">config</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> plugins = [</span><br><span class="line">      <span class="keyword">new</span> UglifyJsPlugin(&#123;</span><br><span class="line">        uglifyOptions: &#123;</span><br><span class="line">          compress: &#123;</span><br><span class="line">            warnings: <span class="literal">false</span>,</span><br><span class="line">            drop_debugger: <span class="literal">true</span>,</span><br><span class="line">            drop_console: <span class="literal">true</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        sourceMap: <span class="literal">false</span>,</span><br><span class="line">        parallel: <span class="literal">true</span></span><br><span class="line">      &#125;),</span><br><span class="line">      <span class="keyword">new</span> CompressionWebpackPlugin(&#123;</span><br><span class="line">        filename: <span class="string">'[path].gz[query]'</span>,</span><br><span class="line">        algorithm: <span class="string">'gzip'</span>,</span><br><span class="line">        test: <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'\\.('</span> + [<span class="string">'js'</span>, <span class="string">'css'</span>].join(<span class="string">'|'</span>) + <span class="string">')$'</span>),</span><br><span class="line">        threshold: <span class="number">10240</span>,</span><br><span class="line">        minRatio: <span class="number">0.8</span>,</span><br><span class="line">        deleteOriginalAssets: <span class="literal">false</span> <span class="comment">// 不删除源文件</span></span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">if</span> (process.env.NODE_ENV !== <span class="string">'development'</span>) &#123;</span><br><span class="line">      config.plugins = [...config.plugins, ...plugins]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">     <span class="comment">// 基本路径</span></span><br><span class="line">     publicPath: <span class="string">'/'</span>, <span class="comment">// 3.3版本前用 baseUrl</span></span><br><span class="line">     <span class="comment">// 输出文件目录</span></span><br><span class="line">     outputDir: <span class="string">'dist'</span>,</span><br><span class="line">     <span class="comment">// 用于嵌套生成的静态资产（js，css，img，fonts）的目录。</span></span><br><span class="line">     <span class="comment">//assetsDir: '',</span></span><br><span class="line">     <span class="comment">// 以多页模式构建应用程序。</span></span><br><span class="line">     pages: <span class="literal">undefined</span>,</span><br><span class="line">     <span class="comment">// eslint-loader 是否在保存的时候检查</span></span><br><span class="line">     lintOnSave: <span class="literal">true</span>,</span><br><span class="line">     <span class="comment">// 是否使用包含运行时编译器的Vue核心的构建。</span></span><br><span class="line">     runtimeCompiler: <span class="literal">false</span>,</span><br><span class="line">     <span class="comment">// 默认情况下babel-loader忽略其中的所有文件node_modules。</span></span><br><span class="line">     transpileDependencies: [],</span><br><span class="line">     <span class="comment">// 生产环境sourceMap</span></span><br><span class="line">     productionSourceMap: <span class="literal">true</span>,</span><br><span class="line">     <span class="comment">// webpack配置</span></span><br><span class="line">     configureWebpack: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;,</span><br><span class="line">     chainWebpack: <span class="function"><span class="params">()</span> =&gt;</span> &#123;&#125;,</span><br><span class="line">     <span class="comment">// css相关配置</span></span><br><span class="line">     css: &#123;</span><br><span class="line">      <span class="comment">// 启用 CSS modules</span></span><br><span class="line">      modules: <span class="literal">false</span>,</span><br><span class="line">      <span class="comment">// 是否使用css分离插件</span></span><br><span class="line">      extract: <span class="literal">true</span>,</span><br><span class="line">      <span class="comment">// 开启 CSS source maps?</span></span><br><span class="line">      sourceMap: <span class="literal">false</span>,</span><br><span class="line">      <span class="comment">// css预设器配置项</span></span><br><span class="line">      loaderOptions: &#123;&#125;,</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="comment">// webpack-dev-server 相关配置</span></span><br><span class="line">     devServer: &#123;</span><br><span class="line">      host: <span class="string">'0.0.0.0'</span>,</span><br><span class="line">      port: <span class="number">8080</span>,</span><br><span class="line">      https: <span class="literal">false</span>,</span><br><span class="line">      hotOnly: <span class="literal">false</span>,</span><br><span class="line">      proxy: <span class="literal">null</span>, <span class="comment">// 设置代理</span></span><br><span class="line">      before: <span class="function"><span class="params">app</span> =&gt;</span> &#123;&#125;</span><br><span class="line">     &#125;,</span><br><span class="line">     <span class="comment">// enabled by default if the machine has more than 1 cores</span></span><br><span class="line">     parallel: <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length &gt; <span class="number">1</span>,</span><br><span class="line">     <span class="comment">// PWA 插件相关配置</span></span><br><span class="line">     pwa: &#123;&#125;,</span><br><span class="line">     <span class="comment">// 第三方插件配置</span></span><br><span class="line">     pluginOptions: &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="vue-cli3-x-环境变量设置"><a href="#vue-cli3-x-环境变量设置" class="headerlink" title="vue-cli3.x 环境变量设置"></a>vue-cli3.x 环境变量设置</h2><h3 id="为什么会需要配置多种环境变量"><a href="#为什么会需要配置多种环境变量" class="headerlink" title="为什么会需要配置多种环境变量"></a>为什么会需要配置多种环境变量</h3><p>一个产品的开发过程中,一般来说都是会经历：本地发开–测试版本部署–测试–预上线–正式上线.对应的每一个环节中的服务器地址,接口地址…等可能都会不一样。那么我们环境变量去处理这些情况。</p>
+<h3 id="怎么去配置环境变量"><a href="#怎么去配置环境变量" class="headerlink" title="怎么去配置环境变量"></a>怎么去配置环境变量</h3><p>vue-cli 3.0 脚手架构建的项目根目录中新建一个 .env.[model] 文件,model 为一个变量，可以通过这个 model 的变量值来判断当前属于哪个环境。model 可以根据你的需求来修改，该文件中写上对应的键值对。你需要多少个环境，就创建多少个 .env.[model] 在根目录中。</p>
+<p>例如你可以创建三个文件，分别为：.env.development，.env.production，.env.release，分别表示：开发环境，生产环境，发布环境。</p>
+<p>例如，三个文件的内容分别为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//.env.development</span><br><span class="line">NODE_ENV=development</span><br><span class="line">VUE_APP_XXX=XXX</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//.env.production</span><br><span class="line">NODE_ENV=production</span><br><span class="line">VUE_APP_XXX=XXX</span><br><span class="line"></span><br><span class="line">outputDir=dist</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//.env.release</span><br><span class="line">NODE_ENV=production</span><br><span class="line">VUE_APP_XXX=XXX</span><br><span class="line"></span><br><span class="line">outputDir=release</span><br></pre></td></tr></table></figure>
+<p>需要注意的是：在每个配置文件中：NODE_ENV = “XXX” 不可以省略,vue-cli 3.0 会根据 NODE_ENV = “production” 来判断是否是生产环境,如果你改变了这个就会被默认 NODE_ENV = “development,development 和 production 模式下打包出来的包结构会不同,为了一致性,所以配置文件的第一个字段应该设置成为 NODE_ENV = “production” 或者 NODE_ENV=”development”。</p>
+<p>例如上面的 outputDir 在 vue.config.js 中可以设置改变打包输出文件名：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports=&#123;</span><br><span class="line">    ...</span><br><span class="line">    outputDir: process.env.outputDir,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后需要注意的是，package.json 中的配置必须和配置文件匹配，development 环境和 production 环境使用默认，release 环境为新增，所以需要在 –model 后配置相同名字,名字与配置文件名相同，即为 release</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"serve"</span>: <span class="string">"vue-cli-service serve"</span>,</span><br><span class="line">    <span class="string">"build"</span>: <span class="string">"vue-cli-service build"</span>,</span><br><span class="line">    <span class="string">"release"</span>: <span class="string">"vue-cli-service build --mode release"</span>,</span><br><span class="line">    <span class="string">"lint"</span>: <span class="string">"vue-cli-service lint"</span></span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p>配置环境变量通过： process.env.xxx 在项目的任意地方获取</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/vue-js/" rel="tag"># vue.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/25/debounce and throttle/" rel="next" title="简单的防抖和节流函数">
+                <i class="fa fa-chevron-left"></i> 简单的防抖和节流函数
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/16/element-ui + axios 上传爬坑之路/" rel="prev" title="element-ui + axios 上传爬坑之路">
+                element-ui + axios 上传爬坑之路 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-cli3-x-基础配置"><span class="nav-number">1.</span> <span class="nav-text">vue-cli3.x 基础配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目中配置目录别名-alias："><span class="nav-number">1.1.</span> <span class="nav-text">项目中配置目录别名 alias：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-代理配置相关"><span class="nav-number">1.2.</span> <span class="nav-text">webpack 代理配置相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打包文件优化配置"><span class="nav-number">1.3.</span> <span class="nav-text">打包文件优化配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-config-js-完整默认配置为："><span class="nav-number">1.4.</span> <span class="nav-text">vue.config.js 完整默认配置为：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-cli3-x-环境变量设置"><span class="nav-number">2.</span> <span class="nav-text">vue-cli3.x 环境变量设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么会需要配置多种环境变量"><span class="nav-number">2.1.</span> <span class="nav-text">为什么会需要配置多种环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#怎么去配置环境变量"><span class="nav-number">2.2.</span> <span class="nav-text">怎么去配置环境变量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="核心概念Spring 是一个非常活跃的开源框架，开源帮助分离项目组件之间的依赖关系，它的主要目的是简化企业开发 核心概念：  IOC（Inversion Of Control）控制反转；创建对象，对象之间依赖关系的维护全部再 Spring 容器中完成的，不需要我们程序猿在代码中具体实现。即对象创建和对象之间关系维护的控制权由程序猿管理变为由 Srping 管理 DI（Dependency Inje">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java Spring">
+<meta property="og:url" content="http://yoursite.com/2018/02/16/java笔记_Srping/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="核心概念Spring 是一个非常活跃的开源框架，开源帮助分离项目组件之间的依赖关系，它的主要目的是简化企业开发 核心概念：  IOC（Inversion Of Control）控制反转；创建对象，对象之间依赖关系的维护全部再 Spring 容器中完成的，不需要我们程序猿在代码中具体实现。即对象创建和对象之间关系维护的控制权由程序猿管理变为由 Srping 管理 DI（Dependency Inje">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/java/java_mvc.png">
+<meta property="og:updated_time" content="2019-10-21T16:16:52.664Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java Spring">
+<meta name="twitter:description" content="核心概念Spring 是一个非常活跃的开源框架，开源帮助分离项目组件之间的依赖关系，它的主要目的是简化企业开发 核心概念：  IOC（Inversion Of Control）控制反转；创建对象，对象之间依赖关系的维护全部再 Spring 容器中完成的，不需要我们程序猿在代码中具体实现。即对象创建和对象之间关系维护的控制权由程序猿管理变为由 Srping 管理 DI（Dependency Inje">
+<meta name="twitter:image" content="http://yoursite.com/images/java/java_mvc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/16/java笔记_Srping/">
+
+
+
+
+
+  <title>java Spring | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/16/java笔记_Srping/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java Spring</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T20:31:05+08:00">
+                2018-02-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><p>Spring 是一个非常活跃的开源框架，开源帮助分离项目组件之间的依赖关系，它的主要目的是简化企业开发</p>
+<p>核心概念：</p>
+<ul>
+<li>IOC（Inversion Of Control）控制反转；创建对象，对象之间依赖关系的维护全部再 Spring 容器中完成的，不需要我们程序猿在代码中具体实现。即对象创建和对象之间关系维护的控制权由程序猿管理变为由 Srping 管理</li>
+<li>DI（Dependency Injection）依赖注入；处理对象和对象之间依赖关系的创建</li>
+<li>AOP（Aspect Oriented Programming）面向切面编程</li>
+</ul>
+<h3 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h3><h4 id="使用注解"><a href="#使用注解" class="headerlink" title="使用注解"></a>使用注解</h4><p>类上加入注解<code>@Component</code>，执行类上加入注解<code>@ComponentScan</code>,会扫描自动执行普通类的构造方法</p>
+<p>原版:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建打印机对象</span></span><br><span class="line">MessagePrint printer = <span class="keyword">new</span> MessagePrint();</span><br><span class="line"><span class="comment">// 创建消息服务对象</span></span><br><span class="line">MessageService service = <span class="keyword">new</span> MessageService();</span><br><span class="line"><span class="comment">// 设置打印机对象的 service 对象</span></span><br><span class="line">printer.setService(service);</span><br><span class="line">printer.printMessage();</span><br></pre></td></tr></table></figure></p>
+<p>使用 spring 版:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 spring 容器</span></span><br><span class="line">ApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext(ApplicationSpring.class);</span><br><span class="line"><span class="comment">// 从容器中获取对象</span></span><br><span class="line">MessagePrint printer = context.getBean(MessagePrint.class);</span><br><span class="line">MessageService service = context.getBean(MessageService.class);</span><br><span class="line"><span class="comment">// 设置属性</span></span><br><span class="line">printer.setService(service);</span><br><span class="line"><span class="comment">// 打印消息</span></span><br><span class="line">printer.printMessage();</span><br></pre></td></tr></table></figure>
+<p>在 setter 方法上加入注解<code>@Autowired</code>会自动调用（自动装配）<code>printer.setService(service)</code>，从而上面的代码可以省略为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 spring 容器</span></span><br><span class="line">ApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext(ApplicationSpring.class);</span><br><span class="line"><span class="comment">// 从容器中获取对象</span></span><br><span class="line">MessagePrint printer = context.getBean(MessagePrint.class);</span><br><span class="line"><span class="comment">// 打印消息</span></span><br><span class="line">printer.printMessage();</span><br></pre></td></tr></table></figure>
+<p>注意，使用 spring,需要=在 pox.xml 文件中加入 spring 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.3.13.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用-XML-配置"><a href="#使用-XML-配置" class="headerlink" title="使用 XML 配置"></a>使用 XML 配置</h4><p>xml 配置内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--</span></span><br><span class="line"><span class="comment">    bean元素：描述当前的对象需要spring容器管理</span></span><br><span class="line"><span class="comment">    id属性：标识对象，未来在应用程序中开源根据id获取对象</span></span><br><span class="line"><span class="comment">    class：被管理对象的类全名</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"service"</span> <span class="attr">class</span>=<span class="string">"MessageService"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"printer"</span> <span class="attr">class</span>=<span class="string">"MessagePrint"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"service"</span> <span class="attr">ref</span>=<span class="string">"service"</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>应用程序执行代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 spring 容器,装配XML</span></span><br><span class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"applicationContext.xml"</span>);</span><br><span class="line"><span class="comment">// 从容器中获取对象</span></span><br><span class="line">MessagePrint printer = context.getBean(MessagePrint.class);</span><br><span class="line">printer.printMessage();</span><br></pre></td></tr></table></figure>
+<h4 id="添加日志系统"><a href="#添加日志系统" class="headerlink" title="添加日志系统"></a>添加日志系统</h4><p>在 pox.xml 中加入 log4j 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.17<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 resources 资源文件夹下创建新文件：log4j.properties，加入测试日志配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">log4j.rootLogger=INFO, stdout</span><br><span class="line"></span><br><span class="line">log4j.appender.stdout=org.apache.log4j.ConsoleAppender</span><br><span class="line">log4j.appender.stdout.layout=org.apache.log4j.PatternLayout</span><br><span class="line">log4j.appender.stdout.layout.ConversionPattern=%d&#123;ABSOLUTE&#125; %5p %t %c&#123;2&#125;:%L - %m%n</span><br><span class="line"></span><br><span class="line">log4j.category.org.springframework.beans.factory=DEBUG</span><br></pre></td></tr></table></figure>
+<p>然后再次运行程序就可以看倒控制台上打印的日志</p>
+<p>一个详细的介绍：<a href="https://www.jianshu.com/p/ccafda45bcea" target="_blank" rel="noopener">Log4j.properties配置详解</a></p>
+<h3 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h3><h4 id="使用配置类"><a href="#使用配置类" class="headerlink" title="使用配置类"></a>使用配置类</h4><p>在前面我们是在 main 方法中利用<code>@ComponentScan</code>进行自动组件扫描，然而在实际开发中，我们的应用程序可能不是通过 main 方法来启用，有可能通过微信端，安卓端，浏览器等，所以不是通过 main 方法启用，因此我们可以把组件和 main 方法解耦，单独创建一个扫描配置类。</p>
+<p>单独创建一个 AppConfig 类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span> <span class="comment">// 备注为配置类</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>去除 main 方法中的<code>ComponentScan</code>，然后 main 方法中的 <code>ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationSpring.class);</code> 修改为：<code>ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);</code></p>
+<p>到此为止使用了四个注解：</p>
+<ul>
+<li>组件扫描：<ul>
+<li>@Component：表示这个类需要在应用程序中被创建</li>
+<li>@ComponentScan：自动发现应用程序中创建的类</li>
+</ul>
+</li>
+<li>自动装配<ul>
+<li>@Autowired：自动满足 bean 之间的依赖</li>
+</ul>
+</li>
+<li>定义配置类<ul>
+<li>@Configuration：表示当前类是一个配置类</li>
+</ul>
+</li>
+</ul>
+<h4 id="使用-junit4-单元测试"><a href="#使用-junit4-单元测试" class="headerlink" title="使用 junit4 单元测试"></a>使用 junit4 单元测试</h4><p>引入 Spring  单元测试模块，即在 pox.xml 中加入 junit 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>junit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.12<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 test\java 文件夹下创建一个 AppTest 类，将 main\java 下的 main 方法主类内容复制过来，然后主类文件可以选择删除。 </p>
+<p>然后在 pox.xml 中加入 spring-test 依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>4.3.13.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在测试类上添加注解<code>@RunWith(SpringJUnit4ClassRunner.class)</code>,可以帮我们自动初始化 spring 的上下文环境。</p>
+<p>继续添加注解<code>@ContextConfiguration(classes=Appconfig.class)</code>,该注解可以帮们读取类对象的配置文件，即加载配置类，所以可以删除<code>ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);</code> 这句代码了</p>
+<p>删除<code>CDPlayer player = context.getBean(CDPlayer.class)</code>,采用自动注入对象方式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> CDPlayer player;</span><br></pre></td></tr></table></figure>
+<p>最终代码简化为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@ContextConfiguration</span>(classes=Appconfig.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> CDPlayer player;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPlay</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		player.play();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原版：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testPlay</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		ApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext(AppConfig.class);</span><br><span class="line">		CDPlayer player = context.getBean(CDPlayer.class)</span><br><span class="line">		player.play();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Autowired使用场景"><a href="#Autowired使用场景" class="headerlink" title="@Autowired使用场景"></a>@Autowired使用场景</h4><ol>
+<li>用在构造函数上（效率最高的一种方式）</li>
+<li>用在成员变量上（最便捷的一种方式）</li>
+<li>用在 setter 方法上</li>
+<li>用在任意方法上</li>
+</ol>
+<p>可以在 @Autowired 上添加上 required 属性，来设置是否必须要装配：<code>@Autowired(required=false)</code>，这样将不会检测对象类是否被装配，但是调用对象属性和方法时候，需要判断是否存在。</p>
+<h4 id="使用接口装配"><a href="#使用接口装配" class="headerlink" title="使用接口装配"></a>使用接口装配</h4><p>使用接口装配时，注意亮点：</p>
+<ol>
+<li><code>@Component</code>需要写在实现类上而不是接口上</li>
+<li>调用接口的时候通常会声明成员变量</li>
+</ol>
+<h4 id="z歧义性：当有两个实现类时，spring-不知道应该自动装配哪个实现类"><a href="#z歧义性：当有两个实现类时，spring-不知道应该自动装配哪个实现类" class="headerlink" title="z歧义性：当有两个实现类时，spring 不知道应该自动装配哪个实现类"></a>z歧义性：当有两个实现类时，spring 不知道应该自动装配哪个实现类</h4><p>解决歧义性方案：</p>
+<ol>
+<li>直接在声明成员变量的时候，使用具体实现类：<code>private UserServiceFestival userService</code>而不使用接口类 UserService 声明：<code>private UserService userServic</code></li>
+<li>在实现类上利用<code>@Primary</code>注解指定首先 bean,但不能设置多个首选 bean，存在局限性</li>
+<li>使用限定符<code>@Qualifier(&quot;xxx限定符&quot;)</code>,不明确指定用哪个，而在调用的时候匹配,使用同样是在成员变量上加入注解<code>@Qualifier(&quot;xxx限定符&quot;)</code></li>
+<li>使用类id,<code>@Component(&quot;xxxid&quot;)</code>,在测试用例上使用时，还是用限定符匹配<code>@Qualifier(&quot;xxxid&quot;)</code></li>
+<li>使用<code>@Resource(name=&quot;类的默认ID，即类名&quot;)</code>，利用<code>@Resource</code> 的同时可以省略<code>@Autowired</code>，也不用在实现类上单独添加类id（当然也可以用类id而不用默认id） 或限定符。需要注意的是<code>@Resource</code>不是 spring 的标准，而是 jdk 自带的标准，使用时会引入<code>javax.annotation.Resource</code> 包</li>
+</ol>
+<h4 id="处理分层架构"><a href="#处理分层架构" class="headerlink" title="处理分层架构"></a>处理分层架构</h4><p><img src="/images/java/java_mvc.png" alt="这里写图片描述"></p>
+<p>在实际开发中，我们一般使用分层架构来开发项目，这时候，配置在特定包下面的配置类文件只能处理当前类所在包和子包的自动装配，而不能装配兄弟（同级）包的装配，这时候需要怎么处理呢？</p>
+<ol>
+<li>最简单的方式就是把配置类提到更外层的包里面去。</li>
+<li>项目经常会把配置类单独放到一个特定的包里面，这时候就可以利用扫描指定包名的方式：<code>@ComponentScan(&quot;包名&quot;)</code>，或者<code>@ComponentScan(basePackages = {&quot;包名1&quot;,&quot;包名2&quot;,&quot;包名xxx&quot;})</code>指定多个包的注解方式；这种方式存在的缺陷是：因为是用字符串指定包名，代码重构的时候包名不会自动改变，需要手动操作。</li>
+<li>设置类对象的方式;<code>@ComponentScan(basePackageClasses={UserController.class,xxx类名的class对象})</code></li>
+</ol>
+<p>为了在分层架构中更能表现出项目的结构层次，可以利用<code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>等注解分别替代 Controller 层，Service 层和 Dao 层的<code>@Component</code>注解，本质没有区别，可以让语义更明确。</p>
+<h4 id="通过-XML-启用组件扫描"><a href="#通过-XML-启用组件扫描" class="headerlink" title="通过 XML 启用组件扫描"></a>通过 XML 启用组件扫描</h4><p>上面都是通过配置配置文件的方式来启用各个包之间组件的扫描，既然 XML 可以配置扫描 bean ，当然也可以代替配置文件配置扫描所有组件了，方法就是在 resources 资源文件夹下创建应用的 XML 文件，然后加入配置，例如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"包名xxx"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后在 main 主类或者测试类上将注解<code>@ContextConfiguration(classes=配置类.class)</code>改为<code>@ContextConfiguration(&quot;classpath:xxx.xml&quot;)</code></p>
+<h3 id="显示装配：java-装配和-XML-装配"><a href="#显示装配：java-装配和-XML-装配" class="headerlink" title="显示装配：java 装配和 XML 装配"></a>显示装配：java 装配和 XML 装配</h3><p>正常情况下我们都推荐使用自动装配，但是如果想将第三方库中的组件装配倒应用程序中，则没有办法再类上添加<code>@Compenent</code>和<code>@Autowired</code>等注解，这时候只能使用“显示装配（java装配）”和“XML装配”了。</p>
+<h4 id="在-javaConfig-中配置-bean-对象"><a href="#在-javaConfig-中配置-bean-对象" class="headerlink" title="在 javaConfig 中配置 bean 对象"></a>在 javaConfig 中配置 bean 对象</h4><p>显示装配步骤：</p>
+<ol>
+<li>去除实现类上的<code>@Compenent</code>注解和配置类 AppConfig 上的<code>@ComponentScan</code>，留下<code>@Configuration</code>注解</li>
+<li>在需要装配的方法上添加<code>@Bean</code>注解，在 spring 应用程序启动的时候这个方法就会被自动调用，例如：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> UserDao <span class="title">userDaoNormal</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> UserDaoNormal();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="通过构造函数依赖注入"><a href="#通过构造函数依赖注入" class="headerlink" title="通过构造函数依赖注入"></a>通过构造函数依赖注入</h4><p>例如存在两个接口： UserDao 和 UserService 以及两个对应的实现类：</p>
+<p>UserDaoNormal</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserDaoNormal</span> <span class="keyword">implements</span> <span class="title">UserDAO</span></span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		System.out.println(<span class="string">"添加用户倒数据库中...."</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>UserServiceNormal</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceNormal</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> UserDao userDao;</span><br><span class="line">	 </span><br><span class="line">	<span class="comment">// 通过构造函数依赖注入实现与 UserDAO 的关联，从而可以使用 UserDao 的实列</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">UserServiceNormal</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">UserServiceNormal</span><span class="params">(UserDao userDao)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.userDao = userDao</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		userDao.add();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对应的配置类使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configurationu</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> UserDao <span class="title">userDaoNormal</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> UserDaoNormal();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> UserDao <span class="title">UserServiceNormal</span><span class="params">(UserDao userDao)</span></span>&#123;</span><br><span class="line">		<span class="comment">// spring 会拦截调用，检查是否有重复创建，只存在一个，只调用一次（单例）</span></span><br><span class="line">		<span class="comment">// UserDao userDao = UserDaoNormal(); // 在@bean方法中使用参数，可在参数中传递后，不需要再调用</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> UserDaoNormal(userDao)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="通过-seeter-方法和任意方法-依赖注入"><a href="#通过-seeter-方法和任意方法-依赖注入" class="headerlink" title="通过 seeter 方法和任意方法 依赖注入"></a>通过 seeter 方法和任意方法 依赖注入</h4><p>修改上面通过构造函数注入的 UserServiceNormal 类，添加 UserDao 类的 setter 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserServiceNormal</span> <span class="keyword">implements</span> <span class="title">UserService</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> UserDao userDao;</span><br><span class="line">	 </span><br><span class="line">	<span class="comment">// 通过构造函数依赖注入实现与 UserDAO 的关联，从而可以使用 UserDao 的实列</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">UserServiceNormal</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">super</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">UserServiceNormal</span><span class="params">(UserDao userDao)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.userDao = userDao</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// UserDao 类的 setter 方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUserDao</span><span class="params">(UserDao userDao)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.userDao = userDao</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// UserDao 类的 一般方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(UserDao userDao)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.userDao = userDao</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		userDao.add();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后修改 AppConfig 配置类的 UserServiceNormal Bean 方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configurationu</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> UserDao <span class="title">userDaoNormal</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> UserDaoNormal();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> UserDao <span class="title">UserServiceNormal</span><span class="params">(UserDao userDao)</span></span>&#123;</span><br><span class="line">		UserServiceNormal userService = <span class="keyword">new</span> UserServiceNormal();</span><br><span class="line">		userService.setUserDao(userDao);</span><br><span class="line">		<span class="comment">// userService.prepare(userDao); // 普通方法</span></span><br><span class="line">		<span class="keyword">return</span> userService;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="处理自动装配的歧义性"><a href="#处理自动装配的歧义性" class="headerlink" title="处理自动装配的歧义性"></a>处理自动装配的歧义性</h4><p>java 显示装配中处理歧义性问题与自动装配一致</p>
+<h4 id="XML-装配比较繁琐和复杂，新项目不推荐使用"><a href="#XML-装配比较繁琐和复杂，新项目不推荐使用" class="headerlink" title="XML 装配比较繁琐和复杂，新项目不推荐使用"></a>XML 装配比较繁琐和复杂，新项目不推荐使用</h4><p>推荐尽可能的使用自动装配，显示的配置越少越好，</p>
+<p>其次是使用 javaConfig ,最后再考虑 XML 的形式</p>
+<h3 id="高级装配"><a href="#高级装配" class="headerlink" title="高级装配"></a>高级装配</h3><h4 id="Spring-中的-bean-单例："><a href="#Spring-中的-bean-单例：" class="headerlink" title="Spring 中的 bean 单例："></a>Spring 中的 bean 单例：</h4><ul>
+<li>无论我们是否主动去获取 bean 对象，Spring 上下文一加载就会在创建 bean 对象</li>
+<li>无论获取多少次，拿到的都是同一个对象</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/14/Vue.js中 watch 的高级用法/" rel="next" title="Vue.js中 watch 的高级用法">
+                <i class="fa fa-chevron-left"></i> Vue.js中 watch 的高级用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/17/ES6 Promise/" rel="prev" title="Promise入门">
+                Promise入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">100</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#核心概念"><span class="nav-number">1.</span> <span class="nav-text">核心概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#入门"><span class="nav-number">2.</span> <span class="nav-text">入门</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用注解"><span class="nav-number">2.1.</span> <span class="nav-text">使用注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-XML-配置"><span class="nav-number">2.2.</span> <span class="nav-text">使用 XML 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加日志系统"><span class="nav-number">2.3.</span> <span class="nav-text">添加日志系统</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自动装配"><span class="nav-number">3.</span> <span class="nav-text">自动装配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用配置类"><span class="nav-number">3.1.</span> <span class="nav-text">使用配置类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-junit4-单元测试"><span class="nav-number">3.2.</span> <span class="nav-text">使用 junit4 单元测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Autowired使用场景"><span class="nav-number">3.3.</span> <span class="nav-text">@Autowired使用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用接口装配"><span class="nav-number">3.4.</span> <span class="nav-text">使用接口装配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#z歧义性：当有两个实现类时，spring-不知道应该自动装配哪个实现类"><span class="nav-number">3.5.</span> <span class="nav-text">z歧义性：当有两个实现类时，spring 不知道应该自动装配哪个实现类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理分层架构"><span class="nav-number">3.6.</span> <span class="nav-text">处理分层架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过-XML-启用组件扫描"><span class="nav-number">3.7.</span> <span class="nav-text">通过 XML 启用组件扫描</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#显示装配：java-装配和-XML-装配"><span class="nav-number">4.</span> <span class="nav-text">显示装配：java 装配和 XML 装配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在-javaConfig-中配置-bean-对象"><span class="nav-number">4.1.</span> <span class="nav-text">在 javaConfig 中配置 bean 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过构造函数依赖注入"><span class="nav-number">4.2.</span> <span class="nav-text">通过构造函数依赖注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过-seeter-方法和任意方法-依赖注入"><span class="nav-number">4.3.</span> <span class="nav-text">通过 seeter 方法和任意方法 依赖注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#处理自动装配的歧义性"><span class="nav-number">4.4.</span> <span class="nav-text">处理自动装配的歧义性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#XML-装配比较繁琐和复杂，新项目不推荐使用"><span class="nav-number">4.5.</span> <span class="nav-text">XML 装配比较繁琐和复杂，新项目不推荐使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高级装配"><span class="nav-number">5.</span> <span class="nav-text">高级装配</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-中的-bean-单例："><span class="nav-number">5.1.</span> <span class="nav-text">Spring 中的 bean 单例：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
