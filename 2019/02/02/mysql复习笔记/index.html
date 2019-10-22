@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="SQL一.什么是SQL? Structured Query Language: 结构化查询语音，其实就是定义了操作所有关系型数据库的规则。每一种数据操作的方式存在不一样的地方，称为“方言”。 二.SQL通用语法  SQL 语句可以单行或多行书写，以封号结尾 可以使用空格和缩进来增强语句的可读性 Mysql 数据库的 SQL 语句不区分大小写，关键字建议使用大写 3中注释： 单行注释： “–” 注释">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql 基础复习笔记">
+<meta property="og:url" content="http://yoursite.com/2019/02/02/mysql复习笔记/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="SQL一.什么是SQL? Structured Query Language: 结构化查询语音，其实就是定义了操作所有关系型数据库的规则。每一种数据操作的方式存在不一样的地方，称为“方言”。 二.SQL通用语法  SQL 语句可以单行或多行书写，以封号结尾 可以使用空格和缩进来增强语句的可读性 Mysql 数据库的 SQL 语句不区分大小写，关键字建议使用大写 3中注释： 单行注释： “–” 注释">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-22T16:12:14.183Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mysql 基础复习笔记">
+<meta name="twitter:description" content="SQL一.什么是SQL? Structured Query Language: 结构化查询语音，其实就是定义了操作所有关系型数据库的规则。每一种数据操作的方式存在不一样的地方，称为“方言”。 二.SQL通用语法  SQL 语句可以单行或多行书写，以封号结尾 可以使用空格和缩进来增强语句的可读性 Mysql 数据库的 SQL 语句不区分大小写，关键字建议使用大写 3中注释： 单行注释： “–” 注释">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/02/mysql复习笔记/">
+
+
+
+
+
+  <title>mysql 基础复习笔记 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/02/mysql复习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">mysql 基础复习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-02T20:31:05+08:00">
+                2019-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="SQL"><a href="#SQL" class="headerlink" title="SQL"></a>SQL</h2><p>一.什么是SQL?</p>
+<p>Structured Query Language: 结构化查询语音，其实就是定义了操作所有关系型数据库的规则。每一种数据操作的方式存在不一样的地方，称为“方言”。</p>
+<p>二.SQL通用语法</p>
+<ol>
+<li>SQL 语句可以单行或多行书写，以封号结尾</li>
+<li>可以使用空格和缩进来增强语句的可读性</li>
+<li>Mysql 数据库的 SQL 语句不区分大小写，关键字建议使用大写</li>
+<li>3中注释：<ol>
+<li>单行注释： “–” 注释 或者 “#” 注释内容，mysql 特有</li>
+<li>多行注释： /<em> 注释 </em>/</li>
+</ol>
+</li>
+</ol>
+<p>三.SQL分类</p>
+<ol>
+<li>DDL(Data Definition Language)数据定义语言，用来定义数据库对象：数据库，表，列等，关键字：create,drop,alter 等。</li>
+<li>DML(Data Manipulation Language)数操作语言，用来对数据库中的表的数据进行增删改查。关键字：insert,delete,update 等。</li>
+<li>DQL(Data Query Language)数据查询语言，用来查询数据库中表的记录（数据），关键字：select,where 等</li>
+<li>DCL(Data Control Language)数据控制语言（了解），用来定义数据库的访问权限和安全级别，以及创建用户，关键字：GRANT,REVOKE 等</li>
+</ol>
+<h2 id="DDL-操作数据库、表"><a href="#DDL-操作数据库、表" class="headerlink" title="DDL 操作数据库、表"></a>DDL 操作数据库、表</h2><p>一.操作数据库：CRUE</p>
+<ol>
+<li>C(Create)：创建<ul>
+<li>创建数据库：create database 数据库名称</li>
+<li>创建数据库，判断存不存，再创建：create database if not exists 数据库名称</li>
+<li>创建数据库，并指定字符集：create database 数据库名称 character set 字符集名</li>
+</ul>
+</li>
+<li>R(Retrieve)：查询<ul>
+<li>查询所有数据库名称：show databases</li>
+<li>查询某个数据库的字符集：查询某个数据库的创建语句：show create database 数据库名称</li>
+</ul>
+</li>
+<li>U(Update): 修改<ul>
+<li>修改数据库的字符集：alter database 数据库名称 character set 字符集名称</li>
+</ul>
+</li>
+<li>D(Delete)：删除<ul>
+<li>删除数据库：drop database 数据库名称</li>
+<li>判断数据库存在，存在在删除：drop database if exists 数据库名称</li>
+</ul>
+</li>
+<li>使用数据库<ul>
+<li>查询当前正在舒勇的数据库名称：select database()</li>
+<li>使用数据库：use 数据库名称</li>
+</ul>
+</li>
+</ol>
+<p>二.操作表</p>
+<ol>
+<li><p>C(Create)：创建</p>
+<ul>
+<li>语法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">create table 表名(</span><br><span class="line">	列名1 数据类型1,</span><br><span class="line">	列名2 数据类型2,</span><br><span class="line">	......</span><br><span class="line">	列名n 数据类型n</span><br><span class="line">);</span><br><span class="line">* 注意：最后一列，不需要加逗号&quot;,&quot;</span><br><span class="line">* 一些常用数据库类型：</span><br><span class="line">	1. int 整数类型</span><br><span class="line">	2. double 小数类型</span><br><span class="line">	3. date 日期 只包含年月日 yyyy-MM-dd</span><br><span class="line">	4. dataTime 日期 包含年月日时分秒 yyyy-MM-dd HH:mm:ss</span><br><span class="line">	5. timeTamp 时间戳类型 包含年月日时分秒 yyyy-MM-dd HH:mm:ss，注意:如果将来不给这个字段赋值，或赋值为null，则默认使用当前的系统时间来自动赋值</span><br><span class="line">	6. varchar 字符串</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>R(Retrieve)：查询</p>
+<ul>
+<li>查询某个数据库中所有表名称：show tables</li>
+<li>查询表结构：desc 表名</li>
+</ul>
+</li>
+<li>U(Update): 修改<ul>
+<li>修改表名<ul>
+<li>alter table 表名 rename to 新的表名</li>
+</ul>
+</li>
+<li>修改表的字符集<ul>
+<li>alter table 表名 character set 字符集名称</li>
+</ul>
+</li>
+<li>添加一列<ul>
+<li>alter table 表名 add 列名 数据类型</li>
+</ul>
+</li>
+<li>修改列的名称 类型<ul>
+<li>alter table 表名 change 列名 修改后的新列名 新的数据类型</li>
+<li>alter table 表名 modify 列名 新的数据类型</li>
+</ul>
+</li>
+<li>删除列<ul>
+<li>alter table 表名 drop 列名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>D(Delete)：删除<ul>
+<li>删除表：drop table 表名称</li>
+<li>判断表存在，存在在删除：drop table if exists 表名称</li>
+</ul>
+</li>
+</ol>
+<h2 id="DML-增删改表中数据"><a href="#DML-增删改表中数据" class="headerlink" title="DML 增删改表中数据"></a>DML 增删改表中数据</h2><ol>
+<li><p>添加数据：</p>
+<ul>
+<li><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into 表名(列名1,列名2,...列名n) values(值1,值2,...值n);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意：</p>
+<ul>
+<li>列名要和值一一对应</li>
+<li>如果表名后，部定义列名，则默认给所有列添加值: insert into 表名 values(值1,值2,…值n);</li>
+<li>除了数字类型，其它类型需要使用引号(单双引号都可以)，引起来</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>删除数据<ul>
+<li>语法：<code>deleter from 表名 [where 条件]</code></li>
+<li>注意：<ul>
+<li>如果不加条件，则删除表中所有记录</li>
+<li>如果要删除所有记录<ol>
+<li>delete from 表名; – 不推荐使用，因为5有多少记录就会执行多少次删除操作</li>
+<li>TRUNCATE Table 表名; – 推荐使用，效率高，先删除表，然后再创建一张一样的表。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>修改数据<ul>
+<li>语法：<code>update 表名 set 列名1 = 值1,列名2 = 值2,... [where 条件]</code></li>
+<li>注意：<ul>
+<li>如果不加任何条件，则会将表中所有的记录全部修改</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="DQL-查询表中的记录"><a href="#DQL-查询表中的记录" class="headerlink" title="DQL 查询表中的记录"></a>DQL 查询表中的记录</h2><p>一.语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select 字段列表 from 表名列表 where 条件列表 group by 分组字段 having 分组之后的条件 order by 排序 limit 分页限定</span><br></pre></td></tr></table></figure>
+<p>二.基础查询</p>
+<ol>
+<li>多个字段查询<ul>
+<li>语法：<code>select 字段名1,字段名2... from 表名;</code></li>
+<li>注意：<ul>
+<li>如果查询所有字段，则可以使用*来替代字段列表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>去除重复<ul>
+<li>语法关键字： distinct</li>
+</ul>
+</li>
+<li>计算列<ul>
+<li>一般可以使用四则运算来计算一些列的值。（一般只会进行数值型的计算）</li>
+<li>ifnull(表达式1,表达式2):null 参与的运算，计算结果都为null<ul>
+<li>表达式1：哪个字段需要判断是否为null</li>
+<li>如果该字段为null后的替换值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>起别名<ul>
+<li>语法关键字: as,as也可以省略</li>
+</ul>
+</li>
+</ol>
+<p>三.条件查询</p>
+<ol>
+<li>where 子句后跟条件</li>
+<li>运算符<ul>
+<li><blockquote>
+<p>,&lt;,&lt;=,&gt;=,=,&lt;&gt;</p>
+</blockquote>
+</li>
+<li>BETWEEN…AND</li>
+<li>IN(集合)</li>
+<li>LIKE: 模糊查询<ul>
+<li>占位符：”_”单个任意字符，”%”多个任意字符</li>
+</ul>
+</li>
+<li>IS NULL</li>
+<li>and 或 &amp;&amp;</li>
+<li>or 或 ||</li>
+<li>not 或 ！</li>
+</ul>
+</li>
+</ol>
+<p>四.查询语句</p>
+<ol>
+<li>排序查询<ul>
+<li>语法：<code>order by 子句</code>，<code>order by 排序字段1 排序方式1 , ...排序字段n 排序方式n</code></li>
+<li>排序方式：<ul>
+<li>ASC 升序，默认的</li>
+<li>DESC 降序</li>
+</ul>
+</li>
+<li>注意：<ul>
+<li>如果又多个排序条件，则当前边的条件值一样时，才会去判断第二条件</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>聚合函数：将一列数据作为一个整体，进行纵向的计算</p>
+<ol>
+<li>count：计算个数，一般选择非空列（主键）,或者 count(*) 有一个不为null则计数<ul>
+<li>语法举例：<code>SELECT COUNT(id) FROM student</code></li>
+</ul>
+</li>
+<li>max：计算最大值</li>
+<li>min：计算最小值</li>
+<li>sum：计算和</li>
+<li>avg：计算平均值 </li>
+</ol>
+<ul>
+<li>注意：聚合函数的计算，排除null值</li>
+<li>解决方案：<ol>
+<li>选择不包含空的列进行计算，比如主健</li>
+<li>IFNULL 函数<code>SELECT COUNT(IFNULL(english,0)) FROM student</code></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>分组查询</p>
+<ul>
+<li>语法: group by 分组字段</li>
+<li>注意<ol>
+<li>分组之后查询的字段只能是：分组字段、聚合函数</li>
+<li>语法举例，按照性别分组，分别查询男女同学的数学平均分,人数<code>SELECT sex , AVG(math),COUNT(id) FROM student GROUP BY sex;</code></li>
+<li>where 和 having 的区别<ol>
+<li>where 在分组之前进行限定，如果不满足条件，则不参与分组。having 在分组之后进行限定，如不满足结果，则不会被查询出来</li>
+<li>where 后不可以跟聚合函数，having 可以进行聚合函数的判断</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>分页查询<ol>
+<li>语法： limit 开始索引,每页查询的条数</li>
+<li>公式： 开始的索引=（当前页码-1）*每页显示的条数</li>
+</ol>
+</li>
+</ol>
+<h2 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h2><p>概念：对表中的数据进行限定，保证数据的正确性、有效性和完整性</p>
+<p>分类：</p>
+<ol>
+<li>主键约束：primary key</li>
+<li>非空约束：not null</li>
+<li>唯一约束：unique</li>
+<li>外键约束：foreign key</li>
+</ol>
+<p>一.非空约束: not null</p>
+<ol>
+<li><p>创建表时添加约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE stu(</span><br><span class="line">	id INT,</span><br><span class="line">	NAME VARCHAR(20) NOT NULL -- name为非空</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建表完后，添加非空约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE stu MONDIFY NAME VARCHAR(20) NOT NULL;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除 name 的非空约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE stu MODIFY NAME VARCHAR(20);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>二. 唯一约束：unique,值不能重复</p>
+<ol>
+<li>注意：唯一约束可以有NULL值，但是只能由一条记录为null</li>
+<li><p>在创建表时，添加唯一约束：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE stu(</span><br><span class="line">	id INT,</span><br><span class="line">	phone_null VARCHAR(20) UNIQUE -- 手机号</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除唯一约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE stu DROP INDEX phone_number;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在表创建完后，添加唯一约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE stu MODIFY phone_number VARCHAR(20) UNIQUE;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>三.主键约束：primary key</p>
+<ol>
+<li>注意：<ol>
+<li>含义：非空且唯一</li>
+<li>一张表只能由一个字段为主键</li>
+<li>主键就是表中记录的唯一标识</li>
+</ol>
+</li>
+<li><p>在创建表时，添加主键约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create table stu(</span><br><span class="line">	id int primary key, -- 给id 添加主键约束</span><br><span class="line">	name varchar(20)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除主键约束</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-- 错误 alter table stu modify id int; --</span><br><span class="line">ALTER TABLE stu MODIFY id INT PRIMARY KEY;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建完表后，添加主键</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE stu MODIFY id INT PRIMARY KEY;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自动增长，概念：如果某一系列是数值类型的，使用 auto_increment 可以来完成值得自动增长</p>
+<ul>
+<li><p>在创建表时，添加主键约束，并且完成主键自增长</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">create table stu(</span><br><span class="line">	in int primary key auto_increment, -- 给id添加主键约束</span><br><span class="line">	name varchar(20)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除自动增长<code>ALTER TABLE stu MODIFY id INT</code></p>
+</li>
+<li>添加自动增长<code>ALTER TABLE stu MODIFY id INT AUTO_INCREMENT</code></li>
+</ul>
+</li>
+</ol>
+<p>四.外键约束：foreign key</p>
+<ol>
+<li><p>在创建表时，可以添加外键</p>
+<ul>
+<li>语法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">create table 表名(</span><br><span class="line">	...</span><br><span class="line">	外键列</span><br><span class="line">	constraint 外键名称 foreign key 外键列名称 references 主表名称(主表列名称)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>删除外键</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE 表名 DROP FOREIGN KEY 外键名称</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建表之后，添加外键</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段名称) REFERENCES 主表名称(主表列名称);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>4.级联操作</p>
+<pre><code>1. 添加级联操作
+    - 语法：ALTER TABLE 表名 ADD CONSTRAINT 外键名称 FOREIGN KEY (外键字段名称) REFERENCES 主表名称(主表列名称) ON UPDATE CASCADE ON DELETE CASCADE;
+2. 分类:
+    - 级联更新：ON UPDATE CASCADE
+    - 级联删除：ON DELETE CASCAAD
+</code></pre><h2 id="数据库的设计"><a href="#数据库的设计" class="headerlink" title="数据库的设计"></a>数据库的设计</h2><h3 id="多表之间的关系"><a href="#多表之间的关系" class="headerlink" title="多表之间的关系"></a>多表之间的关系</h3><p>一. 分类</p>
+<ol>
+<li>一对一(了解)<ul>
+<li>如：人和身份证</li>
+<li>分析：一个人只有一个身份证，一个身份证只能对应一个人</li>
+</ul>
+</li>
+<li>一对多（多对一）<ul>
+<li>如：部门和员工</li>
+<li>分析：一个部门有多个员工，一个员工只能对应一个部门</li>
+</ul>
+</li>
+<li>多对多<ul>
+<li>如：学生和课程</li>
+<li>分析：一个学生可以选择很多们课程，一个课程也可以被很多学生选择</li>
+</ul>
+</li>
+</ol>
+<p>二. 实现关系：</p>
+<ol>
+<li><p>一对多（多对一）：</p>
+<ul>
+<li>如：部门和员工</li>
+<li>实现方式：在多的一方建立外键，指向一的一方的主键</li>
+</ul>
+</li>
+<li><p>多对多：</p>
+<ul>
+<li>如：学生和课程</li>
+<li>实现方式：多对多关系实现需要借助第三张中间表。中间表至少包含两个字段，这两个字段作为第三者表的外键，分别指向两张表的主键</li>
+</ul>
+</li>
+<li><p>一对一（少见，一般合为一张表）：</p>
+<ul>
+<li>如：人和身份证</li>
+<li>实现方式：可以在任意一方添加外键指向另一方的主键，并且需要对外键进行唯一约束（unique）</li>
+</ul>
+</li>
+</ol>
+<h3 id="数据库设计的范式"><a href="#数据库设计的范式" class="headerlink" title="数据库设计的范式"></a>数据库设计的范式</h3><p>概念：在设计数据库时，需要遵循一些规范。要遵循后边的范式要求，必须先遵循前边的所有范式要求。</p>
+<p>分类：</p>
+<ol>
+<li>第一范式（1NF）：每一列都是不可分割的原子数据项</li>
+<li>第二范式（2NF）：在1NF的基础上，非码属性必须完全依赖于候选码（在1NF的基础上消除非主属性对主码的部分函数依赖）<ol>
+<li>函数依赖：A –&gt; B，如果通过A属性（属性组）的值，可以确定唯一B属性的值，则称B依赖于A。例如：学号 –&gt; 姓名。 （学号，课程名称） –&gt; 分数</li>
+<li>完全函数依赖： A –&gt; B，如果A是一个属性组，则B属性值的确定需要依赖于A属性组中所有的属性值。例如：（学号，课程名称） –&gt; 分数</li>
+<li>部分函数依赖： A –&gt; B, 如果A是一个属性组，则B属性值的确定需要依赖于A属性组中的某一些值即可。例如：（学号，课程名称） –&gt; 姓名</li>
+<li>传递函数依赖：A –&gt; B, B –&gt; C，如果通过A属性（属性组）的值，可以确定唯一B属性值，再通过B属性（属性组）的值，可以确定唯一C属性值。例如：学号 –&gt; 系名， 系名 –&gt; 系主任</li>
+<li>码：如果在一张表中，一个属性或属性组，被其它所有属性完全依赖，则称这个属性（属性组）为该表的码。例如：该表中的码为：（学号，课程名）</li>
+<li>主属性：码属性组中的所有属性；非主属性：除过码属性组的属性</li>
+</ol>
+</li>
+<li>第三范式（3NF）：在2NF的基础上，任何非主属性不依赖于其它非主属性（在2NF的基础上消除传递依赖）</li>
+<li>其它范式（不要求）</li>
+</ol>
+<h2 id="数据库的备份和还原"><a href="#数据库的备份和还原" class="headerlink" title="数据库的备份和还原"></a>数据库的备份和还原</h2><ol>
+<li>命令行：<ul>
+<li>备份语法：mysqldump -u用户名 -p密码 &gt; 保存的路径</li>
+<li>还原方式：登录数据库，创建数据库，使用数据库，执行文件：source 文件路径</li>
+</ul>
+</li>
+<li>图形化工具：备份/导出</li>
+</ol>
+<h2 id="多表查询"><a href="#多表查询" class="headerlink" title="多表查询"></a>多表查询</h2><ul>
+<li><p>笛卡尔积：</p>
+<ul>
+<li>有两个集合A、B,取这两个集合的所有组成情况</li>
+<li>要完成多表查询，需要消除无用的数据</li>
+</ul>
+</li>
+<li><p>多表查询的分类：</p>
+<ul>
+<li><p>内连接查询</p>
+<ol>
+<li><p>隐式内连接：使用 where 条件消除无用数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span></span><br><span class="line">	t1.name,</span><br><span class="line">	t1.gender,</span><br><span class="line">	t2.name</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">	emp t1,</span><br><span class="line">	dept t2</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">	t1.<span class="string">'dept_id'</span> = t2.<span class="string">'id'</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示内连接</p>
+<ul>
+<li>语法： select 字段列表 from 表名1 inner join 表名2 on 条件<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> emp [<span class="keyword">INNER</span>] <span class="keyword">JOIN</span> dept <span class="keyword">ON</span> emp.<span class="string">'dept_id'</span> = dept.<span class="string">'id'</span> <span class="comment">-- INNER可省略</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>内链接查询：</p>
+<ol>
+<li>从哪些表中查询数据</li>
+<li>条件是什么</li>
+<li>查询哪些字段</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>外连接查询<ol>
+<li>左外连接<ul>
+<li>语法： select 字段列表 from 表1 left [out] join 表2 on 条件;</li>
+<li>查询的是左表所有数据以及其交集部分</li>
+</ul>
+</li>
+<li>右外连接<ul>
+<li>语法： select 字段列表 from 表1 right [out] join 表2 on 条件;</li>
+<li>查询的是右表所有数据以及其交集部分</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>子查询：查询中嵌套查询，称嵌套查询为子查询<ul>
+<li>案例：查询工资最高的员工信息<ul>
+<li>查询最高工资是多少（9000）：SELECT MAX(salary) FROM emp;</li>
+<li>查询员工信息，并且工资等于9000的：SELECT * FROM emp WHERE emp.’salary’ = 9000</li>
+<li>利用子查询，一条 sql 完成：SELECT * FROM emp WHERE emp.’salary’ = (SELECT MAX(salary) FROM emp);</li>
+</ul>
+</li>
+<li>子查询不同情况<ol>
+<li>子查询的结果是单行单列的：<ul>
+<li>子查询可以作为条件，使用运算符去判断。运算符：&gt; &gt;= &lt; &lt;= =</li>
+<li>查询员工工资小于平均工资的人</li>
+<li>SELECT * FROM emp WHERE emp.salary &lt; (SELECT AVG(salary) FROM emp);</li>
+</ul>
+</li>
+<li>子查询结果是多行单列的：<ul>
+<li>子查询可以作为条件，使用运算符 in 来判断</li>
+<li>查询’财务部’和’市场部’所有员工的信息</li>
+<li>SELECT id FROM emp WHERE NAME = ‘财务部’ OR NAME = ‘市场部’;</li>
+<li>SELECT * FROM emp WHERE dept_id = 3 OR dept_id = 2;</li>
+<li>子查询：SELECT * FROM emp WHERE dept_id IN (SELECT id FROM emp WHERE NAME = ‘财务部’ OR NAME = ‘市场部’);</li>
+</ul>
+</li>
+<li>子查询是的结果是多行多列的：<ul>
+<li>查询员工入职日期是2011-11-11日之后的员工信息和部门信息</li>
+<li>子查询的结果集可以作为一张虚拟表，来进行一个表的查询</li>
+<li>SELECT <em> FROM dept t1 , (SELECT </em> FROM emp WHERE emp.’join_date’ &gt; ‘2011-11-11’) t2 WHERE t1.id = t2.dept_id;</li>
+<li>普通内连接也能实现： SELECT * FROM emp t1,dept t2 WHERE t1.’dept_id’ = t2.’id’ AND t1.’join_date’ &gt; ‘2011-11-11’;</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/31/vuecli3.0配置CDN和Gzip压缩/" rel="next" title="vuecli3.0使用CDN和Gzip压缩">
+                <i class="fa fa-chevron-left"></i> vuecli3.0使用CDN和Gzip压缩
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/16/java笔记_Srping/" rel="prev" title="java Spring">
+                java Spring <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL"><span class="nav-number">1.</span> <span class="nav-text">SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDL-操作数据库、表"><span class="nav-number">2.</span> <span class="nav-text">DDL 操作数据库、表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DML-增删改表中数据"><span class="nav-number">3.</span> <span class="nav-text">DML 增删改表中数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DQL-查询表中的记录"><span class="nav-number">4.</span> <span class="nav-text">DQL 查询表中的记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#约束"><span class="nav-number">5.</span> <span class="nav-text">约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的设计"><span class="nav-number">6.</span> <span class="nav-text">数据库的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多表之间的关系"><span class="nav-number">6.1.</span> <span class="nav-text">多表之间的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库设计的范式"><span class="nav-number">6.2.</span> <span class="nav-text">数据库设计的范式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库的备份和还原"><span class="nav-number">7.</span> <span class="nav-text">数据库的备份和还原</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多表查询"><span class="nav-number">8.</span> <span class="nav-text">多表查询</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

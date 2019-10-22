@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最初的时候我们会使用 JavaMail 相关 api 来写发送邮件的相关代码，后来 Spring 推出了 JavaMailSender 更加简化了邮件发送的过程，再之后 Spring Boot 对此进行了封装就有了现在的 spring-boot-starter-mail。 简单使用pom.xml 包配置在 pom.xml 包里面添加 spring-boot-starter-mail 包引用： 12">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot整合mail发送邮件">
+<meta property="og:url" content="http://yoursite.com/2019/04/14/SpringBoot整合mail发送邮件/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="最初的时候我们会使用 JavaMail 相关 api 来写发送邮件的相关代码，后来 Spring 推出了 JavaMailSender 更加简化了邮件发送的过程，再之后 Spring Boot 对此进行了封装就有了现在的 spring-boot-starter-mail。 简单使用pom.xml 包配置在 pom.xml 包里面添加 spring-boot-starter-mail 包引用： 12">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="variableid:">
+<meta property="og:updated_time" content="2019-10-22T16:23:14.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot整合mail发送邮件">
+<meta name="twitter:description" content="最初的时候我们会使用 JavaMail 相关 api 来写发送邮件的相关代码，后来 Spring 推出了 JavaMailSender 更加简化了邮件发送的过程，再之后 Spring Boot 对此进行了封装就有了现在的 spring-boot-starter-mail。 简单使用pom.xml 包配置在 pom.xml 包里面添加 spring-boot-starter-mail 包引用： 12">
+<meta name="twitter:image" content="variableid:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/14/SpringBoot整合mail发送邮件/">
+
+
+
+
+
+  <title>SpringBoot整合mail发送邮件 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/14/SpringBoot整合mail发送邮件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringBoot整合mail发送邮件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-14T20:31:05+08:00">
+                2019-04-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最初的时候我们会使用 JavaMail 相关 api 来写发送邮件的相关代码，后来 Spring 推出了 JavaMailSender 更加简化了邮件发送的过程，再之后 Spring Boot 对此进行了封装就有了现在的 spring-boot-starter-mail。</p>
+<h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><h3 id="pom-xml-包配置"><a href="#pom-xml-包配置" class="headerlink" title="pom.xml 包配置"></a>pom.xml 包配置</h3><p>在 pom.xml 包里面添加 spring-boot-starter-mail 包引用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependencies&gt;</span><br><span class="line">	&lt;dependency&gt; </span><br><span class="line">	    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	    &lt;artifactId&gt;spring-boot-starter-mail&lt;/artifactId&gt;</span><br><span class="line">	&lt;/dependency&gt; </span><br><span class="line">&lt;/dependencies&gt;</span><br></pre></td></tr></table></figure>
+<p>在 application.properties 中添加邮箱配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"># 163个人邮箱</span><br><span class="line">spring.mail.host=smtp.163.com</span><br><span class="line">spring.mail.username=chrootliu@163.com</span><br><span class="line">spring.mail.password=密码（开启POP3/SMTP的授权码）</span><br><span class="line">spring.mail.default-encoding=UTF-8</span><br><span class="line">mail.fromMail.addr=chrootliu@163.com</span><br><span class="line"></span><br><span class="line">#qq个人邮箱</span><br><span class="line">#spring.mail.host=smtp.qq.com</span><br><span class="line">#spring.mail.username=xxxxxxxxxx@qq.com</span><br><span class="line">#spring.mail.password=密码（开启POP3/SMTP的授权码）</span><br><span class="line">#spring.mail.default-encoding=UTF-8</span><br><span class="line">#spring.mail.properties.mail.smtp.starttls.enable=true</span><br><span class="line">#spring.mail.properties.mail.smtp.starttls.required=true</span><br><span class="line">#mail.fromMail.addr=xxxxxxx@qq.com</span><br><span class="line"></span><br><span class="line"># 微软outlook邮箱 yml 配置</span><br><span class="line">host: smtp.office365.com</span><br><span class="line">username: xxxxxxxxxxx@outlook.com</span><br><span class="line">password: 密码</span><br><span class="line">default-encoding: UTF-8</span><br><span class="line">port: 587</span><br><span class="line">protocol: smtp</span><br><span class="line">properties:</span><br><span class="line">  mail:</span><br><span class="line">    smtp:</span><br><span class="line">      auth: true</span><br><span class="line">      starttls:</span><br><span class="line">        enable: true</span><br><span class="line">        required: true</span><br><span class="line">fromMail:</span><br><span class="line">  addr: xxxxx@outlook.com</span><br></pre></td></tr></table></figure>
+<h3 id="编写-mailService，这里只提出实现类"><a href="#编写-mailService，这里只提出实现类" class="headerlink" title="编写 mailService，这里只提出实现类"></a>编写 mailService，这里只提出实现类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailServiceImpl</span> <span class="keyword">implements</span> <span class="title">MailService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JavaMailSender mailSender;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;mail.fromMail.addr&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String from;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServerResponse <span class="title">sendSimpleMail</span><span class="params">(String to, String subject, String content)</span> </span>&#123;</span><br><span class="line">        MimeMessage message = mailSender.createMimeMessage();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">			SimpleMailMessage message = <span class="keyword">new</span> SimpleMailMessage();</span><br><span class="line">            <span class="comment">// helper.setFrom("xxxx@outlook.com");</span></span><br><span class="line">			helper.setFrom(from);</span><br><span class="line">            helper.setTo(to);</span><br><span class="line">            helper.setSubject(subject);</span><br><span class="line">            helper.setText(content, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            mailSender.send(message);</span><br><span class="line">			<span class="comment">// logger.info("简单邮件已经发送。");</span></span><br><span class="line">            <span class="keyword">return</span> ServerResponse.createBySuccessMessage(<span class="string">"发送邮件成功"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (MessagingException e) &#123;</span><br><span class="line">			<span class="comment">// logger.error("发送简单邮件时发生异常！", e);</span></span><br><span class="line">            <span class="keyword">return</span> ServerResponse.createByErrorMessage(<span class="string">"发送邮件失败"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="编写-test-类进行测试"><a href="#编写-test-类进行测试" class="headerlink" title="编写 test 类进行测试"></a>编写 test 类进行测试</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringRunner.class)</span><br><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MailServiceTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MailService MailService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testSimpleMail</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        MailService.sendSimpleMail(<span class="string">"fromEmail@outlook.com"</span>,<span class="string">"test simple mail"</span>,<span class="string">" hello this is simple mail"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="增加其它功能"><a href="#增加其它功能" class="headerlink" title="增加其它功能"></a>增加其它功能</h2><h3 id="发送-html-格式邮件"><a href="#发送-html-格式邮件" class="headerlink" title="发送 html 格式邮件"></a>发送 html 格式邮件</h3><p>其它都不变在 MailService 添加 sendHtmlMail 方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServerResponse <span class="title">sendHtmlMail</span><span class="params">(String to, String subject, String content)</span> </span>&#123;</span><br><span class="line">        MimeMessage message = mailSender.createMimeMessage();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//true表示需要创建一个multipart message</span></span><br><span class="line">            MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(message, <span class="keyword">true</span>);</span><br><span class="line">            helper.setFrom(<span class="string">"xxxxx@outlook.com"</span>);</span><br><span class="line">            helper.setTo(to);</span><br><span class="line">            helper.setSubject(subject);</span><br><span class="line">            helper.setText(content, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            mailSender.send(message);</span><br><span class="line">            <span class="keyword">return</span> ServerResponse.createBySuccessMessage(<span class="string">"发送邮件成功"</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (MessagingException e) &#123;</span><br><span class="line">            <span class="keyword">return</span> ServerResponse.createByErrorMessage(<span class="string">"发送邮件失败"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>在测试类中构建 html 内容，测试发送:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testHtmlMail</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    String content=<span class="string">"&lt;html&gt;\n"</span> +</span><br><span class="line">            <span class="string">"&lt;body&gt;\n"</span> +</span><br><span class="line">            <span class="string">"    &lt;h3&gt;hello world ! 这是一封Html邮件!&lt;/h3&gt;\n"</span> +</span><br><span class="line">            <span class="string">"&lt;/body&gt;\n"</span> +</span><br><span class="line">            <span class="string">"&lt;/html&gt;"</span>;</span><br><span class="line">	String content=<span class="string">"&lt;html&gt;\n"</span> +</span><br><span class="line">                <span class="string">"&lt;body&gt;\n"</span> +</span><br><span class="line">                <span class="string">"    &lt;h3&gt;这是一封注册邀请邮件!&lt;/h3&gt;\n\n"</span> +</span><br><span class="line">                <span class="string">"    &lt;h4&gt;请点击以下链接继续完成注册&lt;/h4&gt;\n"</span> +</span><br><span class="line">                <span class="string">"       &lt;a href='http://xxxxx/register?email="</span>+email+<span class="string">"&amp;inviteCode="</span>+inviteCode+<span class="string">"'&gt;http://xxxxx/register?email="</span>+email+<span class="string">"&amp;inviteCode="</span>+inviteCode+<span class="string">"&lt;/a&gt;"</span> +</span><br><span class="line">                <span class="string">"&lt;/body&gt;\n"</span> +</span><br><span class="line">                <span class="string">"&lt;/html&gt;"</span>;</span><br><span class="line">    MailService.sendHtmlMail(<span class="string">"fromEmail@outlook.com"</span>,<span class="string">"Invite Email"</span>,content);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="发送带附件的邮件"><a href="#发送带附件的邮件" class="headerlink" title="发送带附件的邮件"></a>发送带附件的邮件</h3><p>在 MailService 添加 sendAttachmentsMail 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendAttachmentsMail</span><span class="params">(String to, String subject, String content, String filePath)</span></span>&#123;</span><br><span class="line">    MimeMessage message = mailSender.createMimeMessage();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(message, <span class="keyword">true</span>);</span><br><span class="line">        helper.setFrom(from);</span><br><span class="line">        helper.setTo(to);</span><br><span class="line">        helper.setSubject(subject);</span><br><span class="line">        helper.setText(content, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        FileSystemResource file = <span class="keyword">new</span> FileSystemResource(<span class="keyword">new</span> File(filePath));</span><br><span class="line">        String fileName = filePath.substring(filePath.lastIndexOf(File.separator));</span><br><span class="line">        helper.addAttachment(fileName, file);</span><br><span class="line"></span><br><span class="line">        mailSender.send(message);</span><br><span class="line">        logger.info(<span class="string">"带附件的邮件已经发送。"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (MessagingException e) &#123;</span><br><span class="line">        logger.error(<span class="string">"发送带附件的邮件时发生异常！"</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在测试类中添加测试方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendAttachmentsMail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String filePath=<span class="string">"文件路径xxxxx"</span>;</span><br><span class="line">    mailService.sendAttachmentsMail(<span class="string">"fromEmail@outlook.com"</span>, <span class="string">"主题：带附件的邮件"</span>, <span class="string">"有附件，请查收！"</span>, filePath);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="发送带静态资源的邮件"><a href="#发送带静态资源的邮件" class="headerlink" title="发送带静态资源的邮件"></a>发送带静态资源的邮件</h3><p>邮件中的静态资源一般就是指图片，在 MailService 添加 sendAttachmentsMail 方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendInlineResourceMail</span><span class="params">(String to, String subject, String content, String rscPath, String rscId)</span></span>&#123;</span><br><span class="line">    MimeMessage message = mailSender.createMimeMessage();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        MimeMessageHelper helper = <span class="keyword">new</span> MimeMessageHelper(message, <span class="keyword">true</span>);</span><br><span class="line">        helper.setFrom(from);</span><br><span class="line">        helper.setTo(to);</span><br><span class="line">        helper.setSubject(subject);</span><br><span class="line">        helper.setText(content, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">        FileSystemResource res = <span class="keyword">new</span> FileSystemResource(<span class="keyword">new</span> File(rscPath));</span><br><span class="line">        helper.addInline(rscId, res);</span><br><span class="line"></span><br><span class="line">        mailSender.send(message);</span><br><span class="line">        logger.info(<span class="string">"嵌静态资源的邮件已经发送。"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (MessagingException e) &#123;</span><br><span class="line">        logger.error(<span class="string">"发送带静态资源的邮件时发生异常！"</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在测试类中添加测试方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendInlineResourceMail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String rsVariableId = <span class="string">"aaaaa"</span>;</span><br><span class="line">    String content=<span class="string">"&lt;html&gt;&lt;body&gt;这是有图片的邮件：&lt;img src=\'variableId:"</span> + rsVariableId + <span class="string">"\' &gt;&lt;/body&gt;&lt;/html&gt;"</span>;</span><br><span class="line">    String imgPath = <span class="string">"http://xxxx.png"</span>;</span><br><span class="line"></span><br><span class="line">    mailService.sendInlineResourceMail(<span class="string">"ityouknow@126.com"</span>, <span class="string">"主题：这是有图片的邮件"</span>, content, imgPath, rscId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加多个图片可以使用多条 <img src="variableId:" + rsvariableid ""> 和 helper.addInline(rsVariableId, res) 来实现</p>
+<p>到此所有的基本的邮件发送服务已经完成了。</p>
+<h2 id="邮件模板"><a href="#邮件模板" class="headerlink" title="邮件模板"></a>邮件模板</h2><p>当邮件内容比较复杂，或者变量比较多的话，如果每次发送邮件都需要手动拼接的话会不够优雅，并且每次模板的修改都需要改动代码的话也很不方便，因此对于这类邮件需求，都建议做成邮件模板来处理。模板的本质很简单，就是在模板中替换变化的参数，转换为 html 字符串即可，这里以 thymeleaf 为例。</p>
+<h3 id="在-pom-xml-中导入-thymeleaf-的包"><a href="#在-pom-xml-中导入-thymeleaf-的包" class="headerlink" title="在 pom.xml 中导入 thymeleaf 的包"></a>在 pom.xml 中导入 thymeleaf 的包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-thymeleaf&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="在-resorces-templates-下创建-emailTemplate-html"><a href="#在-resorces-templates-下创建-emailTemplate-html" class="headerlink" title="在 resorces/templates 下创建 emailTemplate.html **"></a>在 resorces/templates 下创建 emailTemplate.html **</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh"</span> <span class="attr">xmlns:th</span>=<span class="string">"http://www.thymeleaf.org"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">            *&#123;</span><br><span class="line">                padding: 0;</span><br><span class="line">                margin: 0;</span><br><span class="line">            &#125;</span><br><span class="line">            body,html&#123;</span><br><span class="line"><span class="css">                <span class="selector-tag">color</span>: <span class="selector-id">#303030</span>;</span></span><br><span class="line">            &#125;</span><br><span class="line"><span class="css">            <span class="selector-class">.container</span>&#123;</span></span><br><span class="line">                width: 600px;</span><br><span class="line">                padding: 40px;</span><br><span class="line">            &#125;</span><br><span class="line">            h1&#123;</span><br><span class="line"><span class="css">                <span class="selector-tag">color</span>: <span class="selector-id">#303030</span>;</span></span><br><span class="line">                font-size: 30px;</span><br><span class="line">                text-align: center;</span><br><span class="line">            &#125;</span><br><span class="line">            h3&#123;</span><br><span class="line"><span class="css">                <span class="selector-tag">color</span>: <span class="selector-id">#303030</span>;</span></span><br><span class="line">                font-size: 18px;</span><br><span class="line">                text-align: center;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="css">            <span class="selector-class">.wrapper</span>&#123;</span></span><br><span class="line">                margin-top: 40px;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="css">            <span class="selector-class">.item_li</span>&#123;</span></span><br><span class="line">                line-height: 28px;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="css">            <span class="selector-class">.title</span>&#123;</span></span><br><span class="line">                font-size: 16px;</span><br><span class="line">                font-weight: bold;</span><br><span class="line">                line-height: 28px;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="css">            <span class="selector-class">.content</span>&#123;</span></span><br><span class="line">                line-height: 28px;</span><br><span class="line">                font-size: 16px;</span><br><span class="line">            &#125;</span><br><span class="line"><span class="css">            <span class="selector-class">.email_content</span>&#123;</span></span><br><span class="line"><span class="css">                <span class="selector-tag">color</span>: <span class="selector-id">#ff6700</span>;</span></span><br><span class="line">            &#125;</span><br><span class="line"><span class="css">            <span class="selector-class">.flex-align-space-between</span>&#123;</span></span><br><span class="line">                display: flex;</span><br><span class="line">                align-items: center;</span><br><span class="line">                justify-content: space-between;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>iVANKY<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Warranty Request<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"wrapper"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Issue<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;subject&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"item_list"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>CountrySite<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;countrySite&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>City<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;city&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Name<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;name&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Email<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content email_content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;email&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Phone<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;phone&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>OrderId<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;orderId&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>IsWithinDay<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;isWithinDay&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>IsOccurred<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;isOccurred&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>ProductCategory<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;productCategory&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Image<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">"img_responsive"</span> <span class="attr">alt</span>=<span class="string">"Image"</span> <span class="attr">th:src</span>=<span class="string">"@&#123;$&#123;image&#125;&#125;"</span> /&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>ProductCode<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;productCode&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Message<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;message&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Address line 1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;addressLineOne&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Address line 2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;addressLineTwo&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">"item_list"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>State/Province/Region<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;state&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"item_li flex-align-space-between"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"title"</span>&gt;</span>Postal code<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"content"</span> <span class="attr">th:text</span>=<span class="string">"$&#123;postalCode&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="解析模板并发送"><a href="#解析模板并发送" class="headerlink" title="解析模板并发送"></a>解析模板并发送</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendTemplateMail</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Context context = <span class="keyword">new</span> Context();</span><br><span class="line">    context.setVariable(<span class="string">"subject"</span>, subject);</span><br><span class="line">    context.setVariable(<span class="string">"isWithinDay"</span>, isWithinDay);</span><br><span class="line">    context.setVariable(<span class="string">"productCategory"</span>, productCategory);</span><br><span class="line">    context.setVariable(<span class="string">"isOccurred"</span>, isOccurred);</span><br><span class="line">    context.setVariable(<span class="string">"countrySite"</span>, countrySite);</span><br><span class="line">    context.setVariable(<span class="string">"name"</span>, name);</span><br><span class="line">    context.setVariable(<span class="string">"email"</span>, email);</span><br><span class="line">    context.setVariable(<span class="string">"message"</span>, message);</span><br><span class="line">    context.setVariable(<span class="string">"orderId"</span>, orderId);</span><br><span class="line">    context.setVariable(<span class="string">"image"</span>, image);</span><br><span class="line">    context.setVariable(<span class="string">"productCode"</span>, productCode);</span><br><span class="line">    context.setVariable(<span class="string">"addressLineOne"</span>, addressLineOne);</span><br><span class="line">    context.setVariable(<span class="string">"addressLineTwo"</span>, addressLineTwo);</span><br><span class="line">    context.setVariable(<span class="string">"state"</span>, state);</span><br><span class="line">    context.setVariable(<span class="string">"city"</span>, city);</span><br><span class="line">    context.setVariable(<span class="string">"postalCode"</span>, postalCode);</span><br><span class="line">    context.setVariable(<span class="string">"phone"</span>, phone);</span><br><span class="line">    String emailContent = templateEngine.process(<span class="string">"emailTemplate"</span>, context);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sendHtmlMail(Const.WARRANTY_EMAIL,<span class="string">"iVANKY Warranty"</span>,emailContent);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="发送失败"><a href="#发送失败" class="headerlink" title="发送失败"></a>发送失败</h2><p>因为各种原因，总会有邮件发送失败的情况，比如：邮件发送过于频繁、网络异常等。在出现这种情况的时候，我们一般会考虑重新重试发送邮件，会分为以下几个步骤来实现：</p>
+<ol>
+<li>接收到发送邮件请求，首先记录请求并且入库。</li>
+<li>调用邮件发送接口发送邮件，并且将发送结果记录入库。</li>
+<li>启动定时系统扫描时间段内，未发送成功并且重试次数小于3次的邮件，进行再次发送</li>
+</ol>
+<h2 id="异步发送"><a href="#异步发送" class="headerlink" title="异步发送"></a>异步发送</h2><p>很多时候邮件发送并不是我们主业务必须关注的结果，比如通知类、提醒类的业务可以允许延时或者失败。这个时候可以采用异步的方式来发送邮件，加快主交易执行速度，在实际项目中可以采用MQ发送邮件相关参数，监听到消息队列之后启动发送邮件。</p>
+<p>可以参考文章 <a href="http://www.ityouknow.com/springboot/2016/11/30/spring-boot-rabbitMQ.html" target="_blank" rel="noopener">RabbitMQ 详解</a></p>
+<p>参考文章 <a href="http://www.ityouknow.com/springboot/2017/05/06/spring-boot-mail.html" target="_blank" rel="noopener">Spring Boot (十)：邮件服务</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/06/java获取MultipartFile图片的宽高大小/" rel="next" title="java获取MultipartFile格式图片的宽高">
+                <i class="fa fa-chevron-left"></i> java获取MultipartFile格式图片的宽高
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简单使用"><span class="nav-number">1.</span> <span class="nav-text">简单使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pom-xml-包配置"><span class="nav-number">1.1.</span> <span class="nav-text">pom.xml 包配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写-mailService，这里只提出实现类"><span class="nav-number">1.2.</span> <span class="nav-text">编写 mailService，这里只提出实现类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编写-test-类进行测试"><span class="nav-number">1.3.</span> <span class="nav-text">编写 test 类进行测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#增加其它功能"><span class="nav-number">2.</span> <span class="nav-text">增加其它功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发送-html-格式邮件"><span class="nav-number">2.1.</span> <span class="nav-text">发送 html 格式邮件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送带附件的邮件"><span class="nav-number">2.2.</span> <span class="nav-text">发送带附件的邮件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发送带静态资源的邮件"><span class="nav-number">2.3.</span> <span class="nav-text">发送带静态资源的邮件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#邮件模板"><span class="nav-number">3.</span> <span class="nav-text">邮件模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在-pom-xml-中导入-thymeleaf-的包"><span class="nav-number">3.1.</span> <span class="nav-text">在 pom.xml 中导入 thymeleaf 的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在-resorces-templates-下创建-emailTemplate-html"><span class="nav-number">3.2.</span> <span class="nav-text">在 resorces/templates 下创建 emailTemplate.html **</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析模板并发送"><span class="nav-number">3.3.</span> <span class="nav-text">解析模板并发送</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发送失败"><span class="nav-number">4.</span> <span class="nav-text">发送失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步发送"><span class="nav-number">5.</span> <span class="nav-text">异步发送</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
