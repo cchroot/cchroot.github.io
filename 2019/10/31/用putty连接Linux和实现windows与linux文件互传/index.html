@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="日常常用的远程连接服务器的工具有: xhell，git bash,PuTTY,securecrt 等等，本人用的最多的是 xshell，可以直接使用命令sudo yum install -y lrzsz然后通过 rz 和 sz 命令来实现上传下载。 今天尝试 putty 的原因是家里的电脑突然无法访问阿里云，一直报 10053 的错误，但是连接别的阿里云服务器没问题，公司连接该服务器也不会报错。所">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用putty连接Linux和实现windows与linux文件互传">
+<meta property="og:url" content="http://yoursite.com/2019/10/31/用putty连接Linux和实现windows与linux文件互传/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="日常常用的远程连接服务器的工具有: xhell，git bash,PuTTY,securecrt 等等，本人用的最多的是 xshell，可以直接使用命令sudo yum install -y lrzsz然后通过 rz 和 sz 命令来实现上传下载。 今天尝试 putty 的原因是家里的电脑突然无法访问阿里云，一直报 10053 的错误，但是连接别的阿里云服务器没问题，公司连接该服务器也不会报错。所">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/linux/putty_1.png">
+<meta property="og:image" content="http://yoursite.com/images/linux/putty_2.png">
+<meta property="og:image" content="http://yoursite.com/images/linux/putty_3.png">
+<meta property="og:image" content="http://yoursite.com/images/linux/putty_4.png">
+<meta property="og:image" content="http://yoursite.com/images/linux/putty_5.png">
+<meta property="og:image" content="http://yoursite.com/images/linux/putty_6.png">
+<meta property="og:image" content="http://yoursite.com/images/linux/putty_7.png">
+<meta property="og:updated_time" content="2019-10-30T16:03:49.881Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用putty连接Linux和实现windows与linux文件互传">
+<meta name="twitter:description" content="日常常用的远程连接服务器的工具有: xhell，git bash,PuTTY,securecrt 等等，本人用的最多的是 xshell，可以直接使用命令sudo yum install -y lrzsz然后通过 rz 和 sz 命令来实现上传下载。 今天尝试 putty 的原因是家里的电脑突然无法访问阿里云，一直报 10053 的错误，但是连接别的阿里云服务器没问题，公司连接该服务器也不会报错。所">
+<meta name="twitter:image" content="http://yoursite.com/images/linux/putty_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/31/用putty连接Linux和实现windows与linux文件互传/">
+
+
+
+
+
+  <title>用putty连接Linux和实现windows与linux文件互传 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/31/用putty连接Linux和实现windows与linux文件互传/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">用putty连接Linux和实现windows与linux文件互传</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-31T20:31:05+08:00">
+                2019-10-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>日常常用的远程连接服务器的工具有: xhell，git bash,PuTTY,securecrt 等等，本人用的最多的是 xshell，可以直接使用命令<code>sudo yum install -y lrzsz</code>然后通过 rz 和 sz 命令来实现上传下载。</p>
+<p>今天尝试 putty 的原因是家里的电脑突然无法访问阿里云，一直报 10053 的错误，但是连接别的阿里云服务器没问题，公司连接该服务器也不会报错。所以就想尝试其他 ssh 工具来连接服务器，所以便有了这篇文章。</p>
+<h3 id="安装使用-putty"><a href="#安装使用-putty" class="headerlink" title="安装使用 putty"></a>安装使用 putty</h3><p>官方下载链接为: <a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank" rel="noopener">putty下载</a></p>
+<p>本人是 win10 64位系统，所以直接点如下下载链接：</p>
+<p><img src="/images/linux/putty_1.png" alt="下载putty图片"></p>
+<p>上面这种是下载了 putty 以及所带的其它工具，也可以往下滑单独下载所需要的工具。</p>
+<p>所有工具一起下下来也不大，所以本人就一起下载安装了。</p>
+<p>下载结束后，直接双击进行安装，没有什么特殊的操作。</p>
+<p>打开 putty,操作界面如下图：</p>
+<p><img src="/images/linux/putty_2.png" alt="putty操作图片"></p>
+<ol>
+<li>输入主机名称或是主机的IP地址</li>
+<li>SSH协议默认的端口号22（这里不需做修改）</li>
+<li>在Saved Sessions中填入一个用于区分的名称</li>
+<li>保存上面的设置，方便以后快速连接，也可不保存，那么上述信息不会被保留，下次使用需要重新设定</li>
+<li>点击Open进行连接，如果不出意外的话，就ok了</li>
+</ol>
+<p>连接成功后，输入用户名和密码即可连接：</p>
+<p><img src="/images/linux/putty_3.png" alt="putty连接图片"></p>
+<p>我这里是设置了自动登录的用户名，所以直接输入密码即可，正常会有 login as: 提示你输入用户名，回车即可再输入密码。</p>
+<h3 id="使用pscp方式从windows上传文件到linux服务器"><a href="#使用pscp方式从windows上传文件到linux服务器" class="headerlink" title="使用pscp方式从windows上传文件到linux服务器"></a>使用pscp方式从windows上传文件到linux服务器</h3><p>由于 putty 不可以使用 lrzsz 的 rz 和 sz 命令进行上传可下载文件,但是提供了 pscp 小工具来进行上传和下载文件，下面就来说说使用方法。</p>
+<p>首先，你需要知道 putty 的安装路径，我是安装在D盘里面：</p>
+<p><img src="/images/linux/putty_4.png" alt="putty安装路径"></p>
+<p>然后，打开 window 自带的 cmd 命令行，进入到 putty 的安装目录：</p>
+<p><img src="/images/linux/putty_5.png" alt="cmd进入putty目录"></p>
+<p>pscp 跟我们平时使用的linux scp命令操作的都是类似的</p>
+<p>现在我直接从 windows 本地 D 盘上传一个文件 bbbbb.text 到 linux服务器的 /usr/local 目录下，则在 cmd 命令行中输入命令：</p>
+<p><code>pscp D:\bbbbb.txt root@xx.xxx.xxx.xxx:/usr/local/</code></p>
+<p>如图：</p>
+<p><img src="/images/linux/putty_6.png" alt="cmd使用命令下载"></p>
+<p>运行命令输入root密码后，在 linux 的 /usr/local 目录下输入ls命令即可查看已上传的文件：</p>
+<p><img src="/images/linux/putty_7.png" alt="linux查看"></p>
+<p>把本地文件file传输到Linxu服务器的目录中：</p>
+<p><code>pscp 文件 用户名@LinuxIP:目录</code></p>
+<p>使用 “-l” 选项可以指定用户名:</p>
+<p><code>pscp -l 用户名 文件 LinuxIP:目录</code></p>
+<p>使用“ -r ”选项可以用于传输目录:</p>
+<p><code>pscp -r 目录 用户名@LinuxIP:目录</code> 或者 <code>pscp -l 用户名 -r 目录 LinuxIP:目录</code></p>
+<h3 id="使用pscp方式从linux服务器下载文件到windows"><a href="#使用pscp方式从linux服务器下载文件到windows" class="headerlink" title="使用pscp方式从linux服务器下载文件到windows"></a>使用pscp方式从linux服务器下载文件到windows</h3><p>将 Linux 服务器上 /usr/local 目录下的 ccccc.txt 下载到D盘</p>
+<p><code>pscp root@xx.xxx.xxx.xx:/usr/local/aaaaa.txt D:\</code></p>
+<p>使用方式和各种都与上传相同，这里就不再重复了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/14/SpringBoot整合mail发送邮件/" rel="next" title="SpringBoot整合mail发送邮件">
+                <i class="fa fa-chevron-left"></i> SpringBoot整合mail发送邮件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">106</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装使用-putty"><span class="nav-number">1.</span> <span class="nav-text">安装使用 putty</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用pscp方式从windows上传文件到linux服务器"><span class="nav-number">2.</span> <span class="nav-text">使用pscp方式从windows上传文件到linux服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用pscp方式从linux服务器下载文件到windows"><span class="nav-number">3.</span> <span class="nav-text">使用pscp方式从linux服务器下载文件到windows</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
