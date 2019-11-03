@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="本质：redis 是一款高性能的 NOSQL 系列的非关系型数据库 什么是RedisRedis 是用C语言开发的一个开源的高性能键值对(key-value)数据库，官方提供测试数据，50个并发执行100000个请求，读的宿舍是110000次/s,写的速度是81000次/s,且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：  字符串类型 St">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-21T16:43:08.771Z">
+<meta property="og:updated_time" content="2019-10-30T16:14:35.477Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis 基础">
 <meta name="twitter:description" content="本质：redis 是一款高性能的 NOSQL 系列的非关系型数据库 什么是RedisRedis 是用C语言开发的一个开源的高性能键值对(key-value)数据库，官方提供测试数据，50个并发执行100000个请求，读的宿舍是110000次/s,写的速度是81000次/s,且Redis通过提供多种键值数据类型来适应不同场景下的存储需求，目前为止Redis支持的键值数据类型如下：  字符串类型 St">
@@ -510,9 +510,9 @@
 <li>AOF：日志记录的方式，可以记录每一条命令的操作。可以每一次命令操作后，持久化数据<ol>
 <li>编辑 redis.windows.confi 文件<ul>
 <li>appendonly no (关闭 aof) –&gt; appendonly yes 开启aof)</li>
-<li><h1 id="appendfsync-always-每一次操作都进行持久化"><a href="#appendfsync-always-每一次操作都进行持久化" class="headerlink" title="appendfsync always: 每一次操作都进行持久化"></a>appendfsync always: 每一次操作都进行持久化</h1></li>
-<li><h1 id="appendfsync-eversec：-每隔一秒进行一次持久化"><a href="#appendfsync-eversec：-每隔一秒进行一次持久化" class="headerlink" title="appendfsync eversec： 每隔一秒进行一次持久化"></a>appendfsync eversec： 每隔一秒进行一次持久化</h1></li>
-<li><h1 id="appendfsync-no-不进行持久化"><a href="#appendfsync-no-不进行持久化" class="headerlink" title="appendfsync no: 不进行持久化"></a>appendfsync no: 不进行持久化</h1></li>
+<li>appendfsync always: 每一次操作都进行持久化</li>
+<li>appendfsync eversec： 每隔一秒进行一次持久化</li>
+<li>appendfsync no: 不进行持久化</li>
 </ul>
 </li>
 </ol>
@@ -736,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Redis"><span class="nav-number">1.</span> <span class="nav-text">什么是Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装"><span class="nav-number">2.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令操作"><span class="nav-number">3.</span> <span class="nav-text">命令操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久化"><span class="nav-number">4.</span> <span class="nav-text">持久化</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#appendfsync-always-每一次操作都进行持久化"><span class="nav-number"></span> <span class="nav-text">appendfsync always: 每一次操作都进行持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#appendfsync-eversec：-每隔一秒进行一次持久化"><span class="nav-number"></span> <span class="nav-text">appendfsync eversec： 每隔一秒进行一次持久化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#appendfsync-no-不进行持久化"><span class="nav-number"></span> <span class="nav-text">appendfsync no: 不进行持久化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-客户端-Jedis"><span class="nav-number">1.</span> <span class="nav-text">Java 客户端 Jedis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jedis-连接池"><span class="nav-number">2.</span> <span class="nav-text">Jedis 连接池</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Redis"><span class="nav-number">1.</span> <span class="nav-text">什么是Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装"><span class="nav-number">2.</span> <span class="nav-text">下载安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令操作"><span class="nav-number">3.</span> <span class="nav-text">命令操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#持久化"><span class="nav-number">4.</span> <span class="nav-text">持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-客户端-Jedis"><span class="nav-number">5.</span> <span class="nav-text">Java 客户端 Jedis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jedis-连接池"><span class="nav-number">6.</span> <span class="nav-text">Jedis 连接池</span></a></li></ol></div>
             
 
           </div>
