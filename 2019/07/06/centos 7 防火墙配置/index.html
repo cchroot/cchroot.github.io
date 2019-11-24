@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="java,">
+  <meta name="keywords" content="linux,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="遇到的问题最近入了 springMVC 的坑，今天在写接口的时候，后端需要接收前端传递的一个字符串数组来批量删除类别，照常写出如下代码： 123456@RequestMapping(&quot;delete.do&quot;)    @ResponseBody    public ServerResponse deleteCategory(@RequestParam(value = &quot;idArray[]&quot;, defa">
-<meta name="keywords" content="java">
+<meta name="description" content="Centos7 开始采用 firewall 防火墙替代了原来的 iptables 防火墙 查看firewall服务状态systemctl status firewalld 查看firewall的状态firewall-cmd --state 结果为 not runing 或者 runing 开启、重启与关闭service firewalld start service firewalld resta">
+<meta name="keywords" content="linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SpringMVC 数组接收参数方式">
-<meta property="og:url" content="http://yoursite.com/2019/03/30/springMVC数组接收参数方式/index.html">
+<meta property="og:title" content="Centos7 防火墙配置">
+<meta property="og:url" content="http://yoursite.com/2019/07/06/centos 7 防火墙配置/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="遇到的问题最近入了 springMVC 的坑，今天在写接口的时候，后端需要接收前端传递的一个字符串数组来批量删除类别，照常写出如下代码： 123456@RequestMapping(&quot;delete.do&quot;)    @ResponseBody    public ServerResponse deleteCategory(@RequestParam(value = &quot;idArray[]&quot;, defa">
+<meta property="og:description" content="Centos7 开始采用 firewall 防火墙替代了原来的 iptables 防火墙 查看firewall服务状态systemctl status firewalld 查看firewall的状态firewall-cmd --state 结果为 not runing 或者 runing 开启、重启与关闭service firewalld start service firewalld resta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-22T16:18:27.320Z">
+<meta property="og:updated_time" content="2019-11-24T15:34:25.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringMVC 数组接收参数方式">
-<meta name="twitter:description" content="遇到的问题最近入了 springMVC 的坑，今天在写接口的时候，后端需要接收前端传递的一个字符串数组来批量删除类别，照常写出如下代码： 123456@RequestMapping(&quot;delete.do&quot;)    @ResponseBody    public ServerResponse deleteCategory(@RequestParam(value = &quot;idArray[]&quot;, defa">
+<meta name="twitter:title" content="Centos7 防火墙配置">
+<meta name="twitter:description" content="Centos7 开始采用 firewall 防火墙替代了原来的 iptables 防火墙 查看firewall服务状态systemctl status firewalld 查看firewall的状态firewall-cmd --state 结果为 not runing 或者 runing 开启、重启与关闭service firewalld start service firewalld resta">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/03/30/springMVC数组接收参数方式/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/06/centos 7 防火墙配置/">
 
 
 
 
 
-  <title>SpringMVC 数组接收参数方式 | cchroot's blog</title>
+  <title>Centos7 防火墙配置 | cchroot's blog</title>
   
 
 
@@ -333,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/30/springMVC数组接收参数方式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/centos 7 防火墙配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -350,7 +350,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">SpringMVC 数组接收参数方式</h1>
+          <h1 class="post-title" itemprop="name headline">Centos7 防火墙配置</h1>
         
 
         <div class="post-meta">
@@ -362,8 +362,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-30T20:31:00+08:00">
-                2019-03-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-06T20:31:05+08:00">
+                2019-07-06
               </time>
             
 
@@ -385,8 +385,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -422,41 +422,27 @@
       
 
       
-        <h3 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h3><p>最近入了 springMVC 的坑，今天在写接口的时候，后端需要接收前端传递的一个字符串数组来批量删除类别，照常写出如下代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"delete.do"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServerResponse <span class="title">deleteCategory</span><span class="params">(@RequestParam(value = <span class="string">"idArray[]"</span>, defaultValue=<span class="string">""</span>)</span> List&lt;String&gt; categoryIdArray) </span>&#123;</span><br><span class="line">	logger.info(categoryIdArray.toString()); <span class="comment">// 这里一直为空数组[]</span></span><br><span class="line">	<span class="keyword">return</span> iProductCategoryService.deleteProductCategory(categoryIdArray);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> stringArray = [<span class="string">'17'</span>]</span><br><span class="line">deleteCategoryApi(&#123;</span><br><span class="line">  idArray: stringArray</span><br><span class="line">&#125;).then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(res)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>发现上面<code>logger.info</code>打印出来的数组一直为空，前端采用 axios 来发送请求，但是不管怎么尝试就是接收不到前端传递过来的字符串，改用单纯数组接收参数或者 ArrayList 也一样的。</p>
-<h3 id="发现问题原因"><a href="#发现问题原因" class="headerlink" title="发现问题原因"></a>发现问题原因</h3><p>之后通过查阅资料发现，axios 默认的 content-type 是 application/json, 这里后端需要用 formdata 的方式，后端才能获取到数据。</p>
-<p>问题本到这里就结束了，但是我除了文件上传之类的，通常不太喜欢通过 formdata 的方式提交数据，SO,我认为应该还有别的解决方式。然后导致接下来踩了更多的坑，但是也收获了很多。</p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><p>方案一就是上面提到的，修改 axios 提交数据时候的 content-type 为 formdata，这个方案后端不需要改动,必须使用(@RequireParam(“idArray[]”) String[] idArray) 接收。</p>
-<p>其它提交方式：</p>
-<p>使用表单提交: 无法直接使用表单提交,需要转换成jq.ajax等方式提交</p>
-<p>使用jq.ajax提交: 直接提交</p>
-<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p>indices 索引方式，前端通过 qs 修改 axios 的序列化方式为 indices，即：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">example: ?a[<span class="number">0</span>]=<span class="number">1</span>&amp;a[<span class="number">1</span>]=<span class="number">2</span>&amp;a[<span class="number">2</span>]=<span class="number">3</span></span><br></pre></td></tr></table></figure>
-<p>后端比较麻烦，需要在 Controller中 注入一个实体,实体里包含List a，类似于方案三的 @RequestBody 方式，但不需要 @RequestBody 注解。</p>
-<p>其它提交方式：</p>
-<p>使用表单提交: 直接提交</p>
-<p>使用jq.ajax提交: 需要自己处理后提交</p>
-<h4 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h4><p>后端改为 @RequestBody 的接收参数方式，然后新建一个 DTO实体类接收参数：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ServerResponse <span class="title">deleteCategory</span><span class="params">(@RequestBody ProductCategoryDTO categoryIdArray)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> iProductCategoryService.deleteProductCategory(categoryIdArray);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这里 ProductCategoryDTO 为 DTO实体类，里面就一个私有变量 List<string> 数组，以及 get set 方法。</string></p>
-<p>这个方案前端直接用 axios 的 post 方法通过 data 传递字符串数组即可。</p>
-<p>一般我在项目中复杂的参数接收，后端都采用这个方式接收参数，但是这里只传递一个数组，我就没有采用该方案。</p>
-<p>其它提交方式：</p>
-<p>使用表单提交: 直接提交，但是必须修改 content-type 为 application/json</p>
-<p>使用jq.ajax提交: 直接提交</p>
-<h3 id="方案四"><a href="#方案四" class="headerlink" title="方案四"></a>方案四</h3><p>repeat 方式，后端修改接收参数方式为：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ServerResponse <span class="title">deleteCategory</span><span class="params">(@RequestParam(value = <span class="string">"idArray"</span>, defaultValue=<span class="string">""</span>)</span> List&lt;String&gt; categoryIdArray)</span></span><br></pre></td></tr></table></figure>
-<p>乍一看好像跟第一种方案没差，细心一看，你可以发现少了”[]”,这时候后端需要接收的数组传值方式为：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?a=<span class="number">1</span>&amp;a=<span class="number">2</span>&amp;a=<span class="number">3</span></span><br></pre></td></tr></table></figure>
-<p>前端需要修改 axios 的序列化方式为 repeat:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">axios.defaults.paramsSerializer = function (params) &#123;</span><br><span class="line">  return qs.stringify(params, &#123; arrayFormat: &apos;repeat&apos; &#125;)</span><br><span class="line">&#125;</span><br><span class="line">//等同于</span><br><span class="line">paramsSerializer: params =&gt; &#123;</span><br><span class="line">  return qs.stringify(params, &#123; indices: false &#125;)</span><br><span class="line">&#125;&#125;)</span><br></pre></td></tr></table></figure>
-<p>通过查阅 qs 的<a href="https://www.npmjs.com/package/qs" target="_blank" rel="noopener">文档</a>可以发现，有4种序列化方式可以改变数组的输出格式：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">qs.stringify(&#123; <span class="attr">a</span>: [<span class="string">'b'</span>, <span class="string">'c'</span>] &#125;, &#123; <span class="attr">arrayFormat</span>: <span class="string">'indices'</span> &#125;)</span><br><span class="line"><span class="comment">// 'a[0]=b&amp;a[1]=c'</span></span><br><span class="line">qs.stringify(&#123; <span class="attr">a</span>: [<span class="string">'b'</span>, <span class="string">'c'</span>] &#125;, &#123; <span class="attr">arrayFormat</span>: <span class="string">'brackets'</span> &#125;)</span><br><span class="line"><span class="comment">// 'a[]=b&amp;a[]=c'</span></span><br><span class="line">qs.stringify(&#123; <span class="attr">a</span>: [<span class="string">'b'</span>, <span class="string">'c'</span>] &#125;, &#123; <span class="attr">arrayFormat</span>: <span class="string">'repeat'</span> &#125;)</span><br><span class="line"><span class="comment">// 'a=b&amp;a=c'</span></span><br><span class="line">qs.stringify(&#123; <span class="attr">a</span>: [<span class="string">'b'</span>, <span class="string">'c'</span>] &#125;, &#123; <span class="attr">arrayFormat</span>: <span class="string">'comma'</span> &#125;)</span><br><span class="line"><span class="comment">// 'a=b,c'</span></span><br></pre></td></tr></table></figure>
-<p>其它提交方式：</p>
-<p>使用表单提交:无法直接使用表单提交,需要转换成jq.ajax等方式提交</p>
-<p>使用jq.ajax提交: jq.ajax提交的时候需要设置属性: traditional:true</p>
+        <p>Centos7 开始采用 firewall 防火墙替代了原来的 iptables 防火墙</p>
+<h3 id="查看firewall服务状态"><a href="#查看firewall服务状态" class="headerlink" title="查看firewall服务状态"></a>查看firewall服务状态</h3><p><code>systemctl status firewalld</code></p>
+<h3 id="查看firewall的状态"><a href="#查看firewall的状态" class="headerlink" title="查看firewall的状态"></a>查看firewall的状态</h3><p><code>firewall-cmd --state</code> 结果为 not runing 或者 runing</p>
+<h3 id="开启、重启与关闭"><a href="#开启、重启与关闭" class="headerlink" title="开启、重启与关闭"></a>开启、重启与关闭</h3><p><code>service firewalld start</code></p>
+<p><code>service firewalld restart</code></p>
+<p><code>service firewalld stop</code></p>
+<h3 id="查看防火墙规则"><a href="#查看防火墙规则" class="headerlink" title="查看防火墙规则"></a>查看防火墙规则</h3><p><code>firewall-cmd --list-all</code></p>
+<h3 id="查询、开放、关闭端口"><a href="#查询、开放、关闭端口" class="headerlink" title="查询、开放、关闭端口"></a>查询、开放、关闭端口</h3><p>查询端口是否开放:</p>
+<p><code>firewall-cmd --query-port=8080/tcp</code></p>
+<p>开放8080端口:</p>
+<p><code>firewall-cmd --permanent --add-port=8080/tcp</code>，执行成功会显示 success</p>
+<p>移除端口:</p>
+<p><code>firewall-cmd --permanent --remove-port=8080/tcp</code></p>
+<p>查看防火墙的开放的端口:</p>
+<p><code>firewall-cmd --permanent --list-ports</code></p>
+<h3 id="重启防火墙-修改配置后要重启防火墙"><a href="#重启防火墙-修改配置后要重启防火墙" class="headerlink" title="重启防火墙(修改配置后要重启防火墙)"></a>重启防火墙(修改配置后要重启防火墙)</h3><p><code>firewall-cmd --reload</code> 不改变状态的条件下重启防火墙，一般用这条命令就够</p>
+<p>或者</p>
+<p><code>firewall-cmd --complete-reload</code> （使用这条命令：状态信息将会丢失，当防火墙有问题时可以使用，如，状态信息和防火墙规则都正常却无法建立任何链接的情况等）</p>
+<h3 id="查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况）"><a href="#查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况）" class="headerlink" title="查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况）"></a>查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --query-panic</span><br><span class="line">firewall-cmd --panic-on</span><br><span class="line">firewall-cmd --panic-off</span><br></pre></td></tr></table></figure>
+<h3 id="打开、关闭、重启防火墙（会改变状态）"><a href="#打开、关闭、重启防火墙（会改变状态）" class="headerlink" title="打开、关闭、重启防火墙（会改变状态）"></a>打开、关闭、重启防火墙（会改变状态）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl start firewalld</span><br><span class="line">systemctl restart firewalld</span><br></pre></td></tr></table></figure>
+<h3 id="开启-关闭-开机自启动防火墙"><a href="#开启-关闭-开机自启动防火墙" class="headerlink" title="开启/关闭 开机自启动防火墙"></a>开启/关闭 开机自启动防火墙</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable firewalld</span><br><span class="line">systemctl disable firewalld</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -474,7 +460,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/java/" rel="tag"># java</a>
+            <a href="/tags/linux/" rel="tag"># linux</a>
           
         </div>
       
@@ -487,8 +473,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/23/SpringBoot 使用Mybatis-Generator/" rel="next" title="SpringBoot使用Mybatis-Generator">
-                <i class="fa fa-chevron-left"></i> SpringBoot使用Mybatis-Generator
+              <a href="/2019/07/05/centos 7 配置mysql数据库/" rel="next" title="Centos7 安装配置mysql数据库">
+                <i class="fa fa-chevron-left"></i> Centos7 安装配置mysql数据库
               </a>
             
           </div>
@@ -497,8 +483,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/06/java获取MultipartFile图片的宽高大小/" rel="prev" title="java获取MultipartFile格式图片的宽高">
-                java获取MultipartFile格式图片的宽高 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/13/centos 7 安装 nginx/" rel="prev" title="centos 7 安装 nginx">
+                centos 7 安装 nginx <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -578,7 +564,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">108</span>
+                  <span class="site-state-item-count">115</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -655,7 +641,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的问题"><span class="nav-number">1.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发现问题原因"><span class="nav-number">2.</span> <span class="nav-text">发现问题原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方案一"><span class="nav-number">3.1.</span> <span class="nav-text">方案一</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二"><span class="nav-number">4.</span> <span class="nav-text">方案二</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方案三"><span class="nav-number">4.1.</span> <span class="nav-text">方案三</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案四"><span class="nav-number">5.</span> <span class="nav-text">方案四</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看firewall服务状态"><span class="nav-number">1.</span> <span class="nav-text">查看firewall服务状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看firewall的状态"><span class="nav-number">2.</span> <span class="nav-text">查看firewall的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启、重启与关闭"><span class="nav-number">3.</span> <span class="nav-text">开启、重启与关闭</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看防火墙规则"><span class="nav-number">4.</span> <span class="nav-text">查看防火墙规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询、开放、关闭端口"><span class="nav-number">5.</span> <span class="nav-text">查询、开放、关闭端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启防火墙-修改配置后要重启防火墙"><span class="nav-number">6.</span> <span class="nav-text">重启防火墙(修改配置后要重启防火墙)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况）"><span class="nav-number">7.</span> <span class="nav-text">查看、打开、关闭应急模式（应急模式阻断所有网络连接，防止出现紧急状况）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#打开、关闭、重启防火墙（会改变状态）"><span class="nav-number">8.</span> <span class="nav-text">打开、关闭、重启防火墙（会改变状态）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启-关闭-开机自启动防火墙"><span class="nav-number">9.</span> <span class="nav-text">开启/关闭 开机自启动防火墙</span></a></li></ol></div>
             
 
           </div>

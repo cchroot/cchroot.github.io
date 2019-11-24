@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="安装jdk第一步，下载先进入官网：http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 方法一：下载安装包到本地，再上传到服务器 根据系统选择相应版本，服务器是centos7 64位的，所以选择下载linux x64的安装包  下载成功后，使用上传工具（ lrzsz,xtfp等）将安装">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring boot 部署到 centos7">
+<meta property="og:url" content="http://yoursite.com/2019/07/20/spring boot 部署到 centos7/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="安装jdk第一步，下载先进入官网：http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 方法一：下载安装包到本地，再上传到服务器 根据系统选择相应版本，服务器是centos7 64位的，所以选择下载linux x64的安装包  下载成功后，使用上传工具（ lrzsz,xtfp等）将安装">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_3.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_4.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_5.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_4.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_5.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_6.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_7.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_8.png">
+<meta property="og:updated_time" content="2019-11-24T15:42:08.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="spring boot 部署到 centos7">
+<meta name="twitter:description" content="安装jdk第一步，下载先进入官网：http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html 方法一：下载安装包到本地，再上传到服务器 根据系统选择相应版本，服务器是centos7 64位的，所以选择下载linux x64的安装包  下载成功后，使用上传工具（ lrzsz,xtfp等）将安装">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/20/spring%20boot%20部署到%20centos7/images/linux/spring_boot_deploy_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/20/spring boot 部署到 centos7/">
+
+
+
+
+
+  <title>spring boot 部署到 centos7 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-lightbulb"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/20/spring boot 部署到 centos7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">spring boot 部署到 centos7</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-20T20:31:05+08:00">
+                2019-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h3><h4 id="第一步，下载"><a href="#第一步，下载" class="headerlink" title="第一步，下载"></a>第一步，下载</h4><p>先进入官网：<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a></p>
+<p>方法一：下载安装包到本地，再上传到服务器</p>
+<p>根据系统选择相应版本，服务器是centos7 64位的，所以选择下载linux x64的安装包</p>
+<p><img src="images/linux/spring_boot_deploy_1.png" alt="1"></p>
+<p>下载成功后，使用上传工具（ lrzsz,xtfp等）将安装包上传到/usr/local(根据自己习惯，选择目录)目录下</p>
+<p>方法二：wget下载</p>
+<p>在上面下载的页面，根据需要下载的版本，右键鼠标复制链接地址，然后执行wget命令：</p>
+<p><code>wget --no-cookies --header &quot;Cookie: oraclelicense=accept-securebackup-cookie;&quot; https://download.oracle.com/otn/java/jdk/8u231-b11/5b13a193868b4bf28bcb45c792fce896/jdk-8u231-linux-x64.tar.gz</code></p>
+<p>命令执行成功后即下载成功，可用<code>ls</code>命令查看当前目录下有没有对应的文件</p>
+<h4 id="第二步，解压"><a href="#第二步，解压" class="headerlink" title="第二步，解压"></a>第二步，解压</h4><p>切换到安装包保存目录：</p>
+<p><code>cd /usr/local</code></p>
+<p>解压到当前目录：</p>
+<p><code>tar -zxvf jdk-8u231-linux-x64.tar.gz</code></p>
+<h4 id="第三步，配置环境变量"><a href="#第三步，配置环境变量" class="headerlink" title="第三步，配置环境变量"></a>第三步，配置环境变量</h4><p>打开系统环境变量配置文件：</p>
+<p><code>vi /etc/profile</code></p>
+<p>按 i 进入编辑模式，然后在 profile 文件的末尾加上如下内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">## JAVA</span><br><span class="line">JAVA_HOME=/usr/local/jdk1.8.0_161</span><br><span class="line">JRE_HOME=/usr/local/jdk1.8.0_161/jre</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</span><br><span class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+<p>然后按 esc 键后输入 :wq 或者 :x 保存退出</p>
+<p>为了使得配置文件立即生效，执行如下命令：</p>
+<p><code>source /etc/profile</code></p>
+<h4 id="第四步，测试jdk是否安装成功"><a href="#第四步，测试jdk是否安装成功" class="headerlink" title="第四步，测试jdk是否安装成功"></a>第四步，测试jdk是否安装成功</h4><p>查看jdk版本信息：</p>
+<p><code>java -version</code></p>
+<p>在控制台输出 java 版本信息则表示安装成功。</p>
+<h3 id="安装tomcat"><a href="#安装tomcat" class="headerlink" title="安装tomcat"></a>安装tomcat</h3><p><strong>提示：打包成 war 包方式部署在外部tomcat（非springboot自带）上，或者多项目部署，才需要安装 tomcat，否则不需要安装 tomcat，直接打包成 jar 包运行即可。</strong></p>
+<h4 id="第一步，下载-1"><a href="#第一步，下载-1" class="headerlink" title="第一步，下载"></a>第一步，下载</h4><p>tomcat 下载方式与 jdk 下载方式类似，也是有两种方法</p>
+<p>先进入 tomcat 官网：<a href="https://tomcat.apache.org/download-80.cgi" target="_blank" rel="noopener">https://tomcat.apache.org/download-80.cgi</a></p>
+<p>方法一：先从官网下载到本地，再上传到服务器</p>
+<p><img src="images/linux/spring_boot_deploy_2.png" alt="1"></p>
+<p>方法二：wget下载</p>
+<p><code>wget http://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.47/bin/apache-tomcat-8.5.47.tar.gz</code></p>
+<h4 id="第二步，解压-1"><a href="#第二步，解压-1" class="headerlink" title="第二步，解压"></a>第二步，解压</h4><p>切换到tomcat下载目录：</p>
+<p><code>cd /usr/local</code></p>
+<p>解压到当前目录:</p>
+<p><code>tar -zxvf apache-tomcat-8.5.47.tar.gz</code></p>
+<h4 id="第三步，启动"><a href="#第三步，启动" class="headerlink" title="第三步，启动"></a>第三步，启动</h4><p>切换到解压后得 tomcat 得bin 目录下：</p>
+<p><code>cd /usr/local/apache-tomcat-8.5.47/bin</code></p>
+<p>执行启动命令：</p>
+<p><code>./startup.sh</code></p>
+<p>查看 tomcat 启动日志：</p>
+<p><code>tail -f ../logs/catalina.out</code></p>
+<p><img src="images/linux/spring_boot_deploy_3.png" alt="1"></p>
+<p>发现启动耗时太长,解决方法可参考此篇文章：<a href="https://blog.csdn.net/u013939884/article/details/72860358" target="_blank" rel="noopener">https://blog.csdn.net/u013939884/article/details/72860358</a></p>
+<p>我自己是通过修改 JR E中的 java.security 文件为 securerandom.source=file:/dev/urandom 来解决该问题。</p>
+<h4 id="第四步-测试"><a href="#第四步-测试" class="headerlink" title="第四步,测试"></a>第四步,测试</h4><p>访问网址：<a href="http://ip:8080/,访问时将" target="_blank" rel="noopener">http://ip:8080/,访问时将</a> ip 替换为自己的服务器ip，出现常见的 tomcat 欢迎页面，表示 tomcat 启动成功。</p>
+<p>备注：如果tomcat启动成功，但是该页面又访问不了，请检查 8080 端口是否开放。 </p>
+<h3 id="以war包方式部署"><a href="#以war包方式部署" class="headerlink" title="以war包方式部署"></a>以war包方式部署</h3><h4 id="第一步，将项目打包方式修改为war"><a href="#第一步，将项目打包方式修改为war" class="headerlink" title="第一步，将项目打包方式修改为war"></a>第一步，将项目打包方式修改为war</h4><p>修改 pom.xml 里面的 packaging 属性为 war:</p>
+<p><img src="images/linux/spring_boot_deploy_4.png" alt="1"></p>
+<h4 id="第二步，在-idea-中-Terminal-控制台执行-maven-打包命令"><a href="#第二步，在-idea-中-Terminal-控制台执行-maven-打包命令" class="headerlink" title="第二步，在 idea 中 Terminal 控制台执行 maven 打包命令"></a>第二步，在 idea 中 Terminal 控制台执行 maven 打包命令</h4><p><code>mvn clean package -Dmaven.test.skip=true</code></p>
+<p>这里也可打开 idea 最右侧的 Maven 中的 Lifecycle,双击 package 打包</p>
+<p>打包成功后如下（图片是 jar 包，war 包只是后缀名不同）：</p>
+<p><img src="images/linux/spring_boot_deploy_5.png" alt="1"></p>
+<h4 id="第三步，上传到服务器"><a href="#第三步，上传到服务器" class="headerlink" title="第三步，上传到服务器"></a>第三步，上传到服务器</h4><p>使用上传工具将包上传到服务器 /usr/local/apache-tomcat-8.5.47/webapps 目录下</p>
+<p>先将该目录下的 ROOT 目录删除，然后将 ivanky-0.0.1-SNAPSHOT.war 重命名为ROOT.war</p>
+<h4 id="第四步，启动tomcat"><a href="#第四步，启动tomcat" class="headerlink" title="第四步，启动tomcat"></a>第四步，启动tomcat</h4><h4 id="第五步，测试"><a href="#第五步，测试" class="headerlink" title="第五步，测试"></a>第五步，测试</h4><p>输入 ip 地址链接访问项目想访问的接口或目录</p>
+<p>到这里就部署成功了!</p>
+<h4 id="优化处理"><a href="#优化处理" class="headerlink" title="优化处理"></a>优化处理</h4><p>上面这样每次以 war 包方式打包，war 包比较大，我们解压 war 包之后，可以看到文件总共几十M,lib 包也是 几十M,而 classes 文件夹只有 几百kb。</p>
+<p>可以看到 lib 包的大小占到了90%以上，实际代码容量非常小，每次都重新打 war 包,实际上是比较麻烦的，也没有必要。所以在部署实际项目的时候，如果决定要以 war 包方式部署项目，我通常在 pom 依赖没有改变的时候，只会将项目 target 目录下的 classes 目录覆盖服务器上的 classes 目录即可。</p>
+<p>这样可以大幅度的提升项目部署速度，尤其是在网速比较慢的时候。</p>
+<p>只有当pom依赖有改动，才重新打一个完整的war包部署到服务器上。</p>
+<h3 id="以jar包方式部署"><a href="#以jar包方式部署" class="headerlink" title="以jar包方式部署"></a>以jar包方式部署</h3><h4 id="第一步，将项目打包方式修改为jar"><a href="#第一步，将项目打包方式修改为jar" class="headerlink" title="第一步，将项目打包方式修改为jar"></a>第一步，将项目打包方式修改为jar</h4><p>同样去 pom.xml 中修改 packaging 属性：</p>
+<p><img src="images/linux/spring_boot_deploy_4.png" alt="1"></p>
+<h4 id="第二步，在idea中Terminal控制台执行maven打包命令"><a href="#第二步，在idea中Terminal控制台执行maven打包命令" class="headerlink" title="第二步，在idea中Terminal控制台执行maven打包命令"></a>第二步，在idea中Terminal控制台执行maven打包命令</h4><p>这里也可打开 idea 最右侧的 Maven 中的 Lifecycle,双击 package 打包</p>
+<p>打包成功后如下（图片是 jar 包，war 包只是后缀名不同）：</p>
+<p><img src="images/linux/spring_boot_deploy_5.png" alt="1"></p>
+<h4 id="第三步，上传到服务器-1"><a href="#第三步，上传到服务器-1" class="headerlink" title="第三步，上传到服务器"></a>第三步，上传到服务器</h4><p>上传到服务器上任意你想放的项目文件夹下即可</p>
+<h4 id="运行jar包"><a href="#运行jar包" class="headerlink" title="运行jar包"></a>运行jar包</h4><p>先切换到jar包所在目录：</p>
+<p><code>cd /usr/local/xxxxxxx</code></p>
+<p>运行 jar:</p>
+<p><code>java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar</code></p>
+<p>出现如下信息表示启动成功:</p>
+<p><img src="images/linux/spring_boot_deploy_6.png" alt="1"></p>
+<h4 id="第五步-测试"><a href="#第五步-测试" class="headerlink" title="第五步,测试"></a>第五步,测试</h4><p>输入 ip 地址链接访问项目想访问的接口或目录</p>
+<p>到这里就部署成功了!</p>
+<p>这种方式部署的缺点：</p>
+<ol>
+<li>打包后，配置文件和依赖包都在jar包内部，配置文件无法修改。而实际项目中，开发环境的配置与服务器环境配置并不完全一致，例如数据库信息，日志信息保存路径等，想要修改配置文件也无法修改</li>
+<li>项目依赖包一般不会有变化，但是每次打包都会把依赖包打包到jar包内</li>
+<li>控制台页面一关闭，springboot服务也关闭</li>
+</ol>
+<h3 id="Jar包、配置文件、依赖包分开打包"><a href="#Jar包、配置文件、依赖包分开打包" class="headerlink" title="Jar包、配置文件、依赖包分开打包"></a>Jar包、配置文件、依赖包分开打包</h3><p>注：该方法本人暂未测试过</p>
+<p>由于每次以 jar 包方式部署会有上面说的缺点，为了解决这些问题，可以将 jar 包、配置文件、依赖包分开打包。分开打包后，有如下好处：</p>
+<ol>
+<li>可以实现当依赖包有变化时，才重新打包依赖包</li>
+<li>配置文件也可以修改</li>
+<li>由于依赖包和 jar 包分离，可以减少 jar 文件大小。jar 文件减少，可以缩短上传到服务器的时间</li>
+</ol>
+<h4 id="第一步，pom文件修改如下："><a href="#第一步，pom文件修改如下：" class="headerlink" title="第一步，pom文件修改如下："></a>第一步，pom文件修改如下：</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.lnjecit<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springboot-helloworld<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>springboot-helloworld<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.5.8.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-test<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--&lt;plugin&gt;</span></span><br><span class="line"><span class="comment">                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span></span><br><span class="line"><span class="comment">                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;</span></span><br><span class="line"><span class="comment">            &lt;/plugin&gt;--&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-jar-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">excludes</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>*.properties<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">exclude</span>&gt;</span>*.yml<span class="tag">&lt;/<span class="name">exclude</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">excludes</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">archive</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">manifest</span>&gt;</span></span><br><span class="line">                            <span class="comment">&lt;!-- 为依赖包添加路径, 这些路径会写在MANIFEST文件的Class-Path下 --&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">mainClass</span>&gt;</span>com.lnjecit.springboothelloworld.SpringbootHelloworldApplication<span class="tag">&lt;/<span class="name">mainClass</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">addClasspath</span>&gt;</span>true<span class="tag">&lt;/<span class="name">addClasspath</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">classpathPrefix</span>&gt;</span>lib/<span class="tag">&lt;/<span class="name">classpathPrefix</span>&gt;</span></span><br><span class="line">                            <span class="comment">&lt;!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 --&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">useUniqueVersions</span>&gt;</span>false<span class="tag">&lt;/<span class="name">useUniqueVersions</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">manifestEntries</span>&gt;</span></span><br><span class="line">                            <span class="comment">&lt;!-- 在Class-Path下添加配置文件的路径 --&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">Class-Path</span>&gt;</span>config/<span class="tag">&lt;/<span class="name">Class-Path</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">manifestEntries</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">archive</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-resources-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">id</span>&gt;</span>copy-xmls<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">phase</span>&gt;</span>process-sources<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-resources<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>$&#123;basedir&#125;/target/config<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">directory</span>&gt;</span>$&#123;basedir&#125;/src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">include</span>&gt;</span>*.properties<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">include</span>&gt;</span>*.yml<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-dependency-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">id</span>&gt;</span>copy<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">phase</span>&gt;</span>package<span class="tag">&lt;/<span class="name">phase</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>copy-dependencies<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>target/lib/<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="第二步-在idea中Terminal控制台执行maven打包命令"><a href="#第二步-在idea中Terminal控制台执行maven打包命令" class="headerlink" title="第二步,在idea中Terminal控制台执行maven打包命令"></a>第二步,在idea中Terminal控制台执行maven打包命令</h4><p><code>mvn clean package -Dmaven.test.skip=true</code></p>
+<p>命令执行完毕后，在 target 目录下生成了 jar 包、config、lib 三部分，如下图：</p>
+<p><img src="images/linux/spring_boot_deploy_7.png" alt="1"></p>
+<h4 id="第三步-将jar包上传到服务器-usr-local-springboot-helloworld-deploy目录下"><a href="#第三步-将jar包上传到服务器-usr-local-springboot-helloworld-deploy目录下" class="headerlink" title="第三步,将jar包上传到服务器/usr/local/springboot-helloworld/deploy目录下"></a>第三步,将jar包上传到服务器/usr/local/springboot-helloworld/deploy目录下</h4><h4 id="第四步-运行jar包"><a href="#第四步-运行jar包" class="headerlink" title="第四步,运行jar包"></a>第四步,运行jar包</h4><p>先切换到jar包所在目录：</p>
+<p><code>cd /usr/local/springboot-helloworld/deploy/</code></p>
+<p>运行jar:</p>
+<p><code>java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar</code></p>
+<p>运行成功后，跟上面一样测试即可</p>
+<h3 id="jar包后台运行"><a href="#jar包后台运行" class="headerlink" title="jar包后台运行"></a>jar包后台运行</h3><p>普通运行：</p>
+<p><code>java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar</code></p>
+<p>指定端口运行:</p>
+<p><code>java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar --server.port=8082</code></p>
+<p>后台运行：</p>
+<p>方法一：</p>
+<p><code>nohup java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar &amp;</code></p>
+<p>启动后会在当前目录生成一个 nohup.out 文件，可用查看启动情况，命令<code>tail -f nohup.out</code></p>
+<p>查看启动后的服务：</p>
+<p><code>ps -ef | grep java</code> 或 <code>ps -aux | grep java</code></p>
+<p><img src="images/linux/spring_boot_deploy_8.png" alt="1"></p>
+<p>关闭服务：</p>
+<p><code>kill -9 3730</code> 即： <code>kill -9 进程号</code></p>
+<p>方法二： </p>
+<p><code>nohup java -jar demo.jar &amp; &gt; log.file 2&gt;&amp;1 &amp;</code></p>
+<p>springboot 项目部署方式到这里就介绍完了！</p>
+<p>除未使用过的 jar 分包部署外，其它都亲自实践过~</p>
+<p>参考链接:<a href="https://www.cnblogs.com/zuidongfeng/p/8859229.html" target="_blank" rel="noopener">https://www.cnblogs.com/zuidongfeng/p/8859229.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/14/centos 7 设置 nginx 开机启动/" rel="next" title="centos 7 设置 nginx 开机启动">
+                <i class="fa fa-chevron-left"></i> centos 7 设置 nginx 开机启动
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/25/Linux（Centos7）下搭建SVN服务器/" rel="prev" title="Linux（centos7）下搭建SVN服务器">
+                Linux（centos7）下搭建SVN服务器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">115</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装jdk"><span class="nav-number">1.</span> <span class="nav-text">安装jdk</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步，下载"><span class="nav-number">1.1.</span> <span class="nav-text">第一步，下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步，解压"><span class="nav-number">1.2.</span> <span class="nav-text">第二步，解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步，配置环境变量"><span class="nav-number">1.3.</span> <span class="nav-text">第三步，配置环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四步，测试jdk是否安装成功"><span class="nav-number">1.4.</span> <span class="nav-text">第四步，测试jdk是否安装成功</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装tomcat"><span class="nav-number">2.</span> <span class="nav-text">安装tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步，下载-1"><span class="nav-number">2.1.</span> <span class="nav-text">第一步，下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步，解压-1"><span class="nav-number">2.2.</span> <span class="nav-text">第二步，解压</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步，启动"><span class="nav-number">2.3.</span> <span class="nav-text">第三步，启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四步-测试"><span class="nav-number">2.4.</span> <span class="nav-text">第四步,测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以war包方式部署"><span class="nav-number">3.</span> <span class="nav-text">以war包方式部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步，将项目打包方式修改为war"><span class="nav-number">3.1.</span> <span class="nav-text">第一步，将项目打包方式修改为war</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步，在-idea-中-Terminal-控制台执行-maven-打包命令"><span class="nav-number">3.2.</span> <span class="nav-text">第二步，在 idea 中 Terminal 控制台执行 maven 打包命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步，上传到服务器"><span class="nav-number">3.3.</span> <span class="nav-text">第三步，上传到服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四步，启动tomcat"><span class="nav-number">3.4.</span> <span class="nav-text">第四步，启动tomcat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五步，测试"><span class="nav-number">3.5.</span> <span class="nav-text">第五步，测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化处理"><span class="nav-number">3.6.</span> <span class="nav-text">优化处理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#以jar包方式部署"><span class="nav-number">4.</span> <span class="nav-text">以jar包方式部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步，将项目打包方式修改为jar"><span class="nav-number">4.1.</span> <span class="nav-text">第一步，将项目打包方式修改为jar</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步，在idea中Terminal控制台执行maven打包命令"><span class="nav-number">4.2.</span> <span class="nav-text">第二步，在idea中Terminal控制台执行maven打包命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步，上传到服务器-1"><span class="nav-number">4.3.</span> <span class="nav-text">第三步，上传到服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#运行jar包"><span class="nav-number">4.4.</span> <span class="nav-text">运行jar包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五步-测试"><span class="nav-number">4.5.</span> <span class="nav-text">第五步,测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Jar包、配置文件、依赖包分开打包"><span class="nav-number">5.</span> <span class="nav-text">Jar包、配置文件、依赖包分开打包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步，pom文件修改如下："><span class="nav-number">5.1.</span> <span class="nav-text">第一步，pom文件修改如下：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步-在idea中Terminal控制台执行maven打包命令"><span class="nav-number">5.2.</span> <span class="nav-text">第二步,在idea中Terminal控制台执行maven打包命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三步-将jar包上传到服务器-usr-local-springboot-helloworld-deploy目录下"><span class="nav-number">5.3.</span> <span class="nav-text">第三步,将jar包上传到服务器/usr/local/springboot-helloworld/deploy目录下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四步-运行jar包"><span class="nav-number">5.4.</span> <span class="nav-text">第四步,运行jar包</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jar包后台运行"><span class="nav-number">6.</span> <span class="nav-text">jar包后台运行</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概述 List , Set, Map都是接口，前两个继承至Collection接口，Map为独立接口 Set下有HashSet，LinkedHashSet，TreeSet List下有ArrayList，Vector，LinkedList Map下有Hashtable，LinkedHashMap，HashMap，TreeMap Collection接口下还有个Queue接口，有PriorityQu">
+<meta name="keywords" content="java">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java集合中List,Set以及Map等集合体系详解">
+<meta property="og:url" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="概述 List , Set, Map都是接口，前两个继承至Collection接口，Map为独立接口 Set下有HashSet，LinkedHashSet，TreeSet List下有ArrayList，Vector，LinkedList Map下有Hashtable，LinkedHashMap，HashMap，TreeMap Collection接口下还有个Queue接口，有PriorityQu">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_3.png">
+<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_4.png">
+<meta property="og:updated_time" content="2019-11-24T15:51:53.677Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java集合中List,Set以及Map等集合体系详解">
+<meta name="twitter:description" content="概述 List , Set, Map都是接口，前两个继承至Collection接口，Map为独立接口 Set下有HashSet，LinkedHashSet，TreeSet List下有ArrayList，Vector，LinkedList Map下有Hashtable，LinkedHashMap，HashMap，TreeMap Collection接口下还有个Queue接口，有PriorityQu">
+<meta name="twitter:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/">
+
+
+
+
+
+  <title>Java集合中List,Set以及Map等集合体系详解 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-lightbulb"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java集合中List,Set以及Map等集合体系详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-16T20:31:05+08:00">
+                2019-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><ul>
+<li>List , Set, Map都是接口，前两个继承至Collection接口，Map为独立接口</li>
+<li>Set下有HashSet，LinkedHashSet，TreeSet</li>
+<li>List下有ArrayList，Vector，LinkedList</li>
+<li>Map下有Hashtable，LinkedHashMap，HashMap，TreeMap</li>
+<li>Collection接口下还有个Queue接口，有PriorityQueue类</li>
+</ul>
+<p><img src="images/java/list_set_and_map_1.png" alt="1"></p>
+<p><strong>注意:</strong></p>
+<ul>
+<li>Queue接口与List、Set同一级别，都是继承了Collection接口。<br>看图你会发现,LinkedList既可以实现Queue接口,也可以实现List接口.只不过呢, LinkedList实现了Queue接口。Queue接口窄化了对LinkedList的方法的访问权限（即在方法中的参数类型如果是Queue时，就完全只能访问Queue接口所定义的方法 了，而不能直接访问 LinkedList的非Queue的方法），以使得只有恰当的方法才可以使用。</li>
+<li>SortedSet是个接口，它里面的（只有TreeSet这一个实现可用）中的元素一定是有序的。</li>
+</ul>
+<h3 id="Connection接口"><a href="#Connection接口" class="headerlink" title="Connection接口"></a>Connection接口</h3><p>—— ## List 有序,可重复 ##</p>
+<ul>
+<li>ArrayList<br>  优点: 底层数据结构是数组，查询快，增删慢。<br>  缺点: 线程不安全，效率高</li>
+<li>Vector<br>  优点: 底层数据结构是数组，查询快，增删慢。<br>  缺点: 线程安全，效率低</li>
+<li>LinkedList<br>  优点: 底层数据结构是链表，查询慢，增删快。<br>  缺点: 线程不安全，效率高</li>
+</ul>
+<p>—— ## Set 无序,唯一 ##</p>
+<ul>
+<li>HashSet<br>  底层数据结构是哈希表。(无序,唯一)<br>  如何来保证元素唯一性? 依赖两个方法：hashCode()和equals()</li>
+<li>LinkedHashSet<br>  底层数据结构是链表和哈希表。(FIFO插入有序,唯一)<br>  由链表保证元素有序<br>  由哈希表保证元素唯一</li>
+<li>TreeSet<br>  底层数据结构是红黑树。(唯一，有序)<br>  如何保证元素排序的呢? 自然排序和比较器排序<br>  如何保证元素唯一性的呢? 根据比较的返回值是否是0来决定</li>
+</ul>
+<h4 id="针对Collection集合我们到底使用谁呢"><a href="#针对Collection集合我们到底使用谁呢" class="headerlink" title="针对Collection集合我们到底使用谁呢?"></a>针对Collection集合我们到底使用谁呢?</h4><ul>
+<li>唯一吗？<ul>
+<li>是:Set<ul>
+<li>排序吗?<ul>
+<li>是：TreeSet或LinkedHashSet</li>
+<li>否：HashSet</li>
+<li>如果你知道是Set，但是不知道是哪个Set，就用HashSet。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>否：List<ul>
+<li>要安全吗?<ul>
+<li>是：Vector</li>
+<li>否：ArrayList或者LinkedList<ul>
+<li>查询多：ArrayList</li>
+<li>增删多：LinkedList</li>
+<li>如果你知道是List，但是不知道是哪个List，就用ArrayList。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果你知道是Collection集合，但是不知道使用谁，就用ArrayList。<br>如果你知道用集合，就用ArrayList。</p>
+<h3 id="Map接口"><a href="#Map接口" class="headerlink" title="Map接口"></a>Map接口</h3><p>不同于List单列的线性结构，Map提供的是一种双列映射的存储集合，它能够提供一对一的数据处理能力，双列中的第一列我们称为key，第二列就是value，一个key只能够在一个Map中出现最多一次，通过一个key能够获取Map中唯一一个与之对应的value值，正是它的这种一对一映射的数据处理关系，在实际应用中可以通过一个key快速定位到对应的value。综合上面的概念，可以概括出以下几个核心点：</p>
+<ul>
+<li>Map存储是以k-v键值对的方式进行存储的，是双列的</li>
+<li>Map中的key具有唯一性，不可重复</li>
+<li>每个key对应的value值是唯一的</li>
+</ul>
+<p>上图：</p>
+<p><img src="images/java/list_set_and_map_2.png" alt="1"></p>
+<p><img src="images/java/list_set_and_map_3.png" alt="1"></p>
+<p>Map接口有三个比较重要的实现类，分别是HashMap、TreeMap、HashTable和concurrentHashMap:</p>
+<ul>
+<li>TreeMap是有序的，HashMap、HashTable、concurrentHashMap是无序的。</li>
+<li>Hashtable和concurrentHashMap的方法是同步的，HashMap的方法不是同步的。这是两者最主要的区别。</li>
+</ul>
+<p>这就意味着:</p>
+<ul>
+<li>Hashtable和concurrentHashMap是线程安全的，HashMap不是线程安全的。</li>
+<li>HashMap效率较高，Hashtable效率较低，concurrentHashMap在多线程下效率更高。</li>
+<li>如果对同步性或与遗留代码的兼容性没有任何要求，建议使用HashMap。 查看Hashtable的源代码就可以发现，除构造函数外，Hashtable的所有 public 方法声明中都有 synchronized关键字，而HashMap的源码中则没有。</li>
+<li>Hashtable和concurrentHashMap不允许null值，HashMap允许null值（key和value都允许）</li>
+<li>父类不同：Hashtable的父类是Dictionary，HashMap和concurrentHashMap的父类是AbstractMap</li>
+</ul>
+<p>这里说一下重点说一下concurrentHashMap：</p>
+<p>因为多线程环境下，使用Hashmap进行put操作会引起死循环，导致CPU利用率接近100%，所以在并发情况下不能使用HashMap。</p>
+<p>HashTable容器使用synchronized来保证线程安全，但在线程竞争激烈的情况下HashTable的效率非常低下。因为当一个线程访问HashTable的同步方法时，其他线程访问HashTable的同步方法时，可能会进入阻塞或轮询状态。如线程1使用put进行添加元素，线程2不但不能使用put方法添加元素，并且也不能使用get方法来获取元素，所以竞争越激烈效率越低。</p>
+<p>HashTable容器在竞争激烈的并发环境下表现出效率低下的原因，是因为所有访问HashTable的线程都必须竞争同一把锁，那假如容器里有多把锁，每一把锁用于锁容器其中一部分数据，那么当多线程访问容器里不同数据段的数据时，线程间就不会存在锁竞争，从而可以有效的提高并发访问效率，这就是ConcurrentHashMap所使用的锁分段技术。</p>
+<h4 id="使用Map的时机"><a href="#使用Map的时机" class="headerlink" title="使用Map的时机"></a>使用Map的时机</h4><p><strong>存储双列结果</strong></p>
+<p>有很多情况下我们都需要将数据梳理成双列的结果集存储起来，最常见的就是当查询数据库时，它返回的结果集中，对应字段名key和记录值value就是一个map，当然如果是列表查询，还会在Map的基础上包装一层List，但是它的每一条记录结果的表示形式就是借助Map来存储的，再比如在数据接收时，如果没有合适的对象接收时，可以考虑使用Map进行接收，最常见的就是前端传入json字符串，后端使用Map来接收数据，但是现在基本都采用JSONObject的方式来接收了，但是Map也是可以作为一个备用选项，在没有其他第三方插件可用的情况下，可以考虑使用Map，或者String接收，然后转成Map。</p>
+<p><strong>快速定位数据</strong></p>
+<p>因为Map的一对一映射的数据关系，利用这一特性，可以快速定位具体数据，现在的一些缓存操作就是利用的这一特点，我们将数据以Map的形式存储在内存中，在缓存的众多数据当中，未来如果需要获取数据时只需要给一个指定的key，可以快速定位到缓存的内容，而不必像List结构那样，需要记住具体的位置才能快速定位，当然如果能够确切记得元素位置，也可以使用List，而且效率更高，但是更多时候是不现实的，我们需要记住每一个元素在List中的位值，数据过多时就比较麻烦了，而且写出来的程序可读性也很差，因为只是通过整型的Index获取，而Map的key可以是任何类型，完全可以定义一个具有明确意义的内容。</p>
+<p><strong>需要唯一性存储的时候</strong></p>
+<p>因为Map的key具有唯一性的特点，我们完全可以利用这一特点作为一个“变异版”的Set来使用，我们知道Set的特点就是不可重复，实际上在Java中，HashSet确实就是这么干的，它将存入的元素放入一个HashMap(Map的一种实现)的key中，而Map中所有的value都是一个固定的Object类型的PRESENT常量，因为它的key不可冗余的特性正好符合了Set的特点，所以在HashSet的底层实现就依托于HashMap，而且Map本身也是无需的，注意：这里的“无序”是“不保证有序”，而不是“保证无序”，这两个概念是有区别的，前者说明结果可能会有序，也可能无序，不能保证；而后者说明结果一定是无序的。所以有时可以发现在遍历HashSet时竟然是有序的，这其实并不冲突。</p>
+<h3 id="重点问题重点分析"><a href="#重点问题重点分析" class="headerlink" title="重点问题重点分析"></a>重点问题重点分析</h3><h4 id="TreeSet-LinkedHashSet-and-HashSet-的区别"><a href="#TreeSet-LinkedHashSet-and-HashSet-的区别" class="headerlink" title="TreeSet, LinkedHashSet and HashSet 的区别"></a>TreeSet, LinkedHashSet and HashSet 的区别</h4><p>TreeSet, LinkedHashSet and HashSet 在java中都是实现 Set 的数据结构:</p>
+<ul>
+<li>TreeSet的主要功能用于排序</li>
+<li>LinkedHashSet的主要功能用于保证FIFO即有序的集合(先进先出)</li>
+<li>HashSet只是通用的存储数据的集合</li>
+</ul>
+<p><strong>相同点</strong>:</p>
+<ul>
+<li>Duplicates elements: 因为三者都实现Set interface，所以三者都不包含duplicate elements</li>
+<li>Thread safety: 三者都不是线程安全的，如果要使用线程安全可以Collections.synchronizedSet()</li>
+</ul>
+<p><strong>不同点</strong>:</p>
+<ul>
+<li>Performance and Speed: <strong>HashSet插入数据最快，其次LinkHashSet，最慢的是TreeSet因为内部实现排序</strong></li>
+<li>Ordering: <strong>HashSet不保证有序，LinkHashSet保证FIFO即按插入顺序排序，TreeSet安装内部实现排序，也可以自定义排序规则</strong></li>
+<li>null:HashSet和LinkHashSet允许存在null数据，但是TreeSet中插入null数据时会报NullPointerException</li>
+</ul>
+<p><strong>代码比较</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> </span>&#123;</span><br><span class="line">	HashSet&lt;String&gt; hashSet = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">    LinkedHashSet&lt;String&gt; linkedHashSet = <span class="keyword">new</span> LinkedHashSet&lt;&gt;();</span><br><span class="line">    TreeSet&lt;String&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (String data : Arrays.asList(<span class="string">"B"</span>, <span class="string">"E"</span>, <span class="string">"D"</span>, <span class="string">"C"</span>, <span class="string">"A"</span>)) &#123;</span><br><span class="line">    	hashSet.add(data);</span><br><span class="line">    	linkedHashSet.add(data);</span><br><span class="line">		treeSet.add(data);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//不保证有序</span></span><br><span class="line">	System.out.println(<span class="string">"Ordering in HashSet :"</span> + hashSet);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//FIFO保证安装插入顺序排序</span></span><br><span class="line">	System.out.println(<span class="string">"Order of element in LinkedHashSet :"</span> + linkedHashSet);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//内部实现排序</span></span><br><span class="line">	System.out.println(<span class="string">"Order of objects in TreeSet :"</span> + treeSet);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果:</span><br><span class="line"></span><br><span class="line">Ordering in HashSet :[A, B, C, D, E] (无顺序)</span><br><span class="line">Order of element in LinkedHashSet :[B, E, D, C, A] (FIFO插入有序)</span><br><span class="line">Order of objects in TreeSet :[A, B, C, D, E] (排序)</span><br></pre></td></tr></table></figure></p>
+<h4 id="TreeSet的两种排序方式比较"><a href="#TreeSet的两种排序方式比较" class="headerlink" title="TreeSet的两种排序方式比较"></a>TreeSet的两种排序方式比较</h4><p><strong>一、排序的引入(以基本数据类型的排序为例)</strong></p>
+<p>由于TreeSet可以实现对元素按照某种规则进行排序，例如下面的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 创建集合对象</span></span><br><span class="line">        <span class="comment">// 自然顺序进行排序</span></span><br><span class="line">        TreeSet&lt;Integer&gt; ts = <span class="keyword">new</span> TreeSet&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建元素并添加</span></span><br><span class="line">        <span class="comment">// 20,18,23,22,17,24,19,18,24</span></span><br><span class="line">        ts.add(<span class="number">20</span>);</span><br><span class="line">        ts.add(<span class="number">18</span>);</span><br><span class="line">        ts.add(<span class="number">23</span>);</span><br><span class="line">        ts.add(<span class="number">22</span>);</span><br><span class="line">        ts.add(<span class="number">17</span>);</span><br><span class="line">        ts.add(<span class="number">24</span>);</span><br><span class="line">        ts.add(<span class="number">19</span>);</span><br><span class="line">        ts.add(<span class="number">18</span>);</span><br><span class="line">        ts.add(<span class="number">24</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 遍历</span></span><br><span class="line">        <span class="keyword">for</span> (Integer i : ts) &#123;</span><br><span class="line">            System.out.println(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果:</span><br><span class="line"></span><br><span class="line"><span class="number">17</span></span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">19</span></span><br><span class="line"><span class="number">20</span></span><br><span class="line"><span class="number">22</span></span><br><span class="line"><span class="number">23</span></span><br><span class="line"><span class="number">24</span></span><br></pre></td></tr></table></figure>
+<p><strong>二、如果是引用数据类型呢,比如自定义对象,又该如何排序呢?</strong></p>
+<p>测试类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TreeSet&lt;Student&gt; ts=<span class="keyword">new</span> TreeSet&lt;Student&gt;();</span><br><span class="line">        <span class="comment">//创建元素对象</span></span><br><span class="line">        Student s1=<span class="keyword">new</span> Student(<span class="string">"zhangsan"</span>,<span class="number">20</span>);</span><br><span class="line">        Student s2=<span class="keyword">new</span> Student(<span class="string">"lis"</span>,<span class="number">22</span>);</span><br><span class="line">        Student s3=<span class="keyword">new</span> Student(<span class="string">"wangwu"</span>,<span class="number">24</span>);</span><br><span class="line">        Student s4=<span class="keyword">new</span> Student(<span class="string">"chenliu"</span>,<span class="number">26</span>);</span><br><span class="line">        Student s5=<span class="keyword">new</span> Student(<span class="string">"zhangsan"</span>,<span class="number">22</span>);</span><br><span class="line">        Student s6=<span class="keyword">new</span> Student(<span class="string">"qianqi"</span>,<span class="number">24</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将元素对象添加到集合对象中</span></span><br><span class="line">        ts.add(s1);</span><br><span class="line">        ts.add(s2);</span><br><span class="line">        ts.add(s3);</span><br><span class="line">        ts.add(s4);</span><br><span class="line">        ts.add(s5);</span><br><span class="line">        ts.add(s6);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历</span></span><br><span class="line">        <span class="keyword">for</span>(Student s:ts)&#123;</span><br><span class="line">            System.out.println(s.getName()+<span class="string">"-----------"</span>+s.getAge());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Student.java:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果报错:</p>
+<p><img src="images/java/list_set_and_map_4.png" alt="1"></p>
+<p>原因分析：</p>
+<p>由于不知道该安照那一中排序方式排序，所以会报错。</p>
+<p>解决方法：</p>
+<ol>
+<li>自然排序</li>
+<li>比较器排序</li>
+</ol>
+<p><strong>(1).自然排序</strong></p>
+<p>自然排序要进行一下操作：</p>
+<ol>
+<li>Student类中实现 Comparable 接口</li>
+<li>重写Comparable接口中的Compareto方法</li>
+<li><code>compareTo(T o)  比较此对象与指定对象的顺序。</code></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Student</span>&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Student s)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//return -1; //-1表示放在红黑树的左边,即逆序输出</span></span><br><span class="line">        <span class="comment">//return 1;  //1表示放在红黑树的右边，即顺序输出</span></span><br><span class="line">        <span class="comment">//return o;  //表示元素相同，仅存放第一个元素</span></span><br><span class="line">        <span class="comment">//主要条件 姓名的长度,如果姓名长度小的就放在左子树，否则放在右子树</span></span><br><span class="line">        <span class="keyword">int</span> num=<span class="keyword">this</span>.name.length()-s.name.length();</span><br><span class="line">        <span class="comment">//姓名的长度相同，不代表内容相同,如果按字典顺序此 String 对象位于参数字符串之前，则比较结果为一个负整数。</span></span><br><span class="line">        <span class="comment">//如果按字典顺序此 String 对象位于参数字符串之后，则比较结果为一个正整数。</span></span><br><span class="line">        <span class="comment">//如果这两个字符串相等，则结果为 0</span></span><br><span class="line">        <span class="keyword">int</span> num1=num==<span class="number">0</span>?<span class="keyword">this</span>.name.compareTo(s.name):num;</span><br><span class="line">        <span class="comment">//姓名的长度和内容相同，不代表年龄相同，所以还要判断年龄</span></span><br><span class="line">        <span class="keyword">int</span> num2=num1==<span class="number">0</span>?<span class="keyword">this</span>.age-s.age:num1;</span><br><span class="line">        <span class="keyword">return</span> num2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果:</span><br><span class="line"></span><br><span class="line">lis-----------<span class="number">22</span></span><br><span class="line">qianqi-----------<span class="number">24</span></span><br><span class="line">wangwu-----------<span class="number">24</span></span><br><span class="line">chenliu-----------<span class="number">26</span></span><br><span class="line">zhangsan-----------<span class="number">20</span></span><br><span class="line">zhangsan-----------<span class="number">22</span></span><br></pre></td></tr></table></figure>
+<p><strong>(2).比较器排序</strong></p>
+<p>比较器排序步骤：</p>
+<ol>
+<li>单独创建一个比较类，这里以MyComparator为例，并且要让其继承Comparator接口</li>
+<li>重写Comparator接口中的Compare方法</li>
+<li><code>compare(T o1,T o2)      比较用来排序的两个参数。</code></li>
+<li>在主类中使用下面的 构造方法: <code>TreeSet(Comparator&lt;? superE&gt; comparator)    构造一个新的空 TreeSet，它根据指定比较器进行排序。</code></li>
+</ol>
+<p>Student.java:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>MyComparator类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyComparator</span> <span class="keyword">implements</span> <span class="title">Comparator</span>&lt;<span class="title">Student</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Student s1,Student s2)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 姓名长度</span></span><br><span class="line">        <span class="keyword">int</span> num = s1.getName().length() - s2.getName().length();</span><br><span class="line">        <span class="comment">// 姓名内容</span></span><br><span class="line">        <span class="keyword">int</span> num2 = num == <span class="number">0</span> ? s1.getName().compareTo(s2.getName()) : num;</span><br><span class="line">        <span class="comment">// 年龄</span></span><br><span class="line">        <span class="keyword">int</span> num3 = num2 == <span class="number">0</span> ? s1.getAge() - s2.getAge() : num2;</span><br><span class="line">        <span class="keyword">return</span> num3;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建集合对象</span></span><br><span class="line">        <span class="comment">//TreeSet(Comparator&lt;? super E&gt; comparator) 构造一个新的空 TreeSet，它根据指定比较器进行排序。</span></span><br><span class="line">        TreeSet&lt;Student&gt; ts=<span class="keyword">new</span> TreeSet&lt;Student&gt;(<span class="keyword">new</span> MyComparator());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//创建元素对象</span></span><br><span class="line">        Student s1=<span class="keyword">new</span> Student(<span class="string">"zhangsan"</span>,<span class="number">20</span>);</span><br><span class="line">        Student s2=<span class="keyword">new</span> Student(<span class="string">"lis"</span>,<span class="number">22</span>);</span><br><span class="line">        Student s3=<span class="keyword">new</span> Student(<span class="string">"wangwu"</span>,<span class="number">24</span>);</span><br><span class="line">        Student s4=<span class="keyword">new</span> Student(<span class="string">"chenliu"</span>,<span class="number">26</span>);</span><br><span class="line">        Student s5=<span class="keyword">new</span> Student(<span class="string">"zhangsan"</span>,<span class="number">22</span>);</span><br><span class="line">        Student s6=<span class="keyword">new</span> Student(<span class="string">"qianqi"</span>,<span class="number">24</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//将元素对象添加到集合对象中</span></span><br><span class="line">        ts.add(s1);</span><br><span class="line">        ts.add(s2);</span><br><span class="line">        ts.add(s3);</span><br><span class="line">        ts.add(s4);</span><br><span class="line">        ts.add(s5);</span><br><span class="line">        ts.add(s6);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//遍历</span></span><br><span class="line">        <span class="keyword">for</span>(Student s:ts)&#123;</span><br><span class="line">            System.out.println(s.getName()+<span class="string">"-----------"</span>+s.getAge());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果:</span><br><span class="line"></span><br><span class="line">lis-----------<span class="number">22</span></span><br><span class="line">qianqi-----------<span class="number">24</span></span><br><span class="line">wangwu-----------<span class="number">24</span></span><br><span class="line">chenliu-----------<span class="number">26</span></span><br><span class="line">zhangsan-----------<span class="number">20</span></span><br><span class="line">zhangsan-----------<span class="number">22</span></span><br></pre></td></tr></table></figure>
+<p><strong>三、性能测试</strong></p>
+<p>对象类:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Dog</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> size;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Dog</span><span class="params">(<span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">        size = s;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> size + <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Dog o)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//数值大小比较</span></span><br><span class="line">        <span class="keyword">return</span> size - o.size;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>主类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        Random r = <span class="keyword">new</span> Random();</span><br><span class="line">        HashSet&lt;Dog&gt; hashSet = <span class="keyword">new</span> HashSet&lt;Dog&gt;();</span><br><span class="line">        TreeSet&lt;Dog&gt; treeSet = <span class="keyword">new</span> TreeSet&lt;Dog&gt;();</span><br><span class="line">        LinkedHashSet&lt;Dog&gt; linkedSet = <span class="keyword">new</span> LinkedHashSet&lt;Dog&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// start time</span></span><br><span class="line">        <span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = r.nextInt(<span class="number">1000</span> - <span class="number">10</span>) + <span class="number">10</span>;</span><br><span class="line">            hashSet.add(<span class="keyword">new</span> Dog(x));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// end time</span></span><br><span class="line">        <span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">        <span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">        System.out.println(<span class="string">"HashSet: "</span> + duration);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// start time</span></span><br><span class="line">        startTime = System.nanoTime();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = r.nextInt(<span class="number">1000</span> - <span class="number">10</span>) + <span class="number">10</span>;</span><br><span class="line">            treeSet.add(<span class="keyword">new</span> Dog(x));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// end time</span></span><br><span class="line">        endTime = System.nanoTime();</span><br><span class="line">        duration = endTime - startTime;</span><br><span class="line">        System.out.println(<span class="string">"TreeSet: "</span> + duration);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// start time</span></span><br><span class="line">        startTime = System.nanoTime();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> x = r.nextInt(<span class="number">1000</span> - <span class="number">10</span>) + <span class="number">10</span>;</span><br><span class="line">            linkedSet.add(<span class="keyword">new</span> Dog(x));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// end time</span></span><br><span class="line">        endTime = System.nanoTime();</span><br><span class="line">        duration = endTime - startTime;</span><br><span class="line">        System.out.println(<span class="string">"LinkedHashSet: "</span> + duration);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">运行结果:</span><br><span class="line"></span><br><span class="line">HashSet: <span class="number">1544313</span></span><br><span class="line">TreeSet: <span class="number">2066049</span></span><br><span class="line">LinkedHashSet: <span class="number">629826</span></span><br><span class="line"></span><br><span class="line">虽然测试不够准确,但能反映得出，TreeSet要慢得多,因为它是有序的。</span><br></pre></td></tr></table></figure>
+<p>因觉得原作者总结的很全面很棒，为方便传阅与复习，遂转载，内容有修改完善部分。</p>
+<p>版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。<br>原文链接：<a href="https://blog.csdn.net/zhangqunshuai/article/details/80660974" target="_blank" rel="noopener">https://blog.csdn.net/zhangqunshuai/article/details/80660974</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/31/用putty连接Linux和实现windows与linux文件互传/" rel="next" title="用putty连接Linux和实现windows与linux文件互传">
+                <i class="fa fa-chevron-left"></i> 用putty连接Linux和实现windows与linux文件互传
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/24/排序算法总结/" rel="prev" title="四种排序算法总结">
+                四种排序算法总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">115</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connection接口"><span class="nav-number">2.</span> <span class="nav-text">Connection接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#针对Collection集合我们到底使用谁呢"><span class="nav-number">2.1.</span> <span class="nav-text">针对Collection集合我们到底使用谁呢?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map接口"><span class="nav-number">3.</span> <span class="nav-text">Map接口</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用Map的时机"><span class="nav-number">3.1.</span> <span class="nav-text">使用Map的时机</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重点问题重点分析"><span class="nav-number">4.</span> <span class="nav-text">重点问题重点分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TreeSet-LinkedHashSet-and-HashSet-的区别"><span class="nav-number">4.1.</span> <span class="nav-text">TreeSet, LinkedHashSet and HashSet 的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TreeSet的两种排序方式比较"><span class="nav-number">4.2.</span> <span class="nav-text">TreeSet的两种排序方式比较</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

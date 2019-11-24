@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="通过yum命令安装svnserve，命令如下：yum -y install subversion 此命令会全自动安装svn服务器相关服务和依赖，安装完成会自动停止命令运行 若需查看svn安装位置，可以用以下命令： rpm -ql subversion 查看版本号： svnserve --version 创建svn版本库创建一个文件目录: mkdir /home/svn/xxx 创建svn版本库:">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux（centos7）下搭建SVN服务器">
+<meta property="og:url" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="通过yum命令安装svnserve，命令如下：yum -y install subversion 此命令会全自动安装svn服务器相关服务和依赖，安装完成会自动停止命令运行 若需查看svn安装位置，可以用以下命令： rpm -ql subversion 查看版本号： svnserve --version 创建svn版本库创建一个文件目录: mkdir /home/svn/xxx 创建svn版本库:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_1.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_2.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_3.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_4.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_5.png">
+<meta property="og:updated_time" content="2019-11-24T15:47:37.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux（centos7）下搭建SVN服务器">
+<meta name="twitter:description" content="通过yum命令安装svnserve，命令如下：yum -y install subversion 此命令会全自动安装svn服务器相关服务和依赖，安装完成会自动停止命令运行 若需查看svn安装位置，可以用以下命令： rpm -ql subversion 查看版本号： svnserve --version 创建svn版本库创建一个文件目录: mkdir /home/svn/xxx 创建svn版本库:">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/">
+
+
+
+
+
+  <title>Linux（centos7）下搭建SVN服务器 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-lightbulb"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux（centos7）下搭建SVN服务器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-25T20:31:05+08:00">
+                2019-10-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="通过yum命令安装svnserve，命令如下："><a href="#通过yum命令安装svnserve，命令如下：" class="headerlink" title="通过yum命令安装svnserve，命令如下："></a>通过yum命令安装svnserve，命令如下：</h3><p><code>yum -y install subversion</code></p>
+<p>此命令会全自动安装svn服务器相关服务和依赖，安装完成会自动停止命令运行</p>
+<p>若需查看svn安装位置，可以用以下命令：</p>
+<p><code>rpm -ql subversion</code></p>
+<p>查看版本号：</p>
+<p><code>svnserve --version</code></p>
+<h3 id="创建svn版本库"><a href="#创建svn版本库" class="headerlink" title="创建svn版本库"></a>创建svn版本库</h3><p>创建一个文件目录:</p>
+<p><code>mkdir /home/svn/xxx</code></p>
+<p>创建svn版本库:</p>
+<p><code>svnadmin create /home/svn/xxx</code>（xxxx为你预期的版本库名称，可自定义）</p>
+<h3 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h3><p>创建svn版本库成功后，进入xxx目录的 conf 目录下:</p>
+<p><code>cd /home/svn/xxx/conf</code></p>
+<p>在 conf目录下，一共存放三份重要的配置文件，svn服务器配置文件（svnserve.conf）、 负责账号和密码的用户名单管理(passwd)、负责账号权限的管理，控制账号是否读写权限(authz)。</p>
+<h4 id="配置权限配置文件authz"><a href="#配置权限配置文件authz" class="headerlink" title="配置权限配置文件authz"></a>配置权限配置文件authz</h4><p>编辑 authz 文件（<strong>注意：[/]也是必须的</strong>）</p>
+<p>说明：两个站点为bbs,blog,所以分为三个组超级管理组admin、bbs管理组bbsadmin、blog管理组blogadmin。超级管理组admin可以读写所有站点内容，而bbsadmin对bbs站点可以读写，而只能读blog站点。以及blogadmin对blog站点可以读写,对bbs站点只读。</p>
+<p><img src="images/linux/svn_service_1.png" alt></p>
+<p>groups配置格式： 组名 = 账号名  （注意：配置时前面一定不要有空格）<br>下面repository这个特别注意，很多文档没有说明，这里写的格式是：[你真实的目录名称:/]，因为我这里是/home/svn/project所以我写的是project:/<br>接下来写：<br>@组名 = rw 或者 r （注意@前一定不能有空格），例如</p>
+<p>注：这里我只配置了一个用户，以后要有再加，下面是我实际配置截图：</p>
+<p><img src="images/linux/svn_service_2.png" alt></p>
+<h4 id="配置用户管理文件passwd"><a href="#配置用户管理文件passwd" class="headerlink" title="配置用户管理文件passwd"></a>配置用户管理文件passwd</h4><p>添加组用户以及密码，配置格式：账号 = 密码 （<strong>注意：这里账号前面一定不能有空格</strong>）</p>
+<p><img src="images/linux/svn_service_3.png" alt></p>
+<h4 id="配置-svn服务综合配置文件svnserve-conf"><a href="#配置-svn服务综合配置文件svnserve-conf" class="headerlink" title="配置 svn服务综合配置文件svnserve.conf"></a>配置 svn服务综合配置文件svnserve.conf</h4><p><img src="images/linux/svn_service_4.png" alt></p>
+<p>有些文档说这个可以不用修改配置，直接使用默认的即可。这是个很大的误区。如果不修改此文件，那么就会导致客户端一系列的问题。有可能拉取（checkout）代码就报权限错误，有可能你明明没有设置账户密码但是svn却根本不提示你输入账号密码。</p>
+<p><img src="images/linux/svn_service_5.png" alt></p>
+<p>如果没有设置anon-access = none 和 auth-access = write，则拉取代码没有权限。如果设置了anon-access = write而没有设置auth-access = write则客户端根本不会出现账户密码输入框而能正常拉取提交代码，即使你客户端怎么清除账号密码都不会弹出来。这个是非常之危险的，绝对不能这么干。<br>所以设置必须为：<br>anon-access = none<br>auth-access = write<br>另外password-db = passwd这个只需要去掉前面的注释和空格即可。<br>realm = /home/svn 这个一定要注意跟你svnserve -d -r /home/svn 这个地址保持一致。如果是这样的：<br>（realm = /home/svn/project 而你 svnserve -d -r /home/svn） 或者（realm = /home/svn 而你 svnserve -d -r /home/svn/project） 这样的话，也会有一些问题，如权限错误等等。</p>
+<h3 id="启用svn，连接svn以及关闭svn"><a href="#启用svn，连接svn以及关闭svn" class="headerlink" title="启用svn，连接svn以及关闭svn"></a>启用svn，连接svn以及关闭svn</h3><p>启动命令：<code>svnserve -d -r /home/svn</code></p>
+<p>输入命令<code>ps -aux | grep svnserve</code>可以查看到svn进程</p>
+<p>至此，服务器端配置已经OK了。可以用账号在客户端试试看看拉取，更新，提交代码是否ok</p>
+<p>关闭svn，通过ps -aux|grep svn 查看到的svn进程id来进行关闭</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/20/spring boot 部署到 centos7/" rel="next" title="spring boot 部署到 centos7">
+                <i class="fa fa-chevron-left"></i> spring boot 部署到 centos7
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/31/用putty连接Linux和实现windows与linux文件互传/" rel="prev" title="用putty连接Linux和实现windows与linux文件互传">
+                用putty连接Linux和实现windows与linux文件互传 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">115</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#通过yum命令安装svnserve，命令如下："><span class="nav-number">1.</span> <span class="nav-text">通过yum命令安装svnserve，命令如下：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建svn版本库"><span class="nav-number">2.</span> <span class="nav-text">创建svn版本库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置修改"><span class="nav-number">3.</span> <span class="nav-text">配置修改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#配置权限配置文件authz"><span class="nav-number">3.1.</span> <span class="nav-text">配置权限配置文件authz</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置用户管理文件passwd"><span class="nav-number">3.2.</span> <span class="nav-text">配置用户管理文件passwd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置-svn服务综合配置文件svnserve-conf"><span class="nav-number">3.3.</span> <span class="nav-text">配置 svn服务综合配置文件svnserve.conf</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启用svn，连接svn以及关闭svn"><span class="nav-number">4.</span> <span class="nav-text">启用svn，连接svn以及关闭svn</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

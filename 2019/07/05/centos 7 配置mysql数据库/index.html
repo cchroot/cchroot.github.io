@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="远程访问阿里云服务ssh-keygen ssh-copy-id root@ip ssh root@ip 其中ip为服务器的ip地址 下载安装并配置mysql数据库在MySQL官网中下载YUM源rpm安装包：http://dev.mysql.com/downloads/repo/yum/， 配置YUM源 下载mysql源安装包:wget http://dev.mysql.com/get/mysql5">
+<meta name="keywords" content="linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Centos7 安装配置mysql数据库">
+<meta property="og:url" content="http://yoursite.com/2019/07/05/centos 7 配置mysql数据库/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="远程访问阿里云服务ssh-keygen ssh-copy-id root@ip ssh root@ip 其中ip为服务器的ip地址 下载安装并配置mysql数据库在MySQL官网中下载YUM源rpm安装包：http://dev.mysql.com/downloads/repo/yum/， 配置YUM源 下载mysql源安装包:wget http://dev.mysql.com/get/mysql5">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-11-24T15:33:57.479Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Centos7 安装配置mysql数据库">
+<meta name="twitter:description" content="远程访问阿里云服务ssh-keygen ssh-copy-id root@ip ssh root@ip 其中ip为服务器的ip地址 下载安装并配置mysql数据库在MySQL官网中下载YUM源rpm安装包：http://dev.mysql.com/downloads/repo/yum/， 配置YUM源 下载mysql源安装包:wget http://dev.mysql.com/get/mysql5">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/05/centos 7 配置mysql数据库/">
+
+
+
+
+
+  <title>Centos7 安装配置mysql数据库 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-lightbulb"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/05/centos 7 配置mysql数据库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Centos7 安装配置mysql数据库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-05T20:31:05+08:00">
+                2019-07-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="远程访问阿里云服务"><a href="#远程访问阿里云服务" class="headerlink" title="远程访问阿里云服务"></a>远程访问阿里云服务</h3><p>ssh-keygen</p>
+<p>ssh-copy-id root@ip</p>
+<p>ssh root@ip</p>
+<p>其中ip为服务器的ip地址</p>
+<h3 id="下载安装并配置mysql数据库"><a href="#下载安装并配置mysql数据库" class="headerlink" title="下载安装并配置mysql数据库"></a>下载安装并配置mysql数据库</h3><p>在MySQL官网中下载YUM源rpm安装包：<a href="http://dev.mysql.com/downloads/repo/yum/，" target="_blank" rel="noopener">http://dev.mysql.com/downloads/repo/yum/，</a></p>
+<h3 id="配置YUM源"><a href="#配置YUM源" class="headerlink" title="配置YUM源"></a>配置YUM源</h3><ol>
+<li>下载mysql源安装包:<code>wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm</code></li>
+<li>安装mysql源:<code>yum localinstall mysql57-community-release-el7-8.noarch.rpm</code></li>
+<li>检查mysql源是否安装成功:<code>yum repolist enabled | grep &quot;mysql.*-community.*&quot;</code>(出现三行红色数据库mysql相关字段则表示成功)</li>
+<li>可以修改vim /etc/yum.repos.d/mysql-community.repo源，改变默认安装的mysql版本。比如要安装5.6版本，将5.7源的enabled=1改成enabled=0。然后再将5.6源的enabled=0改成enabled=1即可。</li>
+</ol>
+<h3 id="安装mysql"><a href="#安装mysql" class="headerlink" title="安装mysql"></a>安装mysql</h3><p><code>shell&gt; yum install mysql-community-server</code></p>
+<h3 id="启动MySQL服务"><a href="#启动MySQL服务" class="headerlink" title="启动MySQL服务"></a>启动MySQL服务</h3><p><code>shell&gt; systemctl start mysqld</code></p>
+<p>查看mysql的启动状态：</p>
+<p><code>shell&gt; service mysql(d) status</code></p>
+<h3 id="开启启动"><a href="#开启启动" class="headerlink" title="开启启动"></a>开启启动</h3><p><code>shell&gt; systemctl enable mysqld</code></p>
+<p><code>shell&gt; systemctl daemon-reload</code></p>
+<h3 id="修改root本地登录密码"><a href="#修改root本地登录密码" class="headerlink" title="修改root本地登录密码"></a>修改root本地登录密码</h3><p>mysql安装完成之后，在/var/log/mysqld.log文件中给root生成了一个默认密码。通过下面的方式找到root默认密码，然后登录mysql进行修改：</p>
+<p><code>shell&gt; grep &#39;temporary password&#39; /var/log/mysqld.log</code></p>
+<p>进入mysql:</p>
+<p><code>shell&gt; mysql -uroot -p</code></p>
+<p>注意：在此之上的命令都是在 shell 命令行进行，不需要进入或者登录mysql</p>
+<p>修改密码：</p>
+<p><code>mysql&gt; ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;MyNewPass4!&#39;;</code></p>
+<p>或者：</p>
+<p><code>mysql&gt; set password for &#39;root&#39;@&#39;localhost&#39;=password(&#39;MyNewPass4!&#39;);</code></p>
+<p>注意：mysql5.7默认安装了密码安全检查插件（validate_password），默认密码检查策略要求密码必须包含：大小写字母、数字和特殊符号，并且长度不能少于8位。否则会提示ERROR 1819 (HY000): Your password does not satisfy the current policy requirements错误。</p>
+<p>通过msyql环境变量可以查看密码策略的相关信息：</p>
+<p><code>mysql&gt; show variables like &#39;%password%&#39;;</code></p>
+<h3 id="添加远程登录用户"><a href="#添加远程登录用户" class="headerlink" title="添加远程登录用户"></a>添加远程登录用户</h3><p>默认只允许root帐户在本地登录，如果要在其它机器上连接mysql，必须修改root允许远程连接，或者添加一个允许远程连接的帐户，为了安全起见，我添加一个新的帐户：</p>
+<p><code>mysql&gt; GRANT ALL PRIVILEGES ON *.* TO &#39;chrootliu&#39;@&#39;%&#39; IDENTIFIED BY &#39;youPassword！&#39; WITH GRANT OPTION;</code></p>
+<h3 id="退出mysql"><a href="#退出mysql" class="headerlink" title="退出mysql"></a>退出mysql</h3><p><code>exit</code> 或 <code>quit</code></p>
+<h3 id="配置默认编码为utf8"><a href="#配置默认编码为utf8" class="headerlink" title="配置默认编码为utf8"></a>配置默认编码为utf8</h3><p>修改/etc/my.cnf配置文件，在[mysqld]下添加编码配置，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">character_set_server=utf8</span><br><span class="line">init_connect=&apos;SET NAMES utf8&apos;</span><br></pre></td></tr></table></figure>
+<p>重新启动mysql服务: </p>
+<p><code>shell&gt; service mysql(d) restart</code></p>
+<p>到此为止，mysql的配置已基本完成，可以尝试用数据库连接工具连接数据库，如果出现连接失败错误，则可以考虑是否是<strong>阿里云未配置安全组规则端口</strong>或<strong>服务器防火墙拦截了3306端口</strong>。</p>
+<h3 id="默认配置文件路径："><a href="#默认配置文件路径：" class="headerlink" title="默认配置文件路径："></a>默认配置文件路径：</h3><p>配置文件：/etc/my.cnf<br>日志文件：/var/log//var/log/mysqld.log<br>服务启动脚本：/usr/lib/systemd/system/mysqld.service<br>socket文件：/var/run/mysqld/mysqld.pid</p>
+<h3 id="其它添加用户、删除用户与授权命令"><a href="#其它添加用户、删除用户与授权命令" class="headerlink" title="其它添加用户、删除用户与授权命令"></a>其它添加用户、删除用户与授权命令</h3><p>一、创建用户命令：</p>
+<p><code>CREATE USER &#39;username&#39;@&#39;host&#39; IDENTIFIED BY &#39;password&#39;;</code></p>
+<p>例如：</p>
+<p><code>CREATE USER &#39;test_admin&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;admin@123_S&#39;;</code></p>
+<p>其中:</p>
+<p>username——将要创建的用户名；<br>host——指定该用户在哪个主机上可以登录，”localhost”指该用户只能在本地登录，不能在另外一台机器上远程登录，如果想远程登录，将”localhost”改为”%”，表示在任何一台电脑上都可以登录；也可以指定某台机器可以远程登录；<br>password——该用户的登录密码，密码可以为空，若为空则该用户可以不需要密码登录服务器。</p>
+<p>二、授权：以root用户登录到数据库进行授权</p>
+<p>命令：</p>
+<p><code>GRANT privileges ON databasename.tablename TO &#39;username&#39;@&#39;host&#39;</code></p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GRANT SELECT ON test_db.* TO &apos;test_admin2&apos;@&apos;%&apos;;</span><br><span class="line"></span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line">注意:必须执行flush privileges;</span><br></pre></td></tr></table></figure>
+<p>其中:</p>
+<p>privileges——用户的操作权限，如SELECT等。如果授予所有权限则使用ALL。</p>
+<p>databasename——数据库名称。tablename——表名。如果要给该用户授予对所有数据库和表的相应操作权限则可用<em>表示，例如</em>.*</p>
+<p>三、撤销用户权限</p>
+<p>命令：</p>
+<p><code>REVOKE privilege ON databasename.tablename FROM &#39;username&#39;@&#39;host&#39;;</code></p>
+<p>例如：</p>
+<p><code>REVOKE SELECT ON test_db.* FROM &#39;test_min&#39;@&#39;%&#39;;</code></p>
+<p>四、删除账户及权限</p>
+<p>命令：</p>
+<p><code>drop user &#39;username&#39;@&#39;host&#39;;</code></p>
+<p>五、查看用户的授权</p>
+<p>命令：</p>
+<p><code>SHOW GRANTS FOR &#39;username&#39;@&#39;host&#39;</code></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/20/facebook骨架屏和van骨架屏实现/" rel="next" title="骨架屏动画实现">
+                <i class="fa fa-chevron-left"></i> 骨架屏动画实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/06/centos 7 防火墙配置/" rel="prev" title="Centos7 防火墙配置">
+                Centos7 防火墙配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">115</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#远程访问阿里云服务"><span class="nav-number">1.</span> <span class="nav-text">远程访问阿里云服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载安装并配置mysql数据库"><span class="nav-number">2.</span> <span class="nav-text">下载安装并配置mysql数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置YUM源"><span class="nav-number">3.</span> <span class="nav-text">配置YUM源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装mysql"><span class="nav-number">4.</span> <span class="nav-text">安装mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动MySQL服务"><span class="nav-number">5.</span> <span class="nav-text">启动MySQL服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开启启动"><span class="nav-number">6.</span> <span class="nav-text">开启启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改root本地登录密码"><span class="nav-number">7.</span> <span class="nav-text">修改root本地登录密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加远程登录用户"><span class="nav-number">8.</span> <span class="nav-text">添加远程登录用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#退出mysql"><span class="nav-number">9.</span> <span class="nav-text">退出mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置默认编码为utf8"><span class="nav-number">10.</span> <span class="nav-text">配置默认编码为utf8</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#默认配置文件路径："><span class="nav-number">11.</span> <span class="nav-text">默认配置文件路径：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其它添加用户、删除用户与授权命令"><span class="nav-number">12.</span> <span class="nav-text">其它添加用户、删除用户与授权命令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
