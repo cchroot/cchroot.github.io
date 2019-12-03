@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_3.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_4.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_5.png">
-<meta property="og:updated_time" content="2019-11-24T15:47:37.762Z">
+<meta property="og:updated_time" content="2019-12-03T16:22:55.542Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux（centos7）下搭建SVN服务器">
 <meta name="twitter:description" content="通过yum命令安装svnserve，命令如下：yum -y install subversion 此命令会全自动安装svn服务器相关服务和依赖，安装完成会自动停止命令运行 若需查看svn安装位置，可以用以下命令： rpm -ql subversion 查看版本号： svnserve --version 创建svn版本库创建一个文件目录: mkdir /home/svn/xxx 创建svn版本库:">
@@ -440,9 +440,9 @@
 <p><code>svnadmin create /home/svn/xxx</code>（xxxx为你预期的版本库名称，可自定义）</p>
 <h3 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h3><p>创建svn版本库成功后，进入xxx目录的 conf 目录下:</p>
 <p><code>cd /home/svn/xxx/conf</code></p>
-<p>在 conf目录下，一共存放三份重要的配置文件，svn服务器配置文件（svnserve.conf）、 负责账号和密码的用户名单管理(passwd)、负责账号权限的管理，控制账号是否读写权限(authz)。</p>
+<p>在 conf 目录下，一共存放三份重要的配置文件，svn 服务器配置文件（svnserve.conf）、 负责账号和密码的用户名单管理(passwd)、负责账号权限的管理，控制账号是否读写权限(authz)。</p>
 <h4 id="配置权限配置文件authz"><a href="#配置权限配置文件authz" class="headerlink" title="配置权限配置文件authz"></a>配置权限配置文件authz</h4><p>编辑 authz 文件（<strong>注意：[/]也是必须的</strong>）</p>
-<p>说明：两个站点为bbs,blog,所以分为三个组超级管理组admin、bbs管理组bbsadmin、blog管理组blogadmin。超级管理组admin可以读写所有站点内容，而bbsadmin对bbs站点可以读写，而只能读blog站点。以及blogadmin对blog站点可以读写,对bbs站点只读。</p>
+<p>说明：两个站点为 bbs,blog,所以分为三个组超级管理组admin、bbs管理组bbsadmin、blog管理组blogadmin。超级管理组admin可以读写所有站点内容，而bbsadmin对bbs站点可以读写，而只能读blog站点。以及blogadmin对blog站点可以读写,对bbs站点只读。</p>
 <p><img src="images/linux/svn_service_1.png" alt></p>
 <p>groups配置格式： 组名 = 账号名  （注意：配置时前面一定不要有空格）<br>下面repository这个特别注意，很多文档没有说明，这里写的格式是：[你真实的目录名称:/]，因为我这里是/home/svn/project所以我写的是project:/<br>接下来写：<br>@组名 = rw 或者 r （注意@前一定不能有空格），例如</p>
 <p>注：这里我只配置了一个用户，以后要有再加，下面是我实际配置截图：</p>
@@ -599,7 +599,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/javascript/index.html">
                   <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
