@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="其他,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言面对项目的各种需求，使用口头约定与联调校对的前后端联调对接方式，前后端已经很难快速应对各种需求与需求变更，协作效率相对低下。为此，决定制定对接规范来提升前后端的协作效率，提高项目开发速度。 目标 尽可能的缩小沟通成本，用最少的交流来确定大部分的工作 花最少的时间写文档，尽可能的让协作人员看懂所有文档内容 熟练后不用看文档，也能知道各种接口大概的逻辑与对应的操作 提高代码可读性  前后端协作流程">
+<meta name="keywords" content="其他">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前后端接口规范">
+<meta property="og:url" content="http://yoursite.com/2018/12/13/前后端接口规范/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="前言面对项目的各种需求，使用口头约定与联调校对的前后端联调对接方式，前后端已经很难快速应对各种需求与需求变更，协作效率相对低下。为此，决定制定对接规范来提升前后端的协作效率，提高项目开发速度。 目标 尽可能的缩小沟通成本，用最少的交流来确定大部分的工作 花最少的时间写文档，尽可能的让协作人员看懂所有文档内容 熟练后不用看文档，也能知道各种接口大概的逻辑与对应的操作 提高代码可读性  前后端协作流程">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/other/before_and_after_1.png">
+<meta property="og:image" content="http://yoursite.com/images/other/before_and_after_2.png">
+<meta property="og:image" content="http://yoursite.com/images/other/before_and_after_3.png">
+<meta property="og:updated_time" content="2019-12-12T16:11:04.372Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前后端接口规范">
+<meta name="twitter:description" content="前言面对项目的各种需求，使用口头约定与联调校对的前后端联调对接方式，前后端已经很难快速应对各种需求与需求变更，协作效率相对低下。为此，决定制定对接规范来提升前后端的协作效率，提高项目开发速度。 目标 尽可能的缩小沟通成本，用最少的交流来确定大部分的工作 花最少的时间写文档，尽可能的让协作人员看懂所有文档内容 熟练后不用看文档，也能知道各种接口大概的逻辑与对应的操作 提高代码可读性  前后端协作流程">
+<meta name="twitter:image" content="http://yoursite.com/images/other/before_and_after_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/13/前后端接口规范/">
+
+
+
+
+
+  <title>前后端接口规范 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/13/前后端接口规范/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">前后端接口规范</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-13T21:59:05+08:00">
+                2018-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>面对项目的各种需求，使用口头约定与联调校对的前后端联调对接方式，前后端已经很难快速应对各种需求与需求变更，协作效率相对低下。为此，决定制定对接规范来提升前后端的协作效率，提高项目开发速度。</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ol>
+<li>尽可能的缩小沟通成本，用最少的交流来确定大部分的工作</li>
+<li>花最少的时间写文档，尽可能的让协作人员看懂所有文档内容</li>
+<li>熟练后不用看文档，也能知道各种接口大概的逻辑与对应的操作</li>
+<li>提高代码可读性</li>
+</ol>
+<h3 id="前后端协作流程规范"><a href="#前后端协作流程规范" class="headerlink" title="前后端协作流程规范"></a>前后端协作流程规范</h3><p>前后端团队一定时间的合作，一般可以大致规划出对于双方开发效率较优的协作流程. 将这个流程再进行优化便可落实为规范流程。</p>
+<p>一个典型的前后端协作流程如下：</p>
+<p><img src="/images/other/before_and_after_1.png" alt="图片"></p>
+<ol>
+<li>需求分析。参与者一般有前后端、测试、以及产品. 由产品主持，对需求进行宣贯，接受开发和测试的反馈，确保大家对需求有一致的认知</li>
+<li>系统设计。讨论应用的开发设计和功能模块，沟通技术点、难点、以及分工问题</li>
+<li>设计接口文档。可以由前后端一起设计；或者由后端设计、前端确认是否符合要求</li>
+<li>并行开发。前后端并行开发，在这个阶段，前端可以先实现静态页面; 或者根据接口文档对接口进行Mock, 来模拟对接后端接口</li>
+<li>在联调之前，要求后端做好接口测试</li>
+<li>测试环境联调。前端将接口请求代理到后端服务，进行环境联调</li>
+</ol>
+<h3 id="确定接口规范"><a href="#确定接口规范" class="headerlink" title="确定接口规范"></a>确定接口规范</h3><p>首先应该确定的是接口规范。其实使用哪种接口标准是其次，重要的是统一，且要满足前后端的开发效率要求。对于越是庞大且复杂的项目，越是不建议后端去定义自己的接口标准，而应该去选择一些通用的、有标准定义接口形式, 例如：</p>
+<ul>
+<li>RESTful: RESTful是目前使用最为广泛的API设计规范, 基于HTTP本身的机制来实现。该规范也是使用最广泛的API形式，所以社区上有很多工具来对RESTful接口进行文档化、测试和模拟。<a href="http://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html" target="_blank" rel="noopener">介绍链接</a></li>
+<li>JSONRPC 这是一种非常简单、容易理解的接口规范。简单则不容易产生分歧，新手也可以很快接受。<a href="http://wiki.geekdream.com/Specification/json-rpc_2.0.html" target="_blank" rel="noopener">介绍链接</a></li>
+<li>GraphQL 更为先进、更有前景的API规范。但是你要说服后端配合你使用这种标准可能很有难度。<a href="https://graphql.org/learn/" target="_blank" rel="noopener">介绍链接</a></li>
+</ul>
+<p>我们当前使用的接口规范已经确定，即 RESTful API 设计规范。</p>
+<h3 id="接口规范内容"><a href="#接口规范内容" class="headerlink" title="接口规范内容"></a>接口规范内容</h3><p>由前端和后端一起协定接口规范的内容, 确定接口的地址(URL), 输入(request)和输出(response)格式, 必要的时候详细注释每一个字段的含义和数据类型，以下为规范具体内容：</p>
+<h4 id="接口地址和请求方式"><a href="#接口地址和请求方式" class="headerlink" title="接口地址和请求方式"></a>接口地址和请求方式</h4><p>接口地址即接口的 URL, 定义时使用相对路径(即不用带上域名信息), 建议分模块来定义, 大方向遵循 RESTful 风格。</p>
+<p>关于接口地址，例如：</p>
+<ul>
+<li>GET  “/api/product/list” 表示获取产品列表信息</li>
+<li>POST  “/api/product/add” 表示添加产品</li>
+<li>POST  “/api/product/delete” 表示删除产品</li>
+<li>POST  “/api/product/edit” 表示编辑产品，即更新操作</li>
+<li>GET  “/api/refund/reasons” 表示获取退货原因</li>
+<li>GET  “/api/refund/orderlist” 表水获取退货订单列表，注意这里都是采用小写</li>
+</ul>
+<p>如上，接口地址定义时使用相对路径(即不用带上域名信息), 采用分模块来定义，模块名后接上接口操作（主要是post方式的增删改）或者获取的是什么（主要是get方式的获取内容）。</p>
+<p>项目后期可能会存在很多的模块，包括主模块和子模块的嵌套，还有资源需要多级分类，这样比较容易写出多层级的URL 接口，例如获取某个产品的某个sku 信息：</p>
+<p>GET  “/api/product/12/sku/2”</p>
+<p>这种 URL 不利于扩展，语义也不够明确，更好的做法是除了第一级，其他级别都用查询字符串表达：</p>
+<p>GET  “/api/product/12?sku=2”</p>
+<p>关于请求方式：</p>
+<ul>
+<li>获取信息尽量采用GET方式请求</li>
+<li>有涉及到增删改传递参数的尽量采用POST方式请求</li>
+<li>PUT，PATCH 和 DELETE 三个请求方式项目中暂时没有采用，这里暂时不做约定</li>
+</ul>
+<p>请求方式在当前项目中还是存在随后端人员随意设定情况，后续建议根据约定规范请求方式：用GET获取，POST新增，PUT(更新)和PATCH(部分更新)，DELETE删除。</p>
+<p>关于 api 版本控制：</p>
+<ul>
+<li>应该将API的版本号放入URL，采用多版本并存，增量发布的方式</li>
+<li>另一种做法是，将版本号放在HTTP头信息中</li>
+<li>项目当前还未使用 api 版本控制</li>
+</ul>
+<h4 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h4><p>向接口传递参数时, 如果是少量参数可以作为 URL query string 追加到接口的 URL 中, 或者作为 Content-Type: application/x-www-form-urlencoded 放在请求体(body)中(即表单提交的方式)，这是我们当前接口采用的提交方式。</p>
+<p>对于复杂的接口参数(例如嵌套了多层的数据结构), 其实个人比较推荐在 HTTP 请求体(body)中包含一个 JSON 字符串作为接口的参数, 并设置 Content-Type: application/json; charset=utf-8 的接口提交方式。由于我们项目已经是采用上面的接口参数提交方式，这里便不做更改了。</p>
+<h4 id="接口内容约定（重点关注）"><a href="#接口内容约定（重点关注）" class="headerlink" title="接口内容约定（重点关注）"></a>接口内容约定（重点关注）</h4><ul>
+<li><p>接口必须返回统一的数据结构，参考接口返回的数据结构。</p>
+</li>
+<li><p>接口查询不到数据时, 即空数据的情况下返回给前端怎样的数据：</p>
+<ul>
+<li>必须返回非 null 的对应数据类型初始值, 例如对象类型的返回空对象({}), 数组类型的返回空数组([]), 其他原始数据类型(String/Number/Boolean…)也使用对应的默认值。即必须明确数据类型，很多后端写的接口都是string和number不分的，如果没有规范，前端就需要针对这个属性字段做特殊处理，这也可能是潜在的bug。</li>
+<li>这样可以减少前端很多琐碎的非空判断, 直接使用接口中的数据，不会产生是否存在字段，是否有数值的隐藏bug，并且也可以减轻测试的工作量。</li>
+<li>例如：某个字段本身返回数字类型的数字，但是没有数据的时候却返回了一个空字符串，前端就会显示空字符串而不会显示0。</li>
+<li>再例如：获取 data 对象下的 name ：data.name，如果 data 为 null, 可想而知会前端会报错 Uncaught TypeError: Cannot read property “name ” of null。</li>
+</ul>
+</li>
+<li><p>返回数据中图片 URL 是完整的还是部分的：</p>
+<ul>
+<li><a href="https://www.maxthoven.com/upload/aaa.png" target="_blank" rel="noopener">https://www.maxthoven.com/upload/aaa.png</a> 这就是完整的, 前端直接使用这个 URL。</li>
+<li>/upload/bbb.png 这就是部分的, 一般省略域名部分, 前端需要自己拼接后才能使用 ‘<a href="https://www.maxthoven.com&#39;" target="_blank" rel="noopener">https://www.maxthoven.com&#39;</a> + ‘/path/to/img.png’。</li>
+<li>由于开发经常分各种环境，图片的 URL 建议返回完整的 URL，除非图片分环境存储在不同的服务器资源目录下。</li>
+<li>如果存在资源服务器则最好采用资源服务器来存储图片。</li>
+</ul>
+</li>
+<li><p>返回数据中页面跳转的 URL 是给完整的还是部分的：</p>
+<ul>
+<li>内部页面返回部分的, 或者只给相关参数的, 由前端自己拼接, 例如：只给出商品ID, 让前端自己拼接商品详情页的 URL。</li>
+<li>外部页面返回完整的, 例如：广告授权要跳转去亚马逊。</li>
+</ul>
+</li>
+<li><p>返回数据中日期的格式, 是使用时间戳还是格式化好的文字：</p>
+<ul>
+<li>对于需要前端再次处理的日期值(例如根据日期计算倒计时), 可以使用时间戳(简单暴力), 例如: 1458885313711, 或者参考 Date.prototype.toJSON 提供 ISO 标准格式(需要考虑时区时)。</li>
+<li>对于纯展示用的日期值, 推荐返回为格式化好的文字或数字, 例如: 2019-10-29 08:39:11。</li>
+<li>避免每个端(例如H5/APP/小程序)都需要对时间做统一的格式化实现, 一旦需要调整, 需要各个端都调整一遍。</li>
+</ul>
+</li>
+<li><p>对于需要特殊处理的数字，例如：金额千分位显示，若前端需要计算处理则后端返 Number 类型的数字，否则返回 String 类型的字符串。</p>
+</li>
+<li><p>对于大数字(例如 Java 的 long 类型), 返回给前端时需要设置为字符串类型, 否则 JavaScript 会发生溢出, 造成得到的数值错误：</p>
+<ul>
+<li>例如: 返回 JSON 数据 {“id”: 362909601374617692} 前端拿到的值却是: 362909601374617660。</li>
+</ul>
+</li>
+<li><p>分页参数和分页信息：</p>
+<ul>
+<li>统一分页的数据格式，即统一分页请求的参数和分页结果的数据结构。</li>
+<li>分页返回的数据结构详情见接口返回的数据结构。</li>
+</ul>
+</li>
+<li><p>调用接口失败的常用错误码, 例如未授权时调用需要授权的接口返回 “status”: 401。</p>
+</li>
+<li><p>接口需要登录时需要如何处理, 特别是同时涉及到 Web 端/微信端/App 端, 需要前端针对运行环境判断如何跳转到特定登录页面。</p>
+</li>
+</ul>
+<h4 id="接口返回的数据结构"><a href="#接口返回的数据结构" class="headerlink" title="接口返回的数据结构"></a>接口返回的数据结构</h4><p>接口返回的响应体类型推荐为 Content-Type: application/json; charset=utf-8, 返回的数据包含在 HTTP 响应体中, 是一个 JSON Object. 该 Object 包含 3 个字段 data, status, tip：</p>
+<p><strong>接口调用成功时返回：</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json; charset=utf-8</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  "data": &#123;&#125;, // 分返回的是对象还是列表，如果有数据时返回的数据是数组，则默认为([])</span><br><span class="line">  "status": 200,</span><br><span class="line">  "tip": “给用户的提示信息” // 前端需要提示才显示，例如授权成功</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于data, 如果接口只是表示删除，授权等成功，不需要显示数据，则返回([])或者({})都行。</p>
+<p><strong>接口调用失败时返回：</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 404 error</span><br><span class="line">Content-Type: application/json; charset=utf-8</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"status"</span>: <span class="number">401</span>,</span><br><span class="line">  “tip”: “Unauthorized”,</span><br><span class="line">  "error": &#123;</span><br><span class="line">	“message”:”未授权”</span><br><span class="line">	“code”: “10401”</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>字段说明：</strong></p>
+<p><img src="/images/other/before_and_after_2.png" alt="图片"></p>
+<p><strong>列表返回的数据结构：</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json; charset=utf-8</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"data"</span>: [</span><br><span class="line">	&#123;</span><br><span class="line">	  region: 1</span><br><span class="line">	  sid: 11</span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">	  region: 2</span><br><span class="line">	  sid: 12</span><br><span class="line">	&#125;,…</span><br><span class="line">  ], </span><br><span class="line">  "status": 200,</span><br><span class="line">  "tip": “给用户的提示信息” // 前端需要提示才显示，例如授权成功</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若带有分页，则返回的数据结构再嵌套一层分页相关信息（根据具体项目约定返回）：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Type: application/json; charset=utf-8</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"data"</span>: &#123;</span><br><span class="line">    current_page: 1</span><br><span class="line">    data: [</span><br><span class="line">	  &#123;</span><br><span class="line">	    place_date: "2019-10-22 08:48:02",</span><br><span class="line">	    interval: 2, </span><br><span class="line">	  &#125;,…</span><br><span class="line">	]</span><br><span class="line">    first_page_url: "http://maxthoven-test.com/api/refund/orderlist?page=1"</span><br><span class="line">  	from: 1</span><br><span class="line">	last_page: 14</span><br><span class="line">	last_page_url: "http://maxthoven-test.com/api/refund/orderlist?page=14"</span><br><span class="line">	next_page_url: "http://maxthoven-test.com/api/refund/orderlist?page=2"</span><br><span class="line">	path: "http://maxthoven-test.com/api/refund/orderlist"</span><br><span class="line">	per_page: 15</span><br><span class="line">	prev_page_url: null</span><br><span class="line">	to: 15</span><br><span class="line">	total: 210</span><br><span class="line">  &#125;, </span><br><span class="line">  "status": 200,</span><br><span class="line">  "tip": “给用户的提示信息” // 前端需要提示才显示，例如授权成功</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="接口文档规范"><a href="#接口文档规范" class="headerlink" title="接口文档规范"></a>接口文档规范</h4><p>我们当前采用的是 YApi - 一款开源的可视化接口管理平台。将代码部署在本地服务器，配置 host 后即可使用。<a href="https://github.com/YMFE/yapi" target="_blank" rel="noopener">Github地址</a></p>
+<p>后端完成接口，并填充后即可看到相关接口信息：</p>
+<p><img src="/images/other/before_and_after_3.png" alt="图片"></p>
+<p>如上图，前端需要的接口信息基本都可以展示出来，但是建议后端对<strong>可能产生歧义的字段可以进行解释备注</strong>，不然前端不懂还是要去咨询后端，字段尽量采用可理解的英文名称或英文缩写。</p>
+<h4 id="接口错误码规范"><a href="#接口错误码规范" class="headerlink" title="接口错误码规范"></a>接口错误码规范</h4><p>采用前后端分离开发模式的项目越来越多, 前端负责调用后端的接口来展现界面, 如果有界面显示异常, 需要有快速方便的手段来排查线上错误和定位出职责范围。</p>
+<p>综合了经验总结和行业实践, 最简单有效的手段是制定出一套统一的错误码规范, 协助多方人员来排查出接口的错误。</p>
+<p>例如：</p>
+<ul>
+<li>用户发现错误, 可以截错误码的图, 就能够提供有效的信息帮助开发人员排查错误。</li>
+<li>测试人员发现错误, 可以通过错误码, 快速定位是前端的问题还是后端接口的问题。</li>
+<li>因此我们确定提示信息规范为: 当后端接口调用出错时, 接口提供一个用户可以理解的错误提示, 前端展示给用户错误提示和错误码, 给予用户反馈。</li>
+</ul>
+<p>对于错误码的规范, 参考行业实践, 大致有两种方案：</p>
+<ol>
+<li>做显性的类型区分, 快速定位错误的类别, 例如通过字母划分类型: A101, B131<ul>
+<li><a href="http://www.nexion.co.za/docs/merchant-access/user-manual/17.%20Standard%20ISO%20Response%20codes.pdf" target="_blank" rel="noopener">Standard ISO Response Codes</a></li>
+</ul>
+</li>
+<li>固定位数, 设定区间(例如手机号码, 身份证号码)来划分不同的错误类型。<ul>
+<li><a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html" target="_blank" rel="noopener">HTTP Status Code Definitions</a></li>
+<li><a href="http://www.nexion.co.za/docs/merchant-access/user-manual/17.%20Standard%20ISO%20Response%20codes.pdf" target="_blank" rel="noopener">System Error Codes</a></li>
+</ul>
+</li>
+</ol>
+<p>具体可采用如下方法：</p>
+<ul>
+<li>错误码固定长度, 以区间来划分错误类型(例如 HTTP 的状态码)。</li>
+<li>例如: 10404 表示 HTTP 请求 404 错误, 20000 表示 API 调用失败, 30000 代表业务错误, 31000 表示业务A错误, 32000 表示业务B错误。</li>
+<li>错误码可不固定长度, 以首字母来划分错误类型, 可扩展性更好, 但实际运作还是需要划分区间。</li>
+<li>例如: H404 表示 HTTP 请求 404 错误, A100 表示 API 调用失败, B100 表示业务A错误, B200 表示业务B错误。</li>
+</ul>
+<p>关于错误分类的原则, 我们可以根据发送请求的最终状态来划分：</p>
+<ul>
+<li>发送失败(即请求根本就没有发送出去)</li>
+<li>发送成功</li>
+<li>HTTP 异常状态(例如 404/500…)，接口调用失败</li>
+<li>HTTP 正常状态(例如 200)，接口调用成功</li>
+</ul>
+<h3 id="关于接口协作"><a href="#关于接口协作" class="headerlink" title="关于接口协作"></a>关于接口协作</h3><p>由于接口规范是在开发前制定的，而接口的实现是后续进行的工作, 并且涉及到多人协作, 因此在开发过程中可能出现接口规范与实现不同步, 亦可能某些接口需要进行相对特殊处理，最终造成实际的接口不符合规范的定义, 接口规范就会慢慢失去存在的意义。</p>
+<p>为了尽量避免这种问题, 后端在实现接口的过程中应该确保与接口规范保持一致, 一旦出现脱离规范的内容, 必须在与前端协商后修改该规范, 尽可能保持规范与沟通同步。</p>
+<p>参考链接：</p>
+<p><a href="https://juejin.im/post/5d3a7134f265da1b5d57f1ed#heading-44" target="_blank" rel="noopener">if 我是前端团队 Leader，怎么制定前端协作规范?</a></p>
+<p><a href="https://github.com/f2e-journey/treasure/blob/master/api.md" target="_blank" rel="noopener">前后端接口规范</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/其他/" rel="tag"># 其他</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/03/CDN/" rel="next" title="CDN 基础">
+                <i class="fa fa-chevron-left"></i> CDN 基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/31/vuecli3.0配置CDN和Gzip压缩/" rel="prev" title="vuecli3.0使用CDN和Gzip压缩">
+                vuecli3.0使用CDN和Gzip压缩 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">116</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前后端协作流程规范"><span class="nav-number">3.</span> <span class="nav-text">前后端协作流程规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定接口规范"><span class="nav-number">4.</span> <span class="nav-text">确定接口规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口规范内容"><span class="nav-number">5.</span> <span class="nav-text">接口规范内容</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接口地址和请求方式"><span class="nav-number">5.1.</span> <span class="nav-text">接口地址和请求方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口参数"><span class="nav-number">5.2.</span> <span class="nav-text">接口参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口内容约定（重点关注）"><span class="nav-number">5.3.</span> <span class="nav-text">接口内容约定（重点关注）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口返回的数据结构"><span class="nav-number">5.4.</span> <span class="nav-text">接口返回的数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口文档规范"><span class="nav-number">5.5.</span> <span class="nav-text">接口文档规范</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#接口错误码规范"><span class="nav-number">5.6.</span> <span class="nav-text">接口错误码规范</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于接口协作"><span class="nav-number">6.</span> <span class="nav-text">关于接口协作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
