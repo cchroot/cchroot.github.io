@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this指向该对象 当函数作为单纯函数调用时，this指向全局对象（严格模式时，为undefined） 构造函数中的this指向新创建的对象 嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了。因为th">
+<meta name="description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this 指向该对象 当函数作为单纯函数调用时，this 指向全局对象（严格模式时，为 undefined） 构造函数中的 this 指向新创建的对象 嵌套函数中的 this 不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的 this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确">
 <meta name="keywords" content="javascript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="重温——this">
 <meta property="og:url" content="http://yoursite.com/2018/03/10/重温this/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this指向该对象 当函数作为单纯函数调用时，this指向全局对象（严格模式时，为undefined） 构造函数中的this指向新创建的对象 嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了。因为th">
+<meta property="og:description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this 指向该对象 当函数作为单纯函数调用时，this 指向全局对象（严格模式时，为 undefined） 构造函数中的 this 指向新创建的对象 嵌套函数中的 this 不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的 this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-21T16:27:55.499Z">
+<meta property="og:updated_time" content="2019-12-20T16:46:59.145Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="重温——this">
-<meta name="twitter:description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this指向该对象 当函数作为单纯函数调用时，this指向全局对象（严格模式时，为undefined） 构造函数中的this指向新创建的对象 嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了。因为th">
+<meta name="twitter:description" content="js中的this都有哪些作用?  当函数作为对象的方法调用时，this 指向该对象 当函数作为单纯函数调用时，this 指向全局对象（严格模式时，为 undefined） 构造函数中的 this 指向新创建的对象 嵌套函数中的 this 不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的 this。  在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确">
 
 
 
@@ -424,10 +424,10 @@
       
         <p>js中的this都有哪些作用?</p>
 <ol>
-<li>当函数作为对象的方法调用时，this指向该对象</li>
-<li>当函数作为单纯函数调用时，this指向全局对象（严格模式时，为undefined）</li>
-<li>构造函数中的this指向新创建的对象</li>
-<li>嵌套函数中的this不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的this。</li>
+<li>当函数作为对象的方法调用时，this 指向该对象</li>
+<li>当函数作为单纯函数调用时，this 指向全局对象（严格模式时，为 undefined）</li>
+<li>构造函数中的 this 指向新创建的对象</li>
+<li>嵌套函数中的 this 不会继承上层函数的this，如果需要，可以用一个变量保存上层函数的 this。</li>
 </ol>
 <p><strong>在函数中this到底取何值，是在函数真正被调用执行的时候确定的，函数定义的时候确定不了</strong>。因为this的取值是执行上下文环境的一部分，每次调用函数，都会产生一个新的执行上下文环境。 如果在函数中使用了this，只有在该函数直接被某对象调用时，该this才指向该对象。</p>
 <p>this的取值，分四种情况:</p>

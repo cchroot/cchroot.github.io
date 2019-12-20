@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_3.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_4.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/25/Linux（Centos7）下搭建SVN服务器/images/linux/svn_service_5.png">
-<meta property="og:updated_time" content="2019-12-10T16:07:25.597Z">
+<meta property="og:updated_time" content="2019-12-20T16:41:21.104Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux（centos7）下搭建SVN服务器">
 <meta name="twitter:description" content="通过yum命令安装svnserve，命令如下：yum -y install subversion 此命令会全自动安装svn服务器相关服务和依赖，安装完成会自动停止命令运行 若需查看svn安装位置，可以用以下命令： rpm -ql subversion 查看版本号： svnserve --version 创建svn版本库创建一个文件目录: mkdir /home/svn/xxx 创建svn版本库:">
@@ -438,7 +438,7 @@
 <p><code>mkdir /home/svn/xxx</code></p>
 <p>创建svn版本库:</p>
 <p><code>svnadmin create /home/svn/xxx</code>（xxxx为你预期的版本库名称，可自定义）</p>
-<h3 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h3><p>创建svn版本库成功后，进入xxx目录的 conf 目录下:</p>
+<h3 id="配置修改"><a href="#配置修改" class="headerlink" title="配置修改"></a>配置修改</h3><p>创建svn版本库成功后，进入 xxx 目录的 conf 目录下:</p>
 <p><code>cd /home/svn/xxx/conf</code></p>
 <p>在 conf 目录下，一共存放三份重要的配置文件，svn 服务器配置文件（svnserve.conf）、 负责账号和密码的用户名单管理(passwd)、负责账号权限的管理，控制账号是否读写权限(authz)。</p>
 <h4 id="配置权限配置文件authz"><a href="#配置权限配置文件authz" class="headerlink" title="配置权限配置文件authz"></a>配置权限配置文件authz</h4><p>编辑 authz 文件（<strong>注意：[/]也是必须的</strong>）</p>
