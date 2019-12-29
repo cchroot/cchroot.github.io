@@ -1498,8 +1498,8 @@ object
           
           前言在知乎上翻看着原来收藏的文章，看到了这篇有关正则的文章： https://zhuanlan.zhihu.com/p/29163295 ，觉得值得收藏。加上最近刚好复习了一下正则表达式，趁热打铁再加深一下映像，也方便以后查找使用。并且前面几个我会附上便于理解的解析图，以便于大家理解。以下为正文：
 正文正则表达式，一个十分古老而又强大的文本处理工具，仅仅用一段非常简短的表达式语句，便能够快速实现一个非常复杂的业务逻辑。熟练地掌握正则表达式的话，能够使你的开发效率得到极大的提升。
-正则表达式经常被用于字段或任意字符串的校验，如下面这段校验基本日期格式的JavaScript代码：
-1var reg = /^(\d&#123;1,4&#125;)(-|\/)(\d&#123;1,2&#125;)\2(\d&#123;
+正则表达式经常被用于字段或任意字符串的校验，如下面这段校验基本日期格式的 JavaScript 代码：
+1var reg = /^(\d&#123;1,4&#125;)(-|\/)(\d&#123;1,2&#125;)\2(\d&#12
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1706,7 +1706,7 @@ object
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/28/forEach()和map()的区别/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/28/你不知道的javascript(上二)——关于this/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -1725,7 +1725,7 @@ object
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/28/forEach()和map()的区别/" itemprop="url">forEach()和map()的区别</a></h1>
+                <a class="post-title-link" href="/2018/04/28/你不知道的javascript(上二)——关于this/" itemprop="url">你不知道的javascript——关于this</a></h1>
         
 
         <div class="post-meta">
@@ -1760,8 +1760,8 @@ object
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
                   </a>
                 </span>
 
@@ -1799,22 +1799,12 @@ object
       
         
           
-          相同点
-都是循环遍历数组中的每一项
-forEach和map方法里每次执行匿名函数都支持3个参数，参数分别是item（当前每一项）、index（索引值）、arr（原数组）
-匿名函数中的this都是指向window
-只能遍历数组
-
-1.map()方法map定义和用法： 
-map方法返回一个新的数组，数组中的元素为原始数组调用函数处理后的值； 我的理解就是：原数组进行处理之后对应的一个新的数组。相当于把数组中的这一项变为啥（并不影响原来的数组，只是相当于把原数组克隆一份，把克隆的这一份的数组中的对应项改变了）。
-map()方法按照原始数组元素顺序依次处理元素；
-注意：map()方法不会对空数组进行检测。 map()方法不会改变原始数组。 
-浏览器支持： 
-chrome、safari、opera都支持，IE：&gt;=
+          1.1 为什么要用this我们来解释一下为什么要使用 this：
+1234567891011121314151617181920function identify() &#123;  return this.name.toUpperCase();&#125;function speak() &#123;  var greeting = "Hello, I'm " + identify.call( this );  console.log( greeting );&#125;var me = &#123;  name: "Kyle"&#125;;var you = &#123;  name: "Reader"&#125;;identify.call( me ); // KYLEidentify.call( you
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/28/forEach()和map()的区别/#more" rel="contents">
+            <a class="btn" href="/2018/04/28/你不知道的javascript(上二)——关于this/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
