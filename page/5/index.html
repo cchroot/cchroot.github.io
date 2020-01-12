@@ -1706,7 +1706,7 @@ object
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/28/你不知道的javascript(上二)——关于this/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/28/forEach()和map()的区别/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -1725,7 +1725,7 @@ object
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/28/你不知道的javascript(上二)——关于this/" itemprop="url">你不知道的javascript——关于this</a></h1>
+                <a class="post-title-link" href="/2018/04/28/forEach()和map()的区别/" itemprop="url">forEach()和map()的区别</a></h1>
         
 
         <div class="post-meta">
@@ -1760,8 +1760,8 @@ object
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
                   </a>
                 </span>
 
@@ -1799,12 +1799,22 @@ object
       
         
           
-          1.1 为什么要用this我们来解释一下为什么要使用 this：
-1234567891011121314151617181920function identify() &#123;  return this.name.toUpperCase();&#125;function speak() &#123;  var greeting = "Hello, I'm " + identify.call( this );  console.log( greeting );&#125;var me = &#123;  name: "Kyle"&#125;;var you = &#123;  name: "Reader"&#125;;identify.call( me ); // KYLEidentify.call( you
+          相同点
+都是循环遍历数组中的每一项
+forEach和map方法里每次执行匿名函数都支持3个参数，参数分别是item（当前每一项）、index（索引值）、arr（原数组）
+匿名函数中的this都是指向window
+只能遍历数组
+
+1.map()方法map定义和用法： 
+map方法返回一个新的数组，数组中的元素为原始数组调用函数处理后的值； 我的理解就是：原数组进行处理之后对应的一个新的数组。相当于把数组中的这一项变为啥（并不影响原来的数组，只是相当于把原数组克隆一份，把克隆的这一份的数组中的对应项改变了）。
+map()方法按照原始数组元素顺序依次处理元素；
+注意：map()方法不会对空数组进行检测。 map()方法不会改变原始数组。 
+浏览器支持： 
+chrome、safari、opera都支持，IE：&gt;=
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/04/28/你不知道的javascript(上二)——关于this/#more" rel="contents">
+            <a class="btn" href="/2018/04/28/forEach()和map()的区别/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1915,7 +1925,7 @@ object
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
