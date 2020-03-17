@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="可以用一句话总结本书的第二部分（第4 章至第6 章）：类是一种可选（而不是必须）的设计模式，而且在JavaScript 这样的[[Prototype]] 语言中实现类是很别扭的。 这种别扭的感觉不只是来源于语法，虽然语法是很重要的原因。第4 章和第5 章介绍了许多语法的缺点：繁琐杂乱的.prototype 引用、试图调用原型链上层同名函数时的显式伪多态（参见第4 章）以及不可靠、不美观而且容易被误">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-26T16:07:09.256Z">
+<meta property="og:updated_time" content="2020-03-17T06:44:13.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="你不知道的javascript——ES6中的Class">
 <meta name="twitter:description" content="可以用一句话总结本书的第二部分（第4 章至第6 章）：类是一种可选（而不是必须）的设计模式，而且在JavaScript 这样的[[Prototype]] 语言中实现类是很别扭的。 这种别扭的感觉不只是来源于语法，虽然语法是很重要的原因。第4 章和第5 章介绍了许多语法的缺点：繁琐杂乱的.prototype 引用、试图调用原型链上层同名函数时的显式伪多态（参见第4 章）以及不可靠、不美观而且容易被误">
@@ -431,11 +431,11 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Widget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(width,height) &#123;</span><br><span class="line">    <span class="keyword">this</span>.width = width || <span class="number">50</span>;</span><br><span class="line">    <span class="keyword">this</span>.height = height || <span class="number">50</span>;</span><br><span class="line">    <span class="keyword">this</span>.$elem = <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  render($where)&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.$elem) &#123;</span><br><span class="line"> 	  <span class="keyword">this</span>.$elem.css(&#123;</span><br><span class="line">   	    width: <span class="keyword">this</span>.width + <span class="string">"px"</span>,</span><br><span class="line">        height: <span class="keyword">this</span>.height + <span class="string">"px"</span></span><br><span class="line">      &#125;).appendTo( $where );</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Button</span> <span class="keyword">extends</span> <span class="title">Widget</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(width,height,label) &#123;</span><br><span class="line">	<span class="keyword">super</span>( width, height );</span><br><span class="line">	<span class="keyword">this</span>.label = label || <span class="string">"Default"</span>;</span><br><span class="line">	<span class="keyword">this</span>.$elem = $( <span class="string">"&lt;button&gt;"</span> ).text( <span class="keyword">this</span>.label );</span><br><span class="line">  &#125;</span><br><span class="line">  render($where) &#123;</span><br><span class="line">    <span class="keyword">super</span>( $where );</span><br><span class="line">    <span class="keyword">this</span>.$elem.click( <span class="keyword">this</span>.onClick.bind( <span class="keyword">this</span> ) );</span><br><span class="line">  &#125;</span><br><span class="line">  onClick(evt) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log( <span class="string">"Button '"</span> + <span class="keyword">this</span>.label + <span class="string">"' clicked!"</span> );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>除了语法更好看之外，ES6 还解决了什么问题呢？</p>
 <ol>
-<li>（基本上，下面会详细介绍）不再引用杂乱的.prototype 了。</li>
-<li>Button 声明时直接“ 继承” 了Widget， 不再需要通过Object.create(..) 来替换.prototype 对象，也不需要设置.<strong>proto</strong> 或者Object.setPrototypeOf(..)。</li>
-<li>可以通过super(..) 来实现相对多态，这样任何方法都可以引用原型链上层的同名方法。这可以解决第4 章提到过的那个问题：构造函数不属于类，所以无法互相引用——super() 可以完美解决构造函数的问题。</li>
+<li>（基本上，下面会详细介绍）不再引用杂乱的 .prototype 了。</li>
+<li>Button 声明时直接“ 继承” 了Widget， 不再需要通过Object.create(..) 来替换 .prototype 对象，也不需要设置 .<strong>proto</strong> 或者 Object.setPrototypeOf(..)。</li>
+<li>可以通过 super(..) 来实现相对多态，这样任何方法都可以引用原型链上层的同名方法。这可以解决第4 章提到过的那个问题：构造函数不属于类，所以无法互相引用——super() 可以完美解决构造函数的问题。</li>
 <li>class 字面语法不能声明属性（只能声明方法）。看起来这是一种限制，但是它会排除掉许多不好的情况，如果没有这种限制的话，原型链末端的“实例”可能会意外地获取其他地方的属性（这些属性隐式被所有“实例”所“共享”）。所以，class 语法实际上可以帮助你避免犯错。</li>
-<li>可以通过extends 很自然地扩展对象（子）类型，甚至是内置的对象（子）类型，比如Array 或RegExp。没有class ..extends 语法时，想实现这一点是非常困难的，基本上只有框架的作者才能搞清楚这一点。但是现在可以轻而易举地做到！</li>
+<li>可以通过 extends 很自然地扩展对象（子）类型，甚至是内置的对象（子）类型，比如 Array 或 RegExp。没有 class ..extends 语法时，想实现这一点是非常困难的，基本上只有框架的作者才能搞清楚这一点。但是现在可以轻而易举地做到！</li>
 </ol>
 <p>平心而论，class 语法确实解决了典型原型风格代码中许多显而易见的（语法）问题和缺点。</p>
 <h2 id="A-2-class陷阱"><a href="#A-2-class陷阱" class="headerlink" title="A.2　class陷阱"></a>A.2　class陷阱</h2><p>然而，class 语法并没有解决所有的问题，在JavaScript 中使用“类”设计模式仍然存在许多深层问题。</p>
@@ -617,7 +617,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
+                <a href="/javascript/index.html">
                   <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
