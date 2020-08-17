@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="其他,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是表驱动法所谓表驱动法(Table-Driven Approach),简单讲是指用查表的方法获取值。 我们平时查字典以及念初中时查《数学用表》找立方根就是典型的表驱动法。在数值不多的时候我们可以用逻辑语句(if 或 switch case)的方法来获取值,但随着数值的增多逻辑语句就会越来越长,此时表驱动法的优势就显现出来了。 表驱动法的使用主要分为三种方式：直接访问表，索引访问表和阶梯访问表，">
+<meta name="keywords" content="其他">
+<meta property="og:type" content="article">
+<meta property="og:title" content="表驱动法">
+<meta property="og:url" content="http://yoursite.com/2018/12/21/表驱动法/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="什么是表驱动法所谓表驱动法(Table-Driven Approach),简单讲是指用查表的方法获取值。 我们平时查字典以及念初中时查《数学用表》找立方根就是典型的表驱动法。在数值不多的时候我们可以用逻辑语句(if 或 switch case)的方法来获取值,但随着数值的增多逻辑语句就会越来越长,此时表驱动法的优势就显现出来了。 表驱动法的使用主要分为三种方式：直接访问表，索引访问表和阶梯访问表，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-08-17T14:54:33.995Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="表驱动法">
+<meta name="twitter:description" content="什么是表驱动法所谓表驱动法(Table-Driven Approach),简单讲是指用查表的方法获取值。 我们平时查字典以及念初中时查《数学用表》找立方根就是典型的表驱动法。在数值不多的时候我们可以用逻辑语句(if 或 switch case)的方法来获取值,但随着数值的增多逻辑语句就会越来越长,此时表驱动法的优势就显现出来了。 表驱动法的使用主要分为三种方式：直接访问表，索引访问表和阶梯访问表，">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/21/表驱动法/">
+
+
+
+
+
+  <title>表驱动法 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/21/表驱动法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">表驱动法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T21:59:05+08:00">
+                2018-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是表驱动法"><a href="#什么是表驱动法" class="headerlink" title="什么是表驱动法"></a>什么是表驱动法</h3><p>所谓表驱动法(Table-Driven Approach),简单讲是指用查表的方法获取值。 我们平时查字典以及念初中时查《数学用表》找立方根就是典型的表驱动法。在数值不多的时候我们可以用逻辑语句(if 或 switch case)的方法来获取值,但随着数值的增多逻辑语句就会越来越长,此时表驱动法的优势就显现出来了。</p>
+<p>表驱动法的使用主要分为三种方式：直接访问表，索引访问表和阶梯访问表，下面分别举例说明一下这三种方法。</p>
+<h3 id="直接访问表"><a href="#直接访问表" class="headerlink" title="直接访问表"></a>直接访问表</h3><p>直接访问是最简单也是最常用的一种方法，查表本质其实就是去索引“键”来获得“值”，有点像获得数组值一样，给定下标index，然后 array[index] 就获得数组在相应下标处的数值。</p>
+<p>举个我工作中的栗子：需要根据国家代码，确定国家的货币符号和国家的 icon 图标（这里国家代码和取值是确定且唯一的）。正常的时候我们可能会采用 if else，或者 switch case 的方式来处理这个问题，你可能会这样写这个函数（这里用 switch 来举例）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCurrencyAndIcon</span> (<span class="params">sid</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span> (sid) &#123;</span><br><span class="line">	<span class="keyword">case</span> <span class="number">0</span>: &#123;</span><br><span class="line">	  <span class="keyword">return</span> &#123;</span><br><span class="line">		currency: <span class="string">'$'</span>,</span><br><span class="line">	    icon: <span class="string">'icon-us'</span>  </span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">case</span> <span class="number">1</span>: &#123;</span><br><span class="line">	  <span class="keyword">return</span> &#123;</span><br><span class="line">		currency: <span class="string">'C$'</span>,</span><br><span class="line">	    icon: <span class="string">'icon-ca'</span></span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">case</span> <span class="number">2</span>: &#123;</span><br><span class="line">	  <span class="keyword">return</span> &#123;</span><br><span class="line">		currency: <span class="string">'円'</span>,</span><br><span class="line">	    icon: <span class="string">'icon-jp'</span></span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">case</span> <span class="number">3</span>: &#123;</span><br><span class="line">	  <span class="keyword">return</span> &#123;</span><br><span class="line">		currency: <span class="string">'£'</span>,</span><br><span class="line">	    icon: <span class="string">'icon-uk'</span></span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="keyword">case</span> <span class="number">4</span>: &#123;</span><br><span class="line">	  <span class="keyword">return</span> &#123;</span><br><span class="line">		currency: <span class="string">'€'</span>,</span><br><span class="line">	    icon: <span class="string">'icon-de'</span></span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 注意：这里在case 中 return 退出函数了，所以不需要加 break</span></span><br></pre></td></tr></table></figure>
+<p>上面的写法其实也没有问题，也是常用的写法，但是这里不妨问一下，这里只是4个国家，但是假如是 200 个国家呢？你还是这样写? 那你的函数会有多长？是不是感觉不能忍?</p>
+<p>现在我们采用表驱动法中的直接访问来实现这个函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> array = [ <span class="comment">// 创建一个对象数组</span></span><br><span class="line">  &#123;</span><br><span class="line">	currency: <span class="string">'$'</span>,</span><br><span class="line">	icon: <span class="string">'icon-us'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">	currency: <span class="string">'C$'</span>,</span><br><span class="line">    icon: <span class="string">'icon-ca'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">	currency: <span class="string">'円'</span>,</span><br><span class="line">    icon: <span class="string">'icon-jp'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    currency: <span class="string">'£'</span>,</span><br><span class="line">    icon: <span class="string">'icon-uk'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">	currency: <span class="string">'€'</span>,</span><br><span class="line">    icon: <span class="string">'icon-de'</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCurrencyAndIcon</span> (<span class="params">sid</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> array[sid] <span class="comment">// 直接返回索引对应的值即可</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上对比代码量上看起来可能感觉差的不是太多？实际上是差别还是很大的，尤其是当数据量大的时候，尤其是你如果用 if else 来写更是明显，因为篇幅问题，这里只举栗了4个数据，而且所有的配置只要修改 array 数组即可，不会像用 switch 和 if else 语句实现的时候增删改时需要改原函数代码。</p>
+<p>这里可能大家会遇到，索引是不同的随机数字或者字符串之类的，这也没关系，把数组改成对象就行：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> dataObj = &#123; <span class="comment">// 创建一个对象</span></span><br><span class="line">  <span class="number">100</span>: &#123;</span><br><span class="line">	currency: <span class="string">'$'</span>,</span><br><span class="line">	icon: <span class="string">'icon-us'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="number">200</span>: &#123;</span><br><span class="line">	currency: <span class="string">'C$'</span>,</span><br><span class="line">    icon: <span class="string">'icon-ca'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="number">400</span>: &#123;</span><br><span class="line">	currency: <span class="string">'円'</span>,</span><br><span class="line">    icon: <span class="string">'icon-jp'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="number">600</span>:&#123;</span><br><span class="line">    currency: <span class="string">'£'</span>,</span><br><span class="line">    icon: <span class="string">'icon-uk'</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="number">900</span>&#123;</span><br><span class="line">	currency: <span class="string">'€'</span>,</span><br><span class="line">    icon: <span class="string">'icon-de'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCurrencyAndIcon</span> (<span class="params">sid</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> dataObj[sid] <span class="comment">// 直接返回索引对应的值即可</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="索引访问表"><a href="#索引访问表" class="headerlink" title="索引访问表"></a>索引访问表</h3><p>对于索引访问表，它适用于这样的情况，假设你经营一家商店，有100种商品，每种商品都有一个 id 号，但很多商品的描述都差不多，所以 只有30条不同的描述，现在的问题是建立商品与商品描述的表，如何建立？还是同上面的直接访问表的做法来一一对应吗？那样描述会扩充到100的，会有70个描述是重复的！如何解决这个问题呢？方法是建立一个100长的索引，然后这些索引指向相应的描述，注意不同的索引可以指向相同的描述，这样就解决了表数据冗余的问题啦。</p>
+<p>这里举例采用12个商品，每个商品对应一个 id 号，然后12个商品只有4个不同的描述来举例子处理一下这个问题：</p>
+<p>假如你拿到这个需求，不采用表驱动法的情况下，你可能会直接用 switch case 或者 if else 来处理这个需求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 这里假设id 1001 1002 1003 商品的描述相同，1004 1005 1010的描述相同</span><br><span class="line">// 剩下的 1006 1007 1008 1009 商品描述相同，1011 1012描述相同</span><br><span class="line">function getProductDescription (id) &#123;</span><br><span class="line">  if (id === 1001 || id === 1002 || id === 1003) &#123;</span><br><span class="line">    return &apos;商品描述1&apos;</span><br><span class="line">  &#125; else if (id === 1004 || id === 1005 || id === 1010) &#123;</span><br><span class="line">    return &apos;商品描述2&apos;</span><br><span class="line">  &#125; else if (id === 1006 || id === 1007 || id === 1008 || id ==1009) &#123;</span><br><span class="line">    return &apos;商品描述3&apos;</span><br><span class="line">  &#125; else if (id === 1011 || id === 1012) &#123;</span><br><span class="line">	return &apos;商品描述4&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>采用直接访问表的情况下，可能是这样的:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里假设id 1001 1002 1003 商品的描述相同，1004 1005 1010的描述相同</span></span><br><span class="line"><span class="comment">// 剩下的 1006 1007 1008 1009 商品描述相同，1011 1012描述相同</span></span><br><span class="line"><span class="keyword">const</span> dataObj = &#123;</span><br><span class="line">  <span class="number">1001</span>: <span class="string">'商品描述1'</span>,</span><br><span class="line">  <span class="number">1002</span>: <span class="string">'商品描述1'</span>,</span><br><span class="line">  <span class="number">1003</span>: <span class="string">'商品描述1'</span>,</span><br><span class="line">  <span class="number">1004</span>: <span class="string">'商品描述2'</span>,</span><br><span class="line">  <span class="number">1005</span>: <span class="string">'商品描述2'</span>,</span><br><span class="line">  <span class="number">1006</span>: <span class="string">'商品描述3'</span>,</span><br><span class="line">  <span class="number">1007</span>: <span class="string">'商品描述3'</span>,</span><br><span class="line">  <span class="number">1008</span>: <span class="string">'商品描述3'</span>,</span><br><span class="line">  <span class="number">1009</span>: <span class="string">'商品描述3'</span>,</span><br><span class="line">  <span class="number">1010</span>: <span class="string">'商品描述2'</span>,</span><br><span class="line">  <span class="number">1011</span>: <span class="string">'商品描述4'</span>,</span><br><span class="line">  <span class="number">1012</span>: <span class="string">'商品描述4'</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getProductDescription</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> dataObj[id]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那如果采用索引访问表，会是怎么样的呢？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里假设id 1001 1002 1003 商品的描述相同，1004 1005 1010的描述相同</span></span><br><span class="line"><span class="comment">// 剩下的 1006 1007 1008 1009 商品描述相同，1011 1012描述相同</span></span><br><span class="line"><span class="keyword">const</span> idObj = &#123;</span><br><span class="line">  <span class="number">1001</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="number">1002</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="number">1003</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="number">1004</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="number">1005</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="number">1006</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="number">1007</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="number">1008</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="number">1009</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="number">1010</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="number">1011</span>: <span class="number">4</span>,</span><br><span class="line">  <span class="number">1012</span>: <span class="number">4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> descriptionArray = [</span><br><span class="line">  <span class="string">'商品描述1'</span>,</span><br><span class="line">  <span class="string">'商品描述2'</span>,</span><br><span class="line">  <span class="string">'商品描述3'</span>,</span><br><span class="line">  <span class="string">'商品描述4'</span></span><br><span class="line">]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getProductDescription</span> (<span class="params">id</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> descriptionArray[idObj[id]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="阶梯访问表"><a href="#阶梯访问表" class="headerlink" title="阶梯访问表"></a>阶梯访问表</h3><p>第三种表驱动法是阶梯访问表，它适用于数据不是一个固定的值，而是一个范围的问题，比如将百分制成绩转成五级分制（我们用的优、良、中、合格、不合格，西方用的 A、B、C、D 和F），假定转换关系是当成绩在 90-100 区间，判为A，成绩在 80-89 区间，判为B，成绩在 70-79 区间，判为 C，成 绩在 60-69 区间，判为D，成绩在 60 以下，判为 F。现在的问题是，怎么用表格对付这个范围问题？一种笨笨的方法直接用 if else 判断，还有是申请一个 100 长度的表，然后在这个表中填充相应的等级就行了，但这样太浪费空间了，有没有更好的方法？</p>
+<p>先看看 if else 的实现方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">getLevel (grade) &#123;</span><br><span class="line">  <span class="keyword">if</span> (grade &lt;= <span class="number">59</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'F'</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grade &lt;= <span class="number">69</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'D'</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grade &lt;= <span class="number">79</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'C'</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grade &lt;= <span class="number">89</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'B'</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (grade &lt;= <span class="number">100</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'A'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里就不在再示例直接访问表和索引访问表的实现方法拉，虽然也可以实现，实现，但是直接访问表和索引访问表在这里的需求上都太浪费空间。</p>
+<p>阶梯访问表的实现法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gradeArray = [<span class="number">59</span>, <span class="number">69</span>, <span class="number">79</span>, <span class="number">89</span>, <span class="number">100</span>]</span><br><span class="line"><span class="keyword">const</span> levelArray = [<span class="string">'F'</span>, <span class="string">'D'</span>, <span class="string">'C'</span>, <span class="string">'B'</span>, <span class="string">'A'</span>]</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLevel</span> (<span class="params">grade</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; gradeArray.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (grade &lt;= gradeArray[i]) &#123;</span><br><span class="line">      <span class="keyword">return</span> levelArray[i]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里童鞋们看到了结果，可能觉得代码量还是差不多，而且感觉阶梯访问表的方式逻辑都更负责了，还增加了遍历等增加时间复杂度的操作。</p>
+<p>但是，这里的举例都是数据量小，假设第上面阶梯访问表的需求存在几百，几千个范围呢，你还是用 if else 的话会产生什么样的结果自然不必多说了吧？ </p>
+<p>以上就是表驱动法的总结，大家学会了么？快去改改项目中 if else 和 switch case 的代码先试试水吧，记住，数据量越大，表驱动法优势越大噢！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/其他/" rel="tag"># 其他</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/13/前后端接口规范/" rel="next" title="前后端接口规范">
+                <i class="fa fa-chevron-left"></i> 前后端接口规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/31/vuecli3.0配置CDN和Gzip压缩/" rel="prev" title="vuecli3.0使用CDN和Gzip压缩">
+                vuecli3.0使用CDN和Gzip压缩 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是表驱动法"><span class="nav-number">1.</span> <span class="nav-text">什么是表驱动法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直接访问表"><span class="nav-number">2.</span> <span class="nav-text">直接访问表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引访问表"><span class="nav-number">3.</span> <span class="nav-text">索引访问表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阶梯访问表"><span class="nav-number">4.</span> <span class="nav-text">阶梯访问表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
