@@ -88,7 +88,7 @@
 <meta property="og:description" content="杂谈jquery 源码： 核心架构，事件委托，插件机制 项目开发中遇到过什么难题，怎么解决的~ npm 常用命令 webpack 自我陈述准备：把我面试的沟通方向，阔达、自信的适度发挥 简历： 左右和纵向分栏，项目做完之后的公司收益和技术收益，兴趣说技术相关兴趣 遇到不懂的问题，可以说指导，回去思考，好奇，不要说不知道，不懂，没经历过结尾，要资料，再来~ 自如谈兴趣，巧妙示实例，适时讨疑问，节奏要">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/css/browser.png">
-<meta property="og:updated_time" content="2018-12-09T14:49:18.517Z">
+<meta property="og:updated_time" content="2020-11-18T07:32:22.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试复习一">
 <meta name="twitter:description" content="杂谈jquery 源码： 核心架构，事件委托，插件机制 项目开发中遇到过什么难题，怎么解决的~ npm 常用命令 webpack 自我陈述准备：把我面试的沟通方向，阔达、自信的适度发挥 简历： 左右和纵向分栏，项目做完之后的公司收益和技术收益，兴趣说技术相关兴趣 遇到不懂的问题，可以说指导，回去思考，好奇，不要说不知道，不懂，没经历过结尾，要资料，再来~ 自如谈兴趣，巧妙示实例，适时讨疑问，节奏要">
@@ -510,10 +510,10 @@
 </li>
 <li>HTTP状态吗<ul>
 <li>1XX 指示信息-表示请求已被接收，继续处理</li>
-<li>2XX 成功-表示请求已被成功接收</li>
+<li>2XX 成功-表示请求已被成功接收并成功进行了处理</li>
 <li>3XX 重定向-要完成请求必须进行更进一步的操作</li>
 <li>4XX 客户端错误-请求有语法错误或请求无法实现</li>
-<li>5XX 服务器错误-服务器未能实现合法的请求</li>
+<li>5XX 服务器错误-服务端未能正常处理客户端的请求而出现意外错误</li>
 </ul>
 </li>
 <li>什么是持久连接<ul>
@@ -544,11 +544,11 @@
 <li>创建一个新空对象</li>
 <li>空对象继承（指向）构造函数的prototype原型对象</li>
 <li>构造函数被执行，上下文this会被指定到这个新实例对象上</li>
-<li>如果构造函数返回了一个“对象”，那么这个对象会取代new出来的对象。如果构造函数没有返回对象，那么new出来的结果为步骤一创建的新对象。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//new运行原理</span></span><br><span class="line"><span class="keyword">var</span> new2 = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="built_in">Object</span>.create(func.prototype); <span class="comment">//创建空对象，空对象关联构造函数的原型链</span></span><br><span class="line">  <span class="keyword">var</span> k = func.call(o); <span class="comment">//执行构造函数</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> k === <span class="string">'object'</span>)&#123; <span class="comment">//判断结果是不是对象类型</span></span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> o;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>如果构造函数返回了一个“对象”，那么这个对象会取代new出来的对象。如果构造函数没有返回对象，那么new出来的结果为步骤一创建的新对象。</li>
 </ul>
 </li>
 </ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//new运行原理</span></span><br><span class="line"><span class="keyword">var</span> new2 = <span class="function"><span class="keyword">function</span>(<span class="params">func</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="built_in">Object</span>.create(func.prototype); <span class="comment">//创建空对象，空对象关联构造函数的原型链</span></span><br><span class="line">  <span class="keyword">var</span> k = func.call(o); <span class="comment">//执行构造函数</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> k === <span class="string">'object'</span>)&#123; <span class="comment">//判断结果是不是对象类型</span></span><br><span class="line">    <span class="keyword">return</span> k;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> o;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过原型继承创建一个新对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">inherit</span>(<span class="params">proto</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(proto == <span class="literal">null</span>) &#123;<span class="keyword">throw</span> <span class="built_in">TypeError</span>()&#125;;</span><br><span class="line">  <span class="keyword">if</span>(<span class="built_in">Object</span>.create()) <span class="keyword">return</span> <span class="built_in">Object</span>.create(proto);</span><br><span class="line">  <span class="keyword">var</span> t = <span class="keyword">typeof</span>(proto);</span><br><span class="line">  <span class="keyword">if</span>(t ！== <span class="string">'object'</span> &amp;&amp; t !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">TypeError</span>();</span><br><span class="line">  <span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">  F.prototype = proto;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> F();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="面向对象类"><a href="#面向对象类" class="headerlink" title="面向对象类"></a>面向对象类</h2><h3 id="类与实例"><a href="#类与实例" class="headerlink" title="类与实例"></a>类与实例</h3><ul>
 <li>类的声明</li>
@@ -734,10 +734,8 @@
 <li><p>使用CDN（3~4个域名cdn，并行加载）</p>
 </li>
 <li>预解析DNS<ul>
-<li><meta http-equiv="x-dns-prefetch-control" content="on"> //强制打开dns预解析，a标签默认开启，但是https情况下是一般是关闭的 </li>
-<li><link ref="dns-prefetch" href="XXX">
-
-</li>
+<li><code>&lt;meta http-equiv=&quot;x-dns-prefetch-control&quot; content=&quot;on&quot;&gt; //强制打开dns预解析，a标签默认开启，但是https情况下是一般是关闭的</code></li>
+<li><code>&lt;link ref=&quot;dns-prefetch&quot; href=&quot;XXX&quot;&gt;</code></li>
 </ul>
 </li>
 </ol>
@@ -1007,7 +1005,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">120</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1028,7 +1026,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/javascript/index.html">
                   <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
