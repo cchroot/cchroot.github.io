@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="arithmetic,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="算法思路归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部分，依然是先分半，再排序，后归并。 重复">
+<meta name="keywords" content="arithmetic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="归并排序">
+<meta property="og:url" content="http://yoursite.com/2020/01/06/arithmetic_mergeSort/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="算法思路归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部分，依然是先分半，再排序，后归并。 重复">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/arithmetic/mergeSort_1.png">
+<meta property="og:image" content="http://yoursite.com/images/arithmetic/mergeSort_2.png">
+<meta property="og:image" content="http://yoursite.com/images/arithmetic/mergeSort_3.png">
+<meta property="og:updated_time" content="2020-11-23T12:24:22.089Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="归并排序">
+<meta name="twitter:description" content="算法思路归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部分，依然是先分半，再排序，后归并。 重复">
+<meta name="twitter:image" content="http://yoursite.com/images/arithmetic/mergeSort_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/06/arithmetic_mergeSort/">
+
+
+
+
+
+  <title>归并排序 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/06/arithmetic_mergeSort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">归并排序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-06T20:31:05+08:00">
+                2020-01-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/arithmetic/" itemprop="url" rel="index">
+                    <span itemprop="name">arithmetic</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h3><p>归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：</p>
+<ol>
+<li>首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来</li>
+<li>我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并</li>
+<li>对于 2 中的每一个部分，依然是先分半，再排序，后归并。</li>
+<li>重复 3，当我们分到一定细度（每一部分只有 1 个数）的时候，没一个部分都是有序的。</li>
+<li>逐步向上归并，当归并都最后一层的时候，就是有序数组了。</li>
+</ol>
+<p><img src="/images/arithmetic/mergeSort_1.png" alt="归并排序"></p>
+<h3 id="归并过程"><a href="#归并过程" class="headerlink" title="归并过程"></a>归并过程</h3><ol>
+<li>先创建一个当前需要归并后结果数组一样长度的数组，并赋值</li>
+<li>利用新创建数组中的 [0…mid] 与 [mid+1…r] 部分进行对比排序来对原数组赋值</li>
+<li>这里用到双指针的方式对 l 和 mid+i 起始的两个索引进行维护</li>
+</ol>
+<p><img src="/images/arithmetic/mergeSort_2.png" alt="归并排序"></p>
+<h3 id="实现的代码"><a href="#实现的代码" class="headerlink" title="实现的代码"></a>实现的代码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自顶向下的归并排序</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span>(<span class="params">arr, n</span>) </span>&#123;</span><br><span class="line">  __mergeSort(arr, <span class="number">0</span>, n - <span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 递归使用归并排序，对arr[l...r]的范围进行排序</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__mergeSort</span>(<span class="params">arr, l, r</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (l &gt;= r) &#123;</span><br><span class="line">  	<span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// if (r - l &lt;= 15) &#123; // 优化，当数组范围小于15位采用插入排序</span></span><br><span class="line">  <span class="comment">//     insertSort(arr, l, r);</span></span><br><span class="line">  <span class="comment">//     return;</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  <span class="keyword">let</span> mid = l + <span class="built_in">Math</span>.floor((r - l) / <span class="number">2</span>) <span class="comment">// 防止越界</span></span><br><span class="line">  __mergeSort(arr, l, mid)</span><br><span class="line">  __mergeSort(arr, mid + <span class="number">1</span>, r)</span><br><span class="line">  <span class="keyword">if</span> (arr[mid] &gt; arr[mid + <span class="number">1</span>]) &#123; <span class="comment">// 还未有序则需要归并排序</span></span><br><span class="line">  	__merge(arr, l, mid, r)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 将arr[l...mid]和arr[mid+1...r]两部分进行归并</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">__merge</span>(<span class="params">arr, l, mid, r</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 拷贝一个新数组用于归并操作</span></span><br><span class="line">  <span class="keyword">let</span> auxArr = []</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = l; i &lt;= r; i++) &#123;</span><br><span class="line">    auxArr[i-l] = arr[i]</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 归并, 利用 auxArr 值进行判断，对原数组 arr 进行赋值操作</span></span><br><span class="line">  <span class="keyword">let</span> n = l, m = mid + <span class="number">1</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> k = l; k &lt;= r; k++) &#123;</span><br><span class="line">  	<span class="keyword">if</span> (n &gt; mid) &#123; <span class="comment">// 如果 n 越界</span></span><br><span class="line">      arr[k] = auxArr[m - l]</span><br><span class="line">      m++</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (m &gt; r) &#123; <span class="comment">// 如果 m 越界</span></span><br><span class="line">      arr[k] = auxArr[n - l]</span><br><span class="line">      n++</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (auxArr[n - l] &lt; auxArr[m - l]) &#123; <span class="comment">// 没有越界的情况下判断</span></span><br><span class="line">      arr[k] = auxArr[n - l]</span><br><span class="line">      n++</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      arr[k] = auxArr[m - l]</span><br><span class="line">      m++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 对arr[l...r]范围内的数组进行插入排序</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertSort</span> (<span class="params">arr, l, r</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = l+<span class="number">1</span>; i &lt;= r; i++) &#123;</span><br><span class="line">      <span class="keyword">let</span> e = arr[i]</span><br><span class="line">      <span class="keyword">let</span> j</span><br><span class="line">      <span class="keyword">for</span> (j = i; j &gt; l &amp;&amp; arr[j<span class="number">-1</span>] &gt; e; j--) &#123;</span><br><span class="line">          arr[j] = arr[j<span class="number">-1</span>]</span><br><span class="line">      &#125;</span><br><span class="line">      arr[j] = e</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">mergeSortBU</span> (<span class="params">arr, n</span>) </span>&#123; <span class="comment">// 自底向上的归并(还未优化)</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> sz = <span class="number">1</span>; sz &lt;= n; sz += sz) &#123; <span class="comment">// 第一次看一个元素，第二次看两个元素，第三次看4个元素。。。每次加上自己</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i + sz &lt; n; i += sz + sz) &#123; <span class="comment">// 对 [0 ~ sz-1] [sz ~ 2sz-1] [2sz ~ 3sz-1]。。。进行归并，i + sz &lt; n 防止越界</span></span><br><span class="line">      <span class="comment">// 对 arr[i...i+sz-1] 和 arr[i+sz+sz-1] 进行归并</span></span><br><span class="line">      <span class="keyword">let</span> r = <span class="built_in">Math</span>.min(i + sz + sz - <span class="number">1</span>, n - <span class="number">1</span>) <span class="comment">// min取最小值防止越界</span></span><br><span class="line">      <span class="keyword">if</span> (arr[i + sz - <span class="number">1</span>] &gt; arr[i + sz]) &#123; <span class="comment">// 还未有序则需要归并排序</span></span><br><span class="line">		__merge(arr, i, i + sz - <span class="number">1</span>, r);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> testArr = [<span class="number">5</span>,<span class="number">1</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">8</span>,<span class="number">2</span>,<span class="number">7</span>,<span class="number">10</span>,<span class="number">9</span>]</span><br><span class="line">mergeSort(testArr, <span class="number">10</span>);</span><br><span class="line">	<span class="built_in">console</span>.log(testArr)</span><br><span class="line"><span class="keyword">let</span> testArr2 = [<span class="number">50</span>,<span class="number">10</span>,<span class="number">60</span>,<span class="number">40</span>,<span class="number">30</span>,<span class="number">80</span>,<span class="number">20</span>,<span class="number">70</span>,<span class="number">100</span>,<span class="number">90</span>]</span><br><span class="line">mergeSortBU(testArr2, <span class="number">10</span>)</span><br><span class="line"><span class="built_in">console</span>.log(testArr2)</span><br></pre></td></tr></table></figure>
+<p>上面的说的归并排序主要是采用自顶向下的排序方式，在算法代码里，还涉及到了自低向上的归并排序，其过程是：</p>
+<ol>
+<li>遍历所有元素，看一个元素，第二次看两个元素，第三次看4个元素。。。每次加上自己（加倍）</li>
+<li>遍历 [0 ~ sz-1] [sz ~ 2sz-1] [2sz ~ 3sz-1]。。。进行归并，i + sz &lt; n 判断用于防止越界</li>
+<li>对 arr[i…i+sz-1] 和 arr[i+sz+sz-1] 进行归并</li>
+</ol>
+<p><img src="/images/arithmetic/mergeSort_3.png" alt="归并排序"></p>
+<p>以上就是归并排序的2种实现方法，这里记录以下方便查阅与复习</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/arithmetic/" rel="tag"># arithmetic</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/31/前后端接口规范/" rel="next" title="前后端接口规范">
+                <i class="fa fa-chevron-left"></i> 前后端接口规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#算法思路"><span class="nav-number">1.</span> <span class="nav-text">算法思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#归并过程"><span class="nav-number">2.</span> <span class="nav-text">归并过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现的代码"><span class="nav-number">3.</span> <span class="nav-text">实现的代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
