@@ -79,21 +79,21 @@
 
 
 
-<meta name="description" content="算法思路归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部分，依然是先分半，再排序，后归并。 重复">
+<meta name="description" content="算法思路归并排序为 nlogn 时间复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序其实类似于二叉树的后序遍历。 归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部">
 <meta name="keywords" content="arithmetic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="归并排序">
 <meta property="og:url" content="http://yoursite.com/2020/01/06/arithmetic_mergeSort/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="算法思路归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部分，依然是先分半，再排序，后归并。 重复">
+<meta property="og:description" content="算法思路归并排序为 nlogn 时间复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序其实类似于二叉树的后序遍历。 归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/arithmetic/mergeSort_1.png">
 <meta property="og:image" content="http://yoursite.com/images/arithmetic/mergeSort_2.png">
 <meta property="og:image" content="http://yoursite.com/images/arithmetic/mergeSort_3.png">
-<meta property="og:updated_time" content="2020-11-23T12:24:22.089Z">
+<meta property="og:updated_time" content="2020-11-25T07:02:10.253Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="归并排序">
-<meta name="twitter:description" content="算法思路归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部分，依然是先分半，再排序，后归并。 重复">
+<meta name="twitter:description" content="算法思路归并排序为 nlogn 时间复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序其实类似于二叉树的后序遍历。 归并排序的思路：  首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来 我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并 对于 2 中的每一个部">
 <meta name="twitter:image" content="http://yoursite.com/images/arithmetic/mergeSort_1.png">
 
 
@@ -426,7 +426,8 @@
       
 
       
-        <h3 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h3><p>归并排序为 nlogn 复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序的思路：</p>
+        <h3 id="算法思路"><a href="#算法思路" class="headerlink" title="算法思路"></a>算法思路</h3><p>归并排序为 nlogn 时间复杂度的算法，是一种稳定的算法，大部分框架源码里面的排序算法都是采用归并排序。归并排序其实类似于二叉树的后序遍历。</p>
+<p>归并排序的思路：</p>
 <ol>
 <li>首先把数组分成 2 半，然后想办法把左边的数组排序，再想办法把右边的数组排序，之后再将它们归并起来</li>
 <li>我们对左边和右边的数组进行排序的时候，再分别把左边和右边的数组分别分成一半，然后对每一个部分先排序再归并</li>
@@ -489,6 +490,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/18/arithmetic_quickSort/" rel="prev" title="快速排序">
+                快速排序 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -567,7 +572,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">121</span>
+                  <span class="site-state-item-count">125</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -578,7 +583,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

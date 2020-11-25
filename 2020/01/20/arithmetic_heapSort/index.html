@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="arithmetic,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="堆是一种特殊的完全二叉树（除了最后一层节点之外，其它层的节点必须是最大值），然后最后一层的节点必须集中在最左侧。 创建堆把 n 个元素建立成一个堆，首先我可以将这 n 个节点以自顶向下，从左到右的方式从 1 到 n 编码。这样就可以把这 n 个节点转换成为一棵完全二叉树，紧接着从最后一个非叶节点（节点编号为 n/2）开始到根节点(节点编号为1)逐个扫描所有节点，根据需要将当前节点向下调整，直到以当">
+<meta name="keywords" content="arithmetic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="堆排序">
+<meta property="og:url" content="http://yoursite.com/2020/01/20/arithmetic_heapSort/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="堆是一种特殊的完全二叉树（除了最后一层节点之外，其它层的节点必须是最大值），然后最后一层的节点必须集中在最左侧。 创建堆把 n 个元素建立成一个堆，首先我可以将这 n 个节点以自顶向下，从左到右的方式从 1 到 n 编码。这样就可以把这 n 个节点转换成为一棵完全二叉树，紧接着从最后一个非叶节点（节点编号为 n/2）开始到根节点(节点编号为1)逐个扫描所有节点，根据需要将当前节点向下调整，直到以当">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-24T14:25:04.657Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="堆排序">
+<meta name="twitter:description" content="堆是一种特殊的完全二叉树（除了最后一层节点之外，其它层的节点必须是最大值），然后最后一层的节点必须集中在最左侧。 创建堆把 n 个元素建立成一个堆，首先我可以将这 n 个节点以自顶向下，从左到右的方式从 1 到 n 编码。这样就可以把这 n 个节点转换成为一棵完全二叉树，紧接着从最后一个非叶节点（节点编号为 n/2）开始到根节点(节点编号为1)逐个扫描所有节点，根据需要将当前节点向下调整，直到以当">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/20/arithmetic_heapSort/">
+
+
+
+
+
+  <title>堆排序 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/arithmetic_heapSort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">堆排序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-20T20:31:05+08:00">
+                2020-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/arithmetic/" itemprop="url" rel="index">
+                    <span itemprop="name">arithmetic</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>堆是一种特殊的完全二叉树（除了最后一层节点之外，其它层的节点必须是最大值），然后最后一层的节点必须集中在最左侧。</p>
+<h3 id="创建堆"><a href="#创建堆" class="headerlink" title="创建堆"></a>创建堆</h3><p>把 n 个元素建立成一个堆，首先我可以将这 n 个节点以自顶向下，从左到右的方式从 1 到 n 编码。这样就可以把这 n 个节点转换成为一棵完全二叉树，紧接着从最后一个非叶节点（节点编号为 n/2）开始到根节点(节点编号为1)逐个扫描所有节点，根据需要将当前节点向下调整，直到以当前节点为根节点的子树符合堆的特性：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从最后一个非叶结点到第1个结点依次进行向下调整</span></span><br><span class="line"><span class="keyword">for</span>(i=n/<span class="number">2</span>;i&gt;=<span class="number">1</span>;i--)&#123;</span><br><span class="line">	siftdown(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="最大堆"><a href="#最大堆" class="headerlink" title="最大堆"></a>最大堆</h3><p>所有父节点都比子节点要大：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> h[<span class="number">101</span>]; <span class="comment">// 用来存放堆的数组</span></span><br><span class="line"><span class="keyword">int</span> n; <span class="comment">// 用来存储堆中元素的个数，也就是堆的大小</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 交换函数，用来交换堆中的两个元素的值</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	t=h[x];</span><br><span class="line">	h[x]=h[y];</span><br><span class="line">	h[y]=t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向上调整</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shiftUp</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span>(k &gt; <span class="number">1</span> &amp;&amp; h[k/<span class="number">2</span>] &lt; h[k])&#123;</span><br><span class="line">		swap(k/<span class="number">2</span>,k);</span><br><span class="line">		k /= <span class="number">2</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 插入元素,item为插入值，count为当堆元素的数量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> item, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">	h[count + <span class="number">1</span>] = item</span><br><span class="line">	count++</span><br><span class="line">	shiftUp(count)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向下调整函数</span></span><br><span class="line"><span class="keyword">void</span> siftdown(<span class="keyword">int</span> i) &#123; <span class="comment">// 传入一个需要向下调整的节点编号i,这里传入1，即从堆的顶点开始向下调整</span></span><br><span class="line">	<span class="keyword">int</span> t,flag=<span class="number">0</span>;<span class="comment">// flag用来标记是否需要继续向下调整</span></span><br><span class="line">	<span class="keyword">while</span>(i*<span class="number">2</span>&lt;=n &amp;&amp; flag==<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="comment">// 首先判断它和左儿子的关系(至少有左儿子)，并用t记录值较大的结点编号</span></span><br><span class="line">		<span class="keyword">if</span>(h[i] &lt; h[i*<span class="number">2</span>])&#123;</span><br><span class="line">			t=i*<span class="number">2</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			t=i;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 如果它有右儿子，再对右儿子进行比较</span></span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span>+<span class="number">1</span> &lt;= n)&#123;</span><br><span class="line">			<span class="comment">// 如果右儿子的值更大，更新较大的节点编号</span></span><br><span class="line">			<span class="keyword">if</span>(h[t]&lt;h[i*<span class="number">2</span>+<span class="number">1</span>])&#123;</span><br><span class="line">				t=i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 如果发现最大的结点编号不是自己，说明结点中有比父结点更大的数</span></span><br><span class="line">		<span class="keyword">if</span>(t!=i)&#123;</span><br><span class="line">			swap(t,i); <span class="comment">// 交换它们，注意swap函数需要自己来写</span></span><br><span class="line">			i=t; <span class="comment">// 更新i为刚才与它交换的儿子的结点编号，便于接下来继续向下调整</span></span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			flag=<span class="number">1</span>; <span class="comment">// 否则说明当前的父结点已经比两个子结点都要小了，不需要再进行向下调整了</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立堆函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creat</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="comment">// 从最后一个非叶结点到第1个结点依次进行向下调整</span></span><br><span class="line">	<span class="keyword">for</span>(i=n/<span class="number">2</span>;i&gt;=<span class="number">1</span>;i--)&#123;</span><br><span class="line">		siftdown(i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 堆排序</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapsort</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (n&gt;<span class="number">1</span>)&#123;</span><br><span class="line">		swap(<span class="number">1</span>,n);</span><br><span class="line">		n--;</span><br><span class="line">		siftdown(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,num;</span><br><span class="line">	<span class="comment">// 读入需要配许的数字的个数</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;num);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=num;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;h[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	n=num;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 建堆</span></span><br><span class="line">	creat();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 堆排序</span></span><br><span class="line">	heapsort();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 输出</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=num;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,h[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	getchar();</span><br><span class="line">	getchar(); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试用例:</span></span><br><span class="line"><span class="comment">// 14</span></span><br><span class="line"><span class="comment">// 99 5 36 7 22 17 46 12 2 19 25 28 1 92</span></span><br></pre></td></tr></table></figure>
+<h3 id="最小堆"><a href="#最小堆" class="headerlink" title="最小堆"></a>最小堆</h3><p>所有父节点都比子节点要小：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> h[<span class="number">101</span>]; <span class="comment">// 用来存放堆的数组</span></span><br><span class="line"><span class="keyword">int</span> n; <span class="comment">// 用来存储堆中元素的个数，也就是堆的大小</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 交换函数，用来交换堆中的两个元素的值</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	t=h[x];</span><br><span class="line">	h[x]=h[y];</span><br><span class="line">	h[y]=t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 向下调整函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">siftdown</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123; <span class="comment">// 传入一个需要向下调整的节点编号i,这里传入1，即从堆的顶点开始向下调整</span></span><br><span class="line">	<span class="keyword">int</span> t,flag=<span class="number">0</span>;<span class="comment">// flag用来标记是否需要继续向下调整</span></span><br><span class="line">	<span class="keyword">while</span>(i*<span class="number">2</span>&lt;=n &amp;&amp; flag==<span class="number">0</span>)&#123;</span><br><span class="line">		<span class="comment">// 首先判断它和左儿子的关系，并用t记录值较小的结点编号</span></span><br><span class="line">		<span class="keyword">if</span>(h[i] &gt; h[i*<span class="number">2</span>])&#123;</span><br><span class="line">			t=i*<span class="number">2</span>;</span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			t=i;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 如果它有右儿子，再对右儿子进行比较</span></span><br><span class="line">		<span class="keyword">if</span>(i*<span class="number">2</span>+<span class="number">1</span> &lt;=n)&#123;</span><br><span class="line">			<span class="comment">// 如果右儿子的值更小，更新较小的节点编号</span></span><br><span class="line">			<span class="keyword">if</span>(h[t]&gt;h[i*<span class="number">2</span>+<span class="number">1</span>])&#123;</span><br><span class="line">				t=i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 如果发现最小的结点编号不是自己，说明结点中有比父结点更小的数</span></span><br><span class="line">		<span class="keyword">if</span>(t!=i)&#123;</span><br><span class="line">			swap(t,i); <span class="comment">// 交换它们，注意swap函数需要自己来写</span></span><br><span class="line">			i=t; <span class="comment">// 更新i为刚才与它交换的儿子的结点编号，便于接下来继续向下调整</span></span><br><span class="line">		&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">			flag=<span class="number">1</span>; <span class="comment">// 否则说明当前的父结点已经比两个子结点都要小了，不需要再进行向下调整了</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 建立堆函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">creat</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="comment">// 从最后一个非叶结点到第1个结点依次进行向下调整</span></span><br><span class="line">	<span class="keyword">for</span>(i=n/<span class="number">2</span>;i&gt;=<span class="number">1</span>;i--)&#123;</span><br><span class="line">		siftdown(i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除最小的元素堆顶元素，删除堆里面的最后一个元素放到第一个进行向下调整操作</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">deletemin</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	t=h[<span class="number">1</span>]; <span class="comment">// 用一个临时变量记录堆顶的值</span></span><br><span class="line">	h[<span class="number">1</span>]=h[n]; <span class="comment">// 将堆的最后一个点赋值到堆顶</span></span><br><span class="line">	n--; <span class="comment">// 堆的元素减少1</span></span><br><span class="line">	siftdown(<span class="number">1</span>); <span class="comment">// 向下调整</span></span><br><span class="line">	<span class="keyword">return</span> t; <span class="comment">// 返回之前记录的堆的顶点的最小值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i,num;</span><br><span class="line">	<span class="comment">// 读入需要配许的数字的个数</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;num);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=num;i++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;h[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	n=num;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 建堆</span></span><br><span class="line">	creat();</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 删除顶部元素，连续删除n次，其实也就是从大到小把数输出来</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=num;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d "</span>,deletemin());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	getchar();</span><br><span class="line">	getchar(); </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试用例:</span></span><br><span class="line"><span class="comment">// 14</span></span><br><span class="line"><span class="comment">// 99 5 36 7 22 17 46 12 2 19 25 28 1 92</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/arithmetic/" rel="tag"># arithmetic</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/20/arithmetic_binarySearch/" rel="next" title="二分查找">
+                <i class="fa fa-chevron-left"></i> 二分查找
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/30/arithmetic_BST/" rel="prev" title="二叉搜索树">
+                二叉搜索树 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">125</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建堆"><span class="nav-number">1.</span> <span class="nav-text">创建堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最大堆"><span class="nav-number">2.</span> <span class="nav-text">最大堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最小堆"><span class="nav-number">3.</span> <span class="nav-text">最小堆</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
