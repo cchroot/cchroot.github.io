@@ -332,6 +332,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/07/shell脚本自动部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/07/shell脚本自动部署/" itemprop="url">shell 脚本简单自动部署</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-07T20:31:05+08:00">
+                2020-02-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          以下为 node 服务和 前端的自动部署简单脚本，需要前后端代码的 git 服务也本身在服务器上。
+部署node服务123456789101112131415echo "开始更新 服务1 服务器端"cd /root/wechat/node-serverecho "正在更新代码..."git pullecho "正在重启服务..."node app.js &amp;echo "服务1 服务端启动成功"echo "开始更新 服务2 服务器端"cd /root/wechat/node-admin-serverecho "正在更新代码..."git pullecho "正在重启服务..."node app.js &amp;echo "服务2 服务端启动成功"
+部署前端服务1234567891011echo "开始更新前
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/02/07/shell脚本自动部署/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/30/arithmetic_BST/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -489,7 +639,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/arithmetic_heapSort/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/24/排序算法总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -508,7 +658,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/01/20/arithmetic_heapSort/" itemprop="url">堆排序</a></h1>
+                <a class="post-title-link" href="/2020/01/24/排序算法总结/" itemprop="url">四种排序算法总结</a></h1>
         
 
         <div class="post-meta">
@@ -520,8 +670,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-20T20:31:05+08:00">
-                2020-01-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-24T20:31:05+08:00">
+                2020-01-24
               </time>
             
 
@@ -582,15 +732,17 @@
       
         
           
-          堆是一种特殊的完全二叉树（除了最后一层节点之外，其它层的节点必须是最大值），然后最后一层的节点必须集中在最左侧。
-创建堆把 n 个元素建立成一个堆，首先我可以将这 n 个节点以自顶向下，从左到右的方式从 1 到 n 编码。这样就可以把这 n 个节点转换成为一棵完全二叉树，紧接着从最后一个非叶节点（节点编号为 n/2）开始到根节点(节点编号为1)逐个扫描所有节点，根据需要将当前节点向下调整，直到以当前节点为根节点的子树符合堆的特性：
-1234// 从最后一个非叶结点到第1个结点依次进行向下调整for(i=n/2;i&gt;=1;i--)&#123;	siftdown(i);&#125;
-最大堆所有父节点都比子节点要大：
-12345678910111213141516171819202122232425262728
+          这里通过对比四种排序算法：插入排序，归并排序，快速排序和堆排序，来总结一下它们的使用场景和优缺点。
+先上图：
+
+平均时间复杂度从平均时间复杂度来看，只有插入排序是 O(n^2) 的时间复杂度，其他三种排序都是 O(nlogn) 的时间复杂度。
+注意，这里说的是平均的时间复杂度，为什么要强调是平均时间复杂度呢?
+大家应该知道，比如说对于插入排序，当我们要排序的数组已经是有序的情况下，那么插入排序算法就会退化到 O(n) 这个级别的时间复杂度。而对于快速排序算法，在极其特殊的情况下也会退化成 O(n^2) 级别的时间复杂度，我们一般会使用随机化的方式来尽量避免这个问题，使得快速排序算法退化成 O(n^2) 级别的时间复杂度的概率变得极其极其的小。
+在通过前面的比较测试，可以发现：总体而言快速排序是更加快的排序算法。
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/01/20/arithmetic_heapSort/#more" rel="contents">
+            <a class="btn" href="/2020/01/24/排序算法总结/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -742,6 +894,158 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/01/20/arithmetic_binarySearch/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/20/arithmetic_heapSort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/20/arithmetic_heapSort/" itemprop="url">堆排序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-20T20:31:05+08:00">
+                2020-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/arithmetic/" itemprop="url" rel="index">
+                    <span itemprop="name">arithmetic</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          堆是一种特殊的完全二叉树（除了最后一层节点之外，其它层的节点必须是最大值），然后最后一层的节点必须集中在最左侧。
+创建堆把 n 个元素建立成一个堆，首先我可以将这 n 个节点以自顶向下，从左到右的方式从 1 到 n 编码。这样就可以把这 n 个节点转换成为一棵完全二叉树，紧接着从最后一个非叶节点（节点编号为 n/2）开始到根节点(节点编号为1)逐个扫描所有节点，根据需要将当前节点向下调整，直到以当前节点为根节点的子树符合堆的特性：
+1234// 从最后一个非叶结点到第1个结点依次进行向下调整for(i=n/2;i&gt;=1;i--)&#123;	siftdown(i);&#125;
+最大堆所有父节点都比子节点要大：
+12345678910111213141516171819202122232425262728
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/01/20/arithmetic_heapSort/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1568,327 +1872,6 @@ Certbot 会启动一个临时服务器来完成验证（会占用 80 端口或 4
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/24/排序算法总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cchroot">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/headPhoto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cchroot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/24/排序算法总结/" itemprop="url">四种排序算法总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-24T20:31:05+08:00">
-                2019-11-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/arithmetic/" itemprop="url" rel="index">
-                    <span itemprop="name">arithmetic</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          这里通过对比四种排序算法：插入排序，归并排序，快速排序和堆排序，来总结一下它们的使用场景和优缺点。
-先上图：
-
-平均时间复杂度从平均时间复杂度来看，只有插入排序是 O(n^2) 的时间复杂度，其他三种排序都是 O(nlogn) 的时间复杂度。
-注意，这里说的是平均的时间复杂度，为什么要强调是平均时间复杂度呢?
-大家应该知道，比如说对于插入排序，当我们要排序的数组已经是有序的情况下，那么插入排序算法就会退化到 O(n) 这个级别的时间复杂度。而对于快速排序算法，在极其特殊的情况下也会退化成 O(n^2) 级别的时间复杂度，我们一般会使用随机化的方式来尽量避免这个问题，使得快速排序算法退化成 O(n^2) 级别的时间复杂度的概率变得极其极其的小。
-在通过前面的比较测试，可以发现：总体而言快速排序是更加快的排序算法。
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/11/24/排序算法总结/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/19/git冲突解决办法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cchroot">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/headPhoto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cchroot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/19/git冲突解决办法/" itemprop="url">git 冲突解决办法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-19T20:31:05+08:00">
-                2019-11-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/其他/" itemprop="url" rel="index">
-                    <span itemprop="name">其他</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          git 冲突解决方式（方式一，目标分支有push权限）
-先切换到需要合并到的目标分支  git checkout xxx（xxx为目标分支名）
-
-拉去该分支的最新代码 git pull
-
-将需要合并到该分支的代码（你需要提交合并的代码分支），合并到该目标分支：git merge –no-ff XXX（XXX为你的开发分支名）
-
-查看当前合并状态 git status
-
-用编辑器打开冲突文件进行修改
-
-用 git diff 命令查看是否还有冲突文件
-
-如果有冲突文件则返回第5步骤继续修改，如果没有冲突则直接在当前的目标分支提交代码
-
-
-git  冲突解决方式（方式二，目标分支无push权限）
-先切换到需要合并到的目标分支 git checkout xxx（xxx为目标分支名）
-
-拉去该分支的最新代码 git pu
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/11/19/git冲突解决办法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1941,7 +1924,7 @@ git  冲突解决方式（方式二，目标分支无push权限）
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">125</span>
+                  <span class="site-state-item-count">126</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1962,7 +1945,7 @@ git  冲突解决方式（方式二，目标分支无push权限）
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/javascript/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
