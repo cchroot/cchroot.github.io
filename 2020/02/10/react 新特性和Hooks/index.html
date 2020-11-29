@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react.js,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="react 新特性 Context 实现跨层级的组件数据传递，静态属性 ContextType 访问跨层级组件的数据 Lazy 与 Suspense 实现延迟加载（类似于 vue 的异步组件） Memo 实现指定组件进行渲染（优化组件渲染，当传入组件的属性值都不变的情况下，不会触发组件的重新渲染，用于函数组件中替代 PureComponent，注意 PureComponent 只监听第一层属性的变">
+<meta name="keywords" content="react.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react 新特性和 Hooks">
+<meta property="og:url" content="http://yoursite.com/2020/02/10/react 新特性和Hooks/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="react 新特性 Context 实现跨层级的组件数据传递，静态属性 ContextType 访问跨层级组件的数据 Lazy 与 Suspense 实现延迟加载（类似于 vue 的异步组件） Memo 实现指定组件进行渲染（优化组件渲染，当传入组件的属性值都不变的情况下，不会触发组件的重新渲染，用于函数组件中替代 PureComponent，注意 PureComponent 只监听第一层属性的变">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-11-29T14:49:29.011Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="react 新特性和 Hooks">
+<meta name="twitter:description" content="react 新特性 Context 实现跨层级的组件数据传递，静态属性 ContextType 访问跨层级组件的数据 Lazy 与 Suspense 实现延迟加载（类似于 vue 的异步组件） Memo 实现指定组件进行渲染（优化组件渲染，当传入组件的属性值都不变的情况下，不会触发组件的重新渲染，用于函数组件中替代 PureComponent，注意 PureComponent 只监听第一层属性的变">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/10/react 新特性和Hooks/">
+
+
+
+
+
+  <title>react 新特性和 Hooks | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/10/react 新特性和Hooks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">react 新特性和 Hooks</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-10T21:59:05+08:00">
+                2020-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/reactJs/" itemprop="url" rel="index">
+                    <span itemprop="name">reactJs</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="react-新特性"><a href="#react-新特性" class="headerlink" title="react 新特性"></a>react 新特性</h2><ul>
+<li>Context 实现跨层级的组件数据传递，静态属性 ContextType 访问跨层级组件的数据</li>
+<li>Lazy 与 Suspense 实现延迟加载（类似于 vue 的异步组件）</li>
+<li>Memo 实现指定组件进行渲染（优化组件渲染，当传入组件的属性值都不变的情况下，不会触发组件的重新渲染，用于函数组件中替代 PureComponent，注意 PureComponent 只监听第一层属性的变化，当属性拆分越简单，使用的概率就越高）</li>
+</ul>
+<p>这里暂时举例，官网都有，下面使用 Hooks 也会涉及到部分</p>
+<h2 id="Hooks"><a href="#Hooks" class="headerlink" title="Hooks"></a>Hooks</h2><h3 id="Hooks-的意义"><a href="#Hooks-的意义" class="headerlink" title="Hooks 的意义"></a>Hooks 的意义</h3><p>类组件的不足:</p>
+<ul>
+<li>状态逻辑难以复用<ul>
+<li>缺少复用机制</li>
+<li>渲染属性和高阶组件会导致层级冗余</li>
+</ul>
+</li>
+<li>趋向复杂难以维护<ul>
+<li>生命周期函数混杂不相干逻辑</li>
+<li>相干逻辑分散在不同生命周期函数中</li>
+</ul>
+</li>
+<li>this 指向困扰<ul>
+<li>内联函数过度创建新句柄</li>
+<li>类成员函数不能保证 this</li>
+</ul>
+</li>
+</ul>
+<p>Hooks 的优势：</p>
+<ul>
+<li>优化类组件的三大问题<ul>
+<li>函数组件无 this 问题</li>
+<li>自定义 Hook 方便复用状态逻辑</li>
+<li>副作用的关注点分离</li>
+</ul>
+</li>
+</ul>
+<h3 id="Hook-的使用"><a href="#Hook-的使用" class="headerlink" title="Hook 的使用"></a>Hook 的使用</h3><p>可以使用 eslint-plugin-react-hooks 来减少 hooks 的使用错误</p>
+<p>在 package.json 中：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">"eslintConfig": &#123;</span><br><span class="line">  "extends": "react-app",</span><br><span class="line">  "plugins": [</span><br><span class="line">	<span class="string">"react-hooks"</span></span><br><span class="line">  ],</span><br><span class="line">  "rules":&#123;</span><br><span class="line">	"react-hooks/rules-of-hooks": "error" // 出现hooks的使用错误，直接报错</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="useState"><a href="#useState" class="headerlink" title="useState"></a>useState</h4><p>useState 用来替代之前类组件中 state 成员和 setState 方法的新的状态解决方案</p>
+<p>直接使用:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, useState &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">	&lt;button</span><br><span class="line">	  type=<span class="string">"button"</span></span><br><span class="line">	  onClick=&#123;() =&gt; &#123;setCount(count + <span class="number">1</span>)&#125;&#125;</span><br><span class="line">	&gt;</span><br><span class="line">	Click(&#123;count&#125;)</span><br><span class="line">	&lt;<span class="regexp">/button&gt;	  </span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">export default App;</span></span><br></pre></td></tr></table></figure>
+<p>若需要从父组件中获取数据赋值：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, useState &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span> (<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">  const defaultCount = props.defaultCount || 0 // 这样使用会有问题，每次渲染都会运行，如果复杂度高会浪费过多资源</span></span><br><span class="line"><span class="comment">  const [count, setCount] = useState(defaultCount);</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="comment">// 以下这样使用只在第一次渲染调用</span></span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> props.defaultCount || <span class="number">0</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">	&lt;button</span><br><span class="line">	  type=<span class="string">"button"</span></span><br><span class="line">	  onClick=&#123;() =&gt; &#123;setCount(count + <span class="number">1</span>)&#125;&#125;</span><br><span class="line">	&gt;</span><br><span class="line">	Click(&#123;count&#125;)</span><br><span class="line">	&lt;<span class="regexp">/button&gt;	  </span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">export default App;</span></span><br></pre></td></tr></table></figure>
+<p>useState 的使用主要注意两点:</p>
+<ol>
+<li>使用需要规规矩矩，按顺序，次数不能多也不能少（使用 eslint-plugin-react-hooks 插件减少错误）</li>
+<li>可以传入一个函数，实现延迟初始化提高效率</li>
+</ol>
+<h4 id="useEffect"><a href="#useEffect" class="headerlink" title="useEffect"></a>useEffect</h4><p>useEffect 替代之前的副作用使用场景</p>
+<p>副作用的时机（生命周期函数）：</p>
+<ul>
+<li>Mount 之后 - componentDidMount</li>
+<li>Update 之后 - componentDidUpdate</li>
+<li>Unmount 之前 - componentWillUnmount</li>
+</ul>
+<p>类组件代码:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line">Class App2 extends Component &#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">	count: <span class="number">0</span>,</span><br><span class="line">    size: &#123;</span><br><span class="line">	  width: <span class="built_in">document</span>.documentElement.clientWidth,</span><br><span class="line">	  height: <span class="built_in">document</span>.documentElement.clientHeight</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这里最好使用类属性来声明函数，如果用类成员函数声明</span></span><br><span class="line">  <span class="comment">// 则不能保证里面 this 指向的正确性，和严格一致的句柄</span></span><br><span class="line">  <span class="comment">// 还可以只用下面更优雅的 装饰器 达到相同的目的</span></span><br><span class="line">  onResize = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">this</span>.setState(&#123;</span><br><span class="line">	  size: &#123;</span><br><span class="line">		width: <span class="built_in">document</span>.documentElement.clientWidth,</span><br><span class="line">	    height: <span class="built_in">document</span>.documentElement.clientHeight</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// @bind()  装饰器，还在查看期，未正式发布</span></span><br><span class="line">  <span class="comment">// onResize() &#123;&#125;</span></span><br><span class="line"></span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">	<span class="built_in">document</span>.title = <span class="keyword">this</span>.state.count</span><br><span class="line">	<span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>, <span class="keyword">this</span>.onResize, <span class="literal">false</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  componentDidUpdate() &#123;</span><br><span class="line">	<span class="built_in">document</span>.title = <span class="keyword">this</span>.state.count</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  componentWillUnmount() &#123;</span><br><span class="line">	<span class="built_in">window</span>.removeEventListener(<span class="string">'resize'</span>, <span class="keyword">this</span>.onResize, <span class="literal">false</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">	<span class="keyword">const</span> &#123; count, size &#125; = <span class="keyword">this</span>.state</span><br><span class="line">	&lt;button</span><br><span class="line">	  type=<span class="string">"button"</span></span><br><span class="line">	  onClick=&#123;() =&gt; &#123;setCount(count + <span class="number">1</span>)&#125;&#125;</span><br><span class="line">	&gt;</span><br><span class="line">	Click(&#123;count&#125;)</span><br><span class="line">	Size:&#123;size.width&#125; x &#123;size.height&#125;</span><br><span class="line">	&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>使用 Hooks useEffect 代码:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, useState, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">const</span> [size, setSize] = useState(&#123;</span><br><span class="line">	width: <span class="built_in">document</span>.documentElement.clientWidth,</span><br><span class="line">    height: <span class="built_in">document</span>.documentElement.clientHeight</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 现在没有Class函数也就不存在绑定 this 的问题了</span></span><br><span class="line">  onResize = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	setSize(&#123;</span><br><span class="line">	  size: &#123;</span><br><span class="line">		width: <span class="built_in">document</span>.documentElement.clientWidth,</span><br><span class="line">	    height: <span class="built_in">document</span>.documentElement.clientHeight</span><br><span class="line">	  &#125;</span><br><span class="line">	&#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 会不断重复调用</span></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">document</span>.title = <span class="keyword">this</span>.state.count</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="comment">// 绑定和解绑事件</span></span><br><span class="line">	<span class="built_in">window</span>.addEventListener(<span class="string">'resize'</span>, onResize, <span class="literal">false</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	  <span class="built_in">window</span>.removeEventListener(<span class="string">'resize'</span>, onResize, <span class="literal">false</span>)</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;, []) <span class="comment">// 注意这里传递空数组，可以让 useEffect 只调用一次,"[]"是第二个参数，数组的每一项都不变就会阻止 useEffect 重新运行</span></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">	&lt;button</span><br><span class="line">	  type=<span class="string">"button"</span></span><br><span class="line">	  onClick=&#123;() =&gt; &#123;setCount(count + <span class="number">1</span>)&#125;&#125;</span><br><span class="line">	&gt;</span><br><span class="line">	Click(&#123;count&#125;)</span><br><span class="line">	Size:&#123;size.width&#125; x &#123;size.height&#125;</span><br><span class="line">	&lt;<span class="regexp">/button&gt;	  </span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp">export default App;</span></span><br></pre></td></tr></table></figure>
+<p>之前类组件的生命周期函数在命名上比较好理解，但是其实都是围绕着组件的渲染和重渲染，useEffect 把它们抽象了一层，通过第二个参数来控制抽象的时机，这于生命周期函数是一样的。大家理解什么样的 useEffect 参数和什么周期函数是对应的，就可以灵活应用了。</p>
+<h4 id="Contenxt-Hooks"><a href="#Contenxt-Hooks" class="headerlink" title="Contenxt Hooks"></a>Contenxt Hooks</h4><p>类组件的使用方式</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, useState &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// context</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span>() &#123;</span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">	  &lt;CountContext.Consumer&gt;</span><br><span class="line">	  &#123;</span><br><span class="line">		count =&gt; <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line">	  &#125;</span><br><span class="line">	  &lt;<span class="regexp">/CountContext.Consumer&gt;</span></span><br><span class="line"><span class="regexp">	)</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ contextType</span></span><br><span class="line"><span class="regexp">class Bar extends Component &#123;</span></span><br><span class="line"><span class="regexp">  static contextType = CountContext</span></span><br><span class="line"><span class="regexp">  return() &#123;</span></span><br><span class="line"><span class="regexp">	const count = this.context</span></span><br><span class="line"><span class="regexp">	return (</span></span><br><span class="line"><span class="regexp">	  &lt;h1&gt;&#123;count&#125;&lt;/</span>h1&gt;</span><br><span class="line">	)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">	&lt;div&gt;</span><br><span class="line">	  &lt;button</span><br><span class="line">	    type=<span class="string">"button"</span></span><br><span class="line">	    onClick=&#123;() =&gt; &#123;setCount(count + <span class="number">1</span>)&#125;&#125;</span><br><span class="line">	  &gt;</span><br><span class="line">	  Click(&#123;count&#125;)</span><br><span class="line">	  &lt;<span class="regexp">/button&gt;	  </span></span><br><span class="line"><span class="regexp">      &lt;CountContext.provider value=&#123;count&#125;&gt;</span></span><br><span class="line"><span class="regexp">		&lt;Foo/</span>&gt;</span><br><span class="line">		&lt;Bar/&gt;</span><br><span class="line">	  &lt;<span class="regexp">/CountContext.provider&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>useContext 的实现方式</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, useState, useContext &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> count = useContext(CountContext)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;h1&gt;&#123;count&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function App() &#123;</span></span><br><span class="line"><span class="regexp">  const [count, setCount] = useState(0)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">	&lt;div&gt;</span></span><br><span class="line"><span class="regexp">	  &lt;button</span></span><br><span class="line"><span class="regexp">	    type="button"</span></span><br><span class="line"><span class="regexp">	    onClick=&#123;() =&gt; &#123;setCount(count + 1)&#125;&#125;</span></span><br><span class="line"><span class="regexp">	  &gt;</span></span><br><span class="line"><span class="regexp">	  Click(&#123;count&#125;)</span></span><br><span class="line"><span class="regexp">	  &lt;/</span>button&gt;	  </span><br><span class="line">      &lt;CountContext.provider value=&#123;count&#125;&gt;</span><br><span class="line">		&lt;Counter/&gt;</span><br><span class="line">	  &lt;<span class="regexp">/CountContext.provider&gt;</span></span><br><span class="line"><span class="regexp">	&lt;/</span>div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意不要乱用 context，因为它会破坏组件的容积性</p>
+<h4 id="useMemo-amp-amp-useCallback"><a href="#useMemo-amp-amp-useCallback" class="headerlink" title="useMemo &amp;&amp; useCallback"></a>useMemo &amp;&amp; useCallback</h4><p>useMemo 的使用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, useState, useMemo &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;h1&gt;&#123;props.count&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function App() &#123;</span></span><br><span class="line"><span class="regexp">  const [count, setCount] = useState(0)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ useEffect 是在渲染后运行，useMemo是在渲染期间</span></span><br><span class="line"><span class="regexp">  const double = useMemo(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	return count * 2</span></span><br><span class="line"><span class="regexp">  &#125;, [count]) /</span><span class="regexp">/ 改成 [count === 3] 测 试</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">	&lt;div&gt;</span></span><br><span class="line"><span class="regexp">	  &lt;button</span></span><br><span class="line"><span class="regexp">	    type="button"</span></span><br><span class="line"><span class="regexp">	    onClick=&#123;() =&gt; &#123;setCount(count + 1)&#125;&#125;</span></span><br><span class="line"><span class="regexp">	  &gt;</span></span><br><span class="line"><span class="regexp">	  Click(&#123;count&#125;), double:(&#123;double&#125;)</span></span><br><span class="line"><span class="regexp">	  &lt;/</span>button&gt;	  </span><br><span class="line">      &lt;Counter :count=&#123;count&#125;/&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>useCallback 的使用：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, useState, useMemo, memo, useCallback &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// memo 用于优化函数组件的渲染行为</span></span><br><span class="line"><span class="comment">// 当传入组件的属性值都不变的情况下，不会触发组件的重新渲染</span></span><br><span class="line"><span class="keyword">const</span> Counter = memo(<span class="function"><span class="keyword">function</span> <span class="title">Counter</span>(<span class="params">props</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;h1 onClick=&#123;props.onClick&#125;&gt;&#123;props.count&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function App() &#123;</span></span><br><span class="line"><span class="regexp">  const [count, setCount] = useState(0)</span></span><br><span class="line"><span class="regexp">  const [clickCount, setClickCount] = useState(0)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ useEffect 实在渲染后运行，useMemo是在渲染期间</span></span><br><span class="line"><span class="regexp">  const double = useMemo(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	return count * 2</span></span><br><span class="line"><span class="regexp">  &#125;, [count === 3]) </span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ useMemo 封装，防止 onClick 函数句柄每次变化导致组件更新，优化性能</span></span><br><span class="line"><span class="regexp">  /</span>*</span><br><span class="line">  <span class="keyword">const</span> onClick = useMemo(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	  <span class="built_in">console</span>.log(<span class="string">'Click'</span>)</span><br><span class="line">	&#125;</span><br><span class="line">  &#125;, [])</span><br><span class="line">  *<span class="regexp">/</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ 等价于上面的 onClick</span></span><br><span class="line"><span class="regexp">  /</span>*</span><br><span class="line">  <span class="keyword">const</span> onClick = useCallback(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'Click'</span>)</span><br><span class="line">  &#125;, [])</span><br><span class="line">  *<span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span>*</span><br><span class="line">  <span class="keyword">const</span> onClick = useCallback(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'Click'</span>)</span><br><span class="line">	<span class="comment">// setClickCount(clickCount + 1)</span></span><br><span class="line">    setClickCount(<span class="function">(<span class="params">clickCount</span>) =&gt;</span> clickCount + <span class="number">1</span>) <span class="comment">// 可以是一个函数</span></span><br><span class="line">  &#125;, [clickCount])</span><br><span class="line">  *<span class="regexp">/</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  const onClick = useCallback(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	console.log('Click')</span></span><br><span class="line"><span class="regexp">    setClickCount((clickCount) =&gt; clickCount + 1) /</span><span class="regexp">/ 可以是一个函数，这样也不需要拿到 clickCount 的句柄了</span></span><br><span class="line"><span class="regexp">  &#125;, [])</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ 如果 useMemo 返回的是一个函数，那么可以直接用 useCallback 来省略顶层的函数，即 useMemo(() =&gt; fn) 等价于 useCallBack(fn)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">	&lt;div&gt;</span></span><br><span class="line"><span class="regexp">	  &lt;button</span></span><br><span class="line"><span class="regexp">	    type="button"</span></span><br><span class="line"><span class="regexp">	    onClick=&#123;() =&gt; &#123;setCount(count + 1)&#125;&#125;</span></span><br><span class="line"><span class="regexp">	  &gt;</span></span><br><span class="line"><span class="regexp">	  Click(&#123;count&#125;), double:(&#123;double&#125;)</span></span><br><span class="line"><span class="regexp">	  &lt;/</span>button&gt;	  </span><br><span class="line">      &lt;Counter count=&#123;double&#125; onClick=&#123;onClick&#125;/&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>所以 useCallback 是 useMemo 的变体</p>
+<h4 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a>useRef</h4><p>useRef 用于：</p>
+<ul>
+<li>获取子组件或者 DOM 节点的句柄</li>
+<li>渲染周期之间共享数据的存储（state等）</li>
+</ul>
+<p>使用 useRef 之前，不能满足 clearInterval 定时器的需求：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PureComponent, useState, useEffect, useMemo, memo, useCallback, useRef &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数组件不能通过 ref 获取到句柄</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> <span class="keyword">extends</span> <span class="title">PureComponent</span> </span>&#123;</span><br><span class="line">  speak () &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">`now counter is: <span class="subst">$&#123;<span class="keyword">this</span>.props.count&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  render () &#123;</span><br><span class="line">	<span class="keyword">const</span> &#123; props &#125; = <span class="keyword">this</span></span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">      &lt;h1 onClick=&#123;props.onClick&#125;&gt;&#123;props.count&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function App() &#123;</span></span><br><span class="line"><span class="regexp">  const [count, setCount] = useState(0)</span></span><br><span class="line"><span class="regexp">  const [clickCount, setClickCount] = useState(0)</span></span><br><span class="line"><span class="regexp">  const counterRef = useRef()</span></span><br><span class="line"><span class="regexp">  let it /</span><span class="regexp">/ 定时器的句柄</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ useEffect 实在渲染后运行，useMemo是在渲染期间</span></span><br><span class="line"><span class="regexp">  const double = useMemo(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	return count * 2</span></span><br><span class="line"><span class="regexp">  &#125;, [count === 3]) </span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  const onClick = useCallback(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	console.log('Click')</span></span><br><span class="line"><span class="regexp">    setClickCount((clickCount) =&gt; clickCount + 1)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    counterRef.current.speak() /</span><span class="regexp">/ 调用子组件的函数</span></span><br><span class="line"><span class="regexp">  &#125;, [counterRef])</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  useEffect(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	it = setInterval(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	  setCount(() =&gt; count + 1)</span></span><br><span class="line"><span class="regexp">	&#125;, 1000)</span></span><br><span class="line"><span class="regexp">  &#125;, [])</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  useEffect(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	if (count &gt;= 10) &#123;</span></span><br><span class="line"><span class="regexp">	  clearInterval(it)</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">  &#125;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ 如果 useMemo 返回的是一个函数，那么可以直接用 useCallback 来省略顶层的函数，即 useMemo(() =&gt; fn) 等价于 useCallBack(fn)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">	&lt;div&gt;</span></span><br><span class="line"><span class="regexp">	  &lt;button</span></span><br><span class="line"><span class="regexp">	    type="button"</span></span><br><span class="line"><span class="regexp">	    onClick=&#123;() =&gt; &#123;setCount(count + 1)&#125;&#125;</span></span><br><span class="line"><span class="regexp">	  &gt;</span></span><br><span class="line"><span class="regexp">	  Click(&#123;count&#125;), double:(&#123;double&#125;)</span></span><br><span class="line"><span class="regexp">	  &lt;/</span>button&gt;	  </span><br><span class="line">      &lt;Counter ref=&#123;counterRef&#125; count=&#123;double&#125; onClick=&#123;onClick&#125;/&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>使用 useRef：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PureComponent, useState, useEffect, useMemo, memo, useCallback, useRef &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数组件不能通过 ref 获取到句柄</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Counter</span> <span class="keyword">extends</span> <span class="title">PureComponent</span> </span>&#123;</span><br><span class="line">  speak () &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">`now counter is: <span class="subst">$&#123;<span class="keyword">this</span>.props.count&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  render () &#123;</span><br><span class="line">	<span class="keyword">const</span> &#123; props &#125; = <span class="keyword">this</span></span><br><span class="line">	<span class="keyword">return</span> (</span><br><span class="line">      &lt;h1 onClick=&#123;props.onClick&#125;&gt;&#123;props.count&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function App() &#123;</span></span><br><span class="line"><span class="regexp">  const [count, setCount] = useState(0)</span></span><br><span class="line"><span class="regexp">  const [clickCount, setClickCount] = useState(0)</span></span><br><span class="line"><span class="regexp">  const counterRef = useRef()</span></span><br><span class="line"><span class="regexp">  let it = useRef() /</span><span class="regexp">/ 定时器的句柄</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ useEffect 实在渲染后运行，useMemo是在渲染期间</span></span><br><span class="line"><span class="regexp">  const double = useMemo(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	return count * 2</span></span><br><span class="line"><span class="regexp">  &#125;, [count === 3]) </span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  const onClick = useCallback(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	console.log('Click')</span></span><br><span class="line"><span class="regexp">    setClickCount((clickCount) =&gt; clickCount + 1)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">    counterRef.current.speak() /</span><span class="regexp">/ 调用子组件的函数</span></span><br><span class="line"><span class="regexp">  &#125;, [counterRef])</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  useEffect(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	it.current = setInterval(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	  setCount(() =&gt; count + 1)</span></span><br><span class="line"><span class="regexp">	&#125;, 1000)</span></span><br><span class="line"><span class="regexp">  &#125;, [])</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  useEffect(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	if (count &gt;= 10) &#123;</span></span><br><span class="line"><span class="regexp">	  clearInterval(it.current)</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">  &#125;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  /</span><span class="regexp">/ 如果 useMemo 返回的是一个函数，那么可以直接用 useCallback 来省略顶层的函数，即 useMemo(() =&gt; fn) 等价于 useCallBack(fn)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">	&lt;div&gt;</span></span><br><span class="line"><span class="regexp">	  &lt;button</span></span><br><span class="line"><span class="regexp">	    type="button"</span></span><br><span class="line"><span class="regexp">	    onClick=&#123;() =&gt; &#123;setCount(count + 1)&#125;&#125;</span></span><br><span class="line"><span class="regexp">	  &gt;</span></span><br><span class="line"><span class="regexp">	  Click(&#123;count&#125;), double:(&#123;double&#125;)</span></span><br><span class="line"><span class="regexp">	  &lt;/</span>button&gt;	  </span><br><span class="line">      &lt;Counter ref=&#123;counterRef&#125; count=&#123;double&#125; onClick=&#123;onClick&#125;/&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>童鞋们如果碰到需要在组件中获取上一次渲染的一些数据，甚至是 state，就把他们放到 useRef 中，下次渲染就能正确的获取到了。</p>
+<p>上面用到了 useRef 的两种使用场景:</p>
+<ol>
+<li>获取子组件或者 DOM 元素</li>
+<li>同步不同渲染周期之间需要共享的数据</li>
+</ol>
+<h4 id="自定义-Hooks"><a href="#自定义-Hooks" class="headerlink" title="自定义 Hooks"></a>自定义 Hooks</h4><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component, PureComponent, useState, useEffect, useRef &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 把 Counter 组件改造成 hook</span></span><br><span class="line"><span class="comment">// 证明可以返回 jsx 参与渲染</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useCounter</span>(<span class="params">count</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> size = useSize()</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;h1&gt;&#123;count&#125;,&#123;size.width&#125;x&#123;size.height&#125;&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 自定义 hook 函数必须以 use 开头</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 这里可以发现只有输入和输出的区别</span></span><br><span class="line"><span class="regexp">function useCount(defaultCount) &#123;</span></span><br><span class="line"><span class="regexp">  const [count, setCount] = useState(defaultCount)</span></span><br><span class="line"><span class="regexp">  let it = useRef() /</span><span class="regexp">/ 定时器的句柄</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  useEffect(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	it.current = setInterval(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	  setCount(() =&gt; count + 1)</span></span><br><span class="line"><span class="regexp">	&#125;, 1000)</span></span><br><span class="line"><span class="regexp">  &#125;, [])</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  useEffect(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	if (count &gt;= 10) &#123;</span></span><br><span class="line"><span class="regexp">	  clearInterval(it.current)</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">  &#125;)</span></span><br><span class="line"><span class="regexp">  return [count, setCount]</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 假设很多个位置都需要获取浏览器窗口尺寸</span></span><br><span class="line"><span class="regexp">/</span><span class="regexp">/ 写一个自定义 hook</span></span><br><span class="line"><span class="regexp">function useSize() &#123;</span></span><br><span class="line"><span class="regexp">  const [size, setSize] = setState(&#123;</span></span><br><span class="line"><span class="regexp">	width: document.documentElement.clientWidth,</span></span><br><span class="line"><span class="regexp">    height: document.documentElement.clientHeight</span></span><br><span class="line"><span class="regexp">  &#125;)</span></span><br><span class="line"><span class="regexp">  </span></span><br><span class="line"><span class="regexp">  const onResize = useCallback(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	setSize(&#123;</span></span><br><span class="line"><span class="regexp">	  width: document.documentElement.clientWidth,</span></span><br><span class="line"><span class="regexp">      height: document.documentElement.clientHeight</span></span><br><span class="line"><span class="regexp">	&#125;)</span></span><br><span class="line"><span class="regexp">  &#125;, [])</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  useEffet(() =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	window.addEventListener('resize', onResize, flase)</span></span><br><span class="line"><span class="regexp">    </span></span><br><span class="line"><span class="regexp">	return () =&gt; &#123;</span></span><br><span class="line"><span class="regexp">	  window.removeEventListener('resize', onResize, flase)</span></span><br><span class="line"><span class="regexp">	&#125;</span></span><br><span class="line"><span class="regexp">  &#125;)</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return size</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">function App() &#123;</span></span><br><span class="line"><span class="regexp">  const [count, setCount] = useCount(0)</span></span><br><span class="line"><span class="regexp">  const Counter = useCounter(count)</span></span><br><span class="line"><span class="regexp">  const size = useSize()</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">  return (</span></span><br><span class="line"><span class="regexp">	&lt;div&gt;</span></span><br><span class="line"><span class="regexp">	  &lt;button</span></span><br><span class="line"><span class="regexp">	    type="button"</span></span><br><span class="line"><span class="regexp">	    onClick=&#123;() =&gt; &#123;setCount(count + 1)&#125;&#125;</span></span><br><span class="line"><span class="regexp">	  &gt;</span></span><br><span class="line"><span class="regexp">	  Click(&#123;count&#125;),&#123;size.width&#125;x&#123;size.height&#125;</span></span><br><span class="line"><span class="regexp">	  &lt;/</span>button&gt;	  </span><br><span class="line">      &#123;Counter&#125;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  );</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<h4 id="Hook-规则"><a href="#Hook-规则" class="headerlink" title="Hook 规则"></a>Hook 规则</h4><p><strong>只在最顶层使用 Hook</strong></p>
+<p>不要在循环，条件或嵌套函数中调用 Hook， 确保总是在你的 React 函数的最顶层调用他们。遵守这条规则，你就能确保 Hook 在每一次渲染中都按照同样的顺序被调用。这让 React 能够在多次的 useState 和 useEffect 调用之间保持 hook 状态的正确。</p>
+<p><strong>只在 React 函数中调用 Hook</strong></p>
+<p>不要在普通的 JavaScript 函数中调用 Hook。你可以：</p>
+<ul>
+<li>在 React 的函数组件中调用 Hook</li>
+<li>在自定义 Hook 中调用其他 Hook</li>
+</ul>
+<p>遵循此规则，确保组件的状态逻辑在代码中清晰可见。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react-js/" rel="tag"># react.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/07/shell脚本自动部署/" rel="next" title="shell 脚本简单自动部署">
+                <i class="fa fa-chevron-left"></i> shell 脚本简单自动部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">127</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#react-新特性"><span class="nav-number">1.</span> <span class="nav-text">react 新特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hooks"><span class="nav-number">2.</span> <span class="nav-text">Hooks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hooks-的意义"><span class="nav-number">2.1.</span> <span class="nav-text">Hooks 的意义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hook-的使用"><span class="nav-number">2.2.</span> <span class="nav-text">Hook 的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#useState"><span class="nav-number">2.2.1.</span> <span class="nav-text">useState</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useEffect"><span class="nav-number">2.2.2.</span> <span class="nav-text">useEffect</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Contenxt-Hooks"><span class="nav-number">2.2.3.</span> <span class="nav-text">Contenxt Hooks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useMemo-amp-amp-useCallback"><span class="nav-number">2.2.4.</span> <span class="nav-text">useMemo &amp;&amp; useCallback</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#useRef"><span class="nav-number">2.2.5.</span> <span class="nav-text">useRef</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义-Hooks"><span class="nav-number">2.2.6.</span> <span class="nav-text">自定义 Hooks</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hook-规则"><span class="nav-number">2.2.7.</span> <span class="nav-text">Hook 规则</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
