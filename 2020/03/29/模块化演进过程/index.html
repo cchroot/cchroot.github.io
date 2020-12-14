@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="演进过程全局function模式: 将不同的功能封装成不同的全局函数 编码: 将不同的功能封装成不同的全局函数  问题: 污染全局命名空间, 容易引起命名冲突或数据不安全，而且模块成员之间看不出直接关系   123456function m1()&amp;#123;  //...&amp;#125;function m2()&amp;#123;  //...&amp;#125; namespace 模式: 简单对象封装 作用:">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="模块化演进过程">
+<meta property="og:url" content="http://yoursite.com/2020/03/29/模块化演进过程/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="演进过程全局function模式: 将不同的功能封装成不同的全局函数 编码: 将不同的功能封装成不同的全局函数  问题: 污染全局命名空间, 容易引起命名冲突或数据不安全，而且模块成员之间看不出直接关系   123456function m1()&amp;#123;  //...&amp;#125;function m2()&amp;#123;  //...&amp;#125; namespace 模式: 简单对象封装 作用:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-11T09:02:12.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="模块化演进过程">
+<meta name="twitter:description" content="演进过程全局function模式: 将不同的功能封装成不同的全局函数 编码: 将不同的功能封装成不同的全局函数  问题: 污染全局命名空间, 容易引起命名冲突或数据不安全，而且模块成员之间看不出直接关系   123456function m1()&amp;#123;  //...&amp;#125;function m2()&amp;#123;  //...&amp;#125; namespace 模式: 简单对象封装 作用:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/29/模块化演进过程/">
+
+
+
+
+
+  <title>模块化演进过程 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-react">
+          <a href="/categories/reactJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-asterisk"></i> <br>
+            
+            react.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/29/模块化演进过程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">模块化演进过程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-29T21:59:05+08:00">
+                2020-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="演进过程"><a href="#演进过程" class="headerlink" title="演进过程"></a>演进过程</h2><h3 id="全局function模式-将不同的功能封装成不同的全局函数"><a href="#全局function模式-将不同的功能封装成不同的全局函数" class="headerlink" title="全局function模式: 将不同的功能封装成不同的全局函数"></a>全局function模式: 将不同的功能封装成不同的全局函数</h3><ul>
+<li><p>编码: 将不同的功能封装成不同的全局函数</p>
+</li>
+<li><p>问题: 污染全局命名空间, 容易引起命名冲突或数据不安全，而且模块成员之间看不出直接关系</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">m1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">m2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="namespace-模式-简单对象封装"><a href="#namespace-模式-简单对象封装" class="headerlink" title="namespace 模式: 简单对象封装"></a>namespace 模式: 简单对象封装</h3><ul>
+<li><p>作用: 减少了全局变量，解决命名冲突</p>
+</li>
+<li><p>问题: 数据不安全(外部可以直接修改模块内部的数据)</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myModule = &#123;</span><br><span class="line">  data: <span class="string">'www.baidu.com'</span>,</span><br><span class="line">  foo() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`foo() <span class="subst">$&#123;<span class="keyword">this</span>.data&#125;</span>`</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  bar() &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`bar() <span class="subst">$&#123;<span class="keyword">this</span>.data&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">myModule.data = <span class="string">'other data'</span> <span class="comment">//能直接修改模块内部的数据</span></span><br><span class="line">myModule.foo() <span class="comment">// foo() other data</span></span><br></pre></td></tr></table></figure>
+<p>这样的写法会暴露所有模块成员，内部状态可以被外部改写。</p>
+<h3 id="IIFE模式：匿名函数自调用-闭包"><a href="#IIFE模式：匿名函数自调用-闭包" class="headerlink" title="IIFE模式：匿名函数自调用(闭包)"></a>IIFE模式：匿名函数自调用(闭包)</h3><ul>
+<li><p>作用: 数据是私有的, 外部只能通过暴露的方法操作</p>
+</li>
+<li><p>编码: 将数据和行为封装到一个函数内部, 通过给window添加属性来向外暴露接口</p>
+</li>
+<li><p>问题: 如果当前这个模块依赖另一个模块怎么办?</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// index.html文件</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"module.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line">    myModule.foo()</span><br><span class="line">    myModule.bar()</span><br><span class="line"><span class="javascript">    <span class="built_in">console</span>.log(myModule.data) <span class="comment">//undefined 不能访问模块内部数据</span></span></span><br><span class="line"><span class="javascript">    myModule.data = <span class="string">'xxxx'</span> <span class="comment">//不是修改的模块内部的data</span></span></span><br><span class="line"><span class="javascript">    myModule.foo() <span class="comment">//没有改变</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module.js文件</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> data = <span class="string">'www.baidu.com'</span></span><br><span class="line">  <span class="comment">//操作数据的函数</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//用于暴露有函数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`foo() <span class="subst">$&#123;data&#125;</span>`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//用于暴露有函数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`bar() <span class="subst">$&#123;data&#125;</span>`</span>)</span><br><span class="line">    otherFun() <span class="comment">//内部调用</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">otherFun</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//内部私有的函数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'otherFun()'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//暴露行为</span></span><br><span class="line">  <span class="built_in">window</span>.myModule = &#123; foo, bar &#125; <span class="comment">//ES6写法</span></span><br><span class="line">&#125;)(<span class="built_in">window</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="IIFE模式增强-引入依赖"><a href="#IIFE模式增强-引入依赖" class="headerlink" title="IIFE模式增强: 引入依赖"></a>IIFE模式增强: 引入依赖</h3><p>这就是现代模块实现的基石</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// module.js文件</span></span><br><span class="line">(<span class="function"><span class="keyword">function</span>(<span class="params">window, $</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> data = <span class="string">'www.baidu.com'</span></span><br><span class="line">  <span class="comment">//操作数据的函数</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//用于暴露有函数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`foo() <span class="subst">$&#123;data&#125;</span>`</span>)</span><br><span class="line">    $(<span class="string">'body'</span>).css(<span class="string">'background'</span>, <span class="string">'red'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//用于暴露有函数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">`bar() <span class="subst">$&#123;data&#125;</span>`</span>)</span><br><span class="line">    otherFun() <span class="comment">//内部调用</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">otherFun</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//内部私有的函数</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'otherFun()'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//暴露行为</span></span><br><span class="line">  <span class="built_in">window</span>.myModule = &#123; foo, bar &#125;</span><br><span class="line">&#125;)(<span class="built_in">window</span>, jQuery)</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// index.html文件</span><br><span class="line"><span class="comment">&lt;!-- 引入的js必须有一定顺序 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"jquery-1.10.1.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"module.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line">  myModule.foo()</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上例子通过jquery方法将页面的背景颜色改成红色，所以必须先引入jQuery库，就把这个库当作参数传入。<strong>这样做除了保证模块的独立性，还使得模块之间的依赖关系变得明显</strong>。</p>
+<h3 id="模块化的好处"><a href="#模块化的好处" class="headerlink" title="模块化的好处"></a>模块化的好处</h3><ul>
+<li><p>避免命名冲突(减少命名空间污染)</p>
+</li>
+<li><p>更好的分离, 按需加载</p>
+</li>
+<li><p>更高复用性</p>
+</li>
+<li><p>高可维护性</p>
+</li>
+</ul>
+<h3 id="引入多个后出现出现问题"><a href="#引入多个后出现出现问题" class="headerlink" title="引入多个后出现出现问题"></a>引入多个<script>后出现出现问题</h3><ul>
+<li><p>请求过多</p>
+<ul>
+<li>首先我们要依赖多个模块，那样就会发送多个请求，导致请求过多</li>
+</ul>
+</li>
+<li><p>依赖模糊</p>
+<ul>
+<li>我们不知道他们的具体依赖关系是什么，也就是说很容易因为不了解他们之间的依赖关系导致加载先后顺序出错。</li>
+</ul>
+</li>
+<li><p>难以维护</p>
+<ul>
+<li>以上两种原因就导致了很难维护，很可能出现牵一发而动全身的情况导致项目出现严重的问题。</li>
+</ul>
+</li>
+</ul>
+<p>模块化固然有多个好处，然而一个页面需要引入多个 js 文件，就会出现以上这些问题。而这些问题可以通过模块化规范来解决，下面介绍开发中最流行的 commonjs, AMD, ES6, CMD 规范。</p>
+<h2 id="模块化规范"><a href="#模块化规范" class="headerlink" title="模块化规范"></a>模块化规范</h2><h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><p><strong>概述</strong></p>
+<p>Node 应用由模块组成，采用 CommonJS 模块规范。每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。<strong>在服务器端，模块的加载是运行时同步加载的；在浏览器端，模块需要提前编译打包处理</strong>。</p>
+<p><strong>特点</strong></p>
+<ul>
+<li>所有代码都运行在模块作用域，不会污染全局作用域。</li>
+<li>模块可以多次加载，但是只会在第一次加载时运行一次，然后运行结果就被缓存了，以后再加载，就直接读取缓存结果。要想让模块再次运行，必须清除缓存。</li>
+<li>模块加载的顺序，按照其在代码中出现的顺序。</li>
+</ul>
+<p><strong>基本语法</strong></p>
+<ul>
+<li><p>暴露模块：<code>module.exports = value或exports.xxx = value</code></p>
+</li>
+<li><p>引入模块：<code>require(xxx)</code>,如果是第三方模块，xxx为模块名；如果是自定义模块，xxx为模块文件路径</p>
+</li>
+</ul>
+<p>CommonJS 暴露的模块到底是什么? </p>
+<p>CommonJS 规范规定，每个模块内部，module 变量代表当前模块。这个变量是一个对象，它的 exports 属性（即module.exports）是对外的接口。加载某个模块，其实是加载该模块的 module.exports 属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// example.js</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> addX = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> value + x;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports.x = x;</span><br><span class="line"><span class="built_in">module</span>.exports.addX = addX;</span><br></pre></td></tr></table></figure>
+<p>上面代码通过module.exports输出变量x和函数addX。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// example.js</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">var</span> addX = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> value + x;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">module</span>.exports.x = x;</span><br><span class="line"><span class="built_in">module</span>.exports.addX = addX;</span><br></pre></td></tr></table></figure>
+<p>require 命令用于加载模块文件。require命令的基本功能是，读入并执行一个 JavaScript 文件，然后返回该模块的 exports 对象。如果没有发现指定模块，会报错。</p>
+<p>CommonJS 模块的加载机制是，输入的是被输出的值的拷贝。也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。</p>
+<h3 id="ES6模块化"><a href="#ES6模块化" class="headerlink" title="ES6模块化"></a>ES6模块化</h3><p>ES6 模块的设计思想是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。CommonJS 和 AMD 模块，都只能在运行时确定这些东西。比如，CommonJS 模块就是对象，输入时必须查找对象属性。</p>
+<p><strong>ES6 模块化语法</strong></p>
+<p>export命令用于规定模块的对外接口，import命令用于输入其他模块提供的功能。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 定义模块 math.js **/</span></span><br><span class="line"><span class="keyword">var</span> basicNum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span> (<span class="params">a, b</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">export</span> &#123; basicNum, add &#125;;</span><br><span class="line"><span class="comment">/** 引用模块 **/</span></span><br><span class="line"><span class="keyword">import</span> &#123; basicNum, add &#125; <span class="keyword">from</span> <span class="string">'./math'</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">ele</span>) </span>&#123;</span><br><span class="line">    ele.textContent = add(<span class="number">99</span> + basicNum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上例所示，使用import命令的时候，用户需要知道所要加载的变量名或函数名，否则无法加载。为了给用户提供方便，让他们不用阅读文档就能加载模块，就要用到export default命令，为模块指定默认输出。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// export-default.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'foo'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// import-default.js</span></span><br><span class="line"><span class="keyword">import</span> customName <span class="keyword">from</span> <span class="string">'./export-default'</span>;</span><br><span class="line">customName(); <span class="comment">// 'foo'</span></span><br></pre></td></tr></table></figure>
+<p>模块默认输出, 其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。</p>
+<p><strong>ES6 模块与 CommonJS 模块的差异</strong></p>
+<ol>
+<li><p>CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。</p>
+</li>
+<li><p>CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。即 ES6 模块是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块。</p>
+</li>
+</ol>
+<h3 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h3><p>CommonJS 规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD 规范则是非同步加载模块，允许指定回调函数。由于 Node.js 主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，所以 CommonJS 规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此浏览器端一般采用 AMD 规范。此外 AMD 规范比 CommonJS 规范在浏览器端实现要来着早。</p>
+<p><strong>基本语法</strong></p>
+<p>定义暴露模块:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义没有依赖的模块</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> 模块</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义有依赖的模块</span></span><br><span class="line">define([<span class="string">'module1'</span>, <span class="string">'module2'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">m1, m2</span>)</span>&#123;</span><br><span class="line">   <span class="keyword">return</span> 模块</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>引入使用模块:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>([<span class="string">'module1'</span>, <span class="string">'module2'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">m1, m2</span>)</span>&#123;</span><br><span class="line">   使用m1/m2</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>使用 AMD 规范不得不提到 RequireJS。</p>
+<p>RequireJS 是一个工具库，主要用于客户端的模块管理。它的模块管理遵守AMD规范，RequireJS 的基本思想是，通过 define 方法，将代码定义为模块；通过 require 方法，实现代码的模块加载。</p>
+<ul>
+<li><p>官网: <a href="http://www.requirejs.cn/">http://www.requirejs.cn/</a></p>
+</li>
+<li><p>github : <a href="https://github.com/requirejs/requirejs\">https://github.com/requirejs/requirejs\</a></p>
+</li>
+</ul>
+<h3 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h3><p>CMD规范专门用于浏览器端，模块的加载是异步的，模块使用时才会加载执行。CMD规范整合了CommonJS和AMD规范的特点。在 Sea.js 中，所有 JavaScript 模块都遵循 CMD模块定义规范。</p>
+<p><strong>基本语法</strong></p>
+<p>定义暴露模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义没有依赖的模块</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)</span>&#123;</span><br><span class="line">  exports.xxx = value</span><br><span class="line">  <span class="built_in">module</span>.exports = value</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义有依赖的模块</span></span><br><span class="line">define(<span class="function"><span class="keyword">function</span>(<span class="params">require, exports, module</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//引入依赖模块(同步)</span></span><br><span class="line">  <span class="keyword">var</span> module2 = <span class="built_in">require</span>(<span class="string">'./module2'</span>)</span><br><span class="line">  <span class="comment">//引入依赖模块(异步)</span></span><br><span class="line">    <span class="built_in">require</span>.async(<span class="string">'./module3'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">m3</span>) </span>&#123;</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="comment">//暴露模块</span></span><br><span class="line">  exports.xxx = value</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>引入使用模块：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">define(<span class="function"><span class="keyword">function</span> (<span class="params">require</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> m1 = <span class="built_in">require</span>(<span class="string">'./module1'</span>)</span><br><span class="line">  <span class="keyword">var</span> m4 = <span class="built_in">require</span>(<span class="string">'./module4'</span>)</span><br><span class="line">  m1.show()</span><br><span class="line">  m4.show()</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>seaJS:</p>
+<ul>
+<li><p>官网: <a href="http://seajs.org/">http://seajs.org/</a></p>
+</li>
+<li><p>github : <a href="https://github.com/seajs/seajs">https://github.com/seajs/seajs</a></p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>CommonJS规范主要用于服务端编程，加载模块是同步的，这并不适合在浏览器环境，因为同步意味着阻塞加载，浏览器资源是异步加载的，因此有了AMD CMD解决方案。</p>
+</li>
+<li><p>AMD规范在浏览器环境中异步加载模块，而且可以并行加载多个模块。不过，AMD规范开发成本高，代码的阅读和书写比较困难，模块定义方式的语义不顺畅。</p>
+</li>
+<li><p>CMD规范与AMD规范很相似，都用于浏览器编程，依赖就近，延迟执行，可以很容易在Node.js中运行。不过，依赖SPM 打包，模块的加载逻辑偏重</p>
+</li>
+<li><p>ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决方案。</p>
+</li>
+</ul>
+<p>本文改编自：<a href="https://github.com/ljianshu/Blog/issues/48">前端模块化详解</a></p>
+</script></h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/14/react 新特性和Hooks/" rel="next" title="react 新特性和 Hooks">
+                <i class="fa fa-chevron-left"></i> react 新特性和 Hooks
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/12/vue组件间通信六种方式/" rel="prev" title="vue组件间通信六种方式">
+                vue组件间通信六种方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#演进过程"><span class="nav-number">1.</span> <span class="nav-text">演进过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全局function模式-将不同的功能封装成不同的全局函数"><span class="nav-number">1.1.</span> <span class="nav-text">全局function模式: 将不同的功能封装成不同的全局函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#namespace-模式-简单对象封装"><span class="nav-number">1.2.</span> <span class="nav-text">namespace 模式: 简单对象封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IIFE模式：匿名函数自调用-闭包"><span class="nav-number">1.3.</span> <span class="nav-text">IIFE模式：匿名函数自调用(闭包)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IIFE模式增强-引入依赖"><span class="nav-number">1.4.</span> <span class="nav-text">IIFE模式增强: 引入依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块化的好处"><span class="nav-number">1.5.</span> <span class="nav-text">模块化的好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入多个后出现出现问题"><span class="nav-number">1.6.</span> <span class="nav-text">引入多个后出现出现问题&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;请求过多&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;首先我们要依赖多个模块，那样就会发送多个请求，导致请求过多&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;依赖模糊&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;我们不知道他们的具体依赖关系是什么，也就是说很容易因为不了解他们之间的依赖关系导致加载先后顺序出错。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;难以维护&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;以上两种原因就导致了很难维护，很可能出现牵一发而动全身的情况导致项目出现严重的问题。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;模块化固然有多个好处，然而一个页面需要引入多个 js 文件，就会出现以上这些问题。而这些问题可以通过模块化规范来解决，下面介绍开发中最流行的 commonjs, AMD, ES6, CMD 规范。&lt;/p&gt;
+&lt;h2 id=&quot;模块化规范&quot;&gt;&lt;a href=&quot;#模块化规范&quot; class=&quot;headerlink&quot; title=&quot;模块化规范&quot;&gt;&lt;/a&gt;模块化规范&lt;/h2&gt;&lt;h3 id=&quot;CommonJS&quot;&gt;&lt;a href=&quot;#CommonJS&quot; class=&quot;headerlink&quot; title=&quot;CommonJS&quot;&gt;&lt;/a&gt;CommonJS&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;概述&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Node 应用由模块组成，采用 CommonJS 模块规范。每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见。&lt;strong&gt;在服务器端，模块的加载是运行时同步加载的；在浏览器端，模块需要提前编译打包处理&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;特点&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;所有代码都运行在模块作用域，不会污染全局作用域。&lt;/li&gt;
+&lt;li&gt;模块可以多次加载，但是只会在第一次加载时运行一次，然后运行结果就被缓存了，以后再加载，就直接读取缓存结果。要想让模块再次运行，必须清除缓存。&lt;/li&gt;
+&lt;li&gt;模块加载的顺序，按照其在代码中出现的顺序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;基本语法&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;暴露模块：&lt;code&gt;module.exports = value或exports.xxx = value&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;引入模块：&lt;code&gt;require(xxx)&lt;/code&gt;,如果是第三方模块，xxx为模块名；如果是自定义模块，xxx为模块文件路径&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;CommonJS 暴露的模块到底是什么? &lt;/p&gt;
+&lt;p&gt;CommonJS 规范规定，每个模块内部，module 变量代表当前模块。这个变量是一个对象，它的 exports 属性（即module.exports）是对外的接口。加载某个模块，其实是加载该模块的 module.exports 属性。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// example.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; x = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; addX = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;value&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; value + x;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports.x = x;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports.addX = addX;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面代码通过module.exports输出变量x和函数addX。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// example.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; x = &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; addX = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;value&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; value + x;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports.x = x;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports.addX = addX;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;require 命令用于加载模块文件。require命令的基本功能是，读入并执行一个 JavaScript 文件，然后返回该模块的 exports 对象。如果没有发现指定模块，会报错。&lt;/p&gt;
+&lt;p&gt;CommonJS 模块的加载机制是，输入的是被输出的值的拷贝。也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。&lt;/p&gt;
+&lt;h3 id=&quot;ES6模块化&quot;&gt;&lt;a href=&quot;#ES6模块化&quot; class=&quot;headerlink&quot; title=&quot;ES6模块化&quot;&gt;&lt;/a&gt;ES6模块化&lt;/h3&gt;&lt;p&gt;ES6 模块的设计思想是尽量的静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量。CommonJS 和 AMD 模块，都只能在运行时确定这些东西。比如，CommonJS 模块就是对象，输入时必须查找对象属性。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ES6 模块化语法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;export命令用于规定模块的对外接口，import命令用于输入其他模块提供的功能。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** 定义模块 math.js **/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; basicNum = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; add = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;a, b&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a + b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;export&lt;/span&gt; &amp;#123; basicNum, add &amp;#125;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/** 引用模块 **/&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; &amp;#123; basicNum, add &amp;#125; &lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;./math&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;test&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;ele&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    ele.textContent = add(&lt;span class=&quot;number&quot;&gt;99&lt;/span&gt; + basicNum);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如上例所示，使用import命令的时候，用户需要知道所要加载的变量名或函数名，否则无法加载。为了给用户提供方便，让他们不用阅读文档就能加载模块，就要用到export default命令，为模块指定默认输出。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// export-default.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(&lt;span class=&quot;string&quot;&gt;&#39;foo&#39;&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// import-default.js&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;import&lt;/span&gt; customName &lt;span class=&quot;keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;./export-default&#39;&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;customName(); &lt;span class=&quot;comment&quot;&gt;// &#39;foo&#39;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;模块默认输出, 其他模块加载该模块时，import命令可以为该匿名函数指定任意名字。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;ES6 模块与 CommonJS 模块的差异&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;CommonJS 模块输出的是一个值的拷贝，ES6 模块输出的是值的引用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CommonJS 模块是运行时加载，ES6 模块是编译时输出接口。即 ES6 模块是动态引用，并且不会缓存值，模块里面的变量绑定其所在的模块。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;AMD&quot;&gt;&lt;a href=&quot;#AMD&quot; class=&quot;headerlink&quot; title=&quot;AMD&quot;&gt;&lt;/a&gt;AMD&lt;/h3&gt;&lt;p&gt;CommonJS 规范加载模块是同步的，也就是说，只有加载完成，才能执行后面的操作。AMD 规范则是非同步加载模块，允许指定回调函数。由于 Node.js 主要用于服务器编程，模块文件一般都已经存在于本地硬盘，所以加载起来比较快，不用考虑非同步加载的方式，所以 CommonJS 规范比较适用。但是，如果是浏览器环境，要从服务器端加载模块，这时就必须采用非同步模式，因此浏览器端一般采用 AMD 规范。此外 AMD 规范比 CommonJS 规范在浏览器端实现要来着早。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基本语法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义暴露模块:&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//定义没有依赖的模块&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;define(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; 模块&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//定义有依赖的模块&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;define([&lt;span class=&quot;string&quot;&gt;&#39;module1&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;module2&#39;&lt;/span&gt;], &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;m1, m2&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; 模块&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;引入使用模块:&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;([&lt;span class=&quot;string&quot;&gt;&#39;module1&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;module2&#39;&lt;/span&gt;], &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;m1, m2&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   使用m1/m2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;使用 AMD 规范不得不提到 RequireJS。&lt;/p&gt;
+&lt;p&gt;RequireJS 是一个工具库，主要用于客户端的模块管理。它的模块管理遵守AMD规范，RequireJS 的基本思想是，通过 define 方法，将代码定义为模块；通过 require 方法，实现代码的模块加载。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;官网: &lt;a href=&quot;http://www.requirejs.cn/&quot;&gt;http://www.requirejs.cn/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;github : &lt;a href=&quot;https://github.com/requirejs/requirejs\&quot;&gt;https://github.com/requirejs/requirejs\&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;CMD&quot;&gt;&lt;a href=&quot;#CMD&quot; class=&quot;headerlink&quot; title=&quot;CMD&quot;&gt;&lt;/a&gt;CMD&lt;/h3&gt;&lt;p&gt;CMD规范专门用于浏览器端，模块的加载是异步的，模块使用时才会加载执行。CMD规范整合了CommonJS和AMD规范的特点。在 Sea.js 中，所有 JavaScript 模块都遵循 CMD模块定义规范。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;基本语法&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;定义暴露模块：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//定义没有依赖的模块&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;define(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;require, exports, module&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  exports.xxx = value&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports = value&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//定义有依赖的模块&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;define(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;require, exports, module&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;//引入依赖模块(同步)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; module2 = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;./module2&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;//引入依赖模块(异步)&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;.async(&lt;span class=&quot;string&quot;&gt;&#39;./module3&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;m3&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;comment&quot;&gt;//暴露模块&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  exports.xxx = value&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;引入使用模块：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;define(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;require&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; m1 = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;./module1&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; m4 = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;./module4&#39;&lt;/span&gt;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  m1.show()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  m4.show()&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;seaJS:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;官网: &lt;a href=&quot;http://seajs.org/&quot;&gt;http://seajs.org/&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;github : &lt;a href=&quot;https://github.com/seajs/seajs&quot;&gt;https://github.com/seajs/seajs&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;CommonJS规范主要用于服务端编程，加载模块是同步的，这并不适合在浏览器环境，因为同步意味着阻塞加载，浏览器资源是异步加载的，因此有了AMD CMD解决方案。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;AMD规范在浏览器环境中异步加载模块，而且可以并行加载多个模块。不过，AMD规范开发成本高，代码的阅读和书写比较困难，模块定义方式的语义不顺畅。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;CMD规范与AMD规范很相似，都用于浏览器编程，依赖就近，延迟执行，可以很容易在Node.js中运行。不过，依赖SPM 打包，模块的加载逻辑偏重&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ES6 在语言标准的层面上，实现了模块功能，而且实现得相当简单，完全可以取代 CommonJS 和 AMD 规范，成为浏览器和服务器通用的模块解决方案。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;本文改编自：&lt;a href=&quot;https://github.com/ljianshu/Blog/issues/48&quot;&gt;前端模块化详解&lt;/a&gt;&lt;/p&gt;
+</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
