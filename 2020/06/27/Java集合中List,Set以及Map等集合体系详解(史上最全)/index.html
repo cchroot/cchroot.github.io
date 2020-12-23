@@ -83,19 +83,19 @@
 <meta name="keywords" content="java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java集合中List,Set以及Map等集合体系详解">
-<meta property="og:url" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/06/27/Java集合中List,Set以及Map等集合体系详解(史上最全)/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="概述 List , Set, Map都是接口，前两个继承至Collection接口，Map为独立接口 Set下有HashSet，LinkedHashSet，TreeSet List下有ArrayList，Vector，LinkedList Map下有Hashtable，LinkedHashMap，HashMap，TreeMap Collection接口下还有个Queue接口，有PriorityQu">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_1.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_2.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_3.png">
-<meta property="og:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_4.png">
-<meta property="og:updated_time" content="2019-11-24T15:51:53.677Z">
+<meta property="og:image" content="http://yoursite.com/images/java/list_set_and_map_1.png">
+<meta property="og:image" content="http://yoursite.com/images/java/list_set_and_map_2.png">
+<meta property="og:image" content="http://yoursite.com/images/java/list_set_and_map_3.png">
+<meta property="og:image" content="http://yoursite.com/images/java/list_set_and_map_4.png">
+<meta property="og:updated_time" content="2020-12-23T14:21:14.441Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java集合中List,Set以及Map等集合体系详解">
 <meta name="twitter:description" content="概述 List , Set, Map都是接口，前两个继承至Collection接口，Map为独立接口 Set下有HashSet，LinkedHashSet，TreeSet List下有ArrayList，Vector，LinkedList Map下有Hashtable，LinkedHashMap，HashMap，TreeMap Collection接口下还有个Queue接口，有PriorityQu">
-<meta name="twitter:image" content="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/images/java/list_set_and_map_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/java/list_set_and_map_1.png">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/">
+  <link rel="canonical" href="http://yoursite.com/2020/06/27/Java集合中List,Set以及Map等集合体系详解(史上最全)/">
 
 
 
@@ -348,7 +348,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/16/Java集合中List,Set以及Map等集合体系详解(史上最全)/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/27/Java集合中List,Set以及Map等集合体系详解(史上最全)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -377,8 +377,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-16T20:31:05+08:00">
-                2019-11-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-27T20:31:05+08:00">
+                2020-06-27
               </time>
             
 
@@ -444,7 +444,7 @@
 <li>Map下有Hashtable，LinkedHashMap，HashMap，TreeMap</li>
 <li>Collection接口下还有个Queue接口，有PriorityQueue类</li>
 </ul>
-<p><img src="images/java/list_set_and_map_1.png" alt="1"></p>
+<p><img src="/images/java/list_set_and_map_1.png" alt="1"></p>
 <p><strong>注意:</strong></p>
 <ul>
 <li>Queue接口与List、Set同一级别，都是继承了Collection接口。<br>看图你会发现,LinkedList既可以实现Queue接口,也可以实现List接口.只不过呢, LinkedList实现了Queue接口。Queue接口窄化了对LinkedList的方法的访问权限（即在方法中的参数类型如果是Queue时，就完全只能访问Queue接口所定义的方法 了，而不能直接访问 LinkedList的非Queue的方法），以使得只有恰当的方法才可以使用。</li>
@@ -497,8 +497,8 @@
 <li>每个key对应的value值是唯一的</li>
 </ul>
 <p>上图：</p>
-<p><img src="images/java/list_set_and_map_2.png" alt="1"></p>
-<p><img src="images/java/list_set_and_map_3.png" alt="1"></p>
+<p><img src="/images/java/list_set_and_map_2.png" alt="1"></p>
+<p><img src="/images/java/list_set_and_map_3.png" alt="1"></p>
 <p>Map接口有三个比较重要的实现类，分别是HashMap、TreeMap、HashTable和concurrentHashMap:</p>
 <ul>
 <li>TreeMap是有序的，HashMap、HashTable、concurrentHashMap是无序的。</li>
@@ -549,7 +549,7 @@
 <p>Student.java:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="comment">// TODO Auto-generated constructor stub</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结果报错:</p>
-<p><img src="images/java/list_set_and_map_4.png" alt="1"></p>
+<p><img src="/images/java/list_set_and_map_4.png" alt="1"></p>
 <p>原因分析：</p>
 <p>由于不知道该安照那一中排序方式排序，所以会报错。</p>
 <p>解决方法：</p>
@@ -616,8 +616,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/31/用putty连接Linux和实现windows与linux文件互传/" rel="next" title="用putty连接Linux和实现windows与linux文件互传">
-                <i class="fa fa-chevron-left"></i> 用putty连接Linux和实现windows与linux文件互传
+              <a href="/2020/05/30/分支管理规范/" rel="next" title="分支管理规范">
+                <i class="fa fa-chevron-left"></i> 分支管理规范
               </a>
             
           </div>
@@ -626,8 +626,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/11/19/git冲突解决办法/" rel="prev" title="git 冲突解决办法">
-                git 冲突解决办法 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/07/25/性能优化小技巧/" rel="prev" title="一些基础性能优化技巧">
+                一些基础性能优化技巧 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -707,7 +707,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">132</span>
+                  <span class="site-state-item-count">138</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
