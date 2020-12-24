@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="文总结了 vue 组件间通信的 6 种方式:  props $emit/$on $parent/$children $attrs/$listeners provide/inject vuex  用简单的实例讲述这其中的差别及使用场景，希望对小伙伴有一些帮助 props/$emit父组件 A 通过 props 的方式向子组件 B 传递，子组件 B 传递给父组件 A 通过在子组件 B 组件中 $emi">
+<meta name="description" content="文总结了 vue 组件间通信的 7 种方式:  props/$emit $emit/$on（eventBus） $parent/$children $attrs/$listeners provide/inject vuex ref / refs localStorage / sessionStorage  用简单的实例讲述这其中的差别及使用场景，希望对小伙伴有一些帮助 props/$emit父组件">
 <meta name="keywords" content="vue.js">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue组件间通信六种方式">
-<meta property="og:url" content="http://yoursite.com/2020/04/12/vue组件间通信六种方式/index.html">
+<meta property="og:title" content="vue组件间通信八种方式">
+<meta property="og:url" content="http://yoursite.com/2020/04/12/vue组件间通信八种方式/index.html">
 <meta property="og:site_name" content="cchroot&#39;s blog">
-<meta property="og:description" content="文总结了 vue 组件间通信的 6 种方式:  props $emit/$on $parent/$children $attrs/$listeners provide/inject vuex  用简单的实例讲述这其中的差别及使用场景，希望对小伙伴有一些帮助 props/$emit父组件 A 通过 props 的方式向子组件 B 传递，子组件 B 传递给父组件 A 通过在子组件 B 组件中 $emi">
+<meta property="og:description" content="文总结了 vue 组件间通信的 7 种方式:  props/$emit $emit/$on（eventBus） $parent/$children $attrs/$listeners provide/inject vuex ref / refs localStorage / sessionStorage  用简单的实例讲述这其中的差别及使用场景，希望对小伙伴有一些帮助 props/$emit父组件">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-12-10T16:22:42.180Z">
+<meta property="og:updated_time" content="2020-12-23T15:24:15.543Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vue组件间通信六种方式">
-<meta name="twitter:description" content="文总结了 vue 组件间通信的 6 种方式:  props $emit/$on $parent/$children $attrs/$listeners provide/inject vuex  用简单的实例讲述这其中的差别及使用场景，希望对小伙伴有一些帮助 props/$emit父组件 A 通过 props 的方式向子组件 B 传递，子组件 B 传递给父组件 A 通过在子组件 B 组件中 $emi">
+<meta name="twitter:title" content="vue组件间通信八种方式">
+<meta name="twitter:description" content="文总结了 vue 组件间通信的 7 种方式:  props/$emit $emit/$on（eventBus） $parent/$children $attrs/$listeners provide/inject vuex ref / refs localStorage / sessionStorage  用简单的实例讲述这其中的差别及使用场景，希望对小伙伴有一些帮助 props/$emit父组件">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/12/vue组件间通信六种方式/">
+  <link rel="canonical" href="http://yoursite.com/2020/04/12/vue组件间通信八种方式/">
 
 
 
 
 
-  <title>vue组件间通信六种方式 | cchroot's blog</title>
+  <title>vue组件间通信八种方式 | cchroot's blog</title>
   
 
 
@@ -343,7 +343,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/vue组件间通信六种方式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/12/vue组件间通信八种方式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -360,7 +360,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vue组件间通信六种方式</h1>
+          <h1 class="post-title" itemprop="name headline">vue组件间通信八种方式</h1>
         
 
         <div class="post-meta">
@@ -432,14 +432,16 @@
       
 
       
-        <p>文总结了 vue 组件间通信的 6 种方式:</p>
+        <p>文总结了 vue 组件间通信的 7 种方式:</p>
 <ul>
-<li>props</li>
-<li>$emit/$on</li>
+<li>props/$emit</li>
+<li>$emit/$on（eventBus）</li>
 <li>$parent/$children</li>
 <li>$attrs/$listeners</li>
 <li>provide/inject</li>
 <li>vuex</li>
+<li>ref / refs</li>
+<li>localStorage / sessionStorage</li>
 </ul>
 <p>用简单的实例讲述这其中的差别及使用场景，希望对小伙伴有一些帮助</p>
 <h2 id="props-emit"><a href="#props-emit" class="headerlink" title="props/$emit"></a>props/$emit</h2><p>父组件 A 通过 props 的方式向子组件 B 传递，子组件 B 传递给父组件 A 通过在子组件 B 组件中 $emit 提交, 父组件 A 中 v-on 监听事件的方式获取</p>
@@ -507,6 +509,10 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> defaultCity = <span class="string">"上海"</span></span><br><span class="line"><span class="keyword">try</span> &#123;   <span class="comment">// 用户关闭了本地存储功能，此时在外层加个try...catch</span></span><br><span class="line">  <span class="keyword">if</span> (!defaultCity)&#123;</span><br><span class="line">    defaultCity = <span class="built_in">JSON</span>.parse(<span class="built_in">window</span>.localStorage.getItem(<span class="string">'defaultCity'</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;<span class="keyword">catch</span>(e)&#123;&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</span><br><span class="line">  state: &#123;</span><br><span class="line">    city: defaultCity</span><br><span class="line">  &#125;,</span><br><span class="line">  mutations: &#123;</span><br><span class="line">    changeCity(state, city) &#123;</span><br><span class="line">      state.city = city</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="built_in">window</span>.localStorage.setItem(<span class="string">'defaultCity'</span>, <span class="built_in">JSON</span>.stringify(state.city));</span><br><span class="line">      <span class="comment">// 数据改变的时候把数据拷贝一份保存到localStorage里面</span></span><br><span class="line">      &#125; <span class="keyword">catch</span> (e) &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>这里需要注意的是：由于 vuex 里，我们保存的状态，都是数组，而 localStorage 只支持字符串，所以需要用 JSON 转换：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">JSON</span>.stringify(state.subscribeList);   <span class="comment">// array -&gt; string</span></span><br><span class="line"><span class="built_in">JSON</span>.parse(<span class="built_in">window</span>.localStorage.getItem(<span class="string">"subscribeList"</span>));    <span class="comment">// string -&gt; array</span></span><br></pre></td></tr></table></figure>
+<h2 id="ref-refs"><a href="#ref-refs" class="headerlink" title="ref/refs"></a>ref/refs</h2><p>ref：如果在普通的 DOM 元素上使用，引用指向的就是 DOM 元素；如果用在子组件上，引用就指向组件实例，可以通过实例直接调用组件的方法或访问数据， 我们看一个ref 来访问组件的例子:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 子组件 A.vue</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      name: <span class="string">'Vue.js'</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    sayHello () &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'hello'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 父组件 app.vue</span></span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;component-a ref=<span class="string">"comA"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">component-a</span>&gt;</span></span></span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">  export default &#123;</span></span><br><span class="line"><span class="regexp">    mounted () &#123;</span></span><br><span class="line"><span class="regexp">      const comA = this.$refs.comA;</span></span><br><span class="line"><span class="regexp">      console.log(comA.name);  /</span><span class="regexp">/ Vue.js</span></span><br><span class="line"><span class="regexp">      comA.sayHello();  /</span><span class="regexp">/ hello</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&lt;/</span>script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="localStorage-sessionStorage"><a href="#localStorage-sessionStorage" class="headerlink" title="localStorage / sessionStorage"></a>localStorage / sessionStorage</h2><p>这种通信比较简单,缺点是数据和状态比较混乱,不太容易维护。 通过 <code>window.localStorage.getItem(key)</code> 获取数据 通过 <code>window.localStorage.setItem(key,value)</code> 存储数据</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>常见使用场景可以分为三类：</p>
 <ul>
 <li><p>父子通信：</p>
@@ -652,7 +658,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">138</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -663,7 +669,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -729,7 +735,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#props-emit"><span class="nav-number">1.</span> <span class="nav-text">props/$emit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#父组件向子组件传值"><span class="nav-number">1.1.</span> <span class="nav-text">父组件向子组件传值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子组件向父组件传值（通过事件形式）"><span class="nav-number">1.2.</span> <span class="nav-text">子组件向父组件传值（通过事件形式）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#emit-on"><span class="nav-number">2.</span> <span class="nav-text">$emit/$on</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attrs-listeners"><span class="nav-number">3.</span> <span class="nav-text">$attrs/$listeners</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#provide-inject"><span class="nav-number">4.</span> <span class="nav-text">provide/inject</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#provide与inject怎么实现数据响应式"><span class="nav-number">4.1.</span> <span class="nav-text">provide与inject怎么实现数据响应式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parent-children与-ref"><span class="nav-number">5.</span> <span class="nav-text">$parent / $children与 ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex"><span class="nav-number">6.</span> <span class="nav-text">vuex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简要介绍Vuex原理"><span class="nav-number">6.1.</span> <span class="nav-text">简要介绍Vuex原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-与-localStorage"><span class="nav-number">6.2.</span> <span class="nav-text">Vuex 与 localStorage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#props-emit"><span class="nav-number">1.</span> <span class="nav-text">props/$emit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#父组件向子组件传值"><span class="nav-number">1.1.</span> <span class="nav-text">父组件向子组件传值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子组件向父组件传值（通过事件形式）"><span class="nav-number">1.2.</span> <span class="nav-text">子组件向父组件传值（通过事件形式）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#emit-on"><span class="nav-number">2.</span> <span class="nav-text">$emit/$on</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#attrs-listeners"><span class="nav-number">3.</span> <span class="nav-text">$attrs/$listeners</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#provide-inject"><span class="nav-number">4.</span> <span class="nav-text">provide/inject</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#provide与inject怎么实现数据响应式"><span class="nav-number">4.1.</span> <span class="nav-text">provide与inject怎么实现数据响应式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parent-children与-ref"><span class="nav-number">5.</span> <span class="nav-text">$parent / $children与 ref</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vuex"><span class="nav-number">6.</span> <span class="nav-text">vuex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简要介绍Vuex原理"><span class="nav-number">6.1.</span> <span class="nav-text">简要介绍Vuex原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vuex-与-localStorage"><span class="nav-number">6.2.</span> <span class="nav-text">Vuex 与 localStorage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ref-refs"><span class="nav-number">7.</span> <span class="nav-text">ref/refs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#localStorage-sessionStorage"><span class="nav-number">8.</span> <span class="nav-text">localStorage / sessionStorage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>

@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="数据驱动Vue.js 一个核心思想是数据驱动。所谓数据驱动，是指视图是由数据驱动生成的，我们对视图的修改，不会直接操作 DOM，而是通过修改数据。 数据驱动还有一部分是数据更新驱动视图变化，这一块内容我们也会在之后的章节分析，这一章我们的目标是弄清楚模板和数据如何渲染成最终的 DOM。 new Vue 发生了什么？Vue 实际上就是一个用 Function 实现的类，我们只能通过 new Vue">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2020/02/15/vue源码阅读笔记/img/new-vue.png">
-<meta property="og:image" content="http://yoursite.com/2020/02/15/vue源码阅读笔记/img/vue_reactive.png">
-<meta property="og:updated_time" content="2020-12-23T14:12:02.816Z">
+<meta property="og:image" content="http://yoursite.com/images/vue/new-vue.png">
+<meta property="og:image" content="http://yoursite.com/images/vue/vue_reactive.png">
+<meta property="og:updated_time" content="2020-12-23T14:46:14.269Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vue源码阅读笔记">
 <meta name="twitter:description" content="数据驱动Vue.js 一个核心思想是数据驱动。所谓数据驱动，是指视图是由数据驱动生成的，我们对视图的修改，不会直接操作 DOM，而是通过修改数据。 数据驱动还有一部分是数据更新驱动视图变化，这一块内容我们也会在之后的章节分析，这一章我们的目标是弄清楚模板和数据如何渲染成最终的 DOM。 new Vue 发生了什么？Vue 实际上就是一个用 Function 实现的类，我们只能通过 new Vue">
-<meta name="twitter:image" content="http://yoursite.com/2020/02/15/vue源码阅读笔记/img/new-vue.png">
+<meta name="twitter:image" content="http://yoursite.com/images/vue/new-vue.png">
 
 
 
@@ -472,7 +472,7 @@
 <p>确定了这些入参后，我们回到 patch 函数的执行过程，看几个关键步骤。</p>
 <p>由于我们传入的 oldVnode 实际上是一个 DOM container，所以 isRealElement 为 true，接下来又通过 emptyNodeAt 方法把 oldVnode 转换成 VNode 对象，然后再调用 createElm 方法。createElm 的作用是通过虚拟节点创建真实的 DOM 并插入到它的父节点中（递归创建）。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>那么至此我们从主线上把模板和数据如何渲染成最终的 DOM 的过程分析完毕了，我们可以通过下图更直观地看到从初始化 Vue 到最终渲染的整个过程。</p>
-<p><img src="./img/new-vue.png" alt="new-vue"></p>
+<p><img src="/images/vue/new-vue.png" alt="1"></p>
 <p>我们这里只是分析了最简单和最基础的场景，在实际项目中，我们是把页面拆成很多组件的，Vue 另一个核心思想就是组件化。那么下一章我们就来分析 Vue 的组件化过程。</p>
 <h2 id="组件化"><a href="#组件化" class="headerlink" title="组件化"></a>组件化</h2><p>Vue.js 另一个核心思想是组件化。所谓组件化，就是把页面拆分成多个组件 (component)，每个组件依赖的 CSS、JavaScript、模板、图片等资源放在一起开发和维护。组件是资源独立的，组件在系统内部可复用，组件和组件之间可以嵌套。</p>
 <p>那么在这一章节，我们将从源码的角度来分析 Vue 的组件内部是如何工作的，只有了解了内部的工作原理，才能让我们使用它的时候更加得心应手。</p>
@@ -712,7 +712,7 @@
 <li><p>最复杂的情况是新旧节点相同且它们都存在子节点，那么会执行 updateChildren 逻辑，这块儿可以借助画图的方式配合理解。</p>
 </li>
 </ul>
-<h3 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h3><p><img src="./img/vue_reactive.png" alt></p>
+<h3 id="原理图"><a href="#原理图" class="headerlink" title="原理图"></a>原理图</h3><p><img src="/images/vue/vue_reactive.png" alt="1"></p>
 <p>vue 的响应式原理核心就是去观测数据的变化，当我们这些数据发生变化之后，通知我们对应的观察者来实行相关的逻辑。整个响应式最核心的就是 Dep 的实现，它实际上是连接数据和数据对应观察者的桥梁。</p>
 <ol>
 <li><p>在 vue 的初始化阶段，会对 vue 上定义的数据分别做一些不同的处理</p>
@@ -932,7 +932,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">138</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -943,7 +943,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

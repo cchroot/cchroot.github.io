@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="tool,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="之前使用 hexo + next 搭建自己的博客，最近想整理一些知识点，发现 vuepress 可能更适合查阅知识点，所以打算用 vuepress 再搭一个 vuepress 特性:  为技术文档而优化的内置Markdown拓展 在Markdown文件中使用Vue组件的能力 Vue驱动的自定义主题系统 自动生成Service Worker(支持PWA) Google Analytics集成 基于G">
+<meta name="keywords" content="tool">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vuepress快速制作vue文档博客">
+<meta property="og:url" content="http://yoursite.com/2020/06/20/vuepress快速制作vue文档博客/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="之前使用 hexo + next 搭建自己的博客，最近想整理一些知识点，发现 vuepress 可能更适合查阅知识点，所以打算用 vuepress 再搭一个 vuepress 特性:  为技术文档而优化的内置Markdown拓展 在Markdown文件中使用Vue组件的能力 Vue驱动的自定义主题系统 自动生成Service Worker(支持PWA) Google Analytics集成 基于G">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-23T16:52:20.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vuepress快速制作vue文档博客">
+<meta name="twitter:description" content="之前使用 hexo + next 搭建自己的博客，最近想整理一些知识点，发现 vuepress 可能更适合查阅知识点，所以打算用 vuepress 再搭一个 vuepress 特性:  为技术文档而优化的内置Markdown拓展 在Markdown文件中使用Vue组件的能力 Vue驱动的自定义主题系统 自动生成Service Worker(支持PWA) Google Analytics集成 基于G">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/06/20/vuepress快速制作vue文档博客/">
+
+
+
+
+
+  <title>vuepress快速制作vue文档博客 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-react">
+          <a href="/categories/reactJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-asterisk"></i> <br>
+            
+            react.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/20/vuepress快速制作vue文档博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vuepress快速制作vue文档博客</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-20T21:59:05+08:00">
+                2020-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tool/" itemprop="url" rel="index">
+                    <span itemprop="name">tool</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前使用 hexo + next 搭建自己的博客，最近想整理一些知识点，发现 vuepress 可能更适合查阅知识点，所以打算用 vuepress 再搭一个</p>
+<p>vuepress 特性:</p>
+<ul>
+<li>为技术文档而优化的内置Markdown拓展</li>
+<li>在Markdown文件中使用Vue组件的能力</li>
+<li>Vue驱动的自定义主题系统</li>
+<li>自动生成Service Worker(支持PWA)</li>
+<li>Google Analytics集成</li>
+<li>基于Git的”最后更新时间</li>
+<li>多语言支持</li>
+<li>响应式布局</li>
+<li>支持PWA模式</li>
+</ul>
+<p><a href="https://v1.vuepress.vuejs.org/zh/guide/" target="_blank" rel="noopener">vuepress官网</a></p>
+<h2 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a>搭建过程</h2><h3 id="1-安装vuepress"><a href="#1-安装vuepress" class="headerlink" title="1.安装vuepress"></a>1.安装vuepress</h3><p>使用npm全局安装一下我们的vuepress:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g vuepress</span><br></pre></td></tr></table></figure>
+<h3 id="2-初始化项目"><a href="#2-初始化项目" class="headerlink" title="2.初始化项目"></a>2.初始化项目</h3><p><strong>创建项目目录 blog</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">cd blog</span><br></pre></td></tr></table></figure>
+<p>也可以手动创建一个文件夹，然后进入文件夹中</p>
+<p><strong>初始化</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+<p>当然也可以使用 <code>yarn init -y</code>，这里全程使用 npm</p>
+<p>初始化完成后, 会创建一个 package.json 文件，我们用 IDE(任意代码编辑器) 打开它，再在 scripts 中添加两条命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dev&quot;: &quot;vuepress dev docs&quot;,       // 用于实时预览</span><br><span class="line">    &quot;build&quot;: &quot;vuepress build docs&quot;    // 用于打包项目</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着我们需要创建 vuepress 项目的文件夹和文件，主要需要 2 个文件夹：</p>
+<ul>
+<li>一个 docs 文件夹用来存放 <code>.md</code> 类型的文章文件</li>
+<li>一个 doc.vuepress 文件夹用来 vuepress 的配置</li>
+</ul>
+<p>我设置的目录结构是参考了别人的，大概是这样:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 下面没有文件类型后缀的都是文件夹</span><br><span class="line">// 部分内容并不是必须的，想自己定制的话可以参考官方文档</span><br><span class="line"></span><br><span class="line">├── docs</span><br><span class="line">│   ├── .vuepress  // 存放核心内容的文件夹</span><br><span class="line">│   │   ├── components  // 存放你需要添加的vue组件</span><br><span class="line">│   │   ├── public  // 存放静态文件，如图片等</span><br><span class="line">│   │   ├── styles  // 存放需要定制的样式</span><br><span class="line">│   │   │   └── palette.styl  // 配置页面主题颜色的文件</span><br><span class="line">│   │   └── config.js   // 配置的核心文件</span><br><span class="line">│   ├── pages   // 存放 markdown 文件，用于设置其他页面内容</span><br><span class="line">│   ├── README.md   // 首页展示用的 markdown 文件</span><br><span class="line">├── deploy.sh     // 之后用于编写上传、发布脚本的文件</span><br><span class="line">└── package.json  // 之前创建的Node.js项目描述文件</span><br></pre></td></tr></table></figure>
+<p>我们接下来通过<strong>页面具体内容配置</strong>来教你做一些必须的配置</p>
+<h3 id="3-页面具体内容配置"><a href="#3-页面具体内容配置" class="headerlink" title="3.页面具体内容配置"></a>3.页面具体内容配置</h3><p><strong>基本配置</strong></p>
+<p>新建一个总的配置文件config.js, 这个文件的名字是固定的：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd .vuepress</span><br><span class="line">touch config.js</span><br></pre></td></tr></table></figure>
+<p>config.js 最基础的配置文件内容如下:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    title: &apos;xxx的博客&apos;,</span><br><span class="line">    description: &apos;专注技术栈分享&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后再在 docs 目录下创建 README.md 文件，往 README.md 文件中添加官方的封面模板内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">home: true</span><br><span class="line">heroImage: /hero.png</span><br><span class="line">heroText: Hero 标题</span><br><span class="line">tagline: Hero 副标题</span><br><span class="line">actionText: 快速上手 →</span><br><span class="line">actionLink: /zh/guide/</span><br><span class="line">features:</span><br><span class="line">- title: 简洁至上</span><br><span class="line">  details: 以 Markdown 为中心的项目结构，以最少的配置帮助你专注于写作。</span><br><span class="line">- title: Vue驱动</span><br><span class="line">  details: 享受 Vue + webpack 的开发体验，在 Markdown 中使用 Vue 组件，同时可以使用 Vue 来开发自定义主题。</span><br><span class="line">- title: 高性能</span><br><span class="line">  details: VuePress 为每个页面预渲染生成静态的 HTML，同时在页面被加载的时候，将作为 SPA 运行。</span><br><span class="line">footer: MIT Licensed | Copyright © 2018-present Evan You</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>这时候运行 <code>npm run dev</code>  就会出现博客页面内容啦。</p>
+<p><strong>其它配置</strong></p>
+<p>接下来，你可以在 config.js 中继续配置其它内容，比如：</p>
+<p>导航栏 Logo</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .vuepress/config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  themeConfig: &#123;</span><br><span class="line">    logo: <span class="string">'/assets/img/logo.png'</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>导航栏链接：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .vuepress/config.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  themeConfig: &#123;</span><br><span class="line">    nav: [</span><br><span class="line">      &#123; <span class="attr">text</span>: <span class="string">'Home'</span>, <span class="attr">link</span>: <span class="string">'/'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">text</span>: <span class="string">'Guide'</span>, <span class="attr">link</span>: <span class="string">'/guide/'</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">text</span>: <span class="string">'External'</span>, <span class="attr">link</span>: <span class="string">'https://google.com'</span> &#125;,</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果想要展示二级导航, 可以这样配置:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sidebar: &#123;</span><br><span class="line">  <span class="string">'/pages/interview notes/'</span>:[</span><br><span class="line">	&#123;</span><br><span class="line">	  title: <span class="string">'浏览器'</span>,</span><br><span class="line">	  collapsable: <span class="literal">false</span>,</span><br><span class="line">	  children: [</span><br><span class="line">	    [<span class="string">'浏览器基础知识点.md'</span>, <span class="string">'浏览器基础知识点'</span>],</span><br><span class="line">	    [<span class="string">'浏览器缓存机制.md'</span>, <span class="string">'浏览器缓存机制'</span>],</span><br><span class="line">		[<span class="string">'浏览器渲染原理.md'</span>, <span class="string">'浏览器渲染原理'</span>]</span><br><span class="line">	  ]</span><br><span class="line">	&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比较完整的配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    base: <span class="string">'/interview/'</span>, <span class="comment">// 默认不需要，除非你和我一样另一个 blog 占用了根域名</span></span><br><span class="line">    title: <span class="string">'小墨鱼的面试笔记'</span>, <span class="comment">// 显示在左上角的网页名称以及首页在浏览器标签显示的title名称</span></span><br><span class="line">    description: <span class="string">'小墨鱼的面试笔记'</span>, <span class="comment">// meta 中的描述文字，用于SEO</span></span><br><span class="line">    <span class="comment">// 注入到当前页面的 HTML &lt;head&gt; 中的标签</span></span><br><span class="line">    head: [</span><br><span class="line">        [<span class="string">'link'</span>, &#123; <span class="attr">rel</span>: <span class="string">'icon'</span>, <span class="attr">href</span>: <span class="string">'/egg.png'</span> &#125;],  <span class="comment">//浏览器的标签栏的网页图标</span></span><br><span class="line">    ],</span><br><span class="line">    markdown: &#123;</span><br><span class="line">        lineNumbers: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    serviceWorker: <span class="literal">true</span>,</span><br><span class="line">    themeConfig: &#123;</span><br><span class="line">        logo: <span class="string">'/egg.png'</span>,</span><br><span class="line">        lastUpdated: <span class="string">'lastUpdate'</span>, <span class="comment">// string | boolean</span></span><br><span class="line">        nav: [</span><br><span class="line">            &#123; <span class="attr">text</span>: <span class="string">'首页'</span>, <span class="attr">link</span>: <span class="string">'/'</span> &#125;,</span><br><span class="line">			&#123; <span class="attr">text</span>: <span class="string">'面试笔记'</span>, <span class="attr">link</span>: <span class="string">'/pages/interview notes/JS 基础知识点.md'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">text</span>: <span class="string">'精选面试题'</span>, <span class="attr">link</span>: <span class="string">'/pages/interview questions/js基础面试题.md'</span> &#125;,</span><br><span class="line">            &#123; <span class="attr">text</span>: <span class="string">'Github'</span>, <span class="attr">link</span>: <span class="string">'https://github.com/cchroot/interview'</span> &#125;,</span><br><span class="line">        ],</span><br><span class="line">        sidebar: &#123;</span><br><span class="line">            <span class="string">'/pages/interview notes/'</span>:[</span><br><span class="line">                &#123;</span><br><span class="line">                    title: <span class="string">'JavaScript'</span>,   <span class="comment">// 必要的</span></span><br><span class="line">                    collapsable: <span class="literal">false</span>, <span class="comment">// 可选的, 默认值是 true,</span></span><br><span class="line">                    sidebarDepth: <span class="number">1</span>,    <span class="comment">// 可选的, 默认值是 1</span></span><br><span class="line">                    children: [</span><br><span class="line">                        [<span class="string">'JS 基础知识点.md'</span>, <span class="string">'基础知识点'</span>],</span><br><span class="line">                        [<span class="string">'JS 进阶知识点.md'</span>, <span class="string">'JS 进阶知识点'</span>],</span><br><span class="line">						[<span class="string">'JS 异步编程.md'</span>, <span class="string">'异步编程'</span>],</span><br><span class="line">						[<span class="string">'浏览器与Node的事件循环Event Loop.md'</span>, <span class="string">'浏览器与Node的事件循环(Event Loop)'</span>]</span><br><span class="line">                    ]</span><br><span class="line">                &#125;,</span><br><span class="line">				&#123;</span><br><span class="line">                    title: <span class="string">'浏览器'</span>,</span><br><span class="line">                    collapsable: <span class="literal">false</span>,</span><br><span class="line">                    children: [</span><br><span class="line">                        [<span class="string">'浏览器基础知识点.md'</span>, <span class="string">'浏览器基础知识点'</span>],</span><br><span class="line">                        [<span class="string">'浏览器缓存机制.md'</span>, <span class="string">'浏览器缓存机制'</span>],</span><br><span class="line">						[<span class="string">'浏览器渲染原理.md'</span>, <span class="string">'浏览器渲染原理'</span>]</span><br><span class="line">                    ]</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至于自定义布局和其它内容，大家参考官网再去配置就好，这里就不说了</p>
+<h3 id="4-部署至github-page"><a href="#4-部署至github-page" class="headerlink" title="4. 部署至github page"></a>4. 部署至github page</h3><p>因为我以前已经配置过博客了，所以这步我修改以下 github 上的项目信息就好了，但是你们不一样，需要做比较多的配置。</p>
+<p>这里可以参考这两篇文章：</p>
+<p><a href="https://juejin.cn/post/6844903999129436174#heading-6" target="_blank" rel="noopener">1小时搞定vuepress快速制作vue文档/博客+免费部署预览</a></p>
+<p><a href="https://juejin.cn/post/6844904185838698509#heading-13" target="_blank" rel="noopener">如何快速搭建好看的个人博客(完整配置与源码)</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tool/" rel="tag"># tool</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/30/分支管理规范/" rel="next" title="分支管理规范">
+                <i class="fa fa-chevron-left"></i> 分支管理规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/06/27/Java集合中List,Set以及Map等集合体系详解(史上最全)/" rel="prev" title="Java集合中List,Set以及Map等集合体系详解">
+                Java集合中List,Set以及Map等集合体系详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建过程"><span class="nav-number">1.</span> <span class="nav-text">搭建过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-安装vuepress"><span class="nav-number">1.1.</span> <span class="nav-text">1.安装vuepress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-初始化项目"><span class="nav-number">1.2.</span> <span class="nav-text">2.初始化项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-页面具体内容配置"><span class="nav-number">1.3.</span> <span class="nav-text">3.页面具体内容配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-部署至github-page"><span class="nav-number">1.4.</span> <span class="nav-text">4. 部署至github page</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
