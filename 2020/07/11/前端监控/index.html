@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="前端性能监控利用 performance API let timing = performance.getEntriesByType(&amp;#39;navigation&amp;#39;)[0]; 或者 let timing = performance.timing。封装一个函数，在页面加载完毕后执行，做了一些各个阶段性能指标的计算，然后通过接口发送到服务器，用于统计判断。 在 Console 中输入 per">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-12-24T10:53:43.927Z">
+<meta property="og:updated_time" content="2020-12-28T15:53:46.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端监控">
 <meta name="twitter:description" content="前端性能监控利用 performance API let timing = performance.getEntriesByType(&amp;#39;navigation&amp;#39;)[0]; 或者 let timing = performance.timing。封装一个函数，在页面加载完毕后执行，做了一些各个阶段性能指标的计算，然后通过接口发送到服务器，用于统计判断。 在 Console 中输入 per">
@@ -522,6 +522,16 @@
 <p>对于这几类统计，一般的实现思路大致可以分为两种，分别为手写埋点和无埋点的方式。</p>
 <p>相信第一种方式也是大家最常用的方式，可以自主选择需要监控的数据然后在相应的地方写入代码。这种方式的灵活性很大，但是唯一的缺点就是工作量较大，每个需要监控的地方都得插入代码。</p>
 <p>另一种无埋点的方式基本不需要开发者手写埋点了，而是统计所有的事件并且定时上报。这种方式虽然没有前一种方式繁琐了，但是因为统计的是所有事件，所以还需要后期过滤出需要的数据。</p>
+<h2 id="开源的解决方案"><a href="#开源的解决方案" class="headerlink" title="开源的解决方案"></a>开源的解决方案</h2><p>一些开源的解决方案，比如腾讯的 badjs，淘宝的 JSTracker，阿里巴巴的 FdSafe，支付宝的 saijs，国外的 sentry 和对应的前端 sdk ravenjs，包括对应的 TraceKit。</p>
+<p>目前主流的前端监控系统，包括一些收费服务，国内比如 fundebug，产品功能和 sentry 还真像，只不过他只关注前端，sentry 关注所有的 Error 收集场景，他们解决的问题其实都是本文要说到的一些通用问题，但是针对到具体项目适合不适合，就要看业务方自己选择了。</p>
+<p>其中个人觉得 sentry 是比较好的选择，有以下几点：</p>
+<ul>
+<li>开源</li>
+<li>对各种前端框架的友好支持 (Vue、React、Angular)</li>
+<li>支持 SourceMap</li>
+</ul>
+<p>Sentry 官方提供的免费服务有次数限制，达到一定限制后继续使用就需要收费了，但是我们可以利用 Sentry 的开源库在自己的服务器上搭建服务，官方已经提供了完善的操作文档。</p>
+<p>有兴趣的童鞋可以参考 Sentry 搭建错误监控系统：<br><a href="https://zhuanlan.zhihu.com/p/51446011" target="_blank" rel="noopener">超详细！搭建一个前端错误监控系统</a></p>
 <p>参考链接：</p>
 <p><a href="https://juejin.cn/post/6844903648355418120#heading-14" target="_blank" rel="noopener">前端性能与异常上报</a></p>
 <p><a href="https://juejin.cn/post/6844903540385644557#heading-8" target="_blank" rel="noopener">从无到有&lt;前端异常监控系统&gt;落地</a></p>
@@ -649,7 +659,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">144</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -670,7 +680,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/javascript/index.html">
+                <a href="/tools/index.html">
                   <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
@@ -726,7 +736,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端性能监控"><span class="nav-number">1.</span> <span class="nav-text">前端性能监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端错误监控"><span class="nav-number">2.</span> <span class="nav-text">前端错误监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前端错误的分类"><span class="nav-number">2.1.</span> <span class="nav-text">前端错误的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#即时运行错误捕获方式"><span class="nav-number">2.2.</span> <span class="nav-text">即时运行错误捕获方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局捕获"><span class="nav-number">2.2.1.</span> <span class="nav-text">全局捕获</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#try-catch"><span class="nav-number">2.2.2.</span> <span class="nav-text">try catch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源加载错误的捕获方式"><span class="nav-number">2.3.</span> <span class="nav-text">资源加载错误的捕获方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#object-onerror"><span class="nav-number">2.3.1.</span> <span class="nav-text">object.onerror</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#performance-getEntries"><span class="nav-number">2.3.2.</span> <span class="nav-text">performance.getEntries</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误上报的两种方式"><span class="nav-number">2.4.</span> <span class="nav-text">错误上报的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax"><span class="nav-number">2.4.1.</span> <span class="nav-text">ajax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用Image对象上报"><span class="nav-number">2.4.2.</span> <span class="nav-text">利用Image对象上报</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的问题"><span class="nav-number">2.5.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-和-React-捕获异常"><span class="nav-number">2.6.</span> <span class="nav-text">Vue 和 React 捕获异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际使用后的优化"><span class="nav-number">2.7.</span> <span class="nav-text">实际使用后的优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面埋点"><span class="nav-number">3.</span> <span class="nav-text">页面埋点</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前端性能监控"><span class="nav-number">1.</span> <span class="nav-text">前端性能监控</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端错误监控"><span class="nav-number">2.</span> <span class="nav-text">前端错误监控</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前端错误的分类"><span class="nav-number">2.1.</span> <span class="nav-text">前端错误的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#即时运行错误捕获方式"><span class="nav-number">2.2.</span> <span class="nav-text">即时运行错误捕获方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#全局捕获"><span class="nav-number">2.2.1.</span> <span class="nav-text">全局捕获</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#try-catch"><span class="nav-number">2.2.2.</span> <span class="nav-text">try catch</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源加载错误的捕获方式"><span class="nav-number">2.3.</span> <span class="nav-text">资源加载错误的捕获方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#object-onerror"><span class="nav-number">2.3.1.</span> <span class="nav-text">object.onerror</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#performance-getEntries"><span class="nav-number">2.3.2.</span> <span class="nav-text">performance.getEntries</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误上报的两种方式"><span class="nav-number">2.4.</span> <span class="nav-text">错误上报的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax"><span class="nav-number">2.4.1.</span> <span class="nav-text">ajax</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用Image对象上报"><span class="nav-number">2.4.2.</span> <span class="nav-text">利用Image对象上报</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的问题"><span class="nav-number">2.5.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-和-React-捕获异常"><span class="nav-number">2.6.</span> <span class="nav-text">Vue 和 React 捕获异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际使用后的优化"><span class="nav-number">2.7.</span> <span class="nav-text">实际使用后的优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#页面埋点"><span class="nav-number">3.</span> <span class="nav-text">页面埋点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开源的解决方案"><span class="nav-number">4.</span> <span class="nav-text">开源的解决方案</span></a></li></ol></div>
             
 
           </div>
