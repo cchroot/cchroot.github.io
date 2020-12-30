@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="arithmetic,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="解题模板这个算法技巧的思路非常简单，就是维护一个窗口，不断滑动，然后更新答案，困扰大家的，不是算法的思路，而是各种细节问题。比如说如何向窗口中添加新元素，如何缩小窗口，在窗口滑动的哪个阶段更新结果。 解题模板： 1234567891011121314151617181920212223242526272829let need = new Map()  let window = new Map()">
+<meta name="keywords" content="arithmetic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="滑动窗口小结">
+<meta property="og:url" content="http://yoursite.com/2020/10/17/滑动窗口小结/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="解题模板这个算法技巧的思路非常简单，就是维护一个窗口，不断滑动，然后更新答案，困扰大家的，不是算法的思路，而是各种细节问题。比如说如何向窗口中添加新元素，如何缩小窗口，在窗口滑动的哪个阶段更新结果。 解题模板： 1234567891011121314151617181920212223242526272829let need = new Map()  let window = new Map()">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-30T14:58:38.054Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="滑动窗口小结">
+<meta name="twitter:description" content="解题模板这个算法技巧的思路非常简单，就是维护一个窗口，不断滑动，然后更新答案，困扰大家的，不是算法的思路，而是各种细节问题。比如说如何向窗口中添加新元素，如何缩小窗口，在窗口滑动的哪个阶段更新结果。 解题模板： 1234567891011121314151617181920212223242526272829let need = new Map()  let window = new Map()">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/10/17/滑动窗口小结/">
+
+
+
+
+
+  <title>滑动窗口小结 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-react">
+          <a href="/categories/reactJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-asterisk"></i> <br>
+            
+            react.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/10/17/滑动窗口小结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">滑动窗口小结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-10-17T20:31:05+08:00">
+                2020-10-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/arithmetic/" itemprop="url" rel="index">
+                    <span itemprop="name">arithmetic</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="解题模板"><a href="#解题模板" class="headerlink" title="解题模板"></a>解题模板</h2><p>这个算法技巧的思路非常简单，就是维护一个窗口，不断滑动，然后更新答案，困扰大家的，不是算法的思路，而是各种细节问题。比如说如何向窗口中添加新元素，如何缩小窗口，在窗口滑动的哪个阶段更新结果。</p>
+<p>解题模板：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> need = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="keyword">let</span> <span class="built_in">window</span> = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> char <span class="keyword">of</span> t) &#123;</span><br><span class="line">    <span class="keyword">if</span> (need.has(char)) &#123;</span><br><span class="line">      need.set(char, need.get(char) + <span class="number">1</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      need.set(char, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> left = <span class="number">0</span>, right = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> valid = <span class="number">0</span> <span class="comment">// 用于 window 包含 need 的多少个不重复数值，当 valid === need.size 时，则包含全部</span></span><br><span class="line">  <span class="keyword">while</span> (right &lt; s.length) &#123;</span><br><span class="line">    <span class="keyword">let</span> c = s[right] <span class="comment">// c 是将移入窗口的数值</span></span><br><span class="line">    right++ <span class="comment">// 右移窗口</span></span><br><span class="line">    <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// debug 输出的位置</span></span><br><span class="line">    <span class="built_in">console</span>.log(left, right)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断左侧窗口是否要收缩</span></span><br><span class="line">    <span class="keyword">while</span>(valid === need.size) &#123;</span><br><span class="line">      <span class="keyword">let</span> d = s[left] <span class="comment">// d 是将移出窗口的字符</span></span><br><span class="line">      left++ <span class="comment">// 左移窗口</span></span><br><span class="line">      <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>然后开始套模板，只需要思考以下四个问题：</p>
+<ol>
+<li><p>当移动 right 扩大窗口，即加入字符时，应该更新哪些数据？</p>
+</li>
+<li><p>什么条件下，窗口应该暂停扩大，开始移动 left 缩小窗口？</p>
+</li>
+<li><p>当移动 left 缩小窗口，即移出字符时，应该更新哪些数据？</p>
+</li>
+<li><p>我们要的结果应该在扩大窗口时还是缩小窗口时进行更新？</p>
+</li>
+</ol>
+<h2 id="案例代码"><a href="#案例代码" class="headerlink" title="案例代码"></a>案例代码</h2><h3 id="典型直接套模板"><a href="#典型直接套模板" class="headerlink" title="典型直接套模板"></a>典型直接套模板</h3><p><a href="https://leetcode-cn.com/problems/minimum-window-substring/" target="_blank" rel="noopener">76. 最小覆盖子串</a></p>
+<p>滑动窗口算法的思路是这样：</p>
+<ol>
+<li><p>我们在字符串 S 中使用双指针中的左右指针技巧，初始化 left = right = 0，把索引左闭右开区间 [left, right) 称为一个「窗口」。</p>
+</li>
+<li><p>我们先不断地增加 right 指针扩大窗口 [left, right)，直到窗口中的字符串符合要求（包含了 T 中的所有字符）。</p>
+</li>
+<li><p>此时，我们停止增加 right，转而不断增加 left 指针缩小窗口 [left, right)，直到窗口中的字符串不再符合要求（不包含 T 中的所有字符了）。同时，每次增加 left，我们都要更新一轮结果。</p>
+</li>
+<li><p>重复第 2 和第 3 步，直到 right 到达字符串 S 的尽头。</p>
+</li>
+</ol>
+<p>这个思路其实也不难，第 2 步相当于在寻找一个「可行解」，然后第 3 步在优化这个「可行解」，最终找到最优解，也就是最短的覆盖子串。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> minWindow = <span class="function"><span class="keyword">function</span>(<span class="params">s, t</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> need = <span class="keyword">new</span> <span class="built_in">Map</span>() <span class="comment">// 用于记录需要凑齐的字符</span></span><br><span class="line">  <span class="keyword">let</span> <span class="built_in">window</span> = <span class="keyword">new</span> <span class="built_in">Map</span>() <span class="comment">// 用于记录当前窗口的字符</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> char <span class="keyword">of</span> t) &#123;</span><br><span class="line">    <span class="keyword">if</span> (need.has(char)) &#123;</span><br><span class="line">      need.set(char, need.get(char) + <span class="number">1</span>)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      need.set(char, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> left = <span class="number">0</span>, right = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> valid = <span class="number">0</span> <span class="comment">// 用于 window 包含 need 的多少个不重复数值，当 valid === need.size 时，则包含全部，满足题意</span></span><br><span class="line">  <span class="comment">// 记录最小覆盖子串的起始索引及长度</span></span><br><span class="line">  <span class="keyword">let</span> start = <span class="number">0</span>, len = <span class="built_in">Number</span>.MAX_SAFE_INTEGER</span><br><span class="line">  <span class="keyword">while</span> (right &lt; s.length) &#123;</span><br><span class="line">    <span class="keyword">let</span> c = s[right] <span class="comment">// c 是将移入窗口的数值</span></span><br><span class="line">    right++ <span class="comment">// 右移窗口</span></span><br><span class="line">    <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">    <span class="keyword">if</span> (need.has(c)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.has(c)) &#123;</span><br><span class="line">        <span class="built_in">window</span>.set(c, <span class="built_in">window</span>.get(c) + <span class="number">1</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">window</span>.set(c, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.get(c) === need.get(c)) &#123; <span class="comment">// 满足了某个字符的所需个数</span></span><br><span class="line">        valid++</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断左侧窗口是否要收缩</span></span><br><span class="line">    <span class="keyword">while</span>(valid === need.size) &#123;</span><br><span class="line">      <span class="comment">// 在这里更新最小覆盖子串</span></span><br><span class="line">      <span class="keyword">if</span> (right - left &lt; len) &#123;</span><br><span class="line">        start = left</span><br><span class="line">        len = right - left</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">let</span> d = s[left] <span class="comment">// d 是将移出窗口的字符</span></span><br><span class="line">      left++ <span class="comment">// 左移窗口</span></span><br><span class="line">      <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">      <span class="keyword">if</span> (need.has(d)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">window</span>.get(d) === need.get(d)) &#123;</span><br><span class="line">          valid--</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.set(d, <span class="built_in">window</span>.get(d) - <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 返回最小覆盖子串</span></span><br><span class="line">  <span class="keyword">return</span> len === <span class="built_in">Number</span>.MAX_SAFE_INTEGER ? <span class="string">''</span> : s.substr(start, len)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，当我们发现某个字符在 window 的数量满足了 need 的需要，就要更新 valid，表示有一个字符已经满足要求。而且，你能发现，两次对窗口内数据的更新操作是完全对称的。</p>
+<p>当 valid == need.size() 时，说明 T 中所有字符已经被覆盖，已经得到一个可行的覆盖子串，现在应该开始收缩窗口了，以便得到「最小覆盖子串」。</p>
+<p>移动 left 收缩窗口时，窗口内的字符都是可行解，所以应该在收缩窗口的阶段进行最小覆盖子串的更新，以便从可行解中找到长度最短的最终结果。</p>
+<p><a href="https://leetcode-cn.com/problems/permutation-in-string/" target="_blank" rel="noopener">567. 字符串的排列</a></p>
+<p>这题相当于: 相当给你一个 S 和一个 T，请问你 S 中是否存在一个子串，包含 T 中所有字符且不包含其他字符？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s1</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s2</span></span><br><span class="line"><span class="comment"> * @return &#123;boolean&#125;</span></span><br><span class="line"><span class="comment"> * 滑动窗口</span></span><br><span class="line"><span class="comment"> * 相当给你一个 s1 和一个 s2，请问你 s2 中是否存在一个子串，包含 s1 中所有字符且不包含其他字符？</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> checkInclusion = <span class="function"><span class="keyword">function</span>(<span class="params">s1, s2</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> need = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="keyword">let</span> <span class="built_in">window</span> = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> char <span class="keyword">of</span> s1) &#123;</span><br><span class="line">    <span class="keyword">if</span> (need.has(char)) &#123;</span><br><span class="line">      <span class="keyword">let</span> charNum = need.get(char) + <span class="number">1</span></span><br><span class="line">      need.set(char, charNum)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      need.set(char, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> left = <span class="number">0</span>, right = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> valid = <span class="number">0</span> <span class="comment">// 用于 window 包含 need 的多少个不重复数值，当 valid === need.size 时，则包含全部</span></span><br><span class="line">  <span class="keyword">while</span> (right &lt; s2.length) &#123;</span><br><span class="line">    <span class="keyword">let</span> c = s2[right] <span class="comment">// c 是将移入窗口的数值</span></span><br><span class="line">    right++ <span class="comment">// 右移窗口</span></span><br><span class="line">    <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">    <span class="keyword">if</span> (need.has(c)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.has(c)) &#123;</span><br><span class="line">        <span class="keyword">let</span> cNum = <span class="built_in">window</span>.get(c) + <span class="number">1</span></span><br><span class="line">        <span class="built_in">window</span>.set(c, cNum)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">window</span>.set(c, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.get(c) === need.get(c)) &#123;</span><br><span class="line">        valid++</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// debug 输出的位置</span></span><br><span class="line">    <span class="comment">// console.log(left, right)</span></span><br><span class="line">	</span><br><span class="line">    <span class="comment">// 判断左侧窗口是否要收缩</span></span><br><span class="line">	<span class="keyword">while</span> (valid === need.size) &#123;</span><br><span class="line">      <span class="keyword">if</span> (right - left === s1.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">let</span> d = s2[left] <span class="comment">// d 是将移出窗口的字符</span></span><br><span class="line">      left++ <span class="comment">// 左移窗口</span></span><br><span class="line">      <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">      <span class="keyword">if</span> (need.has(d)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">window</span>.get(d) === need.get(d)) &#123;</span><br><span class="line">          valid--</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">window</span>.set(d, <span class="built_in">window</span>.get(d) - <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">/* 这题也可以先判断长度满不满足</span></span><br><span class="line"><span class="comment">    while(right - left &gt;= s1.length) &#123;</span></span><br><span class="line"><span class="comment">	  // 在判断是否包含整个字串</span></span><br><span class="line"><span class="comment">      if (valid === need.size) &#123;</span></span><br><span class="line"><span class="comment">        return true</span></span><br><span class="line"><span class="comment">      &#125;</span></span><br><span class="line"><span class="comment">      let d = s2[left] // d 是将移出窗口的字符</span></span><br><span class="line"><span class="comment">      left++ // 左移窗口</span></span><br><span class="line"><span class="comment">      // 进行窗口内数据的一系列更新</span></span><br><span class="line"><span class="comment">      if (need.has(d)) &#123;</span></span><br><span class="line"><span class="comment">        if (window.get(d) === need.get(d)) &#123;</span></span><br><span class="line"><span class="comment">          valid--</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment">        let dNum = window.get(d) - 1</span></span><br><span class="line"><span class="comment">        window.set(d, dNum)</span></span><br><span class="line"><span class="comment">      &#125;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对于这道题的解法代码，基本上和最小覆盖子串一模一样，只需要改变两个地方：</p>
+<ol>
+<li><p>本题移动 left 缩小窗口的时机是 <code>valid == need.size()</code> 时候，索命当 window 包含所有字串的字符</p>
+</li>
+<li><p>当发现长度和字串相同时，就说明窗口中就是一个合法的排列，所以立即返回 true。</p>
+</li>
+</ol>
+<p>至于如何处理窗口的扩大和缩小，和最小覆盖子串完全相同。</p>
+<h3 id="进阶多一些存储或其它操作"><a href="#进阶多一些存储或其它操作" class="headerlink" title="进阶多一些存储或其它操作"></a>进阶多一些存储或其它操作</h3><p><a href="https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/" target="_blank" rel="noopener">438. 找到字符串中所有字母异位词</a></p>
+<p>所谓的字母异位词，就是排列，相当于：输入一个串 S，一个串 T，找到 S 中所有 T 的排列，返回它们的起始索引。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; p</span></span><br><span class="line"><span class="comment"> * @return &#123;number[]&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> findAnagrams = <span class="function"><span class="keyword">function</span>(<span class="params">s, p</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> need = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="keyword">let</span> <span class="built_in">window</span> = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> char <span class="keyword">of</span> p) &#123;</span><br><span class="line">    <span class="keyword">if</span> (need.has(char)) &#123;</span><br><span class="line">      <span class="keyword">let</span> charNum = need.get(char) + <span class="number">1</span></span><br><span class="line">      need.set(char, charNum)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      need.set(char, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> left = <span class="number">0</span>, right = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> valid = <span class="number">0</span> <span class="comment">// 用于 window 包含 need 的多少个不重复数值，当 valid === need.size 时，则包含全部</span></span><br><span class="line">  <span class="keyword">let</span> res = []</span><br><span class="line">  <span class="keyword">while</span> (right &lt; s.length) &#123;</span><br><span class="line">    <span class="keyword">let</span> c = s[right] <span class="comment">// c 是将移入窗口的数值</span></span><br><span class="line">    right++ <span class="comment">// 右移窗口</span></span><br><span class="line">    <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">    <span class="keyword">if</span> (need.has(c)) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.has(c)) &#123;</span><br><span class="line">        <span class="keyword">let</span> cNum = <span class="built_in">window</span>.get(c) + <span class="number">1</span></span><br><span class="line">        <span class="built_in">window</span>.set(c, cNum)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">window</span>.set(c, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.get(c) === need.get(c)) &#123;</span><br><span class="line">        valid++</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// debug 输出的位置</span></span><br><span class="line">    <span class="comment">// console.log(left, right)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断左侧窗口是否要收缩</span></span><br><span class="line">    <span class="keyword">while</span>(right - left &gt;= p.length) &#123;</span><br><span class="line">      <span class="keyword">if</span> (valid === need.size) &#123;</span><br><span class="line">        res.push(left)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">let</span> d = s[left] <span class="comment">// d 是将移出窗口的字符</span></span><br><span class="line">      left++ <span class="comment">// 左移窗口</span></span><br><span class="line">      <span class="comment">// 进行窗口内数据的一系列更新</span></span><br><span class="line">      <span class="keyword">if</span> (need.has(d)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">window</span>.get(d) === need.get(d)) &#123;</span><br><span class="line">          valid--</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">let</span> dNum = <span class="built_in">window</span>.get(d) - <span class="number">1</span></span><br><span class="line">        <span class="built_in">window</span>.set(d, dNum)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>跟寻找字符串的排列一样，只是找到一个合法异位词（排列）之后将起始索引加入 res 即可。</p>
+<h3 id="变异版"><a href="#变异版" class="headerlink" title="变异版"></a>变异版</h3><p><a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="noopener">3. 无重复字符的最长子串</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;string&#125; s</span></span><br><span class="line"><span class="comment"> * @return &#123;number&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">var</span> lengthOfLongestSubstring = <span class="function"><span class="keyword">function</span>(<span class="params">s</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (s.length &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> s.length</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> maxLen = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> <span class="built_in">window</span> = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="keyword">let</span> left = <span class="number">0</span>, right = <span class="number">0</span></span><br><span class="line">  <span class="keyword">while</span> (right &lt; s.length) &#123;</span><br><span class="line">    <span class="keyword">let</span> c = s[right]</span><br><span class="line">    right++</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.has(c)) &#123;</span><br><span class="line">      <span class="keyword">let</span> cNum = <span class="built_in">window</span>.get(c) + <span class="number">1</span></span><br><span class="line">      <span class="built_in">window</span>.set(c, cNum)</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">window</span>.set(c, <span class="number">1</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">window</span>.get(c) &gt; <span class="number">1</span>) &#123; <span class="comment">// 当发现重复项</span></span><br><span class="line">      maxLen = <span class="built_in">window</span>.size &gt; maxLen ? <span class="built_in">window</span>.size : maxLen</span><br><span class="line">      <span class="keyword">let</span> d = s[left]</span><br><span class="line">      left++</span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">window</span>.get(d) &gt; <span class="number">1</span>) &#123; </span><br><span class="line">        <span class="keyword">let</span> dNum = <span class="built_in">window</span>.get(d) - <span class="number">1</span></span><br><span class="line">        <span class="built_in">window</span>.set(d, dNum)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">window</span>.delete(d)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (right === s.length) &#123; <span class="comment">// 处理迭代到最后一位</span></span><br><span class="line">      maxLen = <span class="built_in">window</span>.size &gt; maxLen ? <span class="built_in">window</span>.size : maxLen</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> maxLen</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>简单了，连 need 和 valid 都不需要，而且更新窗口内数据也只需要简单的更新计数器 window 即可。</p>
+<p>当 window[c] 值大于 1 时，说明窗口中存在重复字符，不符合条件，就该移动 left 缩小窗口了嘛。</p>
+<p>唯一需要注意的是，在哪里更新结果 maxLen 呢？我们要的是最长无重复子串，哪一个阶段可以保证窗口中的字符串是没有重复的呢？</p>
+<p>这里和之前不一样，要在收缩窗口完成后更新 maxLen，因为窗口收缩的 while 条件是存在重复元素，换句话说收缩完成后一定保证窗口中没有重复嘛。</p>
+<p>解题思路来自: <a href="https://labuladong.gitee.io/algo/" target="_blank" rel="noopener">labuladong的算法小抄</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/arithmetic/" rel="tag"># arithmetic</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/10/11/你能实现一个没有漏洞的双向绑定吗/" rel="next" title="你能实现一个没有漏洞的双向绑定吗">
+                <i class="fa fa-chevron-left"></i> 你能实现一个没有漏洞的双向绑定吗
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/10/31/动态规划简单总结/" rel="prev" title="动态规划简单总结">
+                动态规划简单总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">148</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/javascript/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#解题模板"><span class="nav-number">1.</span> <span class="nav-text">解题模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例代码"><span class="nav-number">2.</span> <span class="nav-text">案例代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型直接套模板"><span class="nav-number">2.1.</span> <span class="nav-text">典型直接套模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进阶多一些存储或其它操作"><span class="nav-number">2.2.</span> <span class="nav-text">进阶多一些存储或其它操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变异版"><span class="nav-number">2.3.</span> <span class="nav-text">变异版</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
