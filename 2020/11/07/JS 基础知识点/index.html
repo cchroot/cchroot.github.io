@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="1、js 中存在 6 种原始类型boolean,null,undefined,number,string,symbol；typeof null 会输出 object,但是这只是 JS 存在的一个悠久 Bug 2、判断类型typeof 对于原始类型来说，除了 null 都可以显示正确的类型；typeof 对于对象来说，除了函数都会显示 object，所以说 typeof 并不能准确判断变量到底是什么">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2020/11/07/JS%20基础知识点/images/js/prototype_1.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/07/JS%20基础知识点/images/js/event_rule_1.png">
-<meta property="og:updated_time" content="2020-12-30T16:14:30.166Z">
+<meta property="og:image" content="http://yoursite.com/images/js/prototype_1.png">
+<meta property="og:image" content="http://yoursite.com/images/js/event_rule_1.png">
+<meta property="og:updated_time" content="2020-12-30T16:27:25.384Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JS 基础知识点">
 <meta name="twitter:description" content="1、js 中存在 6 种原始类型boolean,null,undefined,number,string,symbol；typeof null 会输出 object,但是这只是 JS 存在的一个悠久 Bug 2、判断类型typeof 对于原始类型来说，除了 null 都可以显示正确的类型；typeof 对于对象来说，除了函数都会显示 object，所以说 typeof 并不能准确判断变量到底是什么">
-<meta name="twitter:image" content="http://yoursite.com/2020/11/07/JS%20基础知识点/images/js/prototype_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/js/prototype_1.png">
 
 
 
@@ -478,7 +478,7 @@
 </ol>
 <p>如果你所需拷贝的对象含有内置类型并且不包含函数，可以使用 MessageChannel，完全的深拷贝只能是采用递归遍历了</p>
 <h3 id="9、instanceof"><a href="#9、instanceof" class="headerlink" title="9、instanceof"></a>9、instanceof</h3><p>关于 instanceof 其实表示的就是一种继承关系，或者原型链的结构。Instanceof 运算符的第一个变量是一个对象，暂时称为A；第二个变量一般是一个函数，暂时称为 B。Instanceof的判断规则是：沿着 A 的 <strong>proto</strong> 这条线来找，同时沿着 B 的 prototype 这条线来找，如果两条线能找到同一个引用，即同一个对象，那么就返回 true。如果找到终点还未重合，则返回 false。</p>
-<h3 id="10、关于原型，需要记住这张图"><a href="#10、关于原型，需要记住这张图" class="headerlink" title="10、关于原型，需要记住这张图"></a>10、关于原型，需要记住这张图</h3><p><img src="images/js/prototype_1.png" alt="原型"></p>
+<h3 id="10、关于原型，需要记住这张图"><a href="#10、关于原型，需要记住这张图" class="headerlink" title="10、关于原型，需要记住这张图"></a>10、关于原型，需要记住这张图</h3><p><img src="/images/js/prototype_1.png" alt="原型"></p>
 <h3 id="11、-var、let、const的区别"><a href="#11、-var、let、const的区别" class="headerlink" title="11、 var、let、const的区别"></a>11、 var、let、const的区别</h3><ol>
 <li>函数提升优先于变量提升，函数提升会把整个函数挪到作用域顶部，变量提升只会把声明挪到作用域顶部</li>
 <li>var 存在提升，我们能在声明之前使用。let、const 因为暂时性死区的原因，不能在声明前使用</li>
@@ -503,7 +503,7 @@
 </ol>
 <h3 id="16、Proxy"><a href="#16、Proxy" class="headerlink" title="16、Proxy"></a>16、Proxy</h3><p>在 Vue3.0 中将会通过 Proxy 来替换原本的 Object.defineProperty 来实现数据响应式。 Proxy 是 ES6 中新增的功能，它可以用来自定义对象中的操作。如果需要实现一个 Vue 中的响应式，需要我们在 get 中收集依赖，在 set 派发更新，之所以 Vue3.0 要使用 Proxy 替换原本的 API 原因在于 Proxy 无需一层层递归为每个属性添加代理，一次即可完成以上操作，性能上更好，并且原本的实现有一些数据更新不能监听到，但是 Proxy 可以完美监听到任何方式的数据改变，唯一缺陷可能就是浏览器的兼容性不好了。</p>
 <h3 id="17、事件冒泡与捕获"><a href="#17、事件冒泡与捕获" class="headerlink" title="17、事件冒泡与捕获"></a>17、事件冒泡与捕获</h3><p>浏览器里面的事件都会按照一定的规则去传递，不管 body 上绑定事件、或者 div 甚至 div 的 text 节点上绑定事件，这个事件必须先从根节点开始遍历（即Window对象开始），从上往下，传递的过程中，发现有的元素绑定了事件，也先放着，等全部事件捕获完毕（遍历完毕）， 开始处理事件，处理的顺序为，从最小的根节点上的事件开始，依次向上冒泡，如图：</p>
-<p><img src="images/js/event_rule_1.png" alt="浏览器事件传递规则"></p>
+<p><img src="/images/js/event_rule_1.png" alt="浏览器事件传递规则"></p>
 <p>一句话概括这种机制：</p>
 <ul>
 <li>捕获：自外而内，从根到叶，从大到小</li>
@@ -659,7 +659,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>

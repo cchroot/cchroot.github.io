@@ -87,20 +87,20 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="这几天复习整理了一下 HTTP 相关的知识点，把相对重要的知识点都整理了出来，方便查于复习，这里继续分享给大家： 什么是HTTP协议HTPP(HyperText Transfer Protocol) 是一种超文本传输协议，用于客户端和服务器，通过请求和响应的交换来达成通信。 HTTP 属于 TCP/IP 协议族，TCP/IP 协议族是互联网相关联的协议集合起来总称（不仅仅指的是 TCP  和 IP">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_1.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_2.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_3.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_4.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_5.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_6.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_7.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_8.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/26/http/images/http/http_9.png">
-<meta property="og:updated_time" content="2020-12-30T16:00:11.355Z">
+<meta property="og:image" content="http://yoursite.com/images/http/http_1.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_2.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_3.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_4.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_5.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_6.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_7.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_8.png">
+<meta property="og:image" content="http://yoursite.com/images/http/http_9.png">
+<meta property="og:updated_time" content="2020-12-30T16:26:07.766Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP">
 <meta name="twitter:description" content="这几天复习整理了一下 HTTP 相关的知识点，把相对重要的知识点都整理了出来，方便查于复习，这里继续分享给大家： 什么是HTTP协议HTPP(HyperText Transfer Protocol) 是一种超文本传输协议，用于客户端和服务器，通过请求和响应的交换来达成通信。 HTTP 属于 TCP/IP 协议族，TCP/IP 协议族是互联网相关联的协议集合起来总称（不仅仅指的是 TCP  和 IP">
-<meta name="twitter:image" content="http://yoursite.com/2020/11/26/http/images/http/http_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/http/http_1.png">
 
 
 
@@ -445,7 +445,7 @@
         <p>这几天复习整理了一下 HTTP 相关的知识点，把相对重要的知识点都整理了出来，方便查于复习，这里继续分享给大家：</p>
 <h2 id="什么是HTTP协议"><a href="#什么是HTTP协议" class="headerlink" title="什么是HTTP协议"></a>什么是HTTP协议</h2><p>HTPP(HyperText Transfer Protocol) 是一种超文本传输协议，用于客户端和服务器，通过请求和响应的交换来达成通信。</p>
 <p>HTTP 属于 TCP/IP 协议族，TCP/IP 协议族是互联网相关联的协议集合起来总称（不仅仅指的是 TCP  和 IP 两个协议）。下图可以展示出 ISO 七层模型和 TCP/IP 协议族分层的关系：</p>
-<p><img src="images/http/http_1.png" alt="ISO 七层模型和 TCP/IP 协议族分层关系"></p>
+<p><img src="/images/http/http_1.png" alt="ISO 七层模型和 TCP/IP 协议族分层关系"></p>
 <p>从上图可以看到，TCP/IP 模型合并了 OSI 模型的应用层、表示层和会话层，将 OSI 模型的数据链路层和物理层合并为网络访问层。</p>
 <p>童鞋们可能还经常听说计算机协议的 5 层模型，即：应用层、运输层、网络层、链路层、物理层，本质都一样。</p>
 <h2 id="与HTTP关系密切的协议"><a href="#与HTTP关系密切的协议" class="headerlink" title="与HTTP关系密切的协议"></a>与HTTP关系密切的协议</h2><h3 id="DNS协议"><a href="#DNS协议" class="headerlink" title="DNS协议"></a>DNS协议</h3><p>DNS 的全称是域名系统，DNS 协议位于应用层，负责将域名解析为 IP 地址，本质是一个将域名和 IP 地址相互映射的分布式数据库，能够让人更方便的访问互联网。</p>
@@ -463,8 +463,8 @@
 <p>4、无连接：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。如果当请求的资源很多时，会造成无谓的 TCP 连接建立和断开，增加通信量的开销。为解决 TCP 连接的问题，产生了 keep-alive 的方法以保持连接，其特点是：只要任意一端没有明确提出断开连接，则保持 TCP 连接状态(在HTTP/1.1中，所有的连接默认都是持久连接)。</p>
 <p>5、无状态：HTTP 是无状态协议，即 HTTP 协议自身不具备保存之前发送过的请求或响应的功能。</p>
 <h2 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h2><h3 id="报文格式"><a href="#报文格式" class="headerlink" title="报文格式"></a>报文格式</h3><p>发送请求时会发送请求报文，其由请求行(含请求方法、请求URI、协议版本)、报文首部和报文实体构成的，且报文首部和报文实体以一空行(CR+LF)分隔，如下图：</p>
-<p><img src="images/http/http_2.png" alt="请求报文"></p>
-<h3 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h3><p><img src="images/http/http_3.png" alt="请求方法"></p>
+<p><img src="/images/http/http_2.png" alt="请求报文"></p>
+<h3 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h3><p><img src="/images/http/http_3.png" alt="请求方法"></p>
 <p>上面我们最长用的为 GET 和 POST 方法，他们的区别为：</p>
 <ul>
 <li>Get 请求能缓存，Post 不能</li>
@@ -695,7 +695,7 @@
 <p>HTTP 应用层的协议，数据到达之后需要告诉应用程序这是什么数据，不然应用只能自己不断尝试，这样会非常的低效。</p>
 <p>鉴于此，客户端（浏览器）需要和服务器就数据的传输达成一致，客户端需要声明自己希望能够收取什么样的数据，什么样的压缩格式，什么语言，什么字符集，有什么限制等。服务端会根据请求头获取到客户端声明的信息，进而做出判断，返回客户端最合适的数据资源。</p>
 <p>主要涉及到的请求头和响应头如下图：</p>
-<p><img src="images/http/http_4.png" alt="请求头和响应头"></p>
+<p><img src="/images/http/http_4.png" alt="请求头和响应头"></p>
 <p>注意其中 Accept-Charset 没有对应的 Content-Charset，而是通过 Content-Type 来表示。</p>
 <p>由于篇幅原因，这里就不在解释这些请求头的含义啦，上文也有简单提到过，具体的大家可以查找资料深入学习。</p>
 <h2 id="HTTP-CROS-跨域"><a href="#HTTP-CROS-跨域" class="headerlink" title="HTTP CROS 跨域"></a>HTTP CROS 跨域</h2><h3 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h3><p>产生跨越的原因是由于浏览器的同源策略，所谓同源策略，指的是浏览器对不同源的脚本或者文本的访问方式进行的限制。</p>
@@ -912,7 +912,7 @@
 <li>服务端接收到密文以后通过只有自己知道的私钥解密出正确的秘钥，这时候两端就都知道秘钥是什么了。</li>
 </ol>
 <p>这种加密方式就可以完美解决对称加密存在的问题。假设现在两端需要使用对称加密，那么在这之前，可以先使用非对称加密交换秘钥。</p>
-<h3 id="TLS-握手过程"><a href="#TLS-握手过程" class="headerlink" title="TLS 握手过程"></a>TLS 握手过程</h3><p><img src="images/http/http_5.png" alt="TLS 握手过程"></p>
+<h3 id="TLS-握手过程"><a href="#TLS-握手过程" class="headerlink" title="TLS 握手过程"></a>TLS 握手过程</h3><p><img src="/images/http/http_5.png" alt="TLS 握手过程"></p>
 <p>如上图：</p>
 <p>1、客户端先生成一个随机数，中间会带上客户端这边支持的加密套件（加密协议和加密方式等）</p>
 <p>2、服务端收到客户端的随机值，存储并且自己也产生一个随机值，并根据客户端支持的协议和加密方式来选择最合适的加密套件，并且发送自己的证书（也就是我们之前说到的公钥）</p>
@@ -921,7 +921,7 @@
 <p>5、最后双方通过这个主密钥进行对称加密和解密进行数据传输，确保数据的安全传输</p>
 <h2 id="HTTP2"><a href="#HTTP2" class="headerlink" title="HTTP2"></a>HTTP2</h2><p>HTTP/2 对比 HTTP/1.1 大幅度的提高了web性能，并且完全兼容 HTTP1.1。</p>
 <p>大家可以通过 <a href="https://http2.akamai.com/demo" target="_blank" rel="noopener">demo</a> 来感受一下 HTTP/2 比 HTTP/1.1 到底快了多少：</p>
-<p><img src="images/http/http_6.png" alt="HTTP/2 对比 HTTP/1.1"></p>
+<p><img src="/images/http/http_6.png" alt="HTTP/2 对比 HTTP/1.1"></p>
 <p>在 HTTP/1.1 中，我们会引入雪碧图、将小图内联、使用多个资源域名等等的方式来优化性能。这一切都是因为浏览器限制了同一个域名下的请求数量（Chrome 下一般是限制六个连接，每个浏览器不一定相同），当页面中需要请求很多资源的时候，队头阻塞（Head of line blocking）会导致在达到最大请求数量时，剩余的资源需要等待其他资源请求完成后才能发起请求。</p>
 <p>HTTP/2 有以下6个新特性：</p>
 <ul>
@@ -1042,7 +1042,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><p><img src="images/http/http_7.png" alt="TCP三次握手"></p>
+<h3 id="TCP三次握手"><a href="#TCP三次握手" class="headerlink" title="TCP三次握手"></a>TCP三次握手</h3><p><img src="/images/http/http_7.png" alt="TCP三次握手"></p>
 <p>第一次握手：客户端 A 将标志位 SYN 置为1,随机产生一个值为 seq=J（J的取值范围为=1234567）的数据包到服务器，客户端 A 进入 SYN_SENT 状态，等待服务端 B 确认；</p>
 <p>第二次握手：服务端 B 收到数据包后由标志位 SYN=1 知道客户端 A 请求建立连接，服务端 B 将标志位 SYN 和 ACK 都置为 1，ack=J+1(ACKnum)，随机产生一个值 seq=K，并将该数据包发送给客户端 A 以确认连接请求，服务端 B 进入 SYN_RCVD 状态。</p>
 <p>第三次握手：客户端 A 收到确认后，检查 ack 是否为 J+1，ACK 是否为 1，如果正确则将标志位 ACK 置为 1，ack=K+1，并将该数据包发送给服务端 B，服务端 B 检查 ack 是否为 K+1，ACK 是否为 1，如果正确则连接建立成功，客户端 A 和服务端 B 进入 ESTABLISHED 状态，完成三次握手，随后客户端 A 与服务端 B 之间可以开始传输数据了。</p>
@@ -1050,7 +1050,7 @@
 <p>因为这是为了防止出现失效的连接请求报文段被服务端接收的情况，从而产生错误。</p>
 <p>书中的例子是这样的，“已失效的连接请求报文段”的产生在这样一种情况下：client 发出的第一个连接请求报文段并没有丢失，而是在某个网络结点长时间的滞留了，以致延误到连接释放以后的某个时间才到达 server 。本来这是一个早已失效的报文段。但 server 收到此失效的连接请求报文段后，就误认为是 client 再次发出的一个新的连接请求。于是就向 client 发出确认报文段，同意建立连接。</p>
 <p>假设不采用“三次握手”，那么只要 server 发出确认，新的连接就建立了。由于现在 client 并没有发出建立连接的请求，因此不会理睬 server 的确认，也不会向 server 发送数据。但 server 却以为新的运输连接已经建立，并一直等待 client 发来数据。这样，server 的很多资源就白白浪费掉了。采用“三次握手”的办法可以防止上述现象发生。例如刚才那种情况，client 不会向 server 的确认发出确认。server 由于收不到确认，就知道 client 并没有要求建立连接。主要目的防止 server 端一直等待，浪费资源。</p>
-<h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><p><img src="images/http/http_8.png" alt="TCP四次挥手"></p>
+<h3 id="TCP四次挥手"><a href="#TCP四次挥手" class="headerlink" title="TCP四次挥手"></a>TCP四次挥手</h3><p><img src="/images/http/http_8.png" alt="TCP四次挥手"></p>
 <p>第一次挥手：Client 发送一个 FIN，用来关闭 Client 到 Server 的数据传送，Client 进入 FIN_WAIT_1 状态。</p>
 <p>第二次挥手：Server 收到 FIN 后，发送一个 ACK 给 Client，确认序号为收到序号 +1（与 SYN 相同，一个 FIN 占用一个序号），Server 进入 CLOSE_WAIT 状态。</p>
 <p>第三次挥手：Server 发送一个 FIN，用来关闭 Server 到 Client 的数据传送，Server 进入 LAST_ACK 状态。</p>
@@ -1135,7 +1135,7 @@
 </tbody>
 </table>
 <p>TCP 与 UDP 的应用场景：</p>
-<p><img src="images/http/http_9.png" alt="TCP与UDP的应用场景"></p>
+<p><img src="/images/http/http_9.png" alt="TCP与UDP的应用场景"></p>
 <p>参考资料:</p>
 <p><a href="https://juejin.im/post/6844903545532071943#heading-18" target="_blank" rel="noopener">https://juejin.im/post/6844903545532071943#heading-18</a></p>
 <p><a href="https://blog.csdn.net/liujiyong7/article/details/60151838/" target="_blank" rel="noopener">https://blog.csdn.net/liujiyong7/article/details/60151838/</a></p>
@@ -1282,7 +1282,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>

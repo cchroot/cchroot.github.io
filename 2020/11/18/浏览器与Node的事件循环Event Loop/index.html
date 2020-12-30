@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="Event Loop 即事件循环，是指浏览器或 Node 的一种解决 javaScript 单线程运行时不会阻塞的一种机制，也就是我们经常使用异步的原理。 进程与线程上面说了 js 单线程执行的，那什么是线程和进程？ 进程是 CPU 资源分配的最小单位；线程是 CPU 调度的最小单位。一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线，并且一个进程的内存空间是共享的，每个线程都可用这">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2020/11/18/浏览器与Node的事件循环Event%20Loop/images/node/node_event_loop_1.png">
-<meta property="og:image" content="http://yoursite.com/2020/11/18/浏览器与Node的事件循环Event%20Loop/images/node/node_event_loop_2.png">
-<meta property="og:updated_time" content="2020-12-30T16:16:42.617Z">
+<meta property="og:image" content="http://yoursite.com/images/node/node_event_loop_1.png">
+<meta property="og:image" content="http://yoursite.com/images/node/node_event_loop_2.png">
+<meta property="og:updated_time" content="2020-12-30T16:26:56.390Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浏览器与Node的事件循环(Event Loop)">
 <meta name="twitter:description" content="Event Loop 即事件循环，是指浏览器或 Node 的一种解决 javaScript 单线程运行时不会阻塞的一种机制，也就是我们经常使用异步的原理。 进程与线程上面说了 js 单线程执行的，那什么是线程和进程？ 进程是 CPU 资源分配的最小单位；线程是 CPU 调度的最小单位。一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线，并且一个进程的内存空间是共享的，每个线程都可用这">
-<meta name="twitter:image" content="http://yoursite.com/2020/11/18/浏览器与Node的事件循环Event%20Loop/images/node/node_event_loop_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/node/node_event_loop_1.png">
 
 
 
@@ -501,7 +501,7 @@
 <p>第二轮事件循环：</p>
 <p>先执行宏任务里面的，也就是 setTimeout 的回调，输出【5】。resovle  不会生效，因为 p 这个 Promise 的状态一旦改变就不会在改变了。 所以最终的输出顺序是：3、7、4、1、2、5。</p>
 <h3 id="Node-中的-Event-Loop"><a href="#Node-中的-Event-Loop" class="headerlink" title="Node 中的 Event Loop"></a>Node 中的 Event Loop</h3><p>Node 中的 Event Loop 和浏览器中的是完全不相同的东西。</p>
-<p><img src="images/node/node_event_loop_1.png" alt="node"></p>
+<p><img src="/images/node/node_event_loop_1.png" alt="node"></p>
 <p>Node.js 采用 V8 作为 js 的解析引擎，而 I/O 处理方面使用了自己设计的 libuv，libuv 是一个基于事件驱动的跨平台抽象层，封装了不同操作系统一些底层特性，对外提供统一的 API（时间，非阻塞的网络，异步文件操作，子进程等等），Event Loop 也是它里面的实现。</p>
 <p>Node.js的运行机制如下:</p>
 <ul>
@@ -510,7 +510,7 @@
 <li>libuv 库负责 Node API 的执行。它将不同的任务分配给不同的线程，形成一个 Event Loop（事件循环），以异步的方式将任务的执行结果返回给 V8 引擎。</li>
 <li>V8 引擎再将结果返回给用户。</li>
 </ul>
-<p><img src="images/node/node_event_loop_2.png" alt="node"></p>
+<p><img src="/images/node/node_event_loop_2.png" alt="node"></p>
 <p>Node 的 Event Loop 分为 6 个阶段，它们会按照顺序反复运行。每当进入某一个阶段的时候，都会从对应的回调队列中取出函数去执行。当队列为空或者执行的回调函数数量到达系统设定的阈值，就会进入下一阶段。</p>
 <h4 id="timer"><a href="#timer" class="headerlink" title="timer"></a>timer</h4><p>timers 阶段会执行 setTimeout 和 setInterval 回调，并且是由 poll 阶段控制的。</p>
 <p>同样，<strong>在 Node 中定时器指定的时间也不是准确时间，只能是尽快执行</strong>。</p>
@@ -719,7 +719,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>

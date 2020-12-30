@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="cchroot&#39;s blog">
 <meta property="og:description" content="这篇文章的优化内容是建立在 webpack 4.x 上的，后面也会有 webpack 5.x 相关的介绍 优化方式总览加快构建速度(打包速度) 使用 speed-measure-webpack-plugin 插件可以测量各个插件和loader所花费的时间，量化打包速度，判断优化效果  缩小文件的搜索范围(配置include/exclude resolve.modules resolve.mainF">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2020/12/20/Webpack%20性能优化/images/webpack/source_map_1.png">
-<meta property="og:updated_time" content="2020-12-30T16:18:27.766Z">
+<meta property="og:image" content="http://yoursite.com/images/webpack/source_map_1.png">
+<meta property="og:updated_time" content="2020-12-30T16:26:17.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Webpack 性能优化">
 <meta name="twitter:description" content="这篇文章的优化内容是建立在 webpack 4.x 上的，后面也会有 webpack 5.x 相关的介绍 优化方式总览加快构建速度(打包速度) 使用 speed-measure-webpack-plugin 插件可以测量各个插件和loader所花费的时间，量化打包速度，判断优化效果  缩小文件的搜索范围(配置include/exclude resolve.modules resolve.mainF">
-<meta name="twitter:image" content="http://yoursite.com/2020/12/20/Webpack%20性能优化/images/webpack/source_map_1.png">
+<meta name="twitter:image" content="http://yoursite.com/images/webpack/source_map_1.png">
 
 
 
@@ -580,7 +580,7 @@
 <p>我们打包，将开发环境中的源代码经过压缩，去空格，babel 编译转化，最终可以得到适用于生产环境的代码。但这样处理后的代码和源代码之间存在很大的差异，难以阅读且无法 debug。</p>
 <p>如果压缩等处理过的生产环境中的代码出现 bug，那么调试的时候只能定位到压缩处理后的代码的位置，无法定位到开发环境中源码位置。source map 就是为解决上述的代码定位问题。方便开发人员 debug，定位错误。</p>
 <p>在 webpack 中提供了十几种 source map 的组合：</p>
-<p><img src="images/webpack/source_map_1.png" alt="source_map图"></p>
+<p><img src="/images/webpack/source_map_1.png" alt="source_map图"></p>
 <p>+++ 非常快速, ++ 快速, + 比较快, o 中等, - 比较慢, – 慢</p>
 <p>其中一些值适用于开发环境，一些适用于生产环境。对于开发环境，通常希望更快速的 source map，需要添加到 bundle 中以增加体积为代价，但是对于生产环境，则希望更精准的 source map，需要从 bundle 中分离并独立存在。</p>
 <p><strong>在不同环境中如何选择 source map 的类型</strong></p>
@@ -800,7 +800,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tools/index.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
