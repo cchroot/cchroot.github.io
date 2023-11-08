@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="other,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在业务中常会用到分享图片或者说截图这一功能，利用标题和固定图片分享对用户的吸引力有限，若脱离 web 利用原生手机的截屏也会存在长图无法处理，视窗区域不可控等等问题。能否根据内容生成带有用户独特的分享图方案？ 主流截图方向在解决方案上主要有2种解决思路：前端截图和服务端截图 前端截图前端截图主要会用到 html2canvas 这个第三方库，主要原理是将 DOM 结构绘制在 canvas 上面产生图">
+<meta name="keywords" content="other">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分享图截图方案与优化">
+<meta property="og:url" content="http://yoursite.com/2023/10/10/分享图截图方案与优化/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="在业务中常会用到分享图片或者说截图这一功能，利用标题和固定图片分享对用户的吸引力有限，若脱离 web 利用原生手机的截屏也会存在长图无法处理，视窗区域不可控等等问题。能否根据内容生成带有用户独特的分享图方案？ 主流截图方向在解决方案上主要有2种解决思路：前端截图和服务端截图 前端截图前端截图主要会用到 html2canvas 这个第三方库，主要原理是将 DOM 结构绘制在 canvas 上面产生图">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_1.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_2.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_4.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_6.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_5.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_7.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_8.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_9.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_10.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_11.png">
+<meta property="og:image" content="http://yoursite.com/images/project/shareImg/shareImg_3.png">
+<meta property="og:updated_time" content="2023-11-08T14:24:08.153Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分享图截图方案与优化">
+<meta name="twitter:description" content="在业务中常会用到分享图片或者说截图这一功能，利用标题和固定图片分享对用户的吸引力有限，若脱离 web 利用原生手机的截屏也会存在长图无法处理，视窗区域不可控等等问题。能否根据内容生成带有用户独特的分享图方案？ 主流截图方向在解决方案上主要有2种解决思路：前端截图和服务端截图 前端截图前端截图主要会用到 html2canvas 这个第三方库，主要原理是将 DOM 结构绘制在 canvas 上面产生图">
+<meta name="twitter:image" content="http://yoursite.com/images/project/shareImg/shareImg_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/10/10/分享图截图方案与优化/">
+
+
+
+
+
+  <title>分享图截图方案与优化 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-react">
+          <a href="/categories/reactJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-asterisk"></i> <br>
+            
+            react.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/10/10/分享图截图方案与优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">分享图截图方案与优化</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-10-10T21:59:05+08:00">
+                2023-10-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在业务中常会用到分享图片或者说截图这一功能，利用标题和固定图片分享对用户的吸引力有限，若脱离 web 利用原生手机的截屏也会存在长图无法处理，视窗区域不可控等等问题。能否根据内容生成带有用户独特的分享图方案？</p>
+<h2 id="主流截图方向"><a href="#主流截图方向" class="headerlink" title="主流截图方向"></a>主流截图方向</h2><p>在解决方案上主要有2种解决思路：前端截图和服务端截图</p>
+<h3 id="前端截图"><a href="#前端截图" class="headerlink" title="前端截图"></a>前端截图</h3><p>前端截图主要会用到 html2canvas 这个第三方库，主要原理是将 DOM 结构绘制在 canvas 上面产生图片。但是坑很多，例如：图片需要时间戳，无法利用缓存；对很多css3样式无法支持，存在比较多的兼容性；截图模糊；有背景音乐的时候，生成图的时候会出现响声，音频文件也会重复加载等等；当前业界也有利用 html2canvas 处理的，例如：阿里咸鱼的<a href="https://zhuanlan.zhihu.com/p/162162955" target="_blank" rel="noopener">H5分享截图方案优化</a>。</p>
+<h3 id="服务端截图"><a href="#服务端截图" class="headerlink" title="服务端截图"></a>服务端截图</h3><p>服务端截图主要原理前端将 dom 结构或者 url 传递给后端，后端通过打开无头浏览器来现实页面，截图再返回给前端。可能会用到 PhantomJS 和 Puppeteer.js 等第三方库。</p>
+<p>这里还要提到全民 k 歌使用的截图方案，利用 ImageMagick 工具集和开发包，<a href="http://www.imagemagick.org/script/index.php" target="_blank" rel="noopener">ImageMagick官网</a>。具体方案请看<a href="http://km.oa.com/group/29484/articles/show/332099" target="_blank" rel="noopener">web实时长图实践（内部）</a>。</p>
+<h2 id="项目当前截图方案"><a href="#项目当前截图方案" class="headerlink" title="项目当前截图方案"></a>项目当前截图方案</h2><p>项目当前使用的方案就是利用 Puppeteer.js 来进程截图操作的，具体实现方案流程图：</p>
+<p><img src="/images/project/shareImg/shareImg_1.png" alt="当前方案流程图"></p>
+<p>更多请看：<a href="http://html2img.oa.com/doc/" target="_blank" rel="noopener">html2img</a></p>
+<p>流程图中的 TSW 是指<a href="https://github.com/Tencent/TSW" target="_blank" rel="noopener">TSW</a>，内部请看<a href="http://tsw.oa.com/" target="_blank" rel="noopener">TSW(内部)</a></p>
+<p>当前方案经过各种机型测试，兼容性很棒（毕竟是截图，哈哈），唯一的问题就是：并发不够，1台机器（8核）每秒的并发处理能力只能在 16 左右，若出现更高的并发只能通过增加机器来实现。当前的优化目标就是在保证截图质量的情况下，提高并发量。</p>
+<h2 id="摒弃的方案"><a href="#摒弃的方案" class="headerlink" title="摒弃的方案"></a>摒弃的方案</h2><h3 id="截图交由前端，后端提供不变部分的-base64-图片"><a href="#截图交由前端，后端提供不变部分的-base64-图片" class="headerlink" title="截图交由前端，后端提供不变部分的 base64 图片"></a>截图交由前端，后端提供不变部分的 base64 图片</h3><p>该方案本质是前端利用 html2canvas 库对动态的元素进行截图，静态的部分通过后端返回，后端的 base64 图片是在模版上传或者 ci 流程中进行截图保存。前端只截动态部分，可以极大减少 html2canvas 出现坑的概率（本质还是无法避免），前端再将动态图片和后端静态图片进行合成。</p>
+<p>该方案优点是摒弃了后端的截图过程，极大的提升了服务器的并发能力，缺点是前端还是可能产生存粹前端利用 html2canvas 截图产生的各种兼容性问题，并且还要利用 canvas 进行图片合成操作，操作比较繁琐。本方案为上面提到的前端截图方案。</p>
+<h3 id="尝试后端只截动态部分，前端与静态图片进行前端拼图片合并或绘制合并"><a href="#尝试后端只截动态部分，前端与静态图片进行前端拼图片合并或绘制合并" class="headerlink" title="尝试后端只截动态部分，前端与静态图片进行前端拼图片合并或绘制合并"></a>尝试后端只截动态部分，前端与静态图片进行前端拼图片合并或绘制合并</h3><p>该方案是想在当前截图方案的基础上，测试页面 dom 元素的复杂度是否会影响 Puppeteer.js 的截图速度（截图大小固定的情况下）。然而经过测试，后端只截部分耗时和截全部耗时基本没区别。（但是发现截图图片的大小会影响耗时，图片越大耗时越长）。以下是测试数据：</p>
+<p><img src="/images/project/shareImg/shareImg_2.png" alt="当前方案流程图"></p>
+<p>既然在截图大小固定的情况下，后端只截部分不会影响截图的速度，那后面的前端拼图和绘制合并也就无从谈起了。虽然发现截图大小会影响截图速度，但是动态元素的大小不同场景是不一样的，并不能动态设定动态元素的截图大小。所以该方案无优化效果。</p>
+<h3 id="尝试合并多请求在单tab截图，提升tab利用率"><a href="#尝试合并多请求在单tab截图，提升tab利用率" class="headerlink" title="尝试合并多请求在单tab截图，提升tab利用率"></a>尝试合并多请求在单tab截图，提升tab利用率</h3><p>该方案也想在当前截图方案的基础上，合并多个请求，利用 Puppeteer.js 同步截图完毕后返回给前端，提升 tab 的利用率。</p>
+<p>在 Puppeteer.js 中，可以多次用 <code>await page.setContent(pageContent, { waitUntil: [&#39;load&#39;] })</code> API 进行截图内容设置，也可以多次用 <code>await page.screenshot({ path: &#39;./test.png&#39; });</code> API 进行截图保存。</p>
+<p>该方案的优点是提高了 tab 的利用率，不需要频繁的打开和关闭 tab（截一张开关一次），在相同的并发请求下，可以适当的减少服务器的数量，相同服务器数量下，等同于提高了并发量。缺点是提升有上限，并且到底是合并多少个请求后在一个 tab 中操作呢？因为截图操作是同步的，所以合并几个请求就必须等所有请求都截图完毕后才能统一返回，这样多个请求同步操作下来是需要时间的，如果必须多个，那接口的返回速度将受到比较大的影响，这是难以接受的一点，此外合并后返回怎么分发数据也是个问题。</p>
+<h2 id="实施的方案"><a href="#实施的方案" class="headerlink" title="实施的方案"></a>实施的方案</h2><h3 id="puppeteer-截图流程服务优化（已优化上线方案）"><a href="#puppeteer-截图流程服务优化（已优化上线方案）" class="headerlink" title="puppeteer 截图流程服务优化（已优化上线方案）"></a>puppeteer 截图流程服务优化（已优化上线方案）</h3><p>在探索优化方案的过程中，可以发现当前并发量的限制本质是服务器通过 puppeteer 打开无头浏览器截图的速度和 cpu 处理数量限制。通过压测统计未做任何优化下， puppeteer 截图流程中，随着并发升高，服务端截图流程时间变化：</p>
+<p><img src="/images/project/shareImg/shareImg_4.png" alt="puppeteer 截图流程压测数据"></p>
+<p>根据表格可得趋势图：</p>
+<p><img src="/images/project/shareImg/shareImg_6.png" alt="puppeteer 截图流程压测数据"><br>注：这里由于截图效果，省略绘制了“截图时间”和“总耗时”的最后一个数据点，具体可看上一份表格数据</p>
+<p>从上图中可以发现，puppeteer 在截图流程中，浏览器打开时间、tab 打开时间、截图时间、tab 关闭时间、浏览器关闭时间，随着并发量的增加，时间增长变化很大。本质是：正在使用的浏览器 tab 数量会增加 cpu 的使用率，cpu 使用率增高会严重影响 puppeteer 的截图速度。</p>
+<p>由于 puppeteer 在截图的流程中对浏览器的各项操作都需要耗费不少时间，若能减少或省略各个流程的时间，就可以极大的优化接口的处理速度，并增加 cpu 每秒的处理能力，从而就能提高并发量，即：</p>
+<p>从：</p>
+<p>请求到达 -&gt; 启动 Chromium -&gt; 打开 tab 页 -&gt; 运行代码并截图 -&gt; 关闭 tab 页 -&gt; 关闭 Chromium -&gt; 返回数据</p>
+<p>到：</p>
+<p>请求到达 -&gt; 启动 Chromium -&gt; 使用默认打开的 tab 页 -&gt; 运行代码并截图 -&gt; 关闭 tab 页 -&gt; 关闭 Chromium -&gt; 返回数据</p>
+<p>再到：</p>
+<p>请求到达 -&gt; 使用已启动的 Chromium -&gt; 打开 tab 页 -&gt; 运行代码并截图 -&gt; 关闭 tab 页 -&gt; 缓存 Chromium -&gt; 返回数据</p>
+<p>最后：</p>
+<p>请求到达 -&gt; 使用已启动 Chromium -&gt; 使用已开启 tab 页 -&gt; 运行代码并截图 -&gt; 缓存 tab 页 -&gt; 缓存 Chromium -&gt; 返回数据</p>
+<p>带着上面的想法，我在服务运行的时候事先开启好浏览器，并提开启好固定数量的 tab 页面，并用 <a href="https://github.com/coopernurse/node-pool" target="_blank" rel="noopener">node-pool</a> 把一个个 tab 变成一个个实例进行开启、使用和销毁控制，具体实现方案流程图：</p>
+<p><img src="/images/project/shareImg/shareImg_5.png" alt="优化后方案流程图"></p>
+<h4 id="截图流程优化方案对比"><a href="#截图流程优化方案对比" class="headerlink" title="截图流程优化方案对比"></a>截图流程优化方案对比</h4><p>在优化过程中，把 4 个优化过程，计为 4 个方案，分别为：</p>
+<p>a）浏览器不复用，tab 不复用<br>b）浏览器不复用，tab 复用（浏览器默认打开的 tab）<br>c）浏览器复用，tab 不复用（现网方案）<br>d）浏览器复用，tab 复用，固定 tab 数（单核2）</p>
+<p>对四个方案压测 30s 平均截图耗时、RPS 和失败率统计（不带限流）结果为：</p>
+<p><img src="/images/project/shareImg/shareImg_7.png" alt="优化后方案流程图"><br>结论：最终确认采用：浏览器复用，tab 复用方案</p>
+<h4 id="与现网方案压测对比"><a href="#与现网方案压测对比" class="headerlink" title="与现网方案压测对比"></a>与现网方案压测对比</h4><p>为新方案加入限流（防止超高并发下服务挂掉）逻辑后，进行现网方案和新方案最终压测对比数据统计：</p>
+<p><img src="/images/project/shareImg/shareImg_8.png" alt="优化后方案流程图"></p>
+<p>总结，对比现网方案优化和提高点：</p>
+<p>1、接口返回速度提升，截图总耗时优化到只有 puppeteer.js 中截图步骤存在耗时，单次请求都在300ms以内（qps在16左右），平均速度提高了 250ms ：</p>
+<p><img src="/images/project/shareImg/shareImg_9.png" alt="优化后方案流程图"></p>
+<p>2、RPS 提升，整体提升一倍左右</p>
+<p><img src="/images/project/shareImg/shareImg_10.png" alt="优化后方案流程图"></p>
+<p>3、失败率降低（这里的失败是指服务处理不过来返回的固定 code，采用兜底方案处理）</p>
+<p><img src="/images/project/shareImg/shareImg_11.png" alt="优化后方案流程图"></p>
+<h3 id="ci-流程截图并存储，前端支持图片合成能力（计划实践方案）"><a href="#ci-流程截图并存储，前端支持图片合成能力（计划实践方案）" class="headerlink" title="ci 流程截图并存储，前端支持图片合成能力（计划实践方案）"></a>ci 流程截图并存储，前端支持图片合成能力（计划实践方案）</h3><p>方案流程：事先把需要进行动态截图的 html 进行处理，拿到动态元素的样式和位置作为属性数组，然后隐藏（不改变布局，利用 <code>visibility: hidden;</code> 或者<code>pacity: 0;</code>等）动态数据后，后截图做为静态图片，存储静态图片和属性数组放入 redis 缓存或者数据库中，前端通过接口拿到属性数组后，先将接口数据（例如头像和用户名等）与动态属性进程处理后再与静态图片进行 canvas 绘制合成图片。</p>
+<p>具体实践是利用 Puppeteer.js 在模版 ci 流程中拿到需截图模版的的属性（样式）和位置，根据模版 id 为 key 存储在 redis 中（当前保存的是 base64 格式的图片）。前端只要传递模版 id 即可拿到当前需要绘制模版的静态图片（base64格式）、属性数组，以及接口数据。前端封装 SDK 用于便捷调用绘制分享图，绘制结束后返回最终图片。</p>
+<p>具体实现方案流程图：</p>
+<p><img src="/images/project/shareImg/shareImg_3.png" alt="当前方案流程图"></p>
+<h4 id="计划实践方案存在的问题"><a href="#计划实践方案存在的问题" class="headerlink" title="计划实践方案存在的问题"></a>计划实践方案存在的问题</h4><p>1、文字问题：例如：多行字自适应、文字点点点“…”、特殊字体处理等等<br>2、二维码<br>3、模版代码中是否有动态操 dom 元素的逻辑<br>4、服务端动态根据并发来判断图片处理方式，做到自适应<br>5、其他暂未发现的问题</p>
+<h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2><p>以上便是对截图优化方案截止当前的探索和处理，若有错误，欢迎指正，更欢迎大家提出疑问与想法，感谢阅读～</p>
+<p>待实践方案（ci 流程截图并存储，前端支持图片合成能力）实践后会来完善该篇文章，或者另详细写一篇文章说明。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/other/" rel="tag"># other</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/09/20/引擎剖析：JS 中的字符串转数值/" rel="next" title="引擎剖析：JS 中的字符串转数值">
+                <i class="fa fa-chevron-left"></i> 引擎剖析：JS 中的字符串转数值
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/11/01/一篇文章入门 redis（万字长文干货）/" rel="prev" title="一篇文章入门 redis（万字长文干货）">
+                一篇文章入门 redis（万字长文干货） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tools/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://leetcode-cn.com/u/cchroot-liu/" target="_blank" title="LeetCode">
+                      
+                        <i class="fa fa-fw fa-skype"></i>LeetCode</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主流截图方向"><span class="nav-number">1.</span> <span class="nav-text">主流截图方向</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前端截图"><span class="nav-number">1.1.</span> <span class="nav-text">前端截图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端截图"><span class="nav-number">1.2.</span> <span class="nav-text">服务端截图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#项目当前截图方案"><span class="nav-number">2.</span> <span class="nav-text">项目当前截图方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#摒弃的方案"><span class="nav-number">3.</span> <span class="nav-text">摒弃的方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#截图交由前端，后端提供不变部分的-base64-图片"><span class="nav-number">3.1.</span> <span class="nav-text">截图交由前端，后端提供不变部分的 base64 图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尝试后端只截动态部分，前端与静态图片进行前端拼图片合并或绘制合并"><span class="nav-number">3.2.</span> <span class="nav-text">尝试后端只截动态部分，前端与静态图片进行前端拼图片合并或绘制合并</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尝试合并多请求在单tab截图，提升tab利用率"><span class="nav-number">3.3.</span> <span class="nav-text">尝试合并多请求在单tab截图，提升tab利用率</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实施的方案"><span class="nav-number">4.</span> <span class="nav-text">实施的方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#puppeteer-截图流程服务优化（已优化上线方案）"><span class="nav-number">4.1.</span> <span class="nav-text">puppeteer 截图流程服务优化（已优化上线方案）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#截图流程优化方案对比"><span class="nav-number">4.1.1.</span> <span class="nav-text">截图流程优化方案对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#与现网方案压测对比"><span class="nav-number">4.1.2.</span> <span class="nav-text">与现网方案压测对比</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ci-流程截图并存储，前端支持图片合成能力（计划实践方案）"><span class="nav-number">4.2.</span> <span class="nav-text">ci 流程截图并存储，前端支持图片合成能力（计划实践方案）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#计划实践方案存在的问题"><span class="nav-number">4.2.1.</span> <span class="nav-text">计划实践方案存在的问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#未完待续"><span class="nav-number">5.</span> <span class="nav-text">未完待续</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="JS 中，字符串转数值的方式有以下 9 种：  parseInt() parseFloat() Number() Double tilde (~~) Operator Unary Operator (+) Math.floor() Multiply with number The Signed Right Shift Operator(&amp;gt;&amp;gt;) The Unsigned Right Sh">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="引擎剖析：JS 中的字符串转数值">
+<meta property="og:url" content="http://yoursite.com/2023/09/20/引擎剖析：JS 中的字符串转数值/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="JS 中，字符串转数值的方式有以下 9 种：  parseInt() parseFloat() Number() Double tilde (~~) Operator Unary Operator (+) Math.floor() Multiply with number The Signed Right Shift Operator(&amp;gt;&amp;gt;) The Unsigned Right Sh">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/js/string_complete1.png">
+<meta property="og:image" content="http://yoursite.com/images/js/string_complete2.png">
+<meta property="og:image" content="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503110924.png">
+<meta property="og:image" content="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503110831.png">
+<meta property="og:image" content="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503113745.png">
+<meta property="og:image" content="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503114251.png">
+<meta property="og:updated_time" content="2023-11-08T14:23:54.025Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="引擎剖析：JS 中的字符串转数值">
+<meta name="twitter:description" content="JS 中，字符串转数值的方式有以下 9 种：  parseInt() parseFloat() Number() Double tilde (~~) Operator Unary Operator (+) Math.floor() Multiply with number The Signed Right Shift Operator(&amp;gt;&amp;gt;) The Unsigned Right Sh">
+<meta name="twitter:image" content="http://yoursite.com/images/js/string_complete1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/09/20/引擎剖析：JS 中的字符串转数值/">
+
+
+
+
+
+  <title>引擎剖析：JS 中的字符串转数值 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-react">
+          <a href="/categories/reactJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-asterisk"></i> <br>
+            
+            react.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/20/引擎剖析：JS 中的字符串转数值/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">引擎剖析：JS 中的字符串转数值</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-09-20T21:59:05+08:00">
+                2023-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JS 中，字符串转数值的方式有以下 9 种：</p>
+<ol>
+<li>parseInt()</li>
+<li>parseFloat()</li>
+<li>Number()</li>
+<li>Double tilde (~~) Operator</li>
+<li>Unary Operator (+)</li>
+<li>Math.floor()</li>
+<li>Multiply with number</li>
+<li>The Signed Right Shift Operator(&gt;&gt;)</li>
+<li>The Unsigned Right Shift Operator(&gt;&gt;&gt;)</li>
+</ol>
+<p>这几种方式对运行结果的差异，如下表所示：</p>
+<p><img src="/images/js/string_complete1.png" alt="字符串转数值方案对比"></p>
+<p>除了运行结果上的存在差异之外，这些方法在性能上也存在着差异。在 NodeJS V8 环境下，这几个方法微基准测试的结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">parseInt() x 19,140,190 ops/sec ±0.45% (92 runs sampled)</span><br><span class="line">parseFloat() x 28,203,053 ops/sec ±0.25% (95 runs sampled)</span><br><span class="line">Number() x 1,041,209,524 ops/sec ±0.20% (90 runs sampled)</span><br><span class="line">Double tilde (~~) Operator x 1,035,220,963 ops/sec ±1.65% (97 runs sampled)</span><br><span class="line">Math.floor() x 28,224,678 ops/sec ±0.23% (96 runs sampled)</span><br><span class="line">Unary Operator (+) x 1,045,129,381 ops/sec ±0.17% (95 runs sampled)</span><br><span class="line">Multiply with number x 1,044,176,084 ops/sec ±0.15% (93 runs sampled)</span><br><span class="line">The Signed Right Shift Operator(&gt;&gt;) x 1,046,016,782 ops/sec ±0.11% (96 runs sampled)</span><br><span class="line">The Unsigned Right Shift Operator(&gt;&gt;&gt;) x 1,045,384,959 ops/sec ±0.08% (96 runs sampled)</span><br></pre></td></tr></table></figure>
+<p>可见，<code>parseInt()</code>，<code>parseFloat()</code>，<code>Math.floor()</code> 的效率最低，只有其他运算 2% 左右的效率，而其中又以<code>parseInt()</code>最慢，仅有 1%。</p>
+<p>为什么这些方法存在着这些差异？这些运算在引擎层又是如何被解释执行的？接下来将从 V8、JavaScriptCore、QuickJS 等主流 JS 引擎的视角，探究这些方法的具体实现。</p>
+<p>首先来看看 <code>parsrInt()</code>。</p>
+<h2 id="1-parseInt"><a href="#1-parseInt" class="headerlink" title="1. parseInt()"></a>1. parseInt()</h2><p><a href="https://tc39.es/ecma262/#sec-parseint-string-radix" target="_blank" rel="noopener">ECMAScript (ECMA-262) parseInt</a><br><img src="/images/js/string_complete2.png" alt></p>
+<h3 id="1-1-V8-中的-parseInt"><a href="#1-1-V8-中的-parseInt" class="headerlink" title="1.1 V8 中的 parseInt()"></a>1.1 V8 中的 parseInt()</h3><p>在 V8  [→ src/init/bootstrapper.cc] 中定义了 JS 语言内置的标准对象，我们可以找到其中关于 <code>parseInt</code> 的定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Handle&lt;JSFunction&gt; number_fun = InstallFunction(isolate_, global, <span class="string">"Number"</span>, JS_PRIMITIVE_WRAPPER_TYPE, JSPrimitiveWrapper::kHeaderSize, <span class="number">0</span>, isolate_-&gt;initial_object_prototype(), Builtin::kNumberConstructor);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Install Number.parseInt and Global.parseInt.</span></span><br><span class="line">Handle&lt;JSFunction&gt; parse_int_fun = SimpleInstallFunction(isolate_, number_fun, <span class="string">"parseInt"</span>, Builtin::kNumberParseInt, <span class="number">2</span>, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">JSObject::AddProperty(isolate_, global_object, <span class="string">"parseInt"</span>, parse_int_fun,</span><br><span class="line"> native_context()-&gt;set_global_parse_int_fun(*parse_int_fun);</span><br></pre></td></tr></table></figure>
+<p>可以见，Number.parseInt 和全局对象的 parseInt 都是基于 <code>SimpleInstallFunction</code> 注册的，它会将 API 安装到 isolate 中，并将该方法与 Builtin 做绑定。JS 侧调用 <code>pasreInt</code> 即为引擎侧调用 <code>Builtin::kNumberParseInt</code>。</p>
+<p>Builtin (Built-in Functions) 是 V8 中在 VM 运行时可执行的代码块，用于表达运行时对 VM 的更改。目前 V8 版本中 Builtin 有下述 5 种实现方式：</p>
+<ul>
+<li>Platform-dependent assembly language：很高效，但需要手动适配到所有平台，并且难以维护。</li>
+<li>C++：风格与runtime functions非常相似，可以访问 V8 强大的运行时功能，但通常不适合性能敏感区域。</li>
+<li>JavaScript：缓慢的运行时调用，受类型污染导致的不可预测的性能影响，以及复杂的 JS语义问题。现在 V8 不再使用 JavaScript 内置函数。</li>
+<li>CodeStubAssembler：提供高效的低级功能，非常接近汇编语言，同时保持平台依赖无关性和可读性。</li>
+<li>Torque：是 CodeStubAssembler 的改进版，其语法结合了 TypeScript 的一些特征，非常简单易读。强调在不损失性能的前提下尽量降低使用难度，让 Builtin 的开发更加容易一些。目前不少内置函数都是由 Torque 实现的。</li>
+</ul>
+<p>回到前文 <code>Builtin::kNumberParseInt</code> 这个函数，在 [→ src/builtins/builtins.h] 中可以看到其定义：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Convenience macro to avoid generating named accessors for all builtins.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUILTIN_CODE(isolate, name) \</span></span><br><span class="line">  (isolate)-&gt;builtins()-&gt;code_handle(i::Builtin::k##name)</span><br></pre></td></tr></table></figure>
+<p>因此这个函数注册的原名是 <code>NumberParseInt</code>，实现在 [→ src/builtins/number.tq] 中，是个基于 Torque 的 Builtin 实现。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6 #sec-number.parseint</span></span><br><span class="line"><span class="function">transitioning javascript builtin <span class="title">NumberParseInt</span><span class="params">(</span></span></span><br><span class="line">    js-implicit context: NativeContext)(value: JSAny, radix: JSAny): Number &#123;</span><br><span class="line">  <span class="keyword">return</span> ParseInt(value, radix);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function">transitioning builtin <span class="title">ParseInt</span><span class="params">(implicit context: Context)</span><span class="params">(</span></span></span><br><span class="line">    input: JSAny, radix: JSAny): Number &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// Check if radix should be 10 (i.e. undefined, 0 or 10).</span></span><br><span class="line">    <span class="keyword">if</span> (radix != Undefined &amp;&amp; !TaggedEqual(radix, SmiConstant(<span class="number">10</span>)) &amp;&amp;</span><br><span class="line">        !TaggedEqual(radix, SmiConstant(<span class="number">0</span>))) &#123;</span><br><span class="line">      <span class="keyword">goto</span> CallRuntime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    typeswitch (input) &#123;</span><br><span class="line">      <span class="keyword">case</span> (s: Smi): &#123;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> (h: HeapNumber): &#123;</span><br><span class="line">        <span class="comment">// Check if the input value is in Signed32 range.</span></span><br><span class="line">        <span class="keyword">const</span> asFloat64: float64 = Convert&lt;float64&gt;(h);</span><br><span class="line">        <span class="keyword">const</span> asInt32: int32 = Signed(TruncateFloat64ToWord32(asFloat64));</span><br><span class="line">        <span class="comment">// The sense of comparison is important for the NaN case.</span></span><br><span class="line">        <span class="keyword">if</span> (asFloat64 == ChangeInt32ToFloat64(asInt32)) <span class="function"><span class="keyword">goto</span> <span class="title">Int32</span><span class="params">(asInt32)</span></span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Check if the absolute value of input is in the [1,1&lt;&lt;31[ range. Call</span></span><br><span class="line">        <span class="comment">// the runtime for the range [0,1[ because the result could be -0.</span></span><br><span class="line">        <span class="keyword">const</span> kMaxAbsValue: float64 = <span class="number">2147483648.0</span>;</span><br><span class="line">        <span class="keyword">const</span> absInput: float64 = math::Float64Abs(asFloat64);</span><br><span class="line">        <span class="keyword">if</span> (absInput &lt; kMaxAbsValue &amp;&amp; absInput &gt;= <span class="number">1.0</span>) <span class="function"><span class="keyword">goto</span> <span class="title">Int32</span><span class="params">(asInt32)</span></span>;</span><br><span class="line">        <span class="keyword">goto</span> CallRuntime;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> (s: String): &#123;</span><br><span class="line">        <span class="function"><span class="keyword">goto</span> <span class="title">String</span><span class="params">(s)</span></span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> (HeapObject): &#123;</span><br><span class="line">        <span class="keyword">goto</span> CallRuntime;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="function">label <span class="title">Int32</span><span class="params">(i: int32)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ChangeInt32ToTagged(i);</span><br><span class="line">  &#125; <span class="function">label <span class="title">String</span><span class="params">(s: String)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Check if the string is a cached array index.</span></span><br><span class="line">    <span class="keyword">const</span> hash: NameHash = s.raw_hash_field;</span><br><span class="line">    <span class="keyword">if</span> (IsIntegerIndex(hash) &amp;&amp;</span><br><span class="line">        hash.array_index_length &lt; kMaxCachedArrayIndexLength) &#123;</span><br><span class="line">      <span class="keyword">const</span> arrayIndex: uint32 = hash.array_index_value;</span><br><span class="line">      <span class="keyword">return</span> SmiFromUint32(arrayIndex);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Fall back to the runtime.</span></span><br><span class="line">    <span class="keyword">goto</span> CallRuntime;</span><br><span class="line">  &#125; label CallRuntime &#123;</span><br><span class="line">    tail runtime::StringParseInt(input, radix);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看这段代码前，先科普下 V8 中的几个数据结构：（V8 所有数据结构的定义可以见 [→ src/objects/objects.h]）</p>
+<ul>
+<li>Smi：继承自 Object，immediate small integer，只有 31 位</li>
+<li>HeapObject：继承自 Object，superclass for everything allocated in the heap</li>
+<li>PrimitiveHeapObject：继承自 HeapObject</li>
+<li>HeapNumber：继承自 PrimitiveHeapObject，存储了数字的堆对象，用于保存大整形的对象。</li>
+</ul>
+<p>我们知道 <code>parseInt</code> 接收两个形参， 即 <code>parseInt(string, radix)</code>，此处亦如是。 实现流程如下：</p>
+<ul>
+<li>首先判断 <code>radix</code> 是否没传或者传了 0 或 10，如果不是，那么则不是十进制的转换，就走 runtime 中提供的 <code>StringParseInt</code> 函数 <code>runtime::StringParseInt</code>；</li>
+<li>如果是十进制转换就继续走，判断第一个参数的数据类型。<ul>
+<li>如果是 Smi 或者是没有越界（超 31 位）的 HeapNumber，那么就直接 return 入参，相当于没有转化；否则同样走  <code>runtime::StringParseInt</code>。注意如果这里越界了就会走 <code>ChangeInt32ToTagged</code>，其为 CodeStubAssembler 实现的一个函数，会强转 Int32，如果当前执行环境不允许溢出 32 位，那么转换之后的数字就会不合预期。</li>
+<li>如果是 String，则判断是否是 hash，如果是的就找到对应整型 value 返回；否则依然走 <code>runtime::StringParseInt</code>。</li>
+</ul>
+</li>
+</ul>
+<p>那么焦点来到了 <code>runtime::StringParseInt</code>。[→ src/runtime/runtime-numbers.cc]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6 18.2.5 parseInt(string, radix) slow path</span></span><br><span class="line">RUNTIME_FUNCTION(Runtime_StringParseInt) &#123;</span><br><span class="line">  <span class="function">HandleScope <span class="title">handle_scope</span><span class="params">(isolate)</span></span>;</span><br><span class="line">  DCHECK_EQ(<span class="number">2</span>, args.length());</span><br><span class="line">  Handle&lt;Object&gt; <span class="built_in">string</span> = args.at(<span class="number">0</span>);</span><br><span class="line">  Handle&lt;Object&gt; radix = args.at(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Convert &#123;string&#125; to a String first, and flatten it.</span></span><br><span class="line">  Handle&lt;String&gt; subject;</span><br><span class="line">  ASSIGN_RETURN_FAILURE_ON_EXCEPTION(isolate, subject,</span><br><span class="line">                                     Object::ToString(isolate, <span class="built_in">string</span>));</span><br><span class="line">  subject = String::Flatten(isolate, subject);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Convert &#123;radix&#125; to Int32.</span></span><br><span class="line">  <span class="keyword">if</span> (!radix-&gt;IsNumber()) &#123;</span><br><span class="line">    ASSIGN_RETURN_FAILURE_ON_EXCEPTION(isolate, radix,</span><br><span class="line">                                       Object::ToNumber(isolate, radix));</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> radix32 = DoubleToInt32(radix-&gt;Number());</span><br><span class="line">  <span class="keyword">if</span> (radix32 != <span class="number">0</span> &amp;&amp; (radix32 &lt; <span class="number">2</span> || radix32 &gt; <span class="number">36</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> ReadOnlyRoots(isolate).nan_value();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">double</span> result = StringToInt(isolate, subject, radix32);</span><br><span class="line">  <span class="keyword">return</span> *isolate-&gt;factory()-&gt;NewNumber(result);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段逻辑比较简单，就不再一行行解读了。值得注意的是，根据标准，如果 <code>radix</code> 不在 2~36 的范围内，会返回 NaN。</p>
+<h3 id="1-2-JavaScriptCore-中的-parseInt"><a href="#1-2-JavaScriptCore-中的-parseInt" class="headerlink" title="1.2 JavaScriptCore 中的 parseInt()"></a>1.2 JavaScriptCore 中的 parseInt()</h3><p>接着我们来看看 JavaScriptCore 中的 <code>parseInt()</code>。</p>
+<p>JavaScriptCore 中关于  JS 语言内置对象的注册都在 [→ runtime/JSGlobalObjectFuntions.cpp] 文件中：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">JSC_DEFINE_HOST_FUNCTION(globalFuncParseInt, (JSGlobalObject* globalObject, CallFrame* callFrame))</span><br><span class="line">&#123;</span><br><span class="line">    JSValue value = callFrame-&gt;argument(<span class="number">0</span>);</span><br><span class="line">    JSValue radixValue = callFrame-&gt;argument(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Optimized handling for numbers:</span></span><br><span class="line">    <span class="comment">// If the argument is 0 or a number in range 10^-6 &lt;= n &lt; INT_MAX+1, then parseInt</span></span><br><span class="line">    <span class="comment">// results in a truncation to integer. In the case of -0, this is converted to 0.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// This is also a truncation for values in the range INT_MAX+1 &lt;= n &lt; 10^21,</span></span><br><span class="line">    <span class="comment">// however these values cannot be trivially truncated to int since 10^21 exceeds</span></span><br><span class="line">    <span class="comment">// even the int64_t range. Negative numbers are a little trickier, the case for</span></span><br><span class="line">    <span class="comment">// values in the range -10^21 &lt; n &lt;= -1 are similar to those for integer, but</span></span><br><span class="line">    <span class="comment">// values in the range -1 &lt; n &lt;= -10^-6 need to truncate to -0, not 0.</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">double</span> tenToTheMinus6 = <span class="number">0.000001</span>;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">double</span> intMaxPlusOne = <span class="number">2147483648.0</span>;</span><br><span class="line">    <span class="keyword">if</span> (value.isNumber()) &#123;</span><br><span class="line">        <span class="keyword">double</span> n = value.asNumber();</span><br><span class="line">        <span class="keyword">if</span> (((n &lt; intMaxPlusOne &amp;&amp; n &gt;= tenToTheMinus6) || !n) &amp;&amp; radixValue.isUndefinedOrNull())</span><br><span class="line">            <span class="keyword">return</span> JSValue::encode(jsNumber(<span class="keyword">static_cast</span>&lt;<span class="keyword">int32_t</span>&gt;(n)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If ToString throws, we shouldn't call ToInt32.</span></span><br><span class="line">    <span class="keyword">return</span> toStringView(globalObject, value, [&amp;] (StringView view) &#123;</span><br><span class="line">        <span class="keyword">return</span> JSValue::encode(jsNumber(parseInt(view, radixValue.toInt32(globalObject))));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>WebKit 中的代码注释都很详尽易读，这里也不再解读了。最后，会调用 <code>parseInt</code>，JavaScriptCore 的 <code>parseInt</code> 的实现全放在了 [→ runtime/ParseInt.h]  中，核心代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ALWAYS_INLINE <span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">isStrWhiteSpace</span><span class="params">(UChar c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// https://tc39.github.io/ecma262/#sec-tonumber-applied-to-the-string-type</span></span><br><span class="line">    <span class="keyword">return</span> Lexer&lt;UChar&gt;::isWhiteSpace(c) || Lexer&lt;UChar&gt;::isLineTerminator(c);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ES5.1 15.1.2.2</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> CharType&gt;</span><br><span class="line">ALWAYS_INLINE</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">double</span> <span class="title">parseInt</span><span class="params">(StringView s, <span class="keyword">const</span> CharType* data, <span class="keyword">int</span> radix)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 1. Let inputString be ToString(string).</span></span><br><span class="line">    <span class="comment">// 2. Let S be a newly created substring of inputString consisting of the first character that is not a</span></span><br><span class="line">    <span class="comment">//    StrWhiteSpaceChar and all characters following that character. (In other words, remove leading white</span></span><br><span class="line">    <span class="comment">//    space.) If inputString does not contain any such characters, let S be the empty string.</span></span><br><span class="line">    <span class="keyword">int</span> length = s.length();</span><br><span class="line">    <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (p &lt; length &amp;&amp; isStrWhiteSpace(data[p]))</span><br><span class="line">        ++p;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. Let sign be 1.</span></span><br><span class="line">    <span class="comment">// 4. If S is not empty and the first character of S is a minus sign -, let sign be -1.</span></span><br><span class="line">    <span class="comment">// 5. If S is not empty and the first character of S is a plus sign + or a minus sign -, then remove the first character from S.</span></span><br><span class="line">    <span class="keyword">double</span> sign = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (p &lt; length) &#123;</span><br><span class="line">        <span class="keyword">if</span> (data[p] == <span class="string">'+'</span>)</span><br><span class="line">            ++p;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (data[p] == <span class="string">'-'</span>) &#123;</span><br><span class="line">            sign = <span class="number">-1</span>;</span><br><span class="line">            ++p;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 6. Let R = ToInt32(radix).</span></span><br><span class="line">    <span class="comment">// 7. Let stripPrefix be true.</span></span><br><span class="line">    <span class="comment">// 8. If R != 0,then</span></span><br><span class="line">    <span class="comment">//   b. If R != 16, let stripPrefix be false.</span></span><br><span class="line">    <span class="comment">// 9. Else, R == 0</span></span><br><span class="line">    <span class="comment">//   a. LetR = 10.</span></span><br><span class="line">    <span class="comment">// 10. If stripPrefix is true, then</span></span><br><span class="line">    <span class="comment">//   a. If the length of S is at least 2 and the first two characters of S are either ―0x or ―0X,</span></span><br><span class="line">    <span class="comment">//      then remove the first two characters from S and let R = 16.</span></span><br><span class="line">    <span class="comment">// 11. If S contains any character that is not a radix-R digit, then let Z be the substring of S</span></span><br><span class="line">    <span class="comment">//     consisting of all characters before the first such character; otherwise, let Z be S.</span></span><br><span class="line">    <span class="keyword">if</span> ((radix == <span class="number">0</span> || radix == <span class="number">16</span>) &amp;&amp; length - p &gt;= <span class="number">2</span> &amp;&amp; data[p] == <span class="string">'0'</span> &amp;&amp; (data[p + <span class="number">1</span>] == <span class="string">'x'</span> || data[p + <span class="number">1</span>] == <span class="string">'X'</span>)) &#123;</span><br><span class="line">        radix = <span class="number">16</span>;</span><br><span class="line">        p += <span class="number">2</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (radix == <span class="number">0</span>)</span><br><span class="line">        radix = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 8.a If R &lt; 2 or R &gt; 36, then return NaN.</span></span><br><span class="line">    <span class="keyword">if</span> (radix &lt; <span class="number">2</span> || radix &gt; <span class="number">36</span>)</span><br><span class="line">        <span class="keyword">return</span> PNaN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 13. Let mathInt be the mathematical integer value that is represented by Z in radix-R notation, using the letters</span></span><br><span class="line">    <span class="comment">//     A-Z and a-z for digits with values 10 through 35. (However, if R is 10 and Z contains more than 20 significant</span></span><br><span class="line">    <span class="comment">//     digits, every significant digit after the 20th may be replaced by a 0 digit, at the option of the implementation;</span></span><br><span class="line">    <span class="comment">//     and if R is not 2, 4, 8, 10, 16, or 32, then mathInt may be an implementation-dependent approximation to the</span></span><br><span class="line">    <span class="comment">//     mathematical integer value that is represented by Z in radix-R notation.)</span></span><br><span class="line">    <span class="comment">// 14. Let number be the Number value for mathInt.</span></span><br><span class="line">    <span class="keyword">int</span> firstDigitPosition = p;</span><br><span class="line">    <span class="keyword">bool</span> sawDigit = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">double</span> number = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> (p &lt; length) &#123;</span><br><span class="line">        <span class="keyword">int</span> digit = parseDigit(data[p], radix);</span><br><span class="line">        <span class="keyword">if</span> (digit == <span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        sawDigit = <span class="literal">true</span>;</span><br><span class="line">        number *= radix;</span><br><span class="line">        number += digit;</span><br><span class="line">        ++p;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 12. If Z is empty, return NaN.</span></span><br><span class="line">    <span class="keyword">if</span> (!sawDigit)</span><br><span class="line">        <span class="keyword">return</span> PNaN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Alternate code path for certain large numbers.</span></span><br><span class="line">    <span class="keyword">if</span> (number &gt;= mantissaOverflowLowerBound) &#123;</span><br><span class="line">        <span class="keyword">if</span> (radix == <span class="number">10</span>) &#123;</span><br><span class="line">            <span class="keyword">size_t</span> parsedLength;</span><br><span class="line">            number = parseDouble(s.substring(firstDigitPosition, p - firstDigitPosition), parsedLength);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (radix == <span class="number">2</span> || radix == <span class="number">4</span> || radix == <span class="number">8</span> || radix == <span class="number">16</span> || radix == <span class="number">32</span>)</span><br><span class="line">            number = parseIntOverflow(s.substring(firstDigitPosition, p - firstDigitPosition), radix);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 15. Return sign x number.</span></span><br><span class="line">    <span class="keyword">return</span> sign * number;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ALWAYS_INLINE <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">parseInt</span><span class="params">(StringView s, <span class="keyword">int</span> radix)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (s.is8Bit())</span><br><span class="line">        <span class="keyword">return</span> parseInt(s, s.characters8(), radix);</span><br><span class="line">    <span class="keyword">return</span> parseInt(s, s.characters16(), radix);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> CallbackWhenNoException&gt;</span><br><span class="line"><span class="keyword">static</span> ALWAYS_INLINE <span class="keyword">typename</span> <span class="built_in">std</span>::invoke_result&lt;CallbackWhenNoException, StringView&gt;::<span class="function">type <span class="title">toStringView</span><span class="params">(JSGlobalObject* globalObject, JSValue value, CallbackWhenNoException callback)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    VM&amp; vm = getVM(globalObject);</span><br><span class="line">    <span class="keyword">auto</span> scope = DECLARE_THROW_SCOPE(vm);</span><br><span class="line">    JSString* <span class="built_in">string</span> = value.toStringOrNull(globalObject);</span><br><span class="line">    EXCEPTION_ASSERT(!!scope.exception() == !<span class="built_in">string</span>);</span><br><span class="line">    <span class="keyword">if</span> (UNLIKELY(!<span class="built_in">string</span>))</span><br><span class="line">        <span class="keyword">return</span> &#123; &#125;;</span><br><span class="line">    <span class="keyword">auto</span> viewWithString = <span class="built_in">string</span>-&gt;viewWithUnderlyingString(globalObject);</span><br><span class="line">    RETURN_IF_EXCEPTION(scope, &#123; &#125;);</span><br><span class="line">    RELEASE_AND_RETURN(scope, callback(viewWithString.view));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Mapping from integers 0..35 to digit identifying this value, for radix 2..36.</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span> radixDigits[] = <span class="string">"0123456789abcdefghijklmnopqrstuvwxyz"</span>;</span><br></pre></td></tr></table></figure>
+<p>直接贴出了代码，因为 JavaScriptCore 中的 API 都是严格按照  <a href="https://tc39.es/ecma262/#sec-parseint-string-radix" target="_blank" rel="noopener">ECMAScript (ECMA-262) parseInt</a> 标准一步一步按流程实现，可读性和注释也很好，强烈建议读者自己阅读一下，此处不再解读。</p>
+<h3 id="1-3-QuickJS-中的-parseInt"><a href="#1-3-QuickJS-中的-parseInt" class="headerlink" title="1.3 QuickJS 中的 parseInt()"></a>1.3 QuickJS 中的 parseInt()</h3><p>QuickJS 的核心代码都在 [→ quickjs.c] 中，首先是 <code>parseInt</code> 的注册代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* global object */</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> JSCFunctionListEntry js_global_funcs[] = &#123;</span><br><span class="line">    JS_CFUNC_DEF(<span class="string">"parseInt"</span>, <span class="number">2</span>, js_parseInt ),</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>js_parseInt</code> 的实现逻辑如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> JSValue <span class="title">js_parseInt</span><span class="params">(JSContext *ctx, JSValueConst this_val,</span></span></span><br><span class="line"><span class="function"><span class="params">                           <span class="keyword">int</span> argc, JSValueConst *argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *str, *p;</span><br><span class="line">    <span class="keyword">int</span> radix, flags;</span><br><span class="line">    JSValue ret;</span><br><span class="line"></span><br><span class="line">    str = JS_ToCString(ctx, argv[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">if</span> (!str)</span><br><span class="line">        <span class="keyword">return</span> JS_EXCEPTION;</span><br><span class="line">    <span class="keyword">if</span> (JS_ToInt32(ctx, &amp;radix, argv[<span class="number">1</span>])) &#123;</span><br><span class="line">        JS_FreeCString(ctx, str);</span><br><span class="line">        <span class="keyword">return</span> JS_EXCEPTION;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (radix != <span class="number">0</span> &amp;&amp; (radix &lt; <span class="number">2</span> || radix &gt; <span class="number">36</span>)) &#123;</span><br><span class="line">        ret = JS_NAN;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        p = str;</span><br><span class="line">        p += skip_spaces(p);</span><br><span class="line">        flags = ATOD_INT_ONLY | ATOD_ACCEPT_PREFIX_AFTER_SIGN;</span><br><span class="line">        ret = js_atof(ctx, p, <span class="literal">NULL</span>, radix, flags);</span><br><span class="line">    &#125;</span><br><span class="line">    JS_FreeCString(ctx, str);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Bellard 大神的代码注释很少，但同时也非常精炼。</p>
+<p>至此，本文介绍完了三个引擎下各自 <code>parseInt</code> 的实现，三者都是基于标准的实现，但由于代码风格不同，读起来也像是阅读三个风格不同散文大家的作品。</p>
+<p>不过标准和实现，我们可以发现 <code>parseInt</code> 在真正执行字符串转数字这个操作做了非常多的前置操作，如入参合法判断、入参默认值、字符串格式判断与规整化、越界判断等等，最后再交由 runtime 处理。因此，我们不难推出其效率略低的原因。</p>
+<p>接下来，我们再简单看看 <code>parseFloat</code>。</p>
+<h2 id="2-parseFloat"><a href="#2-parseFloat" class="headerlink" title="2. parseFloat()"></a>2. parseFloat()</h2><p><a href="https://tc39.es/ecma262/#sec-parsefloat-string" target="_blank" rel="noopener">ECMAScript (ECMA-262) parseFloat</a><br><img src="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503110924.png" alt></p>
+<p>根据标准，parseFloat 与 parseInt 有两点明显的不同：</p>
+<ol>
+<li>仅支持一个入参，不支持进制转换</li>
+<li>返回值支持浮点型</li>
+</ol>
+<h3 id="2-1-V8-中的-parseFloat"><a href="#2-1-V8-中的-parseFloat" class="headerlink" title="2.1 V8 中的 parseFloat()"></a>2.1 V8 中的 parseFloat()</h3><p>V8 中 <code>parseFloat</code> 的相关逻辑都紧挨着 <code>parseInt</code>，这里直接贴出关键实现：</p>
+<p>[→ src/builtins/number.tq]<br><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6 #sec-number.parsefloat</span></span><br><span class="line">transitioning javascript builtin NumberParseFloat(</span><br><span class="line">    js-implicit context: NativeContext)(value: JSAny): <span class="built_in">Number</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    typeswitch (value) &#123;</span><br><span class="line">      <span class="keyword">case</span> (s: Smi): &#123;</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> (h: HeapNumber): &#123;</span><br><span class="line">        <span class="comment">// The input is already a Number. Take care of -0.</span></span><br><span class="line">        <span class="comment">// The sense of comparison is important for the NaN case.</span></span><br><span class="line">        <span class="keyword">return</span> (Convert&lt;float64&gt;(h) == <span class="number">0</span>) ? SmiConstant(<span class="number">0</span>) : h;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> (s: <span class="built_in">String</span>): &#123;</span><br><span class="line">        goto <span class="built_in">String</span>(s);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> (HeapObject): &#123;</span><br><span class="line">        goto <span class="built_in">String</span>(<span class="built_in">string</span>::ToString(context, value));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; label <span class="built_in">String</span>(s: <span class="built_in">String</span>) &#123;</span><br><span class="line">    <span class="comment">// Check if the string is a cached array index.</span></span><br><span class="line">    <span class="keyword">const</span> hash: NameHash = s.raw_hash_field;</span><br><span class="line">    <span class="keyword">if</span> (IsIntegerIndex(hash) &amp;&amp;</span><br><span class="line">        hash.array_index_length &lt; kMaxCachedArrayIndexLength) &#123;</span><br><span class="line">      <span class="keyword">const</span> arrayIndex: uint32 = hash.array_index_value;</span><br><span class="line">      <span class="keyword">return</span> SmiFromUint32(arrayIndex);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Fall back to the runtime to convert string to a number.</span></span><br><span class="line">    <span class="keyword">return</span> runtime::StringParseFloat(s);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>[→ src/runtime/runtime-numbers.cc]<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6 18.2.4 parseFloat(string)</span></span><br><span class="line">RUNTIME_FUNCTION(Runtime_StringParseFloat) &#123;</span><br><span class="line">  <span class="function">HandleScope <span class="title">shs</span><span class="params">(isolate)</span></span>;</span><br><span class="line">  DCHECK_EQ(<span class="number">1</span>, args.length());</span><br><span class="line">  Handle&lt;String&gt; subject = args.at&lt;String&gt;(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">double</span> value = StringToDouble(isolate, subject, ALLOW_TRAILING_JUNK,</span><br><span class="line">                                <span class="built_in">std</span>::numeric_limits&lt;<span class="keyword">double</span>&gt;::quiet_NaN());</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> *isolate-&gt;factory()-&gt;NewNumber(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因标准中的流程更为简易，因此较 <code>parseInt</code> 而言， <code>parseFloat</code> 更加简单易读。</p>
+<h3 id="2-2-JavaScriptCore-中的-parseFloat"><a href="#2-2-JavaScriptCore-中的-parseFloat" class="headerlink" title="2.2 JavaScriptCore 中的 parseFloat()"></a>2.2 JavaScriptCore 中的 parseFloat()</h3><p>在 JavaScriptCore 中，<code>parseFloat</code> 的逻辑则更加简洁明了：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">double</span> <span class="title">parseFloat</span><span class="params">(StringView s)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> size = s.length();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (size == <span class="number">1</span>) &#123;</span><br><span class="line">        UChar c = s[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span> (isASCIIDigit(c))</span><br><span class="line">            <span class="keyword">return</span> c - <span class="string">'0'</span>;</span><br><span class="line">        <span class="keyword">return</span> PNaN;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (s.is8Bit()) &#123;</span><br><span class="line">        <span class="keyword">const</span> LChar* data = s.characters8();</span><br><span class="line">        <span class="keyword">const</span> LChar* end = data + size;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Skip leading white space.</span></span><br><span class="line">        <span class="keyword">for</span> (; data &lt; end; ++data) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!isStrWhiteSpace(*data))</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Empty string.</span></span><br><span class="line">        <span class="keyword">if</span> (data == end)</span><br><span class="line">            <span class="keyword">return</span> PNaN;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> jsStrDecimalLiteral(data, end);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> UChar* data = s.characters16();</span><br><span class="line">    <span class="keyword">const</span> UChar* end = data + size;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Skip leading white space.</span></span><br><span class="line">    <span class="keyword">for</span> (; data &lt; end; ++data) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!isStrWhiteSpace(*data))</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Empty string.</span></span><br><span class="line">    <span class="keyword">if</span> (data == end)</span><br><span class="line">        <span class="keyword">return</span> PNaN;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> jsStrDecimalLiteral(data, end);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-QuickJS-中的-parseFloat"><a href="#2-3-QuickJS-中的-parseFloat" class="headerlink" title="2.3 QuickJS 中的 parseFloat()"></a>2.3 QuickJS 中的 parseFloat()</h3><p>而对比 JavaScriptCore，QuickJS 则短短 12 行：</p>
+<p>[→ quickjs.c]<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> JSValue <span class="title">js_parseFloat</span><span class="params">(JSContext *ctx, JSValueConst this_val,</span></span></span><br><span class="line"><span class="function"><span class="params">                             <span class="keyword">int</span> argc, JSValueConst *argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *str, *p;</span><br><span class="line">    JSValue ret;</span><br><span class="line"></span><br><span class="line">    str = JS_ToCString(ctx, argv[<span class="number">0</span>]);</span><br><span class="line">    <span class="keyword">if</span> (!str)</span><br><span class="line">        <span class="keyword">return</span> JS_EXCEPTION;</span><br><span class="line">    p = str;</span><br><span class="line">    p += skip_spaces(p);</span><br><span class="line">    ret = js_atof(ctx, p, <span class="literal">NULL</span>, <span class="number">10</span>, <span class="number">0</span>);</span><br><span class="line">    JS_FreeCString(ctx, str);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>不过对比之后可以知道，QuickJS 这里之所以短小，是没有做 ASCII 和 8Bit 的兼容。阅读 <a href="https://tc39.es/ecma262/#sec-parsefloat-string" target="_blank" rel="noopener">ECMAScript (ECMA-262) parseFloat</a> 之后可以发现，QuickJS 这里的处理其实没有什么问题，最新的标准中并没有要求解释器要这样的兼容。</p>
+<h2 id="3-Number"><a href="#3-Number" class="headerlink" title="3. Number()"></a>3. Number()</h2><p><a href="https://tc39.es/ecma262/#sec-number-constructor-number-value" target="_blank" rel="noopener">ECMAScript (ECMA-262) Number ( value )</a></p>
+<p><img src="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503110831.png" alt></p>
+<h3 id="3-1-V8-中的-Number"><a href="#3-1-V8-中的-Number" class="headerlink" title="3.1 V8 中的 Number()"></a>3.1 V8 中的 Number()</h3><p>Number 作为全局对象，定义还是在  [→ src/init/bootstrapper.cc] 中，在前文介绍 <code>Number.parseInt</code> 的注册时已然介绍过，我们回顾下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Handle&lt;JSFunction&gt; number_fun = InstallFunction(</span><br><span class="line">        isolate_, global, <span class="string">"Number"</span>, JS_PRIMITIVE_WRAPPER_TYPE,</span><br><span class="line">        JSPrimitiveWrapper::kHeaderSize, <span class="number">0</span>,</span><br><span class="line">        isolate_-&gt;initial_object_prototype(), Builtin::kNumberConstructor);</span><br><span class="line">number_fun-&gt;shared().DontAdaptArguments();</span><br><span class="line">number_fun-&gt;shared().set_length(<span class="number">1</span>);</span><br><span class="line">InstallWithIntrinsicDefaultProto(isolate_, number_fun,</span><br><span class="line">                                     Context::NUMBER_FUNCTION_INDEX);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create the %NumberPrototype%</span></span><br><span class="line">Handle&lt;JSPrimitiveWrapper&gt; prototype = Handle&lt;JSPrimitiveWrapper&gt;::cast(</span><br><span class="line">        factory-&gt;NewJSObject(number_fun, AllocationType::kOld));</span><br><span class="line">prototype-&gt;set_value(Smi::zero());</span><br><span class="line">JSFunction::SetPrototype(number_fun, prototype);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Install the "constructor" property on the &#123;prototype&#125;.</span></span><br><span class="line">JSObject::AddProperty(isolate_, prototype, factory-&gt;constructor_string(),</span><br><span class="line">                          number_fun, DONT_ENUM);</span><br></pre></td></tr></table></figure>
+<p>这段代码处理注册了 <code>Number</code> 这个对象之外，还初始化了它的原型链，并把构造函数添加到了它的原型链上。构造函数 <code>Builtin::kNumberConstructor</code> 是 Torque 实现的 Builtin，[→ src/builtins/constructor.tq] ，具体实现如下：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES #sec-number-constructor</span></span><br><span class="line">transitioning javascript builtin</span><br><span class="line">NumberConstructor(</span><br><span class="line">    js-implicit context: NativeContext, receiver: JSAny, newTarget: JSAny,</span><br><span class="line">    target: JSFunction)(...arguments): JSAny &#123;</span><br><span class="line">  <span class="comment">// 1. If no arguments were passed to this function invocation, let n be +0.</span></span><br><span class="line">  <span class="keyword">let</span> n: <span class="built_in">Number</span> = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">arguments</span>.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 2. Else,</span></span><br><span class="line">    <span class="comment">//    a. Let prim be ? ToNumeric(value).</span></span><br><span class="line">    <span class="comment">//    b. If Type(prim) is BigInt, let n be the Number value for prim.</span></span><br><span class="line">    <span class="comment">//    c. Otherwise, let n be prim.</span></span><br><span class="line">    <span class="keyword">const</span> value = <span class="built_in">arguments</span>[<span class="number">0</span>];</span><br><span class="line">    n = ToNumber(value, BigIntHandling::kConvertToNumber);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 3. If NewTarget is undefined, return n.</span></span><br><span class="line">  <span class="keyword">if</span> (newTarget == Undefined) <span class="keyword">return</span> n;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 4. Let O be ? OrdinaryCreateFromConstructor(NewTarget,</span></span><br><span class="line">  <span class="comment">//    "%NumberPrototype%", « [[NumberData]] »).</span></span><br><span class="line">  <span class="comment">// 5. Set O.[[NumberData]] to n.</span></span><br><span class="line">  <span class="comment">// 6. Return O.</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// We ignore the normal target parameter and load the value from the</span></span><br><span class="line">  <span class="comment">// current frame here in order to reduce register pressure on the fast path.</span></span><br><span class="line">  <span class="keyword">const</span> target: JSFunction = LoadTargetFromFrame();</span><br><span class="line">  <span class="keyword">const</span> result = UnsafeCast&lt;JSPrimitiveWrapper&gt;(</span><br><span class="line">      FastNewObject(context, target, UnsafeCast&lt;JSReceiver&gt;(newTarget)));</span><br><span class="line">  result.value = n;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释中的 1-6 一一对应着[ECMAScript (ECMA-262) Number ( value )]标准中的流程 1-6，因此本文不再花篇章赘述其实现。需要注意的是，标准中明确说明了 Number 是支持 BigInt 的，各引擎的实现也着重注意了这点，这也证明了我们之前运算对照表中的结果。</p>
+<h3 id="3-2-JavaScriptCore-中的-Number"><a href="#3-2-JavaScriptCore-中的-Number" class="headerlink" title="3.2 JavaScriptCore 中的 Number()"></a>3.2 JavaScriptCore 中的 Number()</h3><p>JavaScriptCore 中的这段代码则缺少注释，但逻辑上与 V8 一模一样，遵循标准：</p>
+<p>[→ runtime/NumberConstructor.cpp]<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ECMA 15.7.1</span></span><br><span class="line">JSC_DEFINE_HOST_FUNCTION(constructNumberConstructor, (JSGlobalObject* globalObject, CallFrame* callFrame))</span><br><span class="line">&#123;</span><br><span class="line">    VM&amp; vm = globalObject-&gt;vm();</span><br><span class="line">    <span class="keyword">auto</span> scope = DECLARE_THROW_SCOPE(vm);</span><br><span class="line">    <span class="keyword">double</span> n = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (callFrame-&gt;argumentCount()) &#123;</span><br><span class="line">        JSValue numeric = callFrame-&gt;uncheckedArgument(<span class="number">0</span>).toNumeric(globalObject);</span><br><span class="line">        RETURN_IF_EXCEPTION(scope, &#123; &#125;);</span><br><span class="line">        <span class="keyword">if</span> (numeric.isNumber())</span><br><span class="line">            n = numeric.asNumber();</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            ASSERT(numeric.isBigInt());</span><br><span class="line">            numeric = JSBigInt::toNumber(numeric);</span><br><span class="line">            ASSERT(numeric.isNumber());</span><br><span class="line">            n = numeric.asNumber();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    JSObject* newTarget = asObject(callFrame-&gt;newTarget());</span><br><span class="line">    Structure* structure = JSC_GET_DERIVED_STRUCTURE(vm, numberObjectStructure, newTarget, callFrame-&gt;jsCallee());</span><br><span class="line">    RETURN_IF_EXCEPTION(scope, &#123; &#125;);</span><br><span class="line"></span><br><span class="line">    NumberObject* object = NumberObject::create(vm, structure);</span><br><span class="line">    object-&gt;setInternalValue(vm, jsNumber(n));</span><br><span class="line">    <span class="keyword">return</span> JSValue::encode(object);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="3-3-QuickJS-中的-Number"><a href="#3-3-QuickJS-中的-Number" class="headerlink" title="3.3 QuickJS 中的 Number()"></a>3.3 QuickJS 中的 Number()</h3><p>Number 对象及其原型链的注册代码如下所示：</p>
+<p>[→ quickjs.c]<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">JS_AddIntrinsicBaseObjects</span><span class="params">(JSContext *ctx)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/* Number */</span></span><br><span class="line">    ctx-&gt;class_proto[JS_CLASS_NUMBER] = JS_NewObjectProtoClass(ctx, ctx-&gt;class_proto[JS_CLASS_OBJECT], JS_CLASS_NUMBER);</span><br><span class="line">    </span><br><span class="line">    JS_SetObjectData(ctx, ctx-&gt;class_proto[JS_CLASS_NUMBER], JS_NewInt32(ctx, <span class="number">0</span>));</span><br><span class="line">    JS_SetPropertyFunctionList(ctx, ctx-&gt;class_proto[JS_CLASS_NUMBER], js_number_proto_funcs, countof(js_number_proto_funcs));</span><br><span class="line">    </span><br><span class="line">    number_obj = JS_NewGlobalCConstructor(ctx, <span class="string">"Number"</span>, js_number_constructor, <span class="number">1</span>, ctx-&gt;class_proto[JS_CLASS_NUMBER]);</span><br><span class="line">    </span><br><span class="line">    JS_SetPropertyFunctionList(ctx, number_obj, js_number_funcs, countof(js_number_funcs));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同样的时候，在原型链注册的时候绑上了构造函数 <code>js_number_constructor</code> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> JSValue <span class="title">js_number_constructor</span><span class="params">(JSContext *ctx, JSValueConst new_target,</span></span></span><br><span class="line"><span class="function"><span class="params">                                     <span class="keyword">int</span> argc, JSValueConst *argv)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    JSValue val, obj;</span><br><span class="line">    <span class="keyword">if</span> (argc == <span class="number">0</span>) &#123;</span><br><span class="line">        val = JS_NewInt32(ctx, <span class="number">0</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        val = JS_ToNumeric(ctx, argv[<span class="number">0</span>]);</span><br><span class="line">        <span class="keyword">if</span> (JS_IsException(val))</span><br><span class="line">            <span class="keyword">return</span> val;</span><br><span class="line">        <span class="keyword">switch</span>(JS_VALUE_GET_TAG(val)) &#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> CONFIG_BIGNUM</span></span><br><span class="line">        <span class="keyword">case</span> JS_TAG_BIG_INT:</span><br><span class="line">        <span class="keyword">case</span> JS_TAG_BIG_FLOAT:</span><br><span class="line">            &#123;</span><br><span class="line">                JSBigFloat *p = JS_VALUE_GET_PTR(val);</span><br><span class="line">                <span class="keyword">double</span> d;</span><br><span class="line">                bf_get_float64(&amp;p-&gt;num, &amp;d, BF_RNDN);</span><br><span class="line">                JS_FreeValue(ctx, val);</span><br><span class="line">                val = __JS_NewFloat64(ctx, d);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> JS_TAG_BIG_DECIMAL:</span><br><span class="line">            val = JS_ToStringFree(ctx, val);</span><br><span class="line">            <span class="keyword">if</span> (JS_IsException(val))</span><br><span class="line">                <span class="keyword">return</span> val;</span><br><span class="line">            val = JS_ToNumberFree(ctx, val);</span><br><span class="line">            <span class="keyword">if</span> (JS_IsException(val))</span><br><span class="line">                <span class="keyword">return</span> val;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!JS_IsUndefined(new_target)) &#123;</span><br><span class="line">        obj = js_create_from_ctor(ctx, new_target, JS_CLASS_NUMBER);</span><br><span class="line">        <span class="keyword">if</span> (!JS_IsException(obj))</span><br><span class="line">            JS_SetObjectData(ctx, obj, val);</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>值得关注的是 QuickJS 追求精简小巧，因此可以自行配置是否支持 BigInt，其余逻辑依然遵循标准。</p>
+<h2 id="4-Double-tilde-Operator"><a href="#4-Double-tilde-Operator" class="headerlink" title="4. Double tilde (~~) Operator"></a>4. Double tilde (~~) Operator</h2><p><a href="https://tc39.es/ecma262/#sec-bitwise-not-operator-runtime-semantics-evaluation" target="_blank" rel="noopener">ECMAScript (ECMA-262) Bitwise NOT Operator</a></p>
+<p><img src="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503113745.png" alt></p>
+<p>使用 ~ 运算符利用到了标准中的第 2 步，对被计算的值做类型转换，从而将字符串转成数值。这里我们关注这个环节具体是在引擎中的哪个步骤完成的。 </p>
+<h3 id="4-1-V8-中的-BitwiseNot"><a href="#4-1-V8-中的-BitwiseNot" class="headerlink" title="4.1 V8 中的 BitwiseNot"></a>4.1 V8 中的 BitwiseNot</h3><p>首先看看 V8 中对一元运算符的判断：</p>
+<p>[→ src/parsing/token.h]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">bool</span> <span class="title">IsUnaryOp</span><span class="params">(Value op)</span> </span>&#123; <span class="keyword">return</span> base::IsInRange(op, ADD, VOID); &#125;</span><br></pre></td></tr></table></figure>
+<p>定义在 ADD 和 VOID 范围内的 op，都是一元运算符，具体包括 (可见 [→ src/parsing/token.h])，其中 SUB 和 ADD 定义在二元运算符列表的末端，在 IsUnaryOp 中它们也会命中一元符的判断：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">E(T, ADD, <span class="string">"+"</span>, <span class="number">12</span>)</span><br><span class="line">E(T, SUB, <span class="string">"-"</span>, <span class="number">12</span>)</span><br><span class="line">T(NOT, <span class="string">"!"</span>, <span class="number">0</span>)</span><br><span class="line">T(BIT_NOT, <span class="string">"~"</span>, <span class="number">0</span>)</span><br><span class="line">K(DELETE, <span class="string">"delete"</span>, <span class="number">0</span>)</span><br><span class="line">K(TYPEOF, <span class="string">"typeof"</span>, <span class="number">0</span>)</span><br><span class="line">K(VOID, <span class="string">"void"</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>之后进入语法分析阶段，解析 AST 树的过程中，遇到一元运算符会做相应的处理，先调用 <code>ParseUnaryOrPrefixExpression</code> 之后构建一元运算符表达式 <code>BuildUnaryExpression</code>：</p>
+<p>[→ src/parsing/parser-base.h]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Impl&gt;</span><br><span class="line"><span class="keyword">typename</span> ParserBase&lt;Impl&gt;::ExpressionT</span><br><span class="line">ParserBase&lt;Impl&gt;::ParseUnaryExpression() &#123;</span><br><span class="line">  <span class="comment">// UnaryExpression ::</span></span><br><span class="line">  <span class="comment">//   PostfixExpression</span></span><br><span class="line">  <span class="comment">//   'delete' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   'void' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   'typeof' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   '++' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   '--' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   '+' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   '-' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   '~' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   '!' UnaryExpression</span></span><br><span class="line">  <span class="comment">//   [+Await] AwaitExpression[?Yield]</span></span><br><span class="line"></span><br><span class="line">  Token::Value op = peek();</span><br><span class="line">  <span class="comment">// 一元运算符处理</span></span><br><span class="line">  <span class="keyword">if</span> (Token::IsUnaryOrCountOp(op)) <span class="keyword">return</span> ParseUnaryOrPrefixExpression();</span><br><span class="line">  <span class="keyword">if</span> (is_await_allowed() &amp;&amp; op == Token::AWAIT) &#123;</span><br><span class="line">	<span class="comment">// await 处理</span></span><br><span class="line">    <span class="keyword">return</span> ParseAwaitExpression();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ParsePostfixExpression();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename Impl&gt;</span><br><span class="line">typename ParserBase&lt;Impl&gt;::ExpressionT</span><br><span class="line">ParserBase&lt;Impl&gt;::ParseUnaryOrPrefixExpression() &#123;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line"> 	<span class="comment">// Allow the parser's implementation to rewrite the expression.</span></span><br><span class="line">   	<span class="keyword">return</span> impl()-&gt;BuildUnaryExpression(expression, op, pos);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[→ src/parsing/parser.cc]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">Expression* Parser::BuildUnaryExpression(Expression* expression,</span><br><span class="line">                                         Token::Value op, <span class="keyword">int</span> pos) &#123;</span><br><span class="line">  DCHECK_NOT_NULL(expression);</span><br><span class="line">  <span class="keyword">const</span> Literal* literal = expression-&gt;AsLiteral();</span><br><span class="line">  <span class="keyword">if</span> (literal != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">	<span class="comment">// !</span></span><br><span class="line">    <span class="keyword">if</span> (op == Token::NOT) &#123;</span><br><span class="line">      <span class="comment">// Convert the literal to a boolean condition and negate it.</span></span><br><span class="line">      <span class="keyword">return</span> factory()-&gt;NewBooleanLiteral(literal-&gt;ToBooleanIsFalse(), pos);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (literal-&gt;IsNumberLiteral()) &#123;</span><br><span class="line">      <span class="comment">// Compute some expressions involving only number literals.</span></span><br><span class="line">      <span class="keyword">double</span> value = literal-&gt;AsNumber();</span><br><span class="line">      <span class="keyword">switch</span> (op) &#123;</span><br><span class="line">	    <span class="comment">// +</span></span><br><span class="line">        <span class="keyword">case</span> Token::ADD:</span><br><span class="line">          <span class="keyword">return</span> expression;</span><br><span class="line">        <span class="comment">// -</span></span><br><span class="line">        <span class="keyword">case</span> Token::SUB:</span><br><span class="line">          <span class="keyword">return</span> factory()-&gt;NewNumberLiteral(-value, pos);</span><br><span class="line">        <span class="comment">// ~</span></span><br><span class="line">        <span class="keyword">case</span> Token::BIT_NOT:</span><br><span class="line">          <span class="keyword">return</span> factory()-&gt;NewNumberLiteral(~DoubleToInt32(value), pos);</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> factory()-&gt;NewUnaryOperation(op, expression, pos);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果字面量是数值型且一元运算符此刻不是 NOT（!），那么会把 Value 会转成 Number，如果是 BIT_NOT 再转成 INT32 进行取反运算。</p>
+<h3 id="4-2-JavaScriptCore-中的-BitwiseNot"><a href="#4-2-JavaScriptCore-中的-BitwiseNot" class="headerlink" title="4.2 JavaScriptCore 中的 BitwiseNot"></a>4.2 JavaScriptCore 中的 BitwiseNot</h3><p>同样在语法分析生成 AST 阶段，处理到 TILDE（~） 这个 token 后，创建表达式时会做类型转换的工作：</p>
+<p>[→ Parser/Parser.cpp]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> LexerType&gt;</span><br><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">TreeBuilder</span>&gt; <span class="title">TreeExpression</span> <span class="title">Parser</span>&lt;LexerType&gt;:</span>:parseUnaryExpression(TreeBuilder&amp; context)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//... 省略无关代码</span></span><br><span class="line">	 <span class="keyword">while</span> (tokenStackDepth) &#123;</span><br><span class="line"> 		<span class="keyword">switch</span> (tokenType) &#123;</span><br><span class="line">		<span class="comment">//... 省略无关代码</span></span><br><span class="line">		<span class="comment">// ~</span></span><br><span class="line">		<span class="keyword">case</span> TILDE:</span><br><span class="line">     			expr = context.makeBitwiseNotNode(location, expr);</span><br><span class="line">     			<span class="keyword">break</span>;</span><br><span class="line">	     <span class="comment">// +</span></span><br><span class="line">		<span class="keyword">case</span> PLUS:</span><br><span class="line">      			expr = context.createUnaryPlus(location, expr);</span><br><span class="line">     			<span class="keyword">break</span>;</span><br><span class="line">		<span class="comment">//... 省略无关代码</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[→ parser/ASTBuilder.h]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ExpressionNode* ASTBuilder::makeBitwiseNotNode(<span class="keyword">const</span> JSTokenLocation&amp; location, ExpressionNode* expr)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (expr-&gt;isNumber())</span><br><span class="line">        <span class="keyword">return</span> createIntegerLikeNumber(location, ~toInt32(<span class="keyword">static_cast</span>&lt;NumberNode*&gt;(expr)-&gt;value()));</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> (m_parserArena) BitwiseNotNode(location, expr);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[→ parser/NodeConstructors.h]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> BitwiseNotNode::BitwiseNotNode(<span class="keyword">const</span> JSTokenLocation&amp; location, ExpressionNode* expr)</span><br><span class="line">        : UnaryOpNode(location, ResultType::forBitOp(), expr, op_bitnot)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>[→ parser/ResultType.h]</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">constexpr</span> ResultType <span class="title">forBitOp</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> bigIntOrInt32Type();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">constexpr</span> ResultType <span class="title">bigIntOrInt32Type</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> ResultType(TypeMaybeBigInt | TypeInt32 | TypeMaybeNumber);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-QuickJS-中的-BitwiseNot"><a href="#4-3-QuickJS-中的-BitwiseNot" class="headerlink" title="4.3 QuickJS 中的 BitwiseNot"></a>4.3 QuickJS 中的 BitwiseNot</h3><p>QuickJS 在语法分析阶段，遇到 ~ 这个 token 会调用 <code>emit_op(s, OP_not)</code>：</p>
+<p>[→ quickjs.c]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* allowed parse_flags: PF_ARROW_FUNC, PF_POW_ALLOWED, PF_POW_FORBIDDEN */</span></span><br><span class="line"><span class="keyword">static</span> __<span class="function">exception <span class="keyword">int</span> <span class="title">js_parse_unary</span><span class="params">(JSParseState *s, <span class="keyword">int</span> parse_flags)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> op;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>(s-&gt;token.val) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'+'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'-'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'!'</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'~'</span>:</span><br><span class="line">    <span class="keyword">case</span> TOK_VOID:</span><br><span class="line">        op = s-&gt;token.val;</span><br><span class="line">        <span class="keyword">if</span> (next_token(s))</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span> (js_parse_unary(s, PF_POW_FORBIDDEN))</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">switch</span>(op) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'-'</span>:</span><br><span class="line">            emit_op(s, OP_neg);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'+'</span>:</span><br><span class="line">            emit_op(s, OP_plus);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'!'</span>:</span><br><span class="line">            emit_op(s, OP_lnot);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'~'</span>:</span><br><span class="line">            emit_op(s, OP_not);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> TOK_VOID:</span><br><span class="line">            emit_op(s, OP_drop);</span><br><span class="line">            emit_op(s, OP_undefined);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">abort</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        parse_flags = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">	&#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>emit_op</code> 会生成 OP_not 字节码操作符，并将源码保存在 fd-&gt;byte_code 里。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">emit_op</span><span class="params">(JSParseState *s, <span class="keyword">uint8_t</span> val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    JSFunctionDef *fd = s-&gt;cur_func;</span><br><span class="line">    DynBuf *bc = &amp;fd-&gt;byte_code;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Use the line number of the last token used, not the next token,</span></span><br><span class="line"><span class="comment">       nor the current offset in the source file.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (unlikely(fd-&gt;last_opcode_line_num != s-&gt;last_line_num)) &#123;</span><br><span class="line">        dbuf_putc(bc, OP_line_num);</span><br><span class="line">        dbuf_put_u32(bc, s-&gt;last_line_num);</span><br><span class="line">        fd-&gt;last_opcode_line_num = s-&gt;last_line_num;</span><br><span class="line">    &#125;</span><br><span class="line">    fd-&gt;last_opcode_pos = bc-&gt;size;</span><br><span class="line">    dbuf_putc(bc, val);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dbuf_putc</span><span class="params">(DynBuf *s, <span class="keyword">uint8_t</span> c)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> dbuf_put(s, &amp;c, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">dbuf_put</span><span class="params">(DynBuf *s, <span class="keyword">const</span> <span class="keyword">uint8_t</span> *data, <span class="keyword">size_t</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (unlikely((s-&gt;size + len) &gt; s-&gt;allocated_size)) &#123;</span><br><span class="line">        <span class="keyword">if</span> (dbuf_realloc(s, s-&gt;size + len))</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">memcpy</span>(s-&gt;buf + s-&gt;size, data, len);</span><br><span class="line">    s-&gt;size += len;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>QuickJS 解释执行的函数是 <code>JS_EvalFunctionInternal</code>，其会调用 <code>JS_CallFree</code> 进行字节码的解释执行，其核心逻辑是调用的 <code>JS_CallInternal</code> 函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* argv[] is modified if (flags &amp; JS_CALL_FLAG_COPY_ARGV) = 0. */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> JSValue <span class="title">JS_CallInternal</span><span class="params">(JSContext *caller_ctx, JSValueConst func_obj,</span></span></span><br><span class="line"><span class="function"><span class="params">                               JSValueConst this_obj, JSValueConst new_target,</span></span></span><br><span class="line"><span class="function"><span class="params">                               <span class="keyword">int</span> argc, JSValue *argv, <span class="keyword">int</span> flags)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    JSRuntime *rt = caller_ctx-&gt;rt;</span><br><span class="line">    JSContext *ctx;</span><br><span class="line">    JSObject *p;</span><br><span class="line">    JSFunctionBytecode *b;</span><br><span class="line">    JSStackFrame sf_s, *sf = &amp;sf_s;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">uint8_t</span> *pc;</span><br><span class="line">	<span class="comment">// ...省略无关代码</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(;;) &#123;</span><br><span class="line">		<span class="keyword">int</span> call_argc;</span><br><span class="line">		JSValue *call_argv;</span><br><span class="line">		SWITCH(pc) &#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">		CASE(OP_not):</span><br><span class="line">		&#123;</span><br><span class="line">			JSValue op1;</span><br><span class="line">			op1 = sp[<span class="number">-1</span>];</span><br><span class="line">			<span class="comment">// 如果是整型</span></span><br><span class="line">			<span class="keyword">if</span> (JS_VALUE_GET_TAG(op1) == JS_TAG_INT) &#123;</span><br><span class="line">				sp[<span class="number">-1</span>] = JS_NewInt32(ctx, ~JS_VALUE_GET_INT(op1));</span><br><span class="line">			<span class="comment">// 如果不是整型</span></span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (js_not_slow(ctx, sp))</span><br><span class="line">					<span class="keyword">goto</span> exception;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		BREAK;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可见，解析到 OP_not 时， 如果是整型就直接取反，否则就调用 <code>js_not_slow</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> no_inline <span class="keyword">int</span> <span class="title">js_not_slow</span><span class="params">(JSContext *ctx, JSValue *sp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int32_t</span> v1;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (unlikely(JS_ToInt32Free(ctx, &amp;v1, sp[<span class="number">-1</span>]))) &#123;</span><br><span class="line">        sp[<span class="number">-1</span>] = JS_UNDEFINED;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    sp[<span class="number">-1</span>] = JS_NewInt32(ctx, ~v1);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>js_not_slow</code> 会尝试转整型，转不了就转 -1，转的了就转整型后取反。<code>JS_ToInt32Free</code> 转换逻辑如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* return (&lt;0, 0) in case of exception */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">JS_ToInt32Free</span><span class="params">(JSContext *ctx, <span class="keyword">int32_t</span> *pres, JSValue val)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"> redo:</span><br><span class="line">	tag = JS_VALUE_GET_NORM_TAG(val);</span><br><span class="line">	<span class="keyword">switch</span>(tag) &#123;</span><br><span class="line">	<span class="keyword">case</span> JS_TAG_INT:</span><br><span class="line">	<span class="keyword">case</span> JS_TAG_BOOL:</span><br><span class="line">	<span class="keyword">case</span> JS_TAG_NULL:</span><br><span class="line">	<span class="keyword">case</span> JS_TAG_UNDEFINED:</span><br><span class="line">		ret = JS_VALUE_GET_INT(val);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		val = JS_ToNumberFree(ctx, val);</span><br><span class="line">		<span class="keyword">if</span> (JS_IsException(val)) &#123;</span><br><span class="line">			*pres = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">goto</span> redo;</span><br><span class="line">	&#125;</span><br><span class="line">    *pres = ret;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于字符串，会走到 <code>JS_ToNumberFree</code>，之后调用 <code>JS_ToNumberHintFree</code>，涉及到字符串处理的核心逻辑如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> JSValue <span class="title">JS_ToNumberHintFree</span><span class="params">(JSContext *ctx, JSValue val,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   JSToNumberHintEnum flag)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">uint32_t</span> tag;</span><br><span class="line">    JSValue ret;</span><br><span class="line"></span><br><span class="line"> redo:</span><br><span class="line">    tag = JS_VALUE_GET_NORM_TAG(val);</span><br><span class="line">    <span class="keyword">switch</span>(tag) &#123;</span><br><span class="line">    <span class="comment">// ...省略无关逻辑</span></span><br><span class="line">	<span class="keyword">case</span> JS_TAG_STRING:</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">const</span> <span class="keyword">char</span> *str;</span><br><span class="line">            <span class="keyword">const</span> <span class="keyword">char</span> *p;</span><br><span class="line">            <span class="keyword">size_t</span> len;</span><br><span class="line">            </span><br><span class="line">            str = JS_ToCStringLen(ctx, &amp;len, val);</span><br><span class="line">            JS_FreeValue(ctx, val);</span><br><span class="line">            <span class="keyword">if</span> (!str)</span><br><span class="line">                <span class="keyword">return</span> JS_EXCEPTION;</span><br><span class="line">            p = str;</span><br><span class="line">            p += skip_spaces(p);</span><br><span class="line">            <span class="keyword">if</span> ((p - str) == len) &#123;</span><br><span class="line">                ret = JS_NewInt32(ctx, <span class="number">0</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">int</span> flags = ATOD_ACCEPT_BIN_OCT;</span><br><span class="line">                ret = js_atof(ctx, p, &amp;p, <span class="number">0</span>, flags);</span><br><span class="line">                <span class="keyword">if</span> (!JS_IsException(ret)) &#123;</span><br><span class="line">                    p += skip_spaces(p);</span><br><span class="line">                    <span class="keyword">if</span> ((p - str) != len) &#123;</span><br><span class="line">                        JS_FreeValue(ctx, ret);</span><br><span class="line">                        ret = JS_NAN;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            JS_FreeCString(ctx, str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">	<span class="comment">// ...省略无关逻辑</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// ...省略无关逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以转化的用 <code>JS_NewInt32</code> 去处理，否则返回 NaN。</p>
+<h2 id="5-Unary-Operator"><a href="#5-Unary-Operator" class="headerlink" title="5. Unary Operator (+)"></a>5. Unary Operator (+)</h2><p><a href="https://tc39.es/ecma262/#sec-unary-plus-operator-runtime-semantics-evaluation" target="_blank" rel="noopener">ECMAScript (ECMA-262) Unary Plus Operator</a></p>
+<p><img src="https://airing.ursb.me/image/blog/media/20220503/Pasted%20image%2020220503114251.png" alt></p>
+<p>一元运算符加号是笔者最喜欢用的一种字符串转数值的方式，标准中它没有什么花里胡哨的、非常简介明了，就是用来做数值类型转换的。</p>
+<h3 id="5-1-V8-中的-UnaryPlus"><a href="#5-1-V8-中的-UnaryPlus" class="headerlink" title="5.1 V8 中的 UnaryPlus"></a>5.1 V8 中的 UnaryPlus</h3><p>语法分析阶段同 Double tilde (~~) Operator，此处不再赘述。</p>
+<h3 id="5-2-JavaScriptCore-中的-UnaryPlus"><a href="#5-2-JavaScriptCore-中的-UnaryPlus" class="headerlink" title="5.2 JavaScriptCore 中的 UnaryPlus"></a>5.2 JavaScriptCore 中的 UnaryPlus</h3><p>语法分析阶段同 Double tilde (~~) Operator，此处不再赘述。</p>
+<h3 id="5-3-QuickJS-中的-UnaryPlus"><a href="#5-3-QuickJS-中的-UnaryPlus" class="headerlink" title="5.3 QuickJS 中的 UnaryPlus"></a>5.3 QuickJS 中的 UnaryPlus</h3><p>语法分析阶段同 Double tilde (~~) Operator，此处不再赘述。最后依然走到 <code>JS_CallInternal</code>。</p>
+<p>[→ quickjs.c]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* argv[] is modified if (flags &amp; JS_CALL_FLAG_COPY_ARGV) = 0. */</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> JSValue <span class="title">JS_CallInternal</span><span class="params">(JSContext *caller_ctx, JSValueConst func_obj,</span></span></span><br><span class="line"><span class="function"><span class="params">                               JSValueConst this_obj, JSValueConst new_target,</span></span></span><br><span class="line"><span class="function"><span class="params">                               <span class="keyword">int</span> argc, JSValue *argv, <span class="keyword">int</span> flags)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    JSRuntime *rt = caller_ctx-&gt;rt;</span><br><span class="line">    JSContext *ctx;</span><br><span class="line">    JSObject *p;</span><br><span class="line">    JSFunctionBytecode *b;</span><br><span class="line">    JSStackFrame sf_s, *sf = &amp;sf_s;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">uint8_t</span> *pc;</span><br><span class="line">	<span class="comment">// ...省略无关代码</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(;;) &#123;</span><br><span class="line">		<span class="keyword">int</span> call_argc;</span><br><span class="line">		JSValue *call_argv;</span><br><span class="line">		SWITCH(pc) &#123;</span><br><span class="line">		<span class="comment">// ...</span></span><br><span class="line">		CASE(OP_plus):</span><br><span class="line">			&#123;</span><br><span class="line">			    JSValue op1;</span><br><span class="line">				<span class="keyword">uint32_t</span> tag;</span><br><span class="line">				op1 = sp[<span class="number">-1</span>];</span><br><span class="line">				tag = JS_VALUE_GET_TAG(op1);</span><br><span class="line">				<span class="keyword">if</span> (tag == JS_TAG_INT || JS_TAG_IS_FLOAT64(tag)) &#123;</span><br><span class="line">				&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">					<span class="keyword">if</span> (js_unary_arith_slow(ctx, sp, opcode))</span><br><span class="line">				 		<span class="keyword">goto</span> exception;</span><br><span class="line">				&#125;</span><br><span class="line">				BREAK;</span><br><span class="line">			&#125;</span><br><span class="line">		<span class="comment">// ...省略无关代码</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// ...省略无关代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以发现当操作数是 Int 或 Float 时，就直接不处理，和标准中规范的一致。而其他情况就调用 <code>js_unary_arith_slow</code>，若调用过程中遇到异常就走异常逻辑：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> no_inline __<span class="function">exception <span class="keyword">int</span> <span class="title">js_unary_arith_slow</span><span class="params">(JSContext *ctx, JSValue *sp, OPCodeEnum op)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    JSValue op1;</span><br><span class="line">    <span class="keyword">double</span> d;</span><br><span class="line"></span><br><span class="line">    op1 = sp[<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">if</span> (unlikely(JS_ToFloat64Free(ctx, &amp;d, op1))) &#123;</span><br><span class="line">        sp[<span class="number">-1</span>] = JS_UNDEFINED;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span>(op) &#123;</span><br><span class="line">    <span class="keyword">case</span> OP_inc:</span><br><span class="line">        d++;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> OP_dec:</span><br><span class="line">        d--;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> OP_plus:</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> OP_neg:</span><br><span class="line">        d = -d;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="built_in">abort</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    sp[<span class="number">-1</span>] = JS_NewFloat64(ctx, d);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的 <code>JS_ToFloat64Free</code> 的内部处理逻辑和和  4.3 时的 <code>JS_ToFloat64Free</code> 一样，不再赘述。<code>js_unary_arith_slow</code> 处理完数值转换之后，若运算符是一元运算加号，则直接返回；否则还会根据运算符再做相应的运算处理，如自增符还需要+1 等。</p>
+<hr>
+<p>至此，我们讲解了以下 5 个方法在解释器中的具体实现：</p>
+<ol>
+<li>parseInt()</li>
+<li>parseFloat()</li>
+<li>Number()</li>
+<li>Double tilde (~~) Operator</li>
+<li>Unary Operator (+)</li>
+</ol>
+<p>除却以上 5 个数值转换方法之外，还有以下 4 个方法，因篇幅问题本文暂且不再详述：</p>
+<ul>
+<li>Math.floor()</li>
+<li>Multiply with number</li>
+<li>The Signed Right Shift Operator(&gt;&gt;)</li>
+<li>The Unsigned Right Shift Operator(&gt;&gt;&gt;)</li>
+</ul>
+<p>字符串转数值各有优劣，使用者可根据自己的需要进行选用，以下是我个人总结的一些经验：</p>
+<p>如果返回值只要求整形：</p>
+<ul>
+<li>追求代码简洁和执行效率，对输入值有一定的把握（无需防御），优先选用 Unary Operator (+)</li>
+<li>对输入值没有把握，需要做防御式编程，使用  parseInt()</li>
+<li>需要支持 BigInt， 优先考虑使用 Number() ；如果用 Double tilde (~~) Operator，需要注意 31 位问题。</li>
+</ul>
+<p>如果返回值要求浮点型：</p>
+<ul>
+<li>追求代码简洁和执行效率，对输入值有一定的把握（无需防御），优先选用 Unary Operator (+)</li>
+<li>对输入值没有把握，需要做防御式编程，使用  parseFloat()</li>
+<li>需要支持 BigInt，使用 parseFloat()</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/09/10/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/" rel="next" title="基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台">
+                <i class="fa fa-chevron-left"></i> 基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/10/10/分享图截图方案与优化/" rel="prev" title="分享图截图方案与优化">
+                分享图截图方案与优化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tools/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://leetcode-cn.com/u/cchroot-liu/" target="_blank" title="LeetCode">
+                      
+                        <i class="fa fa-fw fa-skype"></i>LeetCode</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-parseInt"><span class="nav-number">1.</span> <span class="nav-text">1. parseInt()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-V8-中的-parseInt"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 V8 中的 parseInt()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-JavaScriptCore-中的-parseInt"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 JavaScriptCore 中的 parseInt()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-QuickJS-中的-parseInt"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 QuickJS 中的 parseInt()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-parseFloat"><span class="nav-number">2.</span> <span class="nav-text">2. parseFloat()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-V8-中的-parseFloat"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 V8 中的 parseFloat()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-JavaScriptCore-中的-parseFloat"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 JavaScriptCore 中的 parseFloat()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-QuickJS-中的-parseFloat"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 QuickJS 中的 parseFloat()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Number"><span class="nav-number">3.</span> <span class="nav-text">3. Number()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-V8-中的-Number"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 V8 中的 Number()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-JavaScriptCore-中的-Number"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 JavaScriptCore 中的 Number()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-QuickJS-中的-Number"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 QuickJS 中的 Number()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Double-tilde-Operator"><span class="nav-number">4.</span> <span class="nav-text">4. Double tilde (~~) Operator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-V8-中的-BitwiseNot"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 V8 中的 BitwiseNot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-JavaScriptCore-中的-BitwiseNot"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 JavaScriptCore 中的 BitwiseNot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-QuickJS-中的-BitwiseNot"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 QuickJS 中的 BitwiseNot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Unary-Operator"><span class="nav-number">5.</span> <span class="nav-text">5. Unary Operator (+)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-V8-中的-UnaryPlus"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 V8 中的 UnaryPlus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-JavaScriptCore-中的-UnaryPlus"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 JavaScriptCore 中的 UnaryPlus</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-QuickJS-中的-UnaryPlus"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 QuickJS 中的 UnaryPlus</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

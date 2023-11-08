@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="other,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近项目中需要在 orange-ci 中进行利用 puppeteer.js 进行截图保存等一系列操作。那么问题马上就来了：在 orange-ci 中 puppeteer.js 如何运行？ 在 orange-ci 中运行 puppeteer.js 也是基于 Linux 环境，在 Linux 环境中安装 Chromium 最长见的 2 个问题就是：  下载 Chromium 时，下载常常以失败告终。换">
+<meta name="keywords" content="other">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台">
+<meta property="og:url" content="http://yoursite.com/2023/09/10/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/index.html">
+<meta property="og:site_name" content="cchroot&#39;s blog">
+<meta property="og:description" content="最近项目中需要在 orange-ci 中进行利用 puppeteer.js 进行截图保存等一系列操作。那么问题马上就来了：在 orange-ci 中 puppeteer.js 如何运行？ 在 orange-ci 中运行 puppeteer.js 也是基于 Linux 环境，在 Linux 环境中安装 Chromium 最长见的 2 个问题就是：  下载 Chromium 时，下载常常以失败告终。换">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2023-11-08T14:24:28.385Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台">
+<meta name="twitter:description" content="最近项目中需要在 orange-ci 中进行利用 puppeteer.js 进行截图保存等一系列操作。那么问题马上就来了：在 orange-ci 中 puppeteer.js 如何运行？ 在 orange-ci 中运行 puppeteer.js 也是基于 Linux 环境，在 Linux 环境中安装 Chromium 最长见的 2 个问题就是：  下载 Chromium 时，下载常常以失败告终。换">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2023/09/10/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/">
+
+
+
+
+
+  <title>基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台 | cchroot's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cchroot's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            文章树
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-navicon"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-bullseye"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-javascript">
+          <a href="/categories/javascript/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-code"></i> <br>
+            
+            javascript
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-vue">
+          <a href="/categories/vueJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-get-pocket"></i> <br>
+            
+            vue.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-react">
+          <a href="/categories/reactJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-asterisk"></i> <br>
+            
+            react.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-node">
+          <a href="/categories/nodeJs/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-adjust"></i> <br>
+            
+            node.js
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/java/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-fire"></i> <br>
+            
+            java
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-linux">
+          <a href="/categories/linux/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-circle"></i> <br>
+            
+            linux
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-arithmetic">
+          <a href="/categories/arithmetic/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-coffee"></i> <br>
+            
+            arithmetic
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tools">
+          <a href="/categories/tool/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-wrench"></i> <br>
+            
+            tool
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/10/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-09-10T21:59:05+08:00">
+                2023-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近项目中需要在 orange-ci 中进行利用 puppeteer.js 进行截图保存等一系列操作。那么问题马上就来了：在 orange-ci 中 puppeteer.js 如何运行？</p>
+<p>在 orange-ci 中运行 puppeteer.js 也是基于 Linux 环境，在 Linux 环境中安装 Chromium 最长见的 2 个问题就是：</p>
+<ol>
+<li>下载 Chromium 时，下载常常以失败告终。换个镜像源后 Chromium 能下载成功，但启动后<br>各种报错，是 Linux上 缺少部分依赖导致的（最新的两个版本我测试不会出现下载 Chromium 失败的情况了，旧项目使用的 5.x 版本经常失败）</li>
+<li>安装完需要的依赖，代码顺利运行。但截图却发现浏览器上的中文字体竟全是框框框框，缺少中文字体库</li>
+</ol>
+<p>上面两个问题也可以侧面说明，将项目改用 Docker 部署的话，能避免出现本地开发正常，上线后却出现各种问题的情况。</p>
+<h2 id="整体计划"><a href="#整体计划" class="headerlink" title="整体计划"></a>整体计划</h2><p>我首先在 KM 平台上搜索了下看看有木有前辈做了相关工作并记录下来了，发现没有找到，基于 123 上制作 docker 镜像倒是有，例如：<a href="http://km.oa.com/group/35339/articles/show/427569?kmref=search&amp;from_page=1&amp;no=1" target="_blank" rel="noopener">123上制作docker镜像全教程，以ffmpeg和puppeteer实战为例</a>，我也测试了文章里面的 puppeteer 运行镜像代码去基于 orange-ci 去运行 puppeteer，但是没有成功。所以有了这篇文章，希望可以帮助到后面的童鞋。</p>
+<p>笔者的想法是：由于在 orange-ci 流程中可以执行各种命令，所以我可以利用一些命令来运行 js 脚本来进行 puppeteer.js 和一些相关操作。命令的具体操作内容是通过自己发布一个 cli 命令的 npm 包，在包里面实现你需要的一系列包含 puppeteer.js 截图的操作。在 orange-ci 执行命令进行 puppeteer.js 脚本操作的时候，需要依赖一个支持 puppeteer.js 运行的 docker 镜像环境（通过查阅 <a href="http://doc.orange-ci.woa.com/internal-steps/docker/cache.html#dockerfile" target="_blank" rel="noopener">orange-ci 文档</a> 可以知道，可以通过“构建一个 Docker 缓存”或者“使用 docker 自定义构建环境”来实现）。</p>
+<p>所以我们可以先制作一个能够运行 puppeteer.js 的运行镜像，然后给镜像加上 orange-ci 的支持，把镜像 上传 CSIG 容器平台，然后跑 ci 的时候，基于这个镜像环境去跑就行了。</p>
+<h2 id="制作-puppeteer-运行镜像"><a href="#制作-puppeteer-运行镜像" class="headerlink" title="制作 puppeteer 运行镜像"></a>制作 puppeteer 运行镜像</h2><p>在制作 puppeteer 运行镜像的过程中，真是一波三折，遇到过各种个样的问题。</p>
+<h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><p>最初我想的是制作一个内部不包含 puppeteer.js 本身的镜像，然后利用 cli 中的 puppeteer.js ，cli 中只安装 puppeteer-core，通过调用 puppeteer.launch 时的 executablePath 配置引入自行下载的 Chromium，这样还能加快 npm install 时候的构建速度。</p>
+<p>这个方案本身没有问题，虽然在安装好 puppeteer.js 并进行测试的时候遇到过各种坑，但是都解决了，最后卡在最后一步，在 orange-ci 中一直找不到 executablePath 配置的浏览器路径，并且还需要单独处理不同版本下的浏览器问题，所以就暂时搁置了该方案。</p>
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><p>方案一先暂停告一段落，先进行方案二。当时通过查找资料，找到了一份 Dockerfile 代码（，对 Dockerfile 不熟悉的童鞋可以看我的另一篇小结：<a href="http://km.oa.com/user/chrootliu/articles?kmref=personal-info-card" target="_blank" rel="noopener">docker 常用命令解析和使用小坑</a>）：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 基于`alpine`版本的`node`10</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">10.15</span>.<span class="number">2</span>-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Chromium (72)。从 alpine/v3.9 版本库中下载</span></span><br><span class="line"><span class="keyword">RUN</span> apk update &amp;&amp; apk upgrade &amp;&amp; \</span><br><span class="line">    echo @v3.9 http://dl-cdn.alpinelinux.org/alpine/v3.9/community &gt;&gt; /etc/apk/repositories &amp;&amp; \</span><br><span class="line">    echo @v3.9 http://dl-cdn.alpinelinux.org/alpine/v3.9/main &gt;&gt; /etc/apk/repositories &amp;&amp; \</span><br><span class="line">    apk add --no-cache \</span><br><span class="line">      freetype@v3.9 \</span><br><span class="line">      chromium@v3.9 \</span><br><span class="line">      harfbuzz@v3.9 \</span><br><span class="line">      nss@v3.9</span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制测试代码到镜像</span></span><br><span class="line"><span class="keyword">COPY</span> ./puppeteer.js .</span><br><span class="line"><span class="keyword">COPY</span> ./puppeteer.js ./tmp</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 安装 Puppeteer 时不让它自动下载 Chromium</span></span><br><span class="line"><span class="keyword">ENV</span> PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true</span><br><span class="line"><span class="comment"># 选择 Chromium 72 对应的 Puppeteer 版本</span></span><br><span class="line"><span class="keyword">RUN</span> yarn add puppeteer@1.11.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加用户</span></span><br><span class="line"><span class="keyword">RUN</span> addgroup -S pptruser &amp;&amp; adduser -S -g pptruser pptruser \</span><br><span class="line">    &amp;&amp; mkdir -p /home/pptruser/Downloads \</span><br><span class="line">    &amp;&amp; chown -R pptruser:pptruser /home/pptruser</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 cjk 字体以支持中文</span></span><br><span class="line"><span class="comment"># COPY NotoSansCJK-Regular.ttc  /usr/share/fonts/TTF</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">USER</span> pptruser</span><br></pre></td></tr></table></figure>
+<p>构建命令：<code>docker build -t node-puppeteer:puppeteer1_11-node10-alpine .</code></p>
+<p>运行命令：<code>docker run -it --rm node-puppeteer:puppeteer1_11-node10-alpine sh</code></p>
+<p>我进行了一些简单修改，加入了测试代码，发现是可以直接成功运行 puppeteer.js 并且截图成功的，上面的 <code>COPY ./puppeteer.js .</code> 是拷贝我自己的测试代码，你可以自己写或者用原来作者提供的，具体请见：<a href="https://liumengjun.github.io/2019/03/16/node-puppeteer-docker.html" target="_blank" rel="noopener">构建 puppeteer docker 镜像</a>。</p>
+<p>我把镜像上传至 TKEx-CSIG 容器平台，并且进行测试也可以打印出我要的信息了，到现在为止一切顺利，接下来要加上支持 orange-ci 的运行环境了，这个镜像依赖的环境是 <code>node:10.15.2-alpine</code>，基于 alpine 版本的 node 10。那么问题来了：直接把依赖镜像修改为支持 orange-ci 的镜像，找不到合适的基础镜像咋办？没有合适的基础镜像，那就只能自己搭一个或者在当前的 Dockerfile 文件中进行安装 orange-ci 的运行环境。</p>
+<p>但是我在当前 Dockerfile 中进行修改和安装一些需要的软件时，却一直失败（可能是我哪里写错了～～），例如我在上述代码中通过 <code>apk</code>安装 vi 或者 vim，因为当前容器中没有 vi 或 vim，不好在命令行编辑文件（只能只用 <code>echo</code> 命令），以及测试的时候修改也不方便（后续遇到这种情况我是采用 <code>docker cp</code> 命令进行复制操作的）。附：<a href="https://blog.csdn.net/weixin_47003048/article/details/108436764" target="_blank" rel="noopener">Alpine镜像使用</a>。</p>
+<p>并且我发现基于当前 Dockerfile 的镜像中 puppeteer.js 的版本很低（1.11.0），chrome 的版本也比较低，然后当前项目里面使用的是最新版本，想升级但是暂时没找到合适的下载路径。所以方案二我暂时也搁置了，当然如果适合的童鞋可以直接使用。</p>
+<h3 id="方案三"><a href="#方案三" class="headerlink" title="方案三"></a>方案三</h3><p>方案三我是想着在当前使用的 orange-ci 基础镜像上自己写 dockerDockerfile 来创建环境（开始就想了几种方案，所以才会暂时先搁置前面遇到问题的方案）。但我在寻找前面方案问题和报错的解决办法的过程中，发现 puppeteer.js 官方有一个 <a href="https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#running-puppeteer-in-docker" target="_blank" rel="noopener">Troubleshooting.md</a> 文件中记录了一些可能会坑，以及 <a href="https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#running-puppeteer-in-docker" target="_blank" rel="noopener">Running Puppeteer in Docker</a>。所以我直接使用官方的 Dockerfile 文件创建了一个，经过测试是可以成功在镜像中运行 puppeteer.js（再次说明认真查看官方资料很重要！！！）。</p>
+<p>类似于方案二，我需要加上 orange-ci 的运行环境，我直接把官方的镜像的基础镜像源替换为了我当前 orange-ci 所依赖的基础景象源，我直接把 <code>FROM node:12-slim</code> 替换为 <code>csighub.tencentyun.com/orange-ci/default-env</code>，所有内容为：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> csighub.tencentyun.com/orange-ci/default-<span class="keyword">env</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">MAINTAINER</span> chrootliu</span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝测试文件，后在容器中用 node 运行即可，省的上传文件或编辑文件测试 </span></span><br><span class="line"><span class="keyword">COPY</span> ./puppeteer.js .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装最新的 Chrome Dev 包和字体以支持主要的Charsets（中文，日语，阿拉伯语，希伯来语，泰国和其他一些语言）</span></span><br><span class="line"><span class="comment"># <span class="doctag">Note:</span> this installs the necessary libs to make the bundled version of Chromium that Puppeteer</span></span><br><span class="line"><span class="comment"># installs, work.</span></span><br><span class="line"><span class="keyword">RUN</span> apt-get update \</span><br><span class="line">    &amp;&amp; apt-get install -y wget gnupg \</span><br><span class="line">    &amp;&amp; wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \</span><br><span class="line">    &amp;&amp; sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" &gt;&gt; /etc/apt/sources.list.d/google.list' \</span><br><span class="line">    &amp;&amp; apt-get update \</span><br><span class="line">    &amp;&amp; apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \</span><br><span class="line">      --no-install-recommends \</span><br><span class="line">    &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"></span><br><span class="line"><span class="comment"># If running Docker &gt;= 1.13.0 use docker run's --init arg to reap zombie processes, otherwise</span></span><br><span class="line"><span class="comment"># uncomment the following lines to have `dumb-init` as PID 1</span></span><br><span class="line"><span class="comment"># ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 /usr/local/bin/dumb-init</span></span><br><span class="line"><span class="comment"># RUN chmod +x /usr/local/bin/dumb-init</span></span><br><span class="line"><span class="comment"># ENTRYPOINT ["dumb-init", "--"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Uncomment to skip the chromium download when installing puppeteer. If you do,</span></span><br><span class="line"><span class="comment"># you'll need to launch puppeteer with:</span></span><br><span class="line"><span class="comment">#     browser.launch(&#123;executablePath: 'google-chrome-stable'&#125;)</span></span><br><span class="line"><span class="comment"># ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install puppeteer so it's available in the container.</span></span><br><span class="line"><span class="keyword">RUN</span> npm i puppeteer \</span><br><span class="line">    # Add user so we don't need --no-sandbox.</span><br><span class="line">    <span class="comment"># same layer as npm install to keep re-chowned files from using up several hundred MBs more space</span></span><br><span class="line">    &amp;&amp; groupadd -r pptruser &amp;&amp; useradd -r -g pptruser -G audio,video pptruser \</span><br><span class="line">    &amp;&amp; mkdir -p /home/pptruser/Downloads \</span><br><span class="line">    &amp;&amp; chown -R pptruser:pptruser /home/pptruser \</span><br><span class="line">    &amp;&amp; chown -R pptruser:pptruser /node_modules</span><br><span class="line"></span><br><span class="line"><span class="comment"># Run everything after as non-privileged user.</span></span><br><span class="line"><span class="keyword">USER</span> pptruser</span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span> ["google-chrome-stable"]</span><br></pre></td></tr></table></figure>
+<p>经过本地测试和 devCloud 上的测试，该方案可以完美的支持我需要的运行环境，并且和方案二一样自带了 puppeteer.js，可以直接就进行测试，不需要额外安装，主要部分终于大功告成…</p>
+<p>这里需要注意两个问题：</p>
+<ol>
+<li>若你使用的项目里面还单独安装了 puppeteer.js 的话，那项目里面的代码会直接调用 package.json 里面的 puppeteer.js，这里要确定自己安装的 puppeteer.js 正常安装了正确的 Chromium，否则还是会报错不能成功打开浏览器。</li>
+<li>如果在会报错 <code>Error: Failed to launch the browser process! spawn chrome.exe ENOENT...</code>，可能是你没有加入在去沙箱环境的 args 配置：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.launch(&#123;</span><br><span class="line">	args: [<span class="string">"--no-sandbox"</span>, <span class="string">"--disable-setuid-sandbox"</span>]</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="将镜像上传至-TKEx-CSIG-容器平台"><a href="#将镜像上传至-TKEx-CSIG-容器平台" class="headerlink" title="将镜像上传至 TKEx-CSIG 容器平台"></a>将镜像上传至 TKEx-CSIG 容器平台</h2><p>这个步骤有可以直接看<a href="http://wiki.k8s.oa.com/quickstart/csighub.html" target="_blank" rel="noopener">官方文档</a>，文档已经写的非常详细啦，上传完毕后可以直接修改 orange-ci 的 FROM 镜像源为你自己的镜像源，也可以像我一样再在DevCloud 上测试测试。</p>
+<p>这里附我测试 puppeteer.js 的测试代码（项目内容相关逻辑已经删除）：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> puppeteer = <span class="built_in">require</span>(<span class="string">'puppeteer'</span>);</span><br><span class="line"></span><br><span class="line">(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> beginTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.launch(&#123;</span><br><span class="line">    args: [<span class="string">'--no-sandbox'</span>, <span class="string">'--disable-setuid-sandbox'</span>],</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">const</span> browserTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  <span class="keyword">const</span> page = <span class="keyword">await</span> browser.newPage();</span><br><span class="line">  <span class="keyword">const</span> newTabTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  <span class="comment">// await page.goto('https://www.baidu.com/');</span></span><br><span class="line">  <span class="comment">// const openLinkTime = +new Date();</span></span><br><span class="line">  <span class="keyword">const</span> pageContent = <span class="string">`这里补充html页面内容`</span></span><br><span class="line">  <span class="keyword">await</span> page.setContent(pageContent, &#123;</span><br><span class="line">    waitUntil: [<span class="string">'load'</span>]</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> loadTIme = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  <span class="keyword">const</span> domcontendLoadTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  <span class="keyword">await</span> page.screenshot(&#123; <span class="attr">path</span>: <span class="string">'./test.png'</span> &#125;);</span><br><span class="line">  <span class="keyword">const</span> screenshotTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  <span class="keyword">await</span> browser.close();</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> endTime = +<span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'开始时间：'</span>+ beginTime + <span class="string">'，浏览器打开时间：'</span> + (browserTime - beginTime) + <span class="string">'，new tab 时间：'</span> + (newTabTime - browserTime) + <span class="string">'，内容load时间：'</span> + (loadTIme - newTabTime)+ <span class="string">'，domcontentloaded时间：'</span> + (domcontendLoadTime - loadTIme) + <span class="string">'，截图时间：'</span>+ (screenshotTime - domcontendLoadTime) + <span class="string">'，结束时间：'</span> + endTime + <span class="string">'，总耗时：'</span> + (endTime - beginTime))</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>以上就是本次基于 orange-ci 环境，制作 puppeteer 运行镜像，所经历的坎坷。其实中间还遇到过很多各种报错，以及涉及到一些不同环境下安装依赖库、安装 Chromium，中文字体支持等遇到的问题，这里就不一一展示出来了~~</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/other/" rel="tag"># other</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2021/01/09/一些需要注意的js输出问题整理/" rel="next" title="一些需要注意的js输出问题整理">
+                <i class="fa fa-chevron-left"></i> 一些需要注意的js输出问题整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/09/20/引擎剖析：JS 中的字符串转数值/" rel="prev" title="引擎剖析：JS 中的字符串转数值">
+                引擎剖析：JS 中的字符串转数值 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/headPhoto.jpg" alt="cchroot">
+            
+              <p class="site-author-name" itemprop="name">cchroot</p>
+              <p class="site-description motion-element" itemprop="description">Your bloom is the reason of the breeze</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tools/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/cchroot" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/599eee90518825242238db1d" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-angle-double-down"></i>Juejin</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://leetcode-cn.com/u/cchroot-liu/" target="_blank" title="LeetCode">
+                      
+                        <i class="fa fa-fw fa-skype"></i>LeetCode</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#整体计划"><span class="nav-number">1.</span> <span class="nav-text">整体计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#制作-puppeteer-运行镜像"><span class="nav-number">2.</span> <span class="nav-text">制作 puppeteer 运行镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案一"><span class="nav-number">2.1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案二"><span class="nav-number">2.2.</span> <span class="nav-text">方案二</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方案三"><span class="nav-number">2.3.</span> <span class="nav-text">方案三</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将镜像上传至-TKEx-CSIG-容器平台"><span class="nav-number">3.</span> <span class="nav-text">将镜像上传至 TKEx-CSIG 容器平台</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cchroot</span>
+
+  
+</div>
+
+
+  <div class="powered-by">个人专属</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
