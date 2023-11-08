@@ -88,7 +88,7 @@
 <meta property="og:description" content="开始前先推荐一篇开源 docker 书籍：docker–从入门到实践 这两天由于需要使用 docker 新建一个镜像来给项目使用，然后在使用 docker 的过程中做了一点点小结，希望可以帮到大家。 常用命令 使用 docker help 可以查看所有命令帮助，使用 docker xxx命令 --help 可以查看命令的语法，例如：docker pull --help，可以看到命令行返回为：Usa">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/docker/docker_1.png">
-<meta property="og:updated_time" content="2023-11-08T14:48:59.780Z">
+<meta property="og:updated_time" content="2023-11-08T14:51:55.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker 常用命令解析和使用小坑">
 <meta name="twitter:description" content="开始前先推荐一篇开源 docker 书籍：docker–从入门到实践 这两天由于需要使用 docker 新建一个镜像来给项目使用，然后在使用 docker 的过程中做了一点点小结，希望可以帮到大家。 常用命令 使用 docker help 可以查看所有命令帮助，使用 docker xxx命令 --help 可以查看命令的语法，例如：docker pull --help，可以看到命令行返回为：Usa">
@@ -481,6 +481,10 @@
 <li><p>相关容器关闭后，再来删除对应的镜像，我一般通过 image 的 id 来指定删除谁 <code>docker image rm xxxx</code> 即可</p>
 </li>
 </ol>
+<h3 id="docker-cp-复制文件问题"><a href="#docker-cp-复制文件问题" class="headerlink" title="docker cp 复制文件问题"></a>docker cp 复制文件问题</h3><p>在 docker 中，可能经常会遇到需要将容器中的文件拷贝到宿主机或者将宿主机的文件拷贝到容器的操作，这样我们就会用到 <code>docker cp</code> 这个拷贝命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-</span><br><span class="line">docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH</span><br></pre></td></tr></table></figure>
+<p>这里需要特别注意的是，很多人都会使用 image ID 进行拷贝操作，而这里要求使用的是 CONTAINER ID，也就是容器 id，这样会导致报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No such container:path:xxx</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -679,7 +683,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除镜像问题"><span class="nav-number">2.</span> <span class="nav-text">删除镜像问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">1.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除镜像问题"><span class="nav-number">2.</span> <span class="nav-text">删除镜像问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-cp-复制文件问题"><span class="nav-number">3.</span> <span class="nav-text">docker cp 复制文件问题</span></a></li></ol></div>
             
 
           </div>
