@@ -88,7 +88,7 @@
 <meta property="og:description" content="开始前先推荐一篇开源 docker 书籍：docker–从入门到实践 这两天由于需要使用 docker 新建一个镜像来给项目使用，然后在使用 docker 的过程中做了一点点小结，希望可以帮到大家。 常用命令 使用 docker help 可以查看所有命令帮助，使用 docker xxx命令 --help 可以查看命令的语法，例如：docker pull --help，可以看到命令行返回为：Usa">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/docker/docker_1.png">
-<meta property="og:updated_time" content="2023-11-08T14:51:55.032Z">
+<meta property="og:updated_time" content="2023-11-08T14:52:53.123Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker 常用命令解析和使用小坑">
 <meta name="twitter:description" content="开始前先推荐一篇开源 docker 书籍：docker–从入门到实践 这两天由于需要使用 docker 新建一个镜像来给项目使用，然后在使用 docker 的过程中做了一点点小结，希望可以帮到大家。 常用命令 使用 docker help 可以查看所有命令帮助，使用 docker xxx命令 --help 可以查看命令的语法，例如：docker pull --help，可以看到命令行返回为：Usa">
@@ -485,6 +485,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-</span><br><span class="line">docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH</span><br></pre></td></tr></table></figure>
 <p>这里需要特别注意的是，很多人都会使用 image ID 进行拷贝操作，而这里要求使用的是 CONTAINER ID，也就是容器 id，这样会导致报错</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No such container:path:xxx</span><br></pre></td></tr></table></figure>
+<p>正确的做法是通过 <code>docker ps</code> 命令或者 来获取容器的 id，然后通过 docker cp 命令进行操作。其中 <code>docker ps -a</code> 可以列出所以正在运行和停止的容器情况。</p>
 
       
     </div>
