@@ -661,6 +661,160 @@ Redis 数据结构与命令使用
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/30/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cchroot">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/headPhoto.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cchroot's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2023/09/30/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/" itemprop="url">基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-09-30T21:59:05+08:00">
+                2023-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/其他/" itemprop="url" rel="index">
+                    <span itemprop="name">其他</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          最近项目中需要在 orange-ci 中进行利用 puppeteer.js 进行截图保存等一系列操作。那么问题马上就来了：在 orange-ci 中 puppeteer.js 如何运行？
+在 orange-ci 中运行 puppeteer.js 也是基于 Linux 环境，在 Linux 环境中安装 Chromium 最长见的 2 个问题就是：
+
+下载 Chromium 时，下载常常以失败告终。换个镜像源后 Chromium 能下载成功，但启动后各种报错，是 Linux上 缺少部分依赖导致的（最新的两个版本我测试不会出现下载 Chromium 失败的情况了，旧项目使用的 5.x 版本经常失败）
+安装完需要的依赖，代码顺利运行。但截图却发现浏览器上的中文字体竟全是框框框框，缺少中文字体库
+
+上面两个问题也可以侧面
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2023/09/30/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/20/引擎剖析：JS 中的字符串转数值/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -824,7 +978,7 @@ The Unsigned Right Shift Operator(&gt;&gt;&gt;)
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/10/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/09/17/docker常用命令解析和使用小坑/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -843,7 +997,7 @@ The Unsigned Right Shift Operator(&gt;&gt;&gt;)
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2023/09/10/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/" itemprop="url">基于orange-ci环境，制作puppeteer运行镜像，镜像放在CSIG容器平台</a></h1>
+                <a class="post-title-link" href="/2023/09/17/docker常用命令解析和使用小坑/" itemprop="url">docker 常用命令解析和使用小坑</a></h1>
         
 
         <div class="post-meta">
@@ -855,8 +1009,8 @@ The Unsigned Right Shift Operator(&gt;&gt;&gt;)
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-09-10T21:59:05+08:00">
-                2023-09-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-09-17T21:59:05+08:00">
+                2023-09-17
               </time>
             
 
@@ -917,17 +1071,18 @@ The Unsigned Right Shift Operator(&gt;&gt;&gt;)
       
         
           
-          最近项目中需要在 orange-ci 中进行利用 puppeteer.js 进行截图保存等一系列操作。那么问题马上就来了：在 orange-ci 中 puppeteer.js 如何运行？
-在 orange-ci 中运行 puppeteer.js 也是基于 Linux 环境，在 Linux 环境中安装 Chromium 最长见的 2 个问题就是：
+          开始前先推荐一篇开源 docker 书籍：docker–从入门到实践
+这两天由于需要使用 docker 新建一个镜像来给项目使用，然后在使用 docker 的过程中做了一点点小结，希望可以帮到大家。
+常用命令
+使用 docker help 可以查看所有命令帮助，使用 docker xxx命令 --help 可以查看命令的语法，例如：docker pull --help，可以看到命令行返回为：Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
 
-下载 Chromium 时，下载常常以失败告终。换个镜像源后 Chromium 能下载成功，但启动后各种报错，是 Linux上 缺少部分依赖导致的（最新的两个版本我测试不会出现下载 Chromium 失败的情况了，旧项目使用的 5.x 版本经常失败）
-安装完需要的依赖，代码顺利运行。但截图却发现浏览器上的中文字体竟全是框框框框，缺少中文字体库
+使用 docker pull xxx 获取镜像，如果带有 tag 标签，则为 docker pull xxx:tag
 
-上面两个问题也可以侧面
+使用 docker run 运行镜像，运行常用：docker run -it --rm -u root x
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2023/09/10/制作puppeteer运行镜像，基于CSIG容器平台和orange-ci/#more" rel="contents">
+            <a class="btn" href="/2023/09/17/docker常用命令解析和使用小坑/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1746,183 +1901,6 @@ HTTP 属于 TCP/IP 协议族，TCP/IP 协议族是互联网相关联的协议集
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/25/nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cchroot">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/headPhoto.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cchroot's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/11/25/nginx/" itemprop="url">nginx 最全操作总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-25T20:31:05+08:00">
-                2020-11-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          这几天在复习 nginx 的知识，刚好就把常用的 nginx 操作整合出来，方便查阅，这里分享给大家：
-本文将会从：安装 -&gt; 全局配置 -&gt; 常用的各种配置 来书写，其中常用配置写的炒鸡详细，需要的童鞋可以直接滑倒响应的位置查看。
-目录
-安装 nginx
-nginx 配置
-基本结构
-主要配置含义
-nginx.conf 配置文件的语法规则
-内置变量
-常用命令
-配置 nginx 开机自启
-配置 nginx 全局可用
-
-
-nginx 常用功能配置
-反向代理
-访问控制
-6 种负载均衡策略
-gzip 压缩
-HTTP 服务器
-动静分离
-请求限制
-正向代理
-图片防盗链
-适配 PC 或移动设备
-设置二级域名
-配置 HTTPS
-配置 HTTP 转 HTTPS
-单页面项目 history 路由配置
-配置高可用集群（双
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/11/25/nginx/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1975,7 +1953,7 @@ HTTP 服务器
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">161</span>
+                  <span class="site-state-item-count">162</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
