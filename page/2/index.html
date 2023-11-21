@@ -342,7 +342,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/25/nginx/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/11/27/浏览器与Node的事件循环Event Loop/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cchroot">
@@ -361,7 +361,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/11/25/nginx/" itemprop="url">nginx 最全操作总结</a></h1>
+                <a class="post-title-link" href="/2020/11/27/浏览器与Node的事件循环Event Loop/" itemprop="url">浏览器与Node的事件循环(Event Loop)</a></h1>
         
 
         <div class="post-meta">
@@ -373,8 +373,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-25T20:31:05+08:00">
-                2020-11-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-11-27T21:59:05+08:00">
+                2020-11-27
               </time>
             
 
@@ -396,8 +396,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
                   </a>
                 </span>
 
@@ -435,40 +435,15 @@
       
         
           
-          这几天在复习 nginx 的知识，刚好就把常用的 nginx 操作整合出来，方便查阅，这里分享给大家：
-本文将会从：安装 -&gt; 全局配置 -&gt; 常用的各种配置 来书写，其中常用配置写的炒鸡详细，需要的童鞋可以直接滑倒响应的位置查看。
-目录
-安装 nginx
-nginx 配置
-基本结构
-主要配置含义
-nginx.conf 配置文件的语法规则
-内置变量
-常用命令
-配置 nginx 开机自启
-配置 nginx 全局可用
-
-
-nginx 常用功能配置
-反向代理
-访问控制
-6 种负载均衡策略
-gzip 压缩
-HTTP 服务器
-动静分离
-请求限制
-正向代理
-图片防盗链
-适配 PC 或移动设备
-设置二级域名
-配置 HTTPS
-配置 HTTP 转 HTTPS
-单页面项目 history 路由配置
-配置高可用集群（双
+          Event Loop 即事件循环，是指浏览器或 Node 的一种解决 javaScript 单线程运行时不会阻塞的一种机制，也就是我们经常使用异步的原理。
+进程与线程上面说了 js 单线程执行的，那什么是线程和进程？
+进程是 CPU 资源分配的最小单位；线程是 CPU 调度的最小单位。一个进程由一个或多个线程组成，线程是一个进程中代码的不同执行路线，并且一个进程的内存空间是共享的，每个线程都可用这些共享内存。
+进程描述了 CPU 在运行指令及加载和保存上下文所需的时间，放在应用上来说就代表了一个程序。线程是进程中的更小单位，描述了执行一段指令所需的时间
+把这些概念拿到浏览器中来说，当你打开一个 Tab 页时，其实就是创建了一个进程，一个进程中可以有多个线程，比如渲染线程、JS 引擎线程、HTTP 请求线程、定时
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/11/25/nginx/#more" rel="contents">
+            <a class="btn" href="/2020/11/27/浏览器与Node的事件循环Event Loop/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
